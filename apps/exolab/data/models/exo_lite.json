@@ -1,0 +1,39 @@
+{
+  "id": "exo_lite",
+  "name": "Exo frame, lite",
+  "kind": "exo_suit",
+  "status": "ready",
+  "about": "Separate parts with skin showing between them: a slim back frame and hip belt, a girdle-tracking shoulder with light backdrivable motors and a free arm-twist bearing, arm and leg struts held on by strap cuffs. Half the weight of the full suit and freer to move, but no load-bearing gauntlets: what the hands hold goes through the straps, so heavy loads press hard on the arm. Switch the mechanism to the plain tilted gimbal in the editor to see why the shoulder centre has to follow the real joint.",
+  "character": "hairsample_female",
+  "suit_asset": "exo_lite",
+  "shoulder": {
+    "mechanism": "girdle_tracking",
+    "assist_share": 0.4,
+    "mechanism_overrides": {"girdle_tracking": {"joints.0.actuator": "qdd_planetary", "joints.1.actuator": "qdd_planetary", "joints.2.actuator": "free_bearing"}}
+  },
+  "elbow": {"actuator": "qdd_planetary", "limits_deg": [0, 145]},
+  "links": [
+    {"id": "back_frame", "name": "Back frame", "role": "back_frame", "material": "al_7075_t6", "section": {"shape": "rect", "w_mm": 30, "h_mm": 15, "wall_mm": 1.5}, "length_m": 0.42},
+    {"id": "upper_arm_link", "name": "Upper-arm strut", "role": "upper_arm", "material": "al_7075_t6", "section": {"shape": "tube", "d_mm": 18, "wall_mm": 1.5}, "length_m": null, "side_offset_mm": 18},
+    {"id": "forearm_link", "name": "Forearm strut", "role": "forearm", "material": "al_7075_t6", "section": {"shape": "tube", "d_mm": 15, "wall_mm": 1.2}, "length_m": null, "side_offset_mm": 16}
+  ],
+  "cuffs": [
+    {"id": "upper_arm_cuff", "name": "Upper-arm cuff", "segment": "upper_arm", "at": 0.6, "width_mm": 60, "gap_mm": 4, "material": "pa12", "liner": "tpu_95a", "thickness_mm": 2.0},
+    {"id": "forearm_cuff", "name": "Forearm cuff", "segment": "forearm", "at": 0.65, "width_mm": 50, "gap_mm": 4, "material": "pa12", "liner": "tpu_95a", "thickness_mm": 2.0}
+  ],
+  "shells": [
+    {"id": "back_plate", "name": "Back plate", "bone": "upperChest", "material": "cfrp_qi", "thickness_mm": 2.5, "fit_gap_mm": 10, "area_m2": 0.035},
+    {"id": "hip_belt", "name": "Hip belt", "bone": "hips", "material": "pa12", "thickness_mm": 3.0, "fit_gap_mm": 6, "area_m2": 0.035},
+    {"id": "thigh_cuff", "name": "Thigh cuff", "bone": "UpperLeg", "mirror": true, "material": "pa12", "thickness_mm": 2.5, "fit_gap_mm": 4, "area_m2": 0.012},
+    {"id": "shin_cuff", "name": "Shin cuff", "bone": "LowerLeg", "mirror": true, "material": "pa12", "thickness_mm": 2.5, "fit_gap_mm": 4, "area_m2": 0.01},
+    {"id": "foot_stirrup", "name": "Foot stirrup", "bone": "Foot", "mirror": true, "material": "al_7075_t6", "thickness_mm": 2.0, "fit_gap_mm": 3, "area_m2": 0.008}
+  ],
+  "legs": {
+    "hip": {"actuator": "qdd_planetary"},
+    "knee": {"actuator": "spring_balance"},
+    "strut_material": "al_7075_t6",
+    "strut_section": {"shape": "tube", "d_mm": 18, "wall_mm": 1.5}
+  },
+  "battery": {"power": "li_ion_21700", "mass_kg": 1.0},
+  "extras_mass_kg": {"electronics and wiring": 0.5, "straps and liners": 0.5}
+}

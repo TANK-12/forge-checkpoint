@@ -1,0 +1,27 @@
+{
+  "id": "music-video",
+  "label": "Media",
+  "tagline": "Music, video, downloads, the iPod and the video tools",
+  "icon": "🎬",
+  "accent": "#e06c9f",
+  "order": 16,
+  "section": "watch",
+  "tabs": true,
+  "merged": true,
+  "members": [
+    "media",
+    "ipod",
+    "mediaforge",
+    "beets",
+    "codec-player"
+  ],
+  "tab_labels": {
+    "media": "Library and player",
+    "ipod": "Other devices",
+    "mediaforge": "Video tools",
+    "beets": "Fix tags",
+    "codec-player": "Codec files"
+  },
+  "help": "The one place for music and video: your library and player with YouTube, Crunchyroll and Download, the iPod over Wi-Fi, and MediaForge's video tools.",
+  "note": "Relay task 383. Undo this fold with \"off\": true; the apps keep their own folders and data."
+}

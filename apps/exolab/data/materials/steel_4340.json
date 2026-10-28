@@ -1,0 +1,13 @@
+{
+  "id": "steel_4340",
+  "name": "Alloy steel 4340 (quenched and tempered)",
+  "short": "Steel 4340",
+  "category": "metal",
+  "colour": "#8f99a6",
+  "note": "Heavy, stiff and very strong. Gear shafts, pins, small high-load brackets.",
+  "density_kg_m3": 7850,
+  "youngs_modulus_gpa": 205,
+  "yield_strength_mpa": 1000,
+  "fatigue_strength_mpa": 480,
+  "source": "Typical handbook value (ASM Handbook / MatWeb datasheets); not a certified figure."
+}

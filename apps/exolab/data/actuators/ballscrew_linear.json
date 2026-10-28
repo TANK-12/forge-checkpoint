@@ -1,0 +1,15 @@
+{
+  "id": "ballscrew_linear",
+  "name": "Ball-screw linear actuator on a lever",
+  "kind": "linear_lever",
+  "mass_kg": 1.5,
+  "torque_cont_nm": 75,
+  "torque_peak_nm": 150,
+  "speed_max_rad_s": 2.0,
+  "efficiency": 0.8,
+  "stiffness_nm_rad": 15000,
+  "backdrivable": false,
+  "power_cont_w": 200,
+  "note": "An electric ram pushing a lever: high torque, slow. Good for knees and elbows of heavy suits.",
+  "source": "1.5 kN continuous at a 50 mm lever; typical industrial electric cylinder; approximate."
+}

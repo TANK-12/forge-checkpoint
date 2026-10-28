@@ -1,0 +1,7 @@
+{
+  "name": "Orbit puzzles",
+  "tagline": "Launch a probe and let real gravity carry it: slingshots, orbits, landings and rings, in 3D.",
+  "icon": "🎯",
+  "order": 30,
+  "entry": "mode.js"
+}

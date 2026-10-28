@@ -1,0 +1,1155 @@
+{
+  "name": "Forge",
+  "version": "0.2.0",
+  "summary": "One window for many small local apps: games, creative tools, readers and research helpers, each its own little web server.",
+  "python": "3.14",
+  "hub_port": 8400,
+  "env_about": "Variables every app's backend gets ('env' below) and those one app gets (its entry's 'env'). {data}, {config}, {cache}, {state} and {logs} are Forge's folders on the system it runs on (forge_portable.data_dirs); {port:<app>} is that app's port. Mostly they move each app's data out of the home folder into Forge's own data folder.",
+  "env": {
+    "FORGE_CONTENT_DIR": "{data}/ForgeGameData",
+    "FORGE_ART_DIR": "{data}/ForgeArtData",
+    "FORGE_JAN_SETTINGS_DIR": "{config}/jan"
+  },
+  "runtime": {
+    "about": "Relocatable CPython builds from python-build-standalone (Astral), the same ones uv installs. A target's runtime_sha256 is the digest GitHub lists for that file; the build refuses a download that does not match.",
+    "url": "https://github.com/astral-sh/python-build-standalone/releases/download/{tag}/cpython-{version}+{tag}-{triple}-{flavour}.tar.gz",
+    "tag": "20261003",
+    "version": "3.14.8",
+    "flavour": "install_only_stripped",
+    "leave_out": [
+      "lib/python3.*/test/*",
+      "lib/python3.*/idlelib/*",
+      "lib/python3.*/turtledemo/*",
+      "lib/python3.*/tkinter/*",
+      "lib/python3.*/lib-dynload/_tkinter*",
+      "lib/tcl*",
+      "lib/tk*",
+      "lib/itcl*",
+      "lib/thread*",
+      "bin/idle3*",
+      "Lib/test/*",
+      "Lib/idlelib/*",
+      "Lib/turtledemo/*",
+      "Lib/tkinter/*",
+      "DLLs/_tkinter*",
+      "DLLs/tcl*",
+      "DLLs/tk*",
+      "tcl/*",
+      "lib/python3.*/site-packages/pip*",
+      "bin/pip*",
+      "Lib/site-packages/pip*",
+      "Scripts/pip*",
+      "lib/python3.*/lib-dynload/_test*",
+      "lib/python3.*/lib-dynload/_ctypes_test*",
+      "lib/python3.*/lib-dynload/xxlimited*",
+      "DLLs/_test*",
+      "DLLs/_ctypes_test*",
+      "DLLs/xxlimited*",
+      "*.dSYM/*"
+    ],
+    "leave_out_about": "Parts of the runtime a release never uses: the standard library's test suite (which holds sample private keys), IDLE, turtle demos, Tk, its C test modules and pip (a bundle installs nothing)."
+  },
+  "third_party": {
+    "included": [
+      "three.js 0.186.0 (MIT, the three.js authors): shared/vendor/three, apps/cosmos/static/vendor",
+      "three-vrm 3.5.5 (MIT, pixiv Inc.): shared/vendor/three-vrm",
+      "xterm.js 6.0 and its fit, search and web-links add-ons (MIT, the xterm.js authors): apps/terminal/static/vendor"
+    ],
+    "skip": [
+      "password in a link",
+      "key or password written in a setting"
+    ],
+    "about": "The runtime, packages and downloaded assets are read for secrets and this laptop's real values, not for personal patterns (authors' addresses). These secret patterns are skipped there too: library docs are full of user:password@host and key = '...' examples, and compiled files hold byte runs that look like them. Real key formats, private keys and the known values are still looked for."
+  },
+  "packages": {
+    "base": [
+      "fastapi==0.141.1",
+      "uvicorn==0.54.0",
+      "httpx==0.28.1",
+      "websockets==17.2",
+      "python-multipart==0.0.32"
+    ],
+    "window": {
+      "windows": [
+        "pywebview==6.2.1"
+      ],
+      "macos": [
+        "pywebview==6.2.1"
+      ]
+    },
+    "source_only": [
+      "sgmllib3k==1.0.0",
+      "proxy_tools==0.1.0"
+    ],
+    "source_only_about": "Pure-Python packages published only as source: built into wheels here once, then installed like the rest.",
+    "leave_out": [
+      "PyObjCTest/*",
+      "*.dSYM/*",
+      "bin/*"
+    ],
+    "leave_out_about": "Installed files taken out again, from inside site-packages: pyobjc's own tests and debug symbols (about 20 MB on macOS), and the command scripts pip writes to bin/, whose first line names the building machine's Python (the launcher never runs them)."
+  },
+  "imports": {
+    "bs4": "beautifulsoup4",
+    "fitz": "pymupdf",
+    "pymupdf": "pymupdf",
+    "PIL": "pillow",
+    "yaml": "PyYAML",
+    "dotenv": "python-dotenv",
+    "multipart": "python-multipart",
+    "webview": "pywebview"
+  },
+  "targets_about": "One entry per download. uv_platform is the platform uv resolves and installs wheels for (uv pip install --python-platform), so every bundle is built on Linux with each package's own per-system dependencies; macos_min is the oldest macOS the wheels may need. launch: files from release/launch/ copied to the bundle's top (name in bundle: file there); forge_installer.py is the Linux install and uninstall (forge --install). setup: an Inno Setup script in release/launch/ that build.py turns into Forge-Setup-<version>.exe beside the zip when Inno Setup is installed under Wine (FORGE_ISCC, else the Wine prefix's Program Files); without it the zip is the whole Windows download. app_bundle: wrap the bundle in Forge.app (macOS).",
+  "targets": {
+    "linux-x64": {
+      "system": "linux",
+      "label": "Linux (x86-64)",
+      "triple": "x86_64-unknown-linux-gnu",
+      "runtime_sha256": "d9ec7a6935ade8b671a57ebaf111083d7314eab8dae5071d167054dadd2b97d6",
+      "uv_platform": "x86_64-manylinux_2_28",
+      "archive": "tar.gz",
+      "launch": {
+        "forge": "forge",
+        "forge_installer.py": "forge_installer.py"
+      }
+    },
+    "windows-x64": {
+      "system": "windows",
+      "label": "Windows 10 and 11 (x64)",
+      "triple": "x86_64-pc-windows-msvc",
+      "runtime_sha256": "10e5705e44938ee78de35c62b30fdfe2945b53438343d04c0f53548cdd8e91b6",
+      "uv_platform": "x86_64-pc-windows-msvc",
+      "archive": "zip",
+      "launch": {
+        "Forge.cmd": "Forge.cmd",
+        "forge-console.cmd": "forge-console.cmd"
+      },
+      "setup": "forge.iss"
+    },
+    "macos-arm64": {
+      "system": "macos",
+      "label": "macOS (Apple silicon)",
+      "triple": "aarch64-apple-darwin",
+      "runtime_sha256": "ed14e9042f36c0aa18383f5d9729bcbf17847e842666a793b5a5a5d8505c0ca1",
+      "uv_platform": "aarch64-apple-darwin",
+      "macos_min": "11.0",
+      "archive": "tar.gz",
+      "app_bundle": true
+    },
+    "macos-x64": {
+      "system": "macos",
+      "label": "macOS (Intel)",
+      "triple": "x86_64-apple-darwin",
+      "runtime_sha256": "08310045a2611bad730d7c1a01e847a1ea729d9dcfe29110ca67cbdf3998bb54",
+      "uv_platform": "x86_64-apple-darwin",
+      "macos_min": "12.0",
+      "archive": "tar.gz",
+      "app_bundle": true
+    }
+  },
+  "window_order": {
+    "linux": [
+      "native",
+      "app",
+      "browser"
+    ],
+    "windows": [
+      "app",
+      "native",
+      "browser"
+    ],
+    "macos": [
+      "native",
+      "app",
+      "browser"
+    ]
+  },
+  "ship_about": "What a bundle holds: these paths plus apps/<name>/ for every app included below, minus anything leave_out matches (fnmatch on the path from the Forge folder; * also crosses /). shared/ ships by allowlist (critic round 1 of the 0.2 plan): only the files and folders named here, the ones the hub and the shipped apps use, so a new file there (often the owner's own tool or notes) stays out until it is added. The build stops when a shipped file names /shared/<file> that is not shipped.",
+  "ship": [
+    "forge_core.py",
+    "forge_portable.py",
+    "forge_serve.py",
+    "release/release.json",
+    "assets/icon.png",
+    "hub/",
+    "groups/",
+    "sections/",
+    "shared/core_plan.json",
+    "shared/forge.css",
+    "shared/forge.js",
+    "shared/forge_art.js",
+    "shared/forge_art.py",
+    "shared/forge_autoclose.py",
+    "shared/forge_chrome.js",
+    "shared/forge_content.py",
+    "shared/forge_cores.py",
+    "shared/forge_depth.js",
+    "shared/forge_diag.json",
+    "shared/forge_diag.py",
+    "shared/forge_dialog.js",
+    "shared/forge_ed25519.py",
+    "shared/forge_edition.py",
+    "shared/forge_fetch.py",
+    "shared/forge_guard.py",
+    "shared/forge_editions.json",
+    "shared/forge_external.py",
+    "shared/forge_framecap.js",
+    "shared/forge_fuzzy.js",
+    "shared/forge_glass.js",
+    "shared/forge_gpuload.py",
+    "shared/forge_icons.js",
+    "shared/forge_idle.js",
+    "shared/forge_jan.js",
+    "shared/forge_jan.py",
+    "shared/forge_jobs.py",
+    "shared/forge_layers.py",
+    "shared/forge_licence.py",
+    "shared/forge_licence_keys.json",
+    "shared/forge_lightbox.css",
+    "shared/forge_lightbox.js",
+    "shared/forge_live.js",
+    "shared/forge_lock.py",
+    "shared/forge_machine.py",
+    "shared/forge_media.js",
+    "shared/forge_mpris.py",
+    "shared/forge_music.py",
+    "shared/forge_options.py",
+    "shared/forge_particles.js",
+    "shared/forge_perf.js",
+    "shared/forge_power.js",
+    "shared/forge_quick.py",
+    "shared/forge_ram.py",
+    "shared/forge_revalidate.py",
+    "shared/forge_search.js",
+    "shared/forge_search_words.js",
+    "shared/forge_seen.py",
+    "shared/forge_slim.py",
+    "shared/forge_sound.js",
+    "shared/forge_stores.json",
+    "shared/forge_static.py",
+    "shared/forge_sysinfo.py",
+    "shared/forge_textsize.js",
+    "shared/forge_theme.py",
+    "shared/forge_theme_cards.js",
+    "shared/forge_themes.py",
+    "shared/forge_undo.js",
+    "shared/forge_visual.js",
+    "shared/forge_wallpapers.py",
+    "shared/forge_widgets.css",
+    "shared/forge_widgets.js",
+    "shared/forge_ytdlp.py",
+    "shared/gpu_heavy.json",
+    "shared/machine_profiles.json",
+    "shared/quick_settings.json",
+    "shared/ram_guard.json",
+    "shared/art_seed/",
+    "shared/companions/",
+    "shared/glass/",
+    "shared/layouts/",
+    "shared/live/",
+    "shared/motion/",
+    "shared/pad/",
+    "shared/perf/",
+    "shared/themes/",
+    "shared/vendor/"
+  ],
+  "leave_out": [
+    "*/tests/*",
+    "*/test_*.py",
+    "*/conftest.py",
+    "*.test.js",
+    "*.test.mjs",
+    "apps/*/docs/*",
+    "apps/*/manifests/*",
+    "apps/*/sessions/*",
+    "*/WIP*.md",
+    "*/CLAUDE.md",
+    "*/MANIFEST.md",
+    "*/MANIFEST.json",
+    "*/.claude/*",
+    "hub/status.js",
+    "hub/status.json",
+    "hub/theme.js",
+    "shared/avatars/*",
+    "shared/assets/*",
+    "shared/sound_library/*",
+    "shared/godot_addons/*",
+    "shared/bridges/*",
+    "shared/accounts.json",
+    "shared/forge_accounts.py",
+    "shared/forge_session_names.py",
+    "shared/forge_mangafetch.py",
+    "apps/driftpeaks/music/*",
+    "*/pyrightconfig.json",
+    "*/pytest.ini",
+    "*/package.json",
+    "apps/*/requirements.txt",
+    "apps/arcade/tools/*",
+    "apps/dossier/tools/sync_usb.py",
+    "apps/dossier/haiku-batch-manifest.json",
+    "apps/dossier/RUNNING.md",
+    "apps/mint/README.md",
+    "apps/mint/scripts/*",
+    "shared/forge_attach*",
+    "shared/forge_voice.py",
+    "shared/voice_registry.json",
+    "shared/voice_emotions.json",
+    "shared/forge_voice.js",
+    "shared/claude_launch.py",
+    "shared/forge_session_title.js",
+    "shared/forge_convo.*",
+    "shared/forge_websearch.py",
+    "shared/forge_open.py",
+    "shared/forge_bidi.py",
+    "shared/forge_avatar.js",
+    "shared/forge_avatars.py",
+    "shared/forge_panels.js",
+    "shared/forge_html.js",
+    "shared/forge_webcap.js",
+    "shared/forge_assets.py",
+    "shared/forge_secrets.py",
+    "shared/forge_google.py",
+    "*/__pycache__/*",
+    "*.pyc"
+  ],
+  "leave_out_keep": [
+    "apps/exolab/data/tests/"
+  ],
+  "leave_out_keep_about": "Paths that ship although a leave_out pattern matches them: Exolab's data/tests/ holds the bench tests its tester runs (data, not code tests).",
+  "leave_out_about": "tests, developer settings and handoff docs; generated hub files (the launcher makes them per request); shared parts only the owner's tools use (Live2D avatars under their own licence, Blender and Godot bridges, saved logins, session titles, a site downloader, chat attachments, the voice hotkey and its wake words, the voice script (the Voice app is not shipped, so Afterglow shows no Read aloud or mic button), the chat, session and avatar views, web search and capture, the session launcher and opener, the asset fetcher); Drift Peaks' bundled music (commercial tracks); the owner's own jobs and notes (Dossier's batch-job file, its run log, its USB copy tool); Arcade's physics sweeps, which are tests; the shared asset and sound packs, of which an app ships only what its 'assets' names; the keyring and Google Drive helpers, which only Office (not shipped) uses.",
+  "scrub": {
+    "about": "Text swapped in the release copy only, never in the source: home folders and mounted drives in examples, comments and defaults a release overrides, and notes that point at the owner's own setup (his assistant's files, the job number that built a file), and script tags for shared parts the release leaves out. Patterns are Python regular expressions; {home} stands for the building account's home folder, matched as it is. After the swaps no 'forbid' pattern may match any shipped file or path.",
+    "replace": [
+      [
+        "/home/[a-z_][a-z0-9_-]*/",
+        "~/"
+      ],
+      [
+        "/run/media/[a-z_][a-z0-9_-]*/",
+        "/run/media/<user>/"
+      ],
+      [
+        "[ \\t]*\\(see ~/\\.claude/[^)\\n]*\\)",
+        ""
+      ],
+      [
+        "[ \\t]*\\(Relay task \\d+[^)\\n]*\\)",
+        ""
+      ],
+      [
+        "Claude \\((?:relay \\d+|Forge sweep)\\)",
+        "Claude"
+      ],
+      [
+        "[ \\t]*\\((?:verified on page|snippet only)(?:[,;] research [AB])?\\)",
+        ""
+      ],
+      [
+        "Low confidence: the S&P pages could not be read, only search summaries\\.",
+        "These figures come from summaries of the report, not the full report."
+      ],
+      [
+        "[ \\t]*\\(research [AB]\\)",
+        ""
+      ],
+      [
+        "the visualiser and animations stay off",
+        "the visualiser and animations stay off"
+      ],
+      [
+        "Play something in Forge",
+        "Play something in Forge"
+      ],
+      [
+        "[,;] research [AB]\\)",
+        ")"
+      ],
+      [
+        ",? by Relay task \\d+",
+        ""
+      ],
+      [
+        "\\bRelay's ",
+        "the "
+      ],
+      [
+        "[ \\t]*<script src=\"/shared/forge_voice\\.js\"></script>\\n?",
+        ""
+      ],
+      [
+        ",? crew of ej[b]-[0-9a-f]+",
+        ""
+      ],
+      [
+        "\\bej[b]-[0-9a-f]{2,}\\b",
+        "a helper session"
+      ],
+      [
+        "look: Hyprland \\| Closer to the desktop: tighter gaps, sharper corners, a turning gradient border, a waybar-style bar",
+        "look: Tiled | Tighter gaps, sharper corners, a turning gradient border and a slim top bar"
+      ]
+    ],
+    "forbid": [
+      "/home/[a-z_][a-z0-9_-]*",
+      "/run/media/[a-z_][a-z0-9_-]*",
+      "{home}",
+      "(?i)emers[o]n",
+      "\\bej[b]\\b",
+      "\\bA[N]3\\b"
+    ]
+  },
+  "apps_about": "Every app in apps/, in the release or not (why); a bundle and the source tree carry only the included ones. An included app may name what it needs on one system (\"cut: why\" leaves it out of that bundle), extra packages, variables for its backend (env) the parts of shared/ only it uses (assets: folders in git shipped with it, CC0 unless their own manifest says otherwise) and files kept out of git that the build downloads, pinned by SHA-256 (downloads; credit goes into THIRD-PARTY.txt).",
+  "apps": {
+    "settings": {
+      "include": true
+    },
+    "afterglow": {
+      "include": true,
+      "env": {
+        "AFTERGLOW_DATA": "{data}/ForgeGameData/afterglow"
+      }
+    },
+    "arcade": {
+      "include": true,
+      "needs": "Jan for its AI opponents",
+      "env": {
+        "ARCADE_DATA": "{data}/ForgeArcadeData"
+      }
+    },
+    "cosmos": {
+      "include": true,
+      "env": {
+        "COSMOS_DATA": "{data}/ForgeGameData/cosmos",
+        "COSMOS_STARS_DIR": "{data}/ForgeGameData/cosmos/stars"
+      }
+    },
+    "driftpeaks": {
+      "include": true,
+      "env": {
+        "DRIFTPEAKS_DATA": "{data}/ForgeGameData/driftpeaks",
+        "DRIFTPEAKS_MUSIC": "{data}/DriftPeaksMusic"
+      }
+    },
+    "emberfield": {
+      "include": true,
+      "env": {
+        "EMBERFIELD_DATA": "{data}/EmberfieldData"
+      }
+    },
+    "exolab": {
+      "include": true,
+      "packages": [
+        "numpy==2.5.3"
+      ],
+      "downloads": [
+        {
+          "path": "shared/assets/characters/hairsample_female/HairSample_Female.vrm",
+          "url": "https://raw.githubusercontent.com/madjin/vrm-samples/e16eb187100149a315ad92c3c9968f1d5baa6c7d/vroid/beta/HairSample_Female.vrm",
+          "sha256": "adfd242317aaabc773f31f7fff7b013979fbb5baa47e97427a78913d9cb4e979",
+          "credit": "HairSample_Female (VRoid Studio sample by pixiv), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/animations/universal_animation_library/AnimationLibrary_Godot_Standard.gltf",
+          "url": "https://raw.githubusercontent.com/J-Ponzo/gltf-universal-animation-library/e24c23cf2a1323488a3faa226ea7ea21f644b73e/glTF/AnimationLibrary_Godot_Standard.gltf",
+          "sha256": "0ff075c7ad6855c5c2c37a171592ee8f0d6ab2f58259e2be77a9b63dd8027765",
+          "credit": "Universal Animation Library by Quaternius, CC0 1.0"
+        },
+        {
+          "path": "shared/assets/animations/universal_animation_library/AnimationLibrary_Godot_Standard.bin",
+          "url": "https://raw.githubusercontent.com/J-Ponzo/gltf-universal-animation-library/e24c23cf2a1323488a3faa226ea7ea21f644b73e/glTF/AnimationLibrary_Godot_Standard.bin",
+          "sha256": "6e65377d81558333c4093dbb144a48fd19019343d82b1a3a7992a98ec0e0543c"
+        },
+        {
+          "path": "shared/assets/animations/universal_animation_library/LICENSE",
+          "url": "https://raw.githubusercontent.com/J-Ponzo/gltf-universal-animation-library/e24c23cf2a1323488a3faa226ea7ea21f644b73e/LICENSE",
+          "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+        },
+        {
+          "path": "shared/assets/polyhaven/Barrel_01/1k/Barrel_01.bin",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/Barrel_01/Barrel_01.bin",
+          "sha256": "fe8369c1ac796059b62a091c0db7367dc420aa2cee212672e48f991f4208da98",
+          "credit": "Barrel_01 by Jorge Camacho (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/Barrel_01/1k/Barrel_01_1k.gltf",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/Barrel_01/Barrel_01_1k.gltf",
+          "sha256": "e084945dedd6a3379c6f3e97842cac89df7169797707e123a5e5b42c135d6888",
+          "credit": "Barrel_01 by Jorge Camacho (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/Barrel_01/1k/textures/Barrel_01_explosive_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/Barrel_01/Barrel_01_explosive_arm_1k.jpg",
+          "sha256": "eab507df7719f0e7a3615bd22bb7bc0c09fed83bfc44e72a51451f8069c2d374",
+          "credit": "Barrel_01 by Jorge Camacho (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/Barrel_01/1k/textures/Barrel_01_explosive_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/Barrel_01/Barrel_01_explosive_diff_1k.jpg",
+          "sha256": "a7e5a7b03bbe0c9c56bf1ac09b24121a5d19148428e9e6eac326c803fc297098",
+          "credit": "Barrel_01 by Jorge Camacho (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/Barrel_01/1k/textures/Barrel_01_explosive_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/Barrel_01/Barrel_01_explosive_nor_gl_1k.jpg",
+          "sha256": "fa4750d64c6f568c8de3e36bc631348710329cf2d6d9c8c87bd2e47a96bc4fcb",
+          "credit": "Barrel_01 by Jorge Camacho (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/blue_metal_plate/1k/blue_metal_plate.bin",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/gltf/8k/blue_metal_plate/blue_metal_plate.bin",
+          "sha256": "609c12a1ddecdfcd0172958f49aa87227213d161bad272a7ddff76169dbc9d28",
+          "credit": "Blue Metal Plate by Rob Tuytel (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/blue_metal_plate/1k/blue_metal_plate_1k.gltf",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/gltf/1k/blue_metal_plate/blue_metal_plate_1k.gltf",
+          "sha256": "947c3a617f428b76f10276896adf02661e1d5d4a10b038b3b0db6e1c976a933d",
+          "credit": "Blue Metal Plate by Rob Tuytel (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/blue_metal_plate/1k/textures/blue_metal_plate_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/blue_metal_plate/blue_metal_plate_arm_1k.jpg",
+          "sha256": "9321b539fe9cf0136ea04c3405b95ae82383f31c258b9c0e37ff8a1e577b637f",
+          "credit": "Blue Metal Plate by Rob Tuytel (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/blue_metal_plate/1k/textures/blue_metal_plate_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/blue_metal_plate/blue_metal_plate_diff_1k.jpg",
+          "sha256": "a0162bffce47d4a35613a12af22571b28c18412dc5805cbb69eac343554ef750",
+          "credit": "Blue Metal Plate by Rob Tuytel (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/blue_metal_plate/1k/textures/blue_metal_plate_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/blue_metal_plate/blue_metal_plate_nor_gl_1k.jpg",
+          "sha256": "970f0273c9e2e3b4fc8338bfd58a28c413b70ac4d1734d9dc8a136724bde56e6",
+          "credit": "Blue Metal Plate by Rob Tuytel (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/concrete_road_barrier/1k/concrete_road_barrier.bin",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/concrete_road_barrier/concrete_road_barrier.bin",
+          "sha256": "64a4f9bc6e4af64d714a252c3c13428c430a60569deba3d52ca6b7dd3aa70d8c",
+          "credit": "Concrete Road Barrier by Amal Kumar (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/concrete_road_barrier/1k/concrete_road_barrier_1k.gltf",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/concrete_road_barrier/concrete_road_barrier_1k.gltf",
+          "sha256": "c371e87d303fff3f0c9fbe88520f7837514364e5c66aac3244e115ffa673d061",
+          "credit": "Concrete Road Barrier by Amal Kumar (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/concrete_road_barrier/1k/textures/concrete_road_barrier_arm_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/concrete_road_barrier/concrete_road_barrier_arm_1k.jpg",
+          "sha256": "b940847648012f2db8c24b16e07ad1e39b3bd33ea493203364deca209606e4b4",
+          "credit": "Concrete Road Barrier by Amal Kumar (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/concrete_road_barrier/1k/textures/concrete_road_barrier_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/concrete_road_barrier/concrete_road_barrier_diff_1k.jpg",
+          "sha256": "88b2d79829ffec7b11ac4d9c8554328f30b665d2c17f634197fde4f1ca8696fe",
+          "credit": "Concrete Road Barrier by Amal Kumar (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/concrete_road_barrier/1k/textures/concrete_road_barrier_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/concrete_road_barrier/concrete_road_barrier_nor_gl_1k.jpg",
+          "sha256": "c1072f51ff5c3d7158f0fbb0aa26e82b816b745b9f03639c4816832af2b37c52",
+          "credit": "Concrete Road Barrier by Amal Kumar (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/cracked_concrete_wall/1k/cracked_concrete_wall.bin",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/gltf/8k/cracked_concrete_wall/cracked_concrete_wall.bin",
+          "sha256": "eec0ff48e4fee7ca9f4015eee351c677131da316041871dc6644e62b84fb1970",
+          "credit": "Cracked Concrete Wall by Dimitrios Savva and Rico Cilliers (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/cracked_concrete_wall/1k/cracked_concrete_wall_1k.gltf",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/gltf/1k/cracked_concrete_wall/cracked_concrete_wall_1k.gltf",
+          "sha256": "5d2dbcbf5cd5e4ef10d726359ee167b27b7f0258a4d65cd45e398501bb28e337",
+          "credit": "Cracked Concrete Wall by Dimitrios Savva and Rico Cilliers (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/cracked_concrete_wall/1k/textures/cracked_concrete_wall_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/cracked_concrete_wall/cracked_concrete_wall_diff_1k.jpg",
+          "sha256": "f910cbaff5a0fbd778a8c41947ac826f2313e70e9b4077bc39221a417fa8d5b4",
+          "credit": "Cracked Concrete Wall by Dimitrios Savva and Rico Cilliers (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/cracked_concrete_wall/1k/textures/cracked_concrete_wall_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/cracked_concrete_wall/cracked_concrete_wall_nor_gl_1k.jpg",
+          "sha256": "d247bdc21f3d37eb514d058aaa3c2193a6955d12191d1190cedf5285985f8604",
+          "credit": "Cracked Concrete Wall by Dimitrios Savva and Rico Cilliers (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/cracked_concrete_wall/1k/textures/cracked_concrete_wall_rough_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/cracked_concrete_wall/cracked_concrete_wall_rough_1k.jpg",
+          "sha256": "0f18937de6a05b34797d2ddaac5a3996e922696431161d312b7304ac1b110312",
+          "credit": "Cracked Concrete Wall by Dimitrios Savva and Rico Cilliers (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/overcast_soil_puresky/1k/overcast_soil_puresky_1k.hdr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/overcast_soil_puresky_1k.hdr",
+          "sha256": "2dbbbbb1323a8e8989db2e8306bd13099b215539e5adba41b85738a250a7904e",
+          "credit": "Overcast Soil (Pure Sky) by Jarod Guest and Sergej Majboroda (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/red_brick_03/1k/red_brick_03.bin",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/gltf/8k/red_brick_03/red_brick_03.bin",
+          "sha256": "a109f34832e5a9e02b399a4937a278685eb34e67a5ef70fc80d25ac42424e7bd",
+          "credit": "Red Brick 03 by Rob Tuytel (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/red_brick_03/1k/red_brick_03_1k.gltf",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/gltf/1k/red_brick_03/red_brick_03_1k.gltf",
+          "sha256": "0ce091ef43340a14d8e6bdd7050b2b38d64fef42191ac2fa0a03da6001793ff8",
+          "credit": "Red Brick 03 by Rob Tuytel (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/red_brick_03/1k/textures/red_brick_03_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/red_brick_03/red_brick_03_diff_1k.jpg",
+          "sha256": "9c58254c099b2d211478f50a427fcdde622af24249ff2e94da41fb836f8c857f",
+          "credit": "Red Brick 03 by Rob Tuytel (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/red_brick_03/1k/textures/red_brick_03_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/red_brick_03/red_brick_03_nor_gl_1k.jpg",
+          "sha256": "9bfd45e24720d851017c1e1678b70219c72239b2ac6b25e11d57d458bdab8503",
+          "credit": "Red Brick 03 by Rob Tuytel (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/red_brick_03/1k/textures/red_brick_03_rough_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/red_brick_03/red_brick_03_rough_1k.jpg",
+          "sha256": "cd865623c1422926848024e877103e9dfe857b2ca8221fce49264b74c9ff48b1",
+          "credit": "Red Brick 03 by Rob Tuytel (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/rocks_ground_02/1k/rocks_ground_02.bin",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/gltf/8k/rocks_ground_02/rocks_ground_02.bin",
+          "sha256": "f8c0fff5d0f147ddc58d7518c8af6decaa8c791d3c66ee9bdcdd0921f2d129f0",
+          "credit": "Rocks Ground 02 by Rob Tuytel (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/rocks_ground_02/1k/rocks_ground_02_1k.gltf",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/gltf/1k/rocks_ground_02/rocks_ground_02_1k.gltf",
+          "sha256": "38d422494095515e27ac3a87c904e41746c898ed4f798d19dca759124f87b2b7",
+          "credit": "Rocks Ground 02 by Rob Tuytel (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/rocks_ground_02/1k/textures/rocks_ground_02_col_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rocks_ground_02/rocks_ground_02_col_1k.jpg",
+          "sha256": "729e26281b28b9c05a53e755658da184ccd673ac291e6ec0532229743c06bf66",
+          "credit": "Rocks Ground 02 by Rob Tuytel (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/rocks_ground_02/1k/textures/rocks_ground_02_nor_gl_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rocks_ground_02/rocks_ground_02_nor_gl_1k.jpg",
+          "sha256": "28f6f35894cb60da7ecd639506c385e3c9e868f7e3ce24a6ceae1d08198b9e69",
+          "credit": "Rocks Ground 02 by Rob Tuytel (Poly Haven), CC0 1.0"
+        },
+        {
+          "path": "shared/assets/polyhaven/rocks_ground_02/1k/textures/rocks_ground_02_rough_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rocks_ground_02/rocks_ground_02_rough_1k.jpg",
+          "sha256": "8ecc647ca1a5407512b2d3feffd140b99a918cc608c70f3b968c8a680b1fa093",
+          "credit": "Rocks Ground 02 by Rob Tuytel (Poly Haven), CC0 1.0"
+        }
+      ],
+      "env": {
+        "EXOLAB_DATA": "{data}/ForgeGameData/exolab",
+        "EXOLAB_REPORT_DIR": "{data}/ExoLabReports"
+      }
+    },
+    "janhollow": {
+      "include": true,
+      "needs": "Jan for its characters"
+    },
+    "pixelforge": {
+      "include": true,
+      "needs": "Jan"
+    },
+    "printforge": {
+      "include": true,
+      "packages": [
+        "numpy==2.5.3"
+      ],
+      "env": {
+        "PRINTFORGE_CONFIG_DIR": "{config}/printforge",
+        "PRINTFORGE_CACHE_DIR": "{cache}/printforge"
+      }
+    },
+    "dossier": {
+      "include": true,
+      "packages": [
+        "beautifulsoup4==4.15.0",
+        "feedparser==6.0.14"
+      ],
+      "needs": "Jan",
+      "env": {
+        "DOSSIER_FIXED_LOCATION": "1",
+        "DOSSIER_LOCAL_ROOT": "{data}/DossierData",
+        "DOSSIER_USB_ROOT": "{data}/DossierData",
+        "DOSSIER_LOCATION_FILE": "{config}/dossier/location.json",
+        "DOSSIER_LAPTOP_COPY": "{state}/dossier-manifest.json",
+        "DOSSIER_CONTACT_FILE": "{config}/dossier/contact.txt"
+      }
+    },
+    "foresight": {
+      "include": true,
+      "packages": [
+        "beautifulsoup4==4.15.0"
+      ],
+      "needs": "Jan",
+      "env": {
+        "FORESIGHT_LOCAL_ROOT": "{data}/ForesightData",
+        "FORESIGHT_USB_ROOT": "{data}/ForesightData",
+        "DOSSIER_LOCAL_ROOT": "{data}/DossierData",
+        "DOSSIER_USB_ROOT": "{data}/DossierData",
+        "DOSSIER_LOCATION_FILE": "{config}/dossier/location.json",
+        "DOSSIER_API": "http://127.0.0.1:{port:dossier}"
+      }
+    },
+    "mint": {
+      "include": true,
+      "env": {
+        "MINT_DATA_DIR": "{data}/MintData"
+      }
+    },
+    "terminal": {
+      "include": true,
+      "windows": "cut: needs a Unix pseudo-terminal (pty), which Windows does not have"
+    },
+    "convert": {
+      "include": true,
+      "windows": "cut: documents fetch a Linux build of pandoc (Linux only in this test build)",
+      "macos": "cut: documents fetch a Linux build of pandoc (Linux only in this test build)",
+      "packages": [
+        "pillow==13.0.0"
+      ],
+      "env": {
+        "CONVERT_DATA_DIR": "{data}/ConvertData"
+      }
+    },
+    "loops": {
+      "include": true,
+      "windows": "cut: deleting a pattern uses gio trash (Linux only in this test build)",
+      "macos": "cut: deleting a pattern uses gio trash (Linux only in this test build)",
+      "env": {
+        "LOOPS_DATA_DIR": "{data}/LoopsData",
+        "LOOPS_OUT_DIR": "{data}/Loops"
+      }
+    },
+    "typeset": {
+      "include": true,
+      "windows": "cut: it fetches a Linux build of Typst, and Move to trash uses gio (Linux only in this test build)",
+      "macos": "cut: it fetches a Linux build of Typst, and Move to trash uses gio (Linux only in this test build)",
+      "env": {
+        "TYPESET_DATA_DIR": "{data}/TypesetData",
+        "TYPESET_DOCS_DIR": "{data}/Typeset"
+      }
+    },
+    "files": {
+      "include": true,
+      "windows": "cut: trash, restore and open use gio and xdg-open from the Linux desktop (Linux only in this test build)",
+      "macos": "cut: trash, restore and open use gio and xdg-open from the Linux desktop (Linux only in this test build)",
+      "env": {
+        "FILES_THUMBS_DIR": "{cache}/files/thumbs"
+      }
+    }
+  },
+  "sections_about": "Home screen headings whose words name apps a release leaves out: the launcher shows these words instead (only label and blurb).",
+  "sections": {
+    "create": {
+      "blurb": "Draw, animate and check 3D prints"
+    },
+    "watch": {
+      "blurb": "Manga and PDFs"
+    },
+    "research": {
+      "blurb": "Facts, plans and money"
+    },
+    "system": {
+      "blurb": "How Forge looks and runs"
+    }
+  },
+  "group_words_about": "Home screen groups (groups/<id>.json) whose tagline names apps a release leaves out: the launcher shows these words instead (only label and tagline). A group that ships some of its members has an entry here, even when its own words still fit.",
+  "group_words": {
+    "create-art": {
+      "tagline": "Sprites and pixel animation"
+    },
+    "make-music": {
+      "tagline": "Beats and loops on a step grid"
+    },
+    "make-3d": {
+      "tagline": "Look over 3D-print files before you slice them"
+    },
+    "office-place": {
+      "tagline": "Documents, CVs and letters, and converting files"
+    },
+    "money": {
+      "tagline": "Where money could go, tested with fake money"
+    },
+    "research-place": {
+      "tagline": "Sourced portfolios, signals and plans"
+    },
+    "play": {
+      "tagline": "Every game, on one shelf"
+    },
+    "files-place": {
+      "tagline": "Browse, copy, move and preview your files"
+    },
+    "terminal-code": {
+      "tagline": "Your shell, in tabs"
+    },
+    "settings-place": {
+      "tagline": "How Forge looks and works"
+    }
+  },
+  "features_about": "Each hub feature per system: native, replaced, fallback or cut, with why after a colon. A feature that is neither native nor replaced has its controls hidden (hide: CSS selectors), its home widgets taken out of the widget menu (widgets: widget kinds), its settings left out of Settings (settings, settings_groups), whole Settings pages left out (settings_pages: their data-section ids) with the Reset groups that touch them (reset_groups), the help under a shown setting reworded (words: setting key to text, for help that names something cut), a Reset group's description reworded (reset_words: group id to text) and theme values set (theme). readme: false keeps it out of a bundle's README (it concerns something the release does not ship). tester: what a bundle's README says about it, in plain words (one text, or one per system); a feature with none is not in a bundle's README, whose list is for testers (the developer reasons stay here and in the source README).",
+  "features": {
+    "window": {
+      "what": "Forge's own window",
+      "tester": {
+        "windows": "Forge opens in Microsoft Edge as an app window (no tabs); without Edge, in a browser tab.",
+        "linux": "Forge opens in its own window when the system has GTK WebKit; otherwise in a Chrome-family browser's app window or a browser tab.",
+        "macos": "Forge opens in a Chrome-family browser's app window, or else a browser tab."
+      },
+      "linux": "replaced: a GTK WebKit window through the system Python when it has one, else a Chrome-family browser in app mode, else a browser tab",
+      "windows": "replaced: Microsoft Edge in app mode (a window without tabs), else WebView2 through pywebview, else a browser tab",
+      "macos": "replaced: a WebKit window through pywebview, else Chrome or Edge in app mode, else a browser tab"
+    },
+    "bridge": {
+      "what": "How the home screen talks to the launcher",
+      "linux": "replaced: HTTP requests and an event stream instead of WebKit's message channel",
+      "windows": "replaced: HTTP requests and an event stream instead of WebKit's message channel",
+      "macos": "replaced: HTTP requests and an event stream instead of WebKit's message channel"
+    },
+    "apps": {
+      "what": "Starting apps when first opened, stopping them all on close",
+      "linux": "native",
+      "windows": "native",
+      "macos": "native"
+    },
+    "fullscreen": {
+      "what": "Full screen (F11 and the bar's button)",
+      "tester": "Full screen (F11 or the bar's button) is the window's own full screen.",
+      "linux": "fallback: the window's own full screen; Start full screen works in a window or app window",
+      "windows": "fallback: the window's own full screen; Start full screen works in an app window",
+      "macos": "fallback: the window's own full screen; Start full screen works in a window or app window"
+    },
+    "popout": {
+      "what": "Pop an app out into its own window",
+      "tester": "Pop out opens the app in a second window of the same kind.",
+      "linux": "fallback: a second window of the same kind",
+      "windows": "fallback: a second window of the same kind",
+      "macos": "fallback: a second window of the same kind"
+    },
+    "app_size": {
+      "what": "App size slider (whole-page zoom)",
+      "tester": "App size is the window's own zoom: Ctrl + and Ctrl -.",
+      "linux": "fallback: the window's own zoom, Ctrl + and Ctrl -",
+      "windows": "fallback: the window's own zoom, Ctrl + and Ctrl -",
+      "macos": "fallback: the window's own zoom, Cmd + and Cmd -",
+      "settings": [
+        "ui_scale"
+      ],
+      "hide": [
+        ".sz-row:has(#sz-ui_scale)"
+      ]
+    },
+    "music": {
+      "what": "Background music from a folder",
+      "linux": "native",
+      "windows": "native",
+      "macos": "native"
+    },
+    "music_download": {
+      "what": "Adding a YouTube link's audio to the music folder",
+      "tester": "Adding a song from a video link to the music folder.",
+      "linux": "cut: needs yt-dlp and the GTK launcher",
+      "windows": "cut: needs yt-dlp and the GTK launcher",
+      "macos": "cut: needs yt-dlp and the GTK launcher",
+      "hide": [
+        "#music-add",
+        "#music-url",
+        "#music-go"
+      ],
+      "words": {
+        "music_folder": "Its music and videos play, and those in folders one level down."
+      }
+    },
+    "system_audio": {
+      "what": "Visualiser driven by the system's sound output",
+      "tester": "A visualiser that follows other sound on the computer: it follows Forge's own music.",
+      "linux": "cut: PipeWire capture lives in the GTK launcher",
+      "windows": "cut: no portable capture",
+      "macos": "cut: no portable capture",
+      "settings": [
+        "visualiser_source"
+      ],
+      "theme": {
+        "visualiser_source": "music"
+      }
+    },
+    "keys": {
+      "what": "Forge's own keyboard shortcuts (caught before the page)",
+      "tester": {
+        "linux": "Forge's own keys (F1, then Forge keys) work, but not Quit or Restart: close the window to quit. If your browser keeps a key for itself, the bar, the dock and Home do the same things.",
+        "windows": "Forge's own keys (F1, then Forge keys) work, but not Quit or Restart: close the window to quit. If Edge or Windows keeps a key for itself (Alt+Space opens the window menu), the bar, the dock and Home do the same things.",
+        "macos": "Forge's own keyboard shortcuts while you are inside an app: use the bar, the dock or Home."
+      },
+      "linux": "fallback: the hub page and each app's page catch them and pass them to the hub (hub/portable.js, shared/forge_chrome.js); the keys cannot be changed, and Quit and Restart are not keys",
+      "windows": "fallback: the hub page and each app's page catch them and pass them to the hub (hub/portable.js, shared/forge_chrome.js); the keys cannot be changed, and Quit and Restart are not keys",
+      "macos": "cut: Option and a letter types a character on a Mac",
+      "page_keys": true,
+      "key_actions": [
+        "quit",
+        "restart"
+      ],
+      "settings": [
+        "hub_keys"
+      ],
+      "reset_groups": [
+        "keys"
+      ]
+    },
+    "desktop_players": {
+      "what": "Other players on the desktop in Now playing (MPRIS)",
+      "linux": "cut: D-Bus media control lives in the GTK launcher",
+      "windows": "cut: Linux D-Bus only",
+      "macos": "cut: Linux D-Bus only",
+      "tester": "Music playing in other programs on Home's Now playing card: it shows what plays in Forge."
+    },
+    "stats": {
+      "what": "CPU, memory, battery and drive numbers in the top bar and the home widgets",
+      "linux": "native",
+      "windows": "replaced: CPU, memory, battery and drives read from Windows itself",
+      "macos": "cut: no way to read them has been tried on a Mac yet",
+      "settings": [
+        "show_stats"
+      ],
+      "theme": {
+        "show_stats": false
+      },
+      "widgets": [
+        "system",
+        "disk",
+        "battery",
+        "activity"
+      ]
+    },
+    "net_and_jan": {
+      "what": "The Network and Jan home widgets",
+      "tester": "The Network and Jan home widgets.",
+      "linux": "native",
+      "windows": "cut: network speed and Jan's state are read from Linux's /proc",
+      "macos": "cut: network speed and Jan's state are read from Linux's /proc",
+      "widgets": [
+        "network",
+        "jan"
+      ],
+      "words": {
+        "widgets": "Cards above the app tiles (clock, weather, music, calendar, system, disk, alarms, notes, visualiser, relax) on pages you can swipe between. The Edit button on the home screen moves, resizes, adds and removes them, and each card's ⚙ changes what it shows and its colour."
+      }
+    },
+    "snapshots": {
+      "what": "Live pictures of open apps in the overview",
+      "tester": "Live pictures of open apps in the overview: it shows their icons.",
+      "linux": "cut: the overview shows each app's icon",
+      "windows": "cut: the overview shows each app's icon",
+      "macos": "cut: the overview shows each app's icon"
+    },
+    "battery": {
+      "what": "Lighter effects on battery",
+      "linux": "cut: effects use the plugged-in values",
+      "windows": "cut: effects use the plugged-in values",
+      "macos": "cut: effects use the plugged-in values",
+      "settings": [
+        "battery_fps",
+        "battery_particles",
+        "battery_particle_fps",
+        "battery_visualiser",
+        "battery_saver",
+        "battery_video_fps",
+        "battery_video_height",
+        "battery_smooth_scroll",
+        "smooth_scroll",
+        "gpu_ease",
+        "gpu_ease_note"
+      ],
+      "reset_words": {
+        "power": "Every Speed and detail setting: frame rate caps, resting when nobody is at the computer, pausing when Forge is not in front and lighter effects."
+      }
+    },
+    "login_start": {
+      "what": "Start Forge at login",
+      "tester": "Starting Forge at login.",
+      "linux": "cut: not set up for the release launcher yet",
+      "windows": "cut: not set up for the release launcher yet",
+      "macos": "cut: not set up for the release launcher yet",
+      "settings": [
+        "start_at_login"
+      ]
+    },
+    "pad": {
+      "what": "PS5 controller as mouse and keys",
+      "linux": "cut: reads the pad through Linux input devices",
+      "windows": "cut: Linux input devices only",
+      "macos": "cut: Linux input devices only"
+    },
+    "web_views": {
+      "what": "Real web pages inside Forge (the Browser app)",
+      "readme": false,
+      "linux": "cut: needs forge.py's native GTK views",
+      "windows": "cut: Linux GTK only",
+      "macos": "cut: Linux GTK only",
+      "settings": [
+        "video_fps",
+        "battery_video_fps",
+        "video_height",
+        "battery_video_height"
+      ],
+      "words": {
+        "max_fps": "Particles, the visualiser and games draw at most this many frames a second. Lower saves power; 60 means no cap."
+      }
+    },
+    "claude_settings": {
+      "what": "Settings for the Claude app, which is not in the release",
+      "readme": false,
+      "linux": "cut",
+      "windows": "cut",
+      "macos": "cut",
+      "settings": [
+        "claude_resume",
+        "claude_archive_hours"
+      ]
+    },
+    "wall_3d": {
+      "what": "2.5D wallpaper (the picture split into depth layers by local AI models)",
+      "linux": "cut: needs onnxruntime and two AI models that are not in the release",
+      "windows": "cut: needs onnxruntime and two AI models that are not in the release",
+      "macos": "cut: needs onnxruntime and two AI models that are not in the release",
+      "settings": [
+        "wall_3d",
+        "wall_3d_mode",
+        "wall_3d_depth",
+        "wall_3d_drift",
+        "wall_3d_beat"
+      ],
+      "theme": {
+        "wall_3d": false
+      },
+      "reset_words": {
+        "visual": "Glass and blur, shadows, animations, particles, the visualiser and background mode's beat effects."
+      }
+    },
+    "wallpaper_tools": {
+      "what": "Wallpaper blur, small previews and colours taken from the wallpaper",
+      "tester": {
+        "windows": "Wallpaper blur, small previews and colours taken from the wallpaper need ImageMagick (magick on the PATH); without it the wallpaper shows sharp.",
+        "linux": "Wallpaper blur, small previews and colours taken from the wallpaper need ImageMagick; without it the wallpaper shows sharp.",
+        "macos": "Wallpaper blur, small previews and colours taken from the wallpaper need ImageMagick (brew install imagemagick); without it the wallpaper shows sharp."
+      },
+      "linux": "fallback: made with ImageMagick when it is installed; without it the wallpaper shows sharp, previews are the full pictures and the theme keeps its own colours",
+      "windows": "fallback: made with ImageMagick when it is installed (magick on the PATH); without it the wallpaper shows sharp, previews are the full pictures and the theme keeps its own colours",
+      "macos": "fallback: made with ImageMagick when it is installed (brew install imagemagick); without it the wallpaper shows sharp, previews are the full pictures and the theme keeps its own colours"
+    },
+    "desktop_mode": {
+      "what": "Hiding Forge on close and resting while hidden, and particles and widgets on the desktop itself",
+      "linux": "cut: needs the GTK launcher and a GNOME or Hyprland extension",
+      "windows": "cut: Linux desktop only",
+      "macos": "cut: Linux desktop only",
+      "settings_groups": [
+        "On the desktop"
+      ],
+      "settings": [
+        "close_action",
+        "pause_when_hidden",
+        "desktop_particles"
+      ],
+      "reset_words": {
+        "screens": "The top bar and dock, the home screen, widgets and full screen."
+      },
+      "words": {
+        "away_minutes": "After this long with no keyboard or mouse, Forge draws at 15 frames a second with no visualiser and half the particles, and after four times as long the moving effects stop. Touching anything brings it all back: at once on the home screen, within a few seconds inside an app. Nothing changes while anything can be heard playing. 0 turns it off.",
+        "widget_hover_lift": "A widget rises a little with a deeper shadow while the pointer is over it. Off keeps every widget still."
+      }
+    },
+    "desktop_theme_files": {
+      "what": "Colour files for Hyprland and the terminal that follow the theme",
+      "readme": false,
+      "linux": "cut: written for the laptop's own Hyprland, kitty and foot configs",
+      "windows": "cut: Linux desktop only",
+      "macos": "cut: Linux desktop only",
+      "settings": [
+        "theme_desktop"
+      ]
+    },
+    "laptop_system": {
+      "what": "Settings for the computer itself (sound, Wi-Fi, Bluetooth, display, battery, notifications, the clock, closing idle apps) and Pick for my machine",
+      "tester": "Settings for the computer itself (Wi-Fi, Bluetooth, sound, display) and closing apps that sit idle.",
+      "linux": "cut: they change the computer's own settings and were made for one laptop, not yet for any computer",
+      "windows": "cut: they drive Linux system tools",
+      "macos": "cut: they drive Linux system tools",
+      "settings_pages": [
+        "system",
+        "machine"
+      ],
+      "reset_groups": [
+        "network",
+        "autoclose",
+        "wifi",
+        "bluetooth",
+        "display",
+        "notifications"
+      ]
+    },
+    "app_options": {
+      "what": "Each app's own options in Settings",
+      "readme": false,
+      "linux": "cut: no app in this release has options yet",
+      "windows": "cut: no app in this release has options yet",
+      "macos": "cut: no app in this release has options yet",
+      "settings_pages": [
+        "app-options"
+      ]
+    },
+    "dev_apps": {
+      "what": "Developer apps and the switch that shows them",
+      "readme": false,
+      "linux": "cut: no developer app ships",
+      "windows": "cut: no developer app ships",
+      "macos": "cut: no developer app ships",
+      "settings": [
+        "show_dev_apps"
+      ],
+      "words": {
+        "forge_layout": "New folds related apps into places with tabs, opens apps in Simple and reads at 15 px. Classic is Forge from before that: every app its own tile, each app's own text size and the mode you left it in. Your own choices below are kept for when you switch back."
+      }
+    }
+  },
+  "mac_bundle_id": "local.forge.hub",
+  "licence": "",
+  "licence_about": "The licence's name (an SPDX id such as MIT), with a LICENSE file in release/source/ mapped in source.top. Empty: none chosen yet, and the README says all rights are reserved.",
+  "source": {
+    "about": "The source tree (build.py --source-tree): what ships, plus the paths in add (not filtered by leave_out), with the files in top copied to the tree's own paths (README.md filled in by build.py).",
+    "add": [
+      "release/build.py",
+      "release/README.md",
+      "release/README.txt",
+      "release/launch/",
+      "release/source/",
+      "release/licence_check.py",
+      "release/licence_policy.json",
+      "tests/test_release.py",
+      "tests/test_release_install.py",
+      "scripts/",
+      "docs/",
+      "LICENSE",
+      "tests/test_checkpoint.py",
+      "pyrightconfig.json",
+      ".github/workflows/check-checkpoint.yml"
+    ],
+    "top": {
+      "release/source/README.md": "README.md",
+      "release/source/gitignore": ".gitignore",
+      "release/source/build.yml": ".github/workflows/build.yml"
+    }
+  }
+}

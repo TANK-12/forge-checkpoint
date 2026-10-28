@@ -1,0 +1,47 @@
+{
+  "label": "Sky",
+  "order": 68,
+  "tags": [
+    "light",
+    "calm",
+    "live"
+  ],
+  "mode": "light",
+  "about": "Clouds drifting across a bright sky, airy white glass, centred and calm, and birds passing now and then.",
+  "look": "classic",
+  "layout": "focus",
+  "colours": {
+    "accent": "#2b8bd6",
+    "bg": "#eef6fd",
+    "panel": "#ffffff",
+    "panel_2": "#f0f6fc",
+    "border": "#d0e2f2",
+    "text": "#14273a",
+    "muted": "#557089"
+  },
+  "font": "inter",
+  "wallpaper": [
+    "forge:clouds-light.jpg",
+    "forge:clouds.jpg",
+    ""
+  ],
+  "live": "clouds",
+  "companion": "birds",
+  "settings": {
+    "particles": "off",
+    "dim": 0.0,
+    "wall_tint": false,
+    "glass_style": "frosted",
+    "glass": 0.75,
+    "border": "subtle",
+    "radius": 20,
+    "motion": "float",
+    "widget_look": "glass"
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {
+      "live": "off"
+    }
+  }
+}

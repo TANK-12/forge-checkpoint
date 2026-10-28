@@ -1,0 +1,17 @@
+{
+  "id": "harmonic_s",
+  "name": "Harmonic drive joint, size 14",
+  "kind": "rotary",
+  "mass_kg": 0.7,
+  "torque_cont_nm": 18,
+  "torque_peak_nm": 35,
+  "speed_max_rad_s": 4.5,
+  "efficiency": 0.7,
+  "stiffness_nm_rad": 4500,
+  "backdrivable": false,
+  "power_cont_w": 100,
+  "note": "Smaller harmonic joint for elbows and wrists.",
+  "source": "Typical of size-14 harmonic joint modules; approximate.",
+  "gear_ratio": 100,
+  "rotor_inertia_kgm2": 8e-06
+}

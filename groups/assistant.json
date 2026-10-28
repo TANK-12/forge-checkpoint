@@ -1,0 +1,21 @@
+{
+  "id": "assistant",
+  "label": "Assistant",
+  "tagline": "Acchan to talk to, and the voice for all of Forge",
+  "icon": "✨",
+  "accent": "#f5a3c7",
+  "order": 13,
+  "section": "assistants",
+  "tabs": true,
+  "merged": true,
+  "members": [
+    "acchan",
+    "voice"
+  ],
+  "tab_labels": {
+    "acchan": "Acchan",
+    "voice": "Voice"
+  },
+  "help": "Acchan (Jan, local) to talk to, plus the speech in and out every app uses. Claude and Enjoy have tiles of their own.",
+  "note": "Relay task 383. Undo this fold with \"off\": true; the apps keep their own folders and data. Relay task 397: Claude left the fold for its own tile again (the owner: \"give me back the forge claude app\")."
+}

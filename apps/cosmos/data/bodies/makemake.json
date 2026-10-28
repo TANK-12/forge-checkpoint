@@ -1,0 +1,25 @@
+{
+  "id": "makemake",
+  "name": "Makemake",
+  "kind": "dwarf",
+  "parent": "sun",
+  "order": 93,
+  "radius_km": 715,
+  "gm_km3_s2": 207.0,
+  "color": "#c99d7d",
+  "summary": "A reddish Kuiper Belt dwarf planet, discovered just after Easter 2005 and named for the creator god of the Rapa Nui people.",
+  "elements": {
+    "model": "kepler",
+    "epoch_jd": 2461200.5,
+    "a_au": 45.57093317300052,
+    "e": 0.1588889953992523,
+    "i_deg": 29.02785603743067,
+    "node_deg": 79.2948338209406,
+    "peri_deg": 297.0922733397207,
+    "M_deg": 169.9379962048232,
+    "n_deg_day": 0.003203850120050116,
+    "frame": "ecliptic",
+    "source": "JPL Small-Body Database, osculating elements at JD 2461200.5"
+  },
+  "notes": "Mass is an estimate from its moon's orbit and is uncertain."
+}

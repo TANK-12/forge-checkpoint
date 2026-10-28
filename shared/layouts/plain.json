@@ -1,0 +1,8 @@
+{
+  "label": "Plain list",
+  "about": "Business-like: a small clock, no greeting or widgets, and the apps as a tidy list under each section, names and what they do side by side.",
+  "order": 40,
+  "home": {"hero": "small", "sections": "all", "tiles": "list", "recent": true, "chips": true, "align": "left"},
+  "settings": {"widgets": false, "greeting": false},
+  "lighter": {"balanced": {}, "light": {}}
+}

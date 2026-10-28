@@ -1,0 +1,43 @@
+{
+  "label": "Spooky",
+  "order": 92,
+  "tags": [
+    "seasonal",
+    "fun",
+    "live",
+    "dark"
+  ],
+  "about": "Halloween night: a big moon, fog and bats, pumpkin orange on deep purple, and a friendly ghost floating about.",
+  "look": "classic",
+  "layout": "forge",
+  "colours": {
+    "accent": "#ff8a1f",
+    "bg": "#0f0a14",
+    "panel": "#1a1220",
+    "panel_2": "#22172a",
+    "border": "#3a2648",
+    "text": "#f3e6ff",
+    "muted": "#a891b8"
+  },
+  "font": "rubik",
+  "wallpaper": [
+    "forge:bats.jpg",
+    ""
+  ],
+  "live": "bats",
+  "companion": "ghost",
+  "settings": {
+    "particles": "off",
+    "dim": 0.05,
+    "glass_style": "frosted",
+    "border": "gradient",
+    "radius": 16,
+    "motion": "spring"
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {
+      "live": "off"
+    }
+  }
+}

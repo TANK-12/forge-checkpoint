@@ -1,0 +1,5 @@
+{"id": "side_raise", "name": "Sideways raise", "about": "Raise the straight arm out to the side and up over the head (abduction): the shoulder joint centre moves the most here.", "keys": [
+ {"t": 0.0, "plane": 0, "elev": 5, "axial": 0, "elbow": 0},
+ {"t": 1.4, "plane": 0, "elev": 165, "axial": -40, "elbow": 0},
+ {"t": 1.8, "plane": 0, "elev": 165, "axial": -40, "elbow": 0},
+ {"t": 3.2, "plane": 0, "elev": 5, "axial": 0, "elbow": 0}]}

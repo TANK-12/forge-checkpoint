@@ -1,0 +1,241 @@
+{
+  "id": "exo_full",
+  "name": "Exo suit, full",
+  "kind": "exo_suit",
+  "status": "ready",
+  "about": "A close-fitting powered suit: fitted carbon and nylon shells over a black undersuit, a back frame with the battery, a girdle-tracking powered shoulder and a powered elbow on each arm, and powered hip and knee struts.",
+  "character": "hairsample_female",
+  "suit_asset": "exo_full",
+  "shoulder": {
+    "mechanism": "girdle_tracking",
+    "assist_share": 0.6,
+    "mechanism_overrides": {}
+  },
+  "elbow": {
+    "actuator": "harmonic_s",
+    "limits_deg": [
+      0,
+      145
+    ]
+  },
+  "hand_grip": true,
+  "hand_grip_note": "Load-bearing gauntlets: a palm bar locks onto what the hand holds, so the load goes into the forearm strut and not through the forearm strap.",
+  "links": [
+    {
+      "id": "back_frame",
+      "name": "Back frame",
+      "role": "back_frame",
+      "material": "al_7075_t6",
+      "section": {
+        "shape": "rect",
+        "w_mm": 40,
+        "h_mm": 20,
+        "wall_mm": 2.0
+      },
+      "length_m": 0.45
+    },
+    {
+      "id": "girdle_link",
+      "name": "Girdle link",
+      "role": "girdle",
+      "material": "al_7075_t6",
+      "section": {
+        "shape": "tube",
+        "d_mm": 25,
+        "wall_mm": 2.0
+      },
+      "length_m": 0.16
+    },
+    {
+      "id": "upper_arm_link",
+      "name": "Upper-arm strut",
+      "role": "upper_arm",
+      "material": "cfrp_qi",
+      "section": {
+        "shape": "tube",
+        "d_mm": 26,
+        "wall_mm": 2.0
+      },
+      "length_m": null,
+      "side_offset_mm": 22
+    },
+    {
+      "id": "forearm_link",
+      "name": "Forearm strut",
+      "role": "forearm",
+      "material": "cfrp_qi",
+      "section": {
+        "shape": "tube",
+        "d_mm": 20,
+        "wall_mm": 1.5
+      },
+      "length_m": null,
+      "side_offset_mm": 20
+    }
+  ],
+  "cuffs": [
+    {
+      "id": "upper_arm_cuff",
+      "name": "Upper-arm cuff",
+      "segment": "upper_arm",
+      "at": 0.55,
+      "width_mm": 110,
+      "gap_mm": 6,
+      "material": "polycarbonate",
+      "liner": "tpu_95a",
+      "thickness_mm": 2.5,
+      "note": "the fitted upper-arm shell is the cuff: it bears on the arm over its whole width"
+    },
+    {
+      "id": "forearm_cuff",
+      "name": "Forearm cuff",
+      "segment": "forearm",
+      "at": 0.62,
+      "width_mm": 130,
+      "gap_mm": 5,
+      "material": "polycarbonate",
+      "liner": "tpu_95a",
+      "thickness_mm": 2.5,
+      "note": "the fitted gauntlet is the cuff"
+    }
+  ],
+  "shells": [
+    {
+      "id": "chest",
+      "name": "Chest plate",
+      "bone": "upperChest",
+      "material": "cfrp_qi",
+      "thickness_mm": 3.0,
+      "fit_gap_mm": 8,
+      "area_m2": 0.075
+    },
+    {
+      "id": "back",
+      "name": "Back plate and spine",
+      "bone": "upperChest",
+      "material": "cfrp_qi",
+      "thickness_mm": 3.0,
+      "fit_gap_mm": 10,
+      "area_m2": 0.085
+    },
+    {
+      "id": "abdomen",
+      "name": "Abdomen bands",
+      "bone": "spine",
+      "material": "pa12",
+      "thickness_mm": 3.0,
+      "fit_gap_mm": 6,
+      "area_m2": 0.05
+    },
+    {
+      "id": "pelvis",
+      "name": "Hip belt",
+      "bone": "hips",
+      "material": "cfrp_qi",
+      "thickness_mm": 3.0,
+      "fit_gap_mm": 8,
+      "area_m2": 0.06
+    },
+    {
+      "id": "pauldron",
+      "name": "Pauldron",
+      "bone": "UpperArm",
+      "mirror": true,
+      "material": "cfrp_qi",
+      "thickness_mm": 2.5,
+      "fit_gap_mm": 8,
+      "area_m2": 0.022
+    },
+    {
+      "id": "upper_arm_shell",
+      "name": "Upper-arm shell",
+      "bone": "UpperArm",
+      "mirror": true,
+      "material": "pa12",
+      "thickness_mm": 2.5,
+      "fit_gap_mm": 6,
+      "area_m2": 0.03
+    },
+    {
+      "id": "gauntlet",
+      "name": "Forearm gauntlet",
+      "bone": "LowerArm",
+      "mirror": true,
+      "material": "pa12",
+      "thickness_mm": 2.5,
+      "fit_gap_mm": 5,
+      "area_m2": 0.03
+    },
+    {
+      "id": "hand_guard",
+      "name": "Back-of-hand guard",
+      "bone": "Hand",
+      "mirror": true,
+      "material": "pa12",
+      "thickness_mm": 2.0,
+      "fit_gap_mm": 4,
+      "area_m2": 0.006
+    },
+    {
+      "id": "thigh_shell",
+      "name": "Thigh shell",
+      "bone": "UpperLeg",
+      "mirror": true,
+      "material": "cfrp_qi",
+      "thickness_mm": 2.5,
+      "fit_gap_mm": 7,
+      "area_m2": 0.06
+    },
+    {
+      "id": "shin_shell",
+      "name": "Shin guard",
+      "bone": "LowerLeg",
+      "mirror": true,
+      "material": "cfrp_qi",
+      "thickness_mm": 2.5,
+      "fit_gap_mm": 6,
+      "area_m2": 0.045
+    },
+    {
+      "id": "boot",
+      "name": "Boot shell",
+      "bone": "Foot",
+      "mirror": true,
+      "material": "pa12",
+      "thickness_mm": 3.0,
+      "fit_gap_mm": 6,
+      "area_m2": 0.04
+    },
+    {
+      "id": "helmet",
+      "name": "Helmet",
+      "bone": "head",
+      "material": "cfrp_qi",
+      "thickness_mm": 4.0,
+      "fit_gap_mm": 12,
+      "area_m2": 0.075
+    }
+  ],
+  "legs": {
+    "hip": {
+      "actuator": "qdd_planetary"
+    },
+    "knee": {
+      "actuator": "qdd_planetary"
+    },
+    "strut_material": "al_7075_t6",
+    "strut_section": {
+      "shape": "tube",
+      "d_mm": 24,
+      "wall_mm": 2.0
+    }
+  },
+  "battery": {
+    "power": "li_ion_21700",
+    "mass_kg": 2.0
+  },
+  "extras_mass_kg": {
+    "electronics and wiring": 0.8,
+    "straps, liners and undersuit": 1.2
+  }
+}

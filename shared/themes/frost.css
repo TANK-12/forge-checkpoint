@@ -1,0 +1,4 @@
+/* Frost (shared/themes/frost.json): icy glass on a winter morning. */
+html[data-forge-theme="frost"] { --glass-line: rgba(80, 130, 190, .18); }
+html[data-forge-theme="frost"] .hero .clock { font-weight: 200; }
+html[data-forge-theme="frost"] .tile:hover, html[data-forge-theme="frost"] .tile.focus { box-shadow: 0 12px 26px rgba(40, 80, 130, .14), 0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent); }

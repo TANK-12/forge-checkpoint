@@ -1,0 +1,25 @@
+{
+  "id": "create-art",
+  "label": "Create",
+  "tagline": "Pictures, sprites and manga movies",
+  "icon": "🎨",
+  "accent": "#ff8c69",
+  "order": 3,
+  "section": "create",
+  "tabs": true,
+  "members": [
+    "ai-studio",
+    "pixelforge",
+    "panelforge",
+    "excalidraw",
+    "drawio"
+  ],
+  "tab_labels": {
+    "ai-studio": "AI Studio",
+    "pixelforge": "PixelForge",
+    "panelforge": "PanelForge",
+    "excalidraw": "Excalidraw",
+    "drawio": "Diagrams"
+  },
+  "note": "Relay task 383. Undo this fold with \"off\": true; the apps keep their own folders and data."
+}

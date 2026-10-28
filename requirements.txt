@@ -1,0 +1,12 @@
+# What Forge 0.2.0 needs to run from source (python3 forge_portable.py).
+# Made by release/build.py from release/release.json; downloads bring their own.
+beautifulsoup4==4.15.0
+fastapi==0.141.1
+feedparser==6.0.14
+httpx==0.28.1
+numpy==2.5.3
+python-multipart==0.0.32
+uvicorn==0.54.0
+websockets==17.2
+pillow==13.0.0; sys_platform == "linux"
+pywebview==6.2.1; sys_platform == "win32" or sys_platform == "darwin"

@@ -1,0 +1,5 @@
+{"id": "reach_behind", "name": "Hand behind the back", "about": "Bring the hand round behind the back, as for a back pocket: arm behind the body with a lot of internal rotation.", "keys": [
+ {"t": 0.0, "plane": 0, "elev": 10, "axial": 0, "elbow": 10},
+ {"t": 1.2, "plane": -60, "elev": 40, "axial": 60, "elbow": 100},
+ {"t": 1.6, "plane": -60, "elev": 40, "axial": 60, "elbow": 100},
+ {"t": 2.8, "plane": 0, "elev": 10, "axial": 0, "elbow": 10}]}

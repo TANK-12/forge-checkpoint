@@ -1,0 +1,28 @@
+{
+  "id": "umbriel",
+  "name": "Umbriel",
+  "kind": "moon",
+  "parent": "uranus",
+  "order": 73,
+  "radius_km": 584.7,
+  "gm_km3_s2": 85.09,
+  "color": "#78756f",
+  "summary": "The darkest of Uranus's large moons, with a strange bright ring on its crater Wunda.",
+  "elements": {
+    "model": "kepler",
+    "epoch_jd": 2461332.5,
+    "a_km": 265986,
+    "e": 0.004,
+    "i_deg": 179.9,
+    "node_deg": 249.1521,
+    "peri_deg": 333.8353,
+    "M_deg": 255.8083,
+    "period_days": 4.144177,
+    "M_rate_deg_day": 86.8612041326,
+    "frame": "parent_equator",
+    "source": "JPL planetary satellite mean elements; mean anomaly and its rate refitted to JPL Horizons positions (2000-2045) on 2026-10-19 by tools/fit_moons.mjs",
+    "peri_period_yr": 64.126,
+    "node_period_yr": 129.745,
+    "i_note": "Measured from Uranus's IAU north pole. Uranus spins backwards, so its moons, about 0 degrees from their own orbit pole in JPL's table, sit near 180 here."
+  }
+}

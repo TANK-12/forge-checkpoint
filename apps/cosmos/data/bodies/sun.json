@@ -1,0 +1,11 @@
+{
+  "id": "sun",
+  "name": "Sun",
+  "kind": "star",
+  "parent": null,
+  "order": 0,
+  "radius_km": 695700,
+  "gm_km3_s2": 132712440018.0,
+  "color": "#ffd27a",
+  "summary": "A G2V main-sequence star holding 99.86% of the solar system's mass. Light from its surface takes about 8 minutes 20 seconds to reach Earth."
+}

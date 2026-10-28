@@ -1,0 +1,27 @@
+{
+  "id": "iapetus",
+  "name": "Iapetus",
+  "kind": "moon",
+  "parent": "saturn",
+  "order": 67,
+  "radius_km": 734.5,
+  "gm_km3_s2": 120.51,
+  "color": "#8e7b64",
+  "summary": "Two-toned: one hemisphere is as dark as coal and the other as bright as snow, with a mountain ridge around its equator.",
+  "elements": {
+    "model": "kepler",
+    "epoch_jd": 2461332.5,
+    "a_km": 3561700,
+    "e": 0.028,
+    "i_deg": 7.6,
+    "node_deg": 83.4182,
+    "peri_deg": 260.3012,
+    "M_deg": 244.0385,
+    "period_days": 79.331002,
+    "M_rate_deg_day": 4.5382425439,
+    "frame": "parent_equator",
+    "source": "JPL planetary satellite mean elements; mean anomaly and its rate refitted to JPL Horizons positions (2000-2045) on 2026-10-19 by tools/fit_moons.mjs",
+    "peri_period_yr": 1662.9,
+    "node_period_yr": 3130.302
+  }
+}

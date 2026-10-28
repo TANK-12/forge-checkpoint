@@ -1,0 +1,7 @@
+/* Mono (shared/themes/mono.json): black, white and grey; colour only on hover. */
+html[data-forge-theme="mono"] #wall, html[data-forge-theme="mono"] #wall-blur { background: var(--bg) !important; filter: none !important; }
+html[data-forge-theme="mono"] #wall-fg, html[data-forge-theme="mono"] #scrim { display: none; }
+html[data-forge-theme="mono"] .tile .icon { filter: grayscale(1); transition: filter 220ms, transform 320ms cubic-bezier(.3, 1.6, .5, 1); }
+html[data-forge-theme="mono"] .tile:hover .icon, html[data-forge-theme="mono"] .tile.focus .icon { filter: none; }
+html[data-forge-theme="mono"] .hero .clock { background-image: linear-gradient(115deg, #fff 35%, #9a9a9a 50%, #fff 65%); font-weight: 200; }
+html[data-forge-theme="mono"] #home .hero > div:first-child::before { display: none; }

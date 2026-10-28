@@ -1,0 +1,24 @@
+{
+  "id": "eris",
+  "name": "Eris",
+  "kind": "dwarf",
+  "parent": "sun",
+  "order": 94,
+  "radius_km": 1163,
+  "gm_km3_s2": 1108.0,
+  "color": "#ebe9e6",
+  "summary": "Slightly smaller than Pluto but more massive. Its discovery in 2005 is what led to Pluto being reclassified as a dwarf planet.",
+  "elements": {
+    "model": "kepler",
+    "epoch_jd": 2461200.5,
+    "a_au": 67.93394687853566,
+    "e": 0.4382385347971672,
+    "i_deg": 43.9258279471791,
+    "node_deg": 36.00477044417249,
+    "peri_deg": 150.7949235840312,
+    "M_deg": 211.774434275007,
+    "n_deg_day": 0.001760247770619088,
+    "frame": "ecliptic",
+    "source": "JPL Small-Body Database, osculating elements at JD 2461200.5"
+  }
+}

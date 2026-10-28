@@ -1,0 +1,67 @@
+{
+  "label": "Retro",
+  "order": 45,
+  "tags": [
+    "retro",
+    "fun",
+    "live",
+    "pixel"
+  ],
+  "about": "A pixel city at night on an old green screen: square corners, monospace type and a phosphor glow.",
+  "look": "classic",
+  "layout": "dense",
+  "colours": {
+    "accent": "#39ff88",
+    "bg": "#07090a",
+    "panel": "#0c120e",
+    "panel_2": "#111a14",
+    "border": "#1f3a2a",
+    "text": "#c8f7d4",
+    "muted": "#6fae84"
+  },
+  "font_stack": "\"JetBrains Mono\", \"DejaVu Sans Mono\", \"Liberation Mono\", monospace",
+  "wallpaper": [
+    "forge:pixel-city.jpg",
+    ""
+  ],
+  "live": "pixel-city",
+  "settings": {
+    "particles": "off",
+    "radius": 0,
+    "gaps": 8,
+    "border": "accent",
+    "shadows": false,
+    "glass_style": "flat",
+    "glass": 0.9,
+    "wall_3d": false,
+    "icon_style": "classic"
+  },
+  "desktop": {
+    "terminal": {
+      "palette": [
+        "#07090a",
+        "#ff5f56",
+        "#39ff88",
+        "#f9e45b",
+        "#4fb8ff",
+        "#d77bff",
+        "#4ff5d8",
+        "#c8f7d4",
+        "#355e44",
+        "#ff8c85",
+        "#7dffae",
+        "#fff08a",
+        "#86ceff",
+        "#e5a8ff",
+        "#8cfbe6",
+        "#ffffff"
+      ]
+    }
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {
+      "live": "off"
+    }
+  }
+}

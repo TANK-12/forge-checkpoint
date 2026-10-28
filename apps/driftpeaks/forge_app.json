@@ -1,0 +1,53 @@
+{
+  "name": "driftpeaks",
+  "label": "Drift Peaks",
+  "tagline": "An endless low-poly snowboard ride",
+  "help": {
+    "about": "An endless snowboard ride down low-poly mountains. Ride for distance, chase the goals, or just cruise in Zen.",
+    "keys": [
+      [
+        "Space or tap",
+        "Jump"
+      ],
+      [
+        "Hold in the air",
+        "Backflip"
+      ]
+    ],
+    "features": [
+      "Ride",
+      "Goals",
+      "Zen",
+      "Today",
+      "Art"
+    ]
+  },
+  "port": 8457,
+  "module": "web_app:app",
+  "src_dir": ".",
+  "accent": "#9fd0ff",
+  "icon": "🏂",
+  "fullscreen": "auto",
+  "order": 16,
+  "section": "play",
+  "ready_timeout": 30,
+  "manifest": {
+    "summary": "Our own game in the spirit of Alto's Adventure: one button to jump and hold to backflip, down an endless mountain of flat-shaded low-poly ranges, with a day and night cycle, weather, and colours that follow the Forge accent.",
+    "features": [
+      {"name": "Ride", "description": "Tap to jump, hold to backflip; chained tricks build a combo and a speed boost. Grind bunting ropes, bounce off rocks, clear chasms, collect coins, catch runaway goats."},
+      {"name": "Goals", "description": "Twelve levels of three goals each (data/levels.json); a crash ends the run."},
+      {"name": "Zen", "description": "No score and no end: a fall puts you back on the snow."},
+      {"name": "Today", "description": "A daily mountain: the same slope all day and a new one tomorrow, with today's best distance, points and runs on the title screen (#daily). Ways to ride come from the static/js/modes.js registry."},
+      {"name": "Best flag", "description": "A flag stands where your best run ended and riding past it says so; switch in Settings."},
+      {"name": "World", "description": "Three parallax layers of low-poly mountains, sun, moon, stars, northern lights, and seven weathers (snow, blizzard, rain, fog, thunderstorm, sand gusts, clear)."},
+      {"name": "Art", "description": "Every shape is a JSON file in the shared Forge store (~/ForgeGameData/shapes/driftpeaks-*.json), editable in the game's Art screen."}
+    ],
+    "data_dir": "~/ForgeGameData/driftpeaks (save.json); ~/ForgeGameData/shapes/driftpeaks-*.json (art); ~/ForgeGameData/sounds/driftpeaks-*.json (sounds)",
+    "services": [],
+    "dependencies": {"required": ["fastapi", "uvicorn"], "optional": ["Forge shared kit (forge_content.py, forge_sound.js, forge_chrome.js)"]},
+    "standalone_launch": "cd ~/Forge/apps/driftpeaks && FORGE_SHARED_DIR=~/Forge/shared .venv/bin/python -m uvicorn web_app:app --host 127.0.0.1 --port 8457",
+    "api_base": "/api",
+    "known_gaps": ["Canvas 2D only; no touch-specific layout beyond tap-to-jump."],
+    "docs": ["README.md", "WIP.md"]
+  }
+}

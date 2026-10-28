@@ -1,0 +1,245 @@
+{
+ "about": "Goal levels. Each goal is {type, n, text}; type is a run statistic the game counts (distance, score, flips, jump_flips, combo, grind, coins, goats, rocks, chasms, night_distance, storm_distance). Adding a level is adding a row.",
+ "levels": [
+  {
+   "name": "Level 1",
+   "goals": [
+    {
+     "type": "distance",
+     "n": 500,
+     "text": "Travel 500 m in one run"
+    },
+    {
+     "type": "flips",
+     "n": 1,
+     "text": "Land a backflip"
+    },
+    {
+     "type": "coins",
+     "n": 20,
+     "text": "Collect 20 coins in one run"
+    }
+   ]
+  },
+  {
+   "name": "Level 2",
+   "goals": [
+    {
+     "type": "distance",
+     "n": 1000,
+     "text": "Travel 1,000 m in one run"
+    },
+    {
+     "type": "grind",
+     "n": 20,
+     "text": "Grind 20 m of rope in one run"
+    },
+    {
+     "type": "goats",
+     "n": 1,
+     "text": "Catch a runaway goat"
+    }
+   ]
+  },
+  {
+   "name": "Level 3",
+   "goals": [
+    {
+     "type": "score",
+     "n": 3000,
+     "text": "Score 3,000 in one run"
+    },
+    {
+     "type": "flips",
+     "n": 5,
+     "text": "Land 5 backflips in one run"
+    },
+    {
+     "type": "rocks",
+     "n": 1,
+     "text": "Bounce off a rock"
+    }
+   ]
+  },
+  {
+   "name": "Level 4",
+   "goals": [
+    {
+     "type": "chasms",
+     "n": 3,
+     "text": "Clear 3 chasms in one run"
+    },
+    {
+     "type": "combo",
+     "n": 3,
+     "text": "Reach a 3x combo"
+    },
+    {
+     "type": "coins",
+     "n": 60,
+     "text": "Collect 60 coins in one run"
+    }
+   ]
+  },
+  {
+   "name": "Level 5",
+   "goals": [
+    {
+     "type": "distance",
+     "n": 2000,
+     "text": "Travel 2,000 m in one run"
+    },
+    {
+     "type": "jump_flips",
+     "n": 2,
+     "text": "Land a double backflip"
+    },
+    {
+     "type": "goats",
+     "n": 3,
+     "text": "Catch 3 goats in one run"
+    }
+   ]
+  },
+  {
+   "name": "Level 6",
+   "goals": [
+    {
+     "type": "score",
+     "n": 10000,
+     "text": "Score 10,000 in one run"
+    },
+    {
+     "type": "grind",
+     "n": 80,
+     "text": "Grind 80 m of rope in one run"
+    },
+    {
+     "type": "rocks",
+     "n": 4,
+     "text": "Bounce off 4 rocks in one run"
+    }
+   ]
+  },
+  {
+   "name": "Level 7",
+   "goals": [
+    {
+     "type": "combo",
+     "n": 6,
+     "text": "Reach a 6x combo"
+    },
+    {
+     "type": "night_distance",
+     "n": 500,
+     "text": "Travel 500 m in the dark"
+    },
+    {
+     "type": "coins",
+     "n": 150,
+     "text": "Collect 150 coins in one run"
+    }
+   ]
+  },
+  {
+   "name": "Level 8",
+   "goals": [
+    {
+     "type": "distance",
+     "n": 3500,
+     "text": "Travel 3,500 m in one run"
+    },
+    {
+     "type": "flips",
+     "n": 20,
+     "text": "Land 20 backflips in one run"
+    },
+    {
+     "type": "storm_distance",
+     "n": 300,
+     "text": "Ride 300 m through a storm"
+    }
+   ]
+  },
+  {
+   "name": "Level 9",
+   "goals": [
+    {
+     "type": "jump_flips",
+     "n": 3,
+     "text": "Land a triple backflip"
+    },
+    {
+     "type": "goats",
+     "n": 6,
+     "text": "Catch 6 goats in one run"
+    },
+    {
+     "type": "chasms",
+     "n": 12,
+     "text": "Clear 12 chasms in one run"
+    }
+   ]
+  },
+  {
+   "name": "Level 10",
+   "goals": [
+    {
+     "type": "score",
+     "n": 30000,
+     "text": "Score 30,000 in one run"
+    },
+    {
+     "type": "combo",
+     "n": 10,
+     "text": "Reach a 10x combo"
+    },
+    {
+     "type": "grind",
+     "n": 200,
+     "text": "Grind 200 m of rope in one run"
+    }
+   ]
+  },
+  {
+   "name": "Level 11",
+   "goals": [
+    {
+     "type": "distance",
+     "n": 6000,
+     "text": "Travel 6,000 m in one run"
+    },
+    {
+     "type": "coins",
+     "n": 400,
+     "text": "Collect 400 coins in one run"
+    },
+    {
+     "type": "rocks",
+     "n": 12,
+     "text": "Bounce off 12 rocks in one run"
+    }
+   ]
+  },
+  {
+   "name": "Level 12",
+   "goals": [
+    {
+     "type": "score",
+     "n": 80000,
+     "text": "Score 80,000 in one run"
+    },
+    {
+     "type": "jump_flips",
+     "n": 4,
+     "text": "Land a quadruple backflip"
+    },
+    {
+     "type": "distance",
+     "n": 10000,
+     "text": "Travel 10,000 m in one run"
+    }
+   ]
+  }
+ ]
+}

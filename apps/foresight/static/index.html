@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Foresight</title>
+<style>html, body { background: #0f1115; color: #e6e6e6; }</style>
+<link rel="stylesheet" href="/shared/forge.css">
+<link rel="stylesheet" href="/app.css">
+<script src="/shared/forge_dialog.js"></script>
+</head>
+<body>
+<div class="shell">
+
+  <div class="topbar">
+    <div class="brand">Fore<span>sight</span></div>
+    <div class="views">
+      <button data-view="ask" class="on">Ask</button>
+      <button data-view="findings">Findings</button>
+      <button data-view="plans">Plans</button>
+      <button data-view="watch">Signals</button>
+      <button data-view="about">Sources</button>
+    </div>
+    <div class="spacer"></div>
+    <span class="pill" id="pill-sweep" hidden></span>
+    <span class="pill" id="pill-dossier">Dossier</span>
+    <span class="pill" id="pill-store">storage</span>
+    <span class="pill" id="pill-jan">Jan</span>
+    <button class="ghost" id="go-fullscreen" title="Hide the Forge sidebar (Alt+F). F11 fills the screen.">Full screen</button>
+  </div>
+
+  <div class="main">
+
+    <!-- ============================== ASK ============================== -->
+    <section class="view on" id="view-ask">
+      <div class="pad">
+        <div class="asklayout">
+          <div>
+            <div class="card">
+              <h3>Ask</h3>
+              <div class="tierpick" id="tier-pick"><span class="muted small">reading the tiers…</span></div>
+              <label class="switch" style="margin-top:8px">
+                <input type="checkbox" id="prefer-rules" checked>
+                <span>Let maths answer when it can, even on a model tier</span>
+              </label>
+              <div class="row" style="margin-top:10px">
+                <textarea id="ask-box" rows="3" placeholder="What is moving? How many subjects do you have? Tell me about NATO."></textarea>
+              </div>
+              <div class="row" style="margin-top:8px">
+                <button class="primary" id="ask-go">Ask</button>
+                <span class="muted small" id="ask-note"></span>
+                <span class="spacer"></span>
+                <button class="ghost small" id="ask-clear" hidden title="Answers are kept on this computer across reloads until cleared">Clear answers</button>
+              </div>
+            </div>
+            <div id="ask-answers"></div>
+          </div>
+
+          <div>
+            <div class="card">
+              <h3>What the maths can settle on its own</h3>
+              <div class="small muted">These need no model at all — they work with Jan switched off.</div>
+              <div id="solver-list" class="solvers"><div class="muted small">reading…</div></div>
+            </div>
+            <div class="card">
+              <h3>Tiers</h3>
+              <div id="tier-help" class="small muted">reading…</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ FINDINGS =========================== -->
+    <section class="view" id="view-findings">
+      <div class="pad">
+        <div class="row" style="margin-bottom:12px">
+          <button class="primary" id="findings-refresh">Recompute</button>
+          <span class="muted small">Pure arithmetic over what is stored — no model, no network.</span>
+          <span class="spacer"></span>
+          <span class="muted small" id="findings-count"></span>
+        </div>
+        <div class="age-note" id="findings-age" hidden>
+          <span id="findings-age-text"></span>
+          <button class="primary" id="findings-sweep">Sweep the watchlist now</button>
+        </div>
+        <div class="row filters" id="findings-filters">
+          <input type="search" id="ff-text" placeholder="filter by subject…" aria-label="Filter by subject">
+          <select id="ff-source" aria-label="Source"><option value="">every source</option></select>
+          <select id="ff-kind" aria-label="Kind"><option value="">every kind</option></select>
+          <label class="switch"><input type="checkbox" id="ff-fresh"><span>Hide old news</span></label>
+          <span class="spacer"></span>
+          <button class="ghost small" id="ff-reset" hidden>Show everything</button>
+        </div>
+        <div id="findings-list"><div class="empty">Reading the findings…</div></div>
+      </div>
+    </section>
+
+    <!-- ============================== PLANS ============================ -->
+    <!-- A scenario is branches of the future, each carrying dated, falsifiable
+         indicators; the ledger marks them by arithmetic when their dates pass.
+         A forecast nobody can mark is an opinion. -->
+    <section class="view" id="view-plans">
+      <div class="pad">
+        <div class="split">
+          <div>
+            <div class="card">
+              <h3>Write a scenario</h3>
+              <div class="hint">Branches of the future for one subject. Every branch has to
+                carry <b>dated, falsifiable indicators</b> — not "tensions may rise" but a named
+                series, a number and a date — so the ledger can mark it later without anyone's
+                judgement. The rules tier carries each stored series forward at the rate it has
+                been moving: no model, works with Jan off, and it is the baseline a cleverer
+                forecast has to beat.</div>
+              <div class="row" style="margin-top:12px">
+                <input type="text" id="plan-subject" placeholder="a subject held in Dossier…" style="flex:1" list="plan-names">
+                <select id="plan-tier" aria-label="Tier"></select>
+                <select id="plan-horizon" aria-label="How far ahead" title="How far ahead the rules tier projects. Two weeks comes due soonest, on daily series such as the exchange rate and pageviews."><option value="">3 months, a year and two years</option></select>
+                <button class="primary" id="plan-make">Write it</button>
+              </div>
+              <div class="small muted" id="plan-note" style="margin-top:8px">
+                A subject needs stored signals to project from — sweep it first on the Signals tab.
+              </div>
+            </div>
+            <div id="plan-list"><div class="empty">Reading the scenarios…</div></div>
+          </div>
+
+          <div>
+            <div class="card">
+              <h3>The ledger</h3>
+              <div class="hint">Every indicator whose date has passed, marked against what the
+                signals actually did. No model is consulted — a scenario written by a model is
+                marked by the same arithmetic as one written by the rules tier, which is the
+                only way the two can be compared honestly.</div>
+              <div id="plan-record" class="small" style="margin-top:12px">nothing forecast yet</div>
+              <div class="row" style="margin-top:12px">
+                <button class="ghost" id="plan-score">Re-mark everything</button>
+              </div>
+            </div>
+            <div class="card">
+              <h3>What history taught</h3>
+              <div class="hint">The ledger only learns when forecasts come due. Signals now
+                reach back up to five years, so every projection is also made from points in
+                the past and marked against what followed. Where assuming no change beat a
+                straight line, the rules tier stops making that claim. Kept apart from the
+                ledger: a backtest is marked against the past, not an unseen future.</div>
+              <div id="plan-lessons" class="small" style="margin-top:12px">nothing learned yet</div>
+              <div class="row" style="margin-top:12px">
+                <button class="ghost" id="plan-learn">Learn from history</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <datalist id="plan-names"></datalist>
+    </section>
+
+    <!-- ============================= SIGNALS =========================== -->
+    <section class="view" id="view-watch">
+      <div class="pad">
+        <div class="split">
+          <div>
+            <div class="card">
+              <h3>Gather signals</h3>
+              <div class="hint">Reads attention and argument for the most consequential
+                subjects in Dossier's library, most prominent first — so a sweep stopped
+                early has still covered the names that matter. Readings merge by date,
+                so running it twice in a day corrects a figure rather than doubling it.</div>
+              <div class="row" style="margin-top:12px">
+                <label class="small muted">top</label>
+                <input type="range" id="sweep-limit-range" value="25" min="1" max="400" aria-label="How many subjects">
+                <input type="number" id="sweep-limit" value="25" min="1" max="400" style="width:80px">
+                <label class="small muted">subjects · last</label>
+                <select id="sweep-days">
+                  <option value="30">30 days</option>
+                  <option value="60" selected>60 days</option>
+                  <option value="120">120 days</option>
+                  <option value="365">a year</option>
+                </select>
+                <button class="primary" id="sweep-go">Sweep</button>
+                <button class="ghost" id="sweep-stop" hidden title="The subject under way finishes and everything gathered is kept">Stop after this subject</button>
+              </div>
+              <div class="row" style="margin-top:10px">
+                <button class="ghost" id="sweep-history">Get all new info for what is held</button>
+                <span class="small muted">Re-reads five years of every signal for each subject
+                  already swept, adds the monthly news counts, then learns from the history.
+                  Every reading already stored is kept.</span>
+              </div>
+              <div class="bar"><i id="sweep-bar" style="width:0%"></i></div>
+              <div class="small muted" id="sweep-summary">idle</div>
+            </div>
+            <div class="card">
+              <h3>Watchlist</h3>
+              <div class="small muted">Ranked by prominence, the way Dossier ranks its own queue.</div>
+              <div id="watchlist" class="watchlist"><div class="muted small">reading the watchlist…</div></div>
+            </div>
+          </div>
+          <div>
+            <div class="card">
+              <h3>Live log</h3>
+              <div class="joblog" id="sweep-log">nothing running</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= SOURCES =========================== -->
+    <section class="view" id="view-about">
+      <div class="pad">
+        <div class="card">
+          <h3>Where signals come from</h3>
+          <div class="small muted">Every source says what is wrong with it. A measurement
+            shown without its bias is worse than no measurement.</div>
+          <div id="source-list"><div class="muted small">reading…</div></div>
+        </div>
+        <div class="card">
+          <h3>What runs without a model</h3>
+          <div id="analyser-list" class="small"><div class="muted">reading…</div></div>
+        </div>
+        <div class="card">
+          <h3>Storage</h3>
+          <div class="small muted" id="storage-detail">reading…</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- One subject, everything held about it: opened from a finding, the
+     watchlist or a scenario. Drawn from GET /api/subject/{slug}. -->
+<div class="subject-backdrop" id="subject-backdrop" hidden></div>
+<aside class="subject-panel" id="subject-panel" hidden aria-label="Subject" tabindex="-1">
+  <div class="sp-head">
+    <div>
+      <h2 id="sp-name">Subject</h2>
+      <div class="small muted" id="sp-slug"></div>
+    </div>
+    <span class="spacer"></span>
+    <button class="ghost" id="sp-close" title="Close (Esc)">Close</button>
+  </div>
+  <div class="row" style="margin:10px 0 4px">
+    <button class="primary" id="sp-plan">Write a scenario</button>
+    <button class="ghost" id="sp-ask">Ask about it</button>
+  </div>
+  <div id="sp-body"></div>
+</aside>
+<div id="toast" class="toast hidden" role="status"></div>
+
+<script>
+/* The view the address names is shown before the first paint, so opening
+   #/plans does not flash the Ask view while the scripts below load. app.js
+   takes over routing from here. */
+(function () {
+  var name = (location.hash || "").replace("#/", "");
+  if (!name || !document.getElementById("view-" + name)) return;
+  document.querySelectorAll(".view").forEach(function (v) {
+    v.classList.toggle("on", v.id === "view-" + name);
+  });
+  document.querySelectorAll(".views button").forEach(function (b) {
+    b.classList.toggle("on", b.dataset.view === name);
+  });
+})();
+</script>
+
+<script src="/shared/forge_idle.js"></script>
+<script src="/shared/forge_chrome.js"></script>
+<script src="/shared/forge.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>

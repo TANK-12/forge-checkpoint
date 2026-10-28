@@ -1,0 +1,43 @@
+{
+  "label": "Autumn",
+  "order": 80,
+  "tags": [
+    "cosy",
+    "nature",
+    "live",
+    "warm"
+  ],
+  "about": "Leaves tumbling through low golden light, rust and amber glass, a serif clock and a dog trotting along the bottom.",
+  "look": "classic",
+  "layout": "forge",
+  "colours": {
+    "accent": "#e08a3c",
+    "bg": "#1a120c",
+    "panel": "#241912",
+    "panel_2": "#2e2017",
+    "border": "#45301f",
+    "text": "#f5e7d6",
+    "muted": "#b79a7e"
+  },
+  "font": "serif",
+  "wallpaper": [
+    "forge:leaves.jpg",
+    ""
+  ],
+  "live": "leaves",
+  "companion": "dog",
+  "settings": {
+    "particles": "off",
+    "dim": 0.1,
+    "glass_style": "frosted",
+    "border": "subtle",
+    "radius": 18,
+    "motion": "glide"
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {
+      "live": "off"
+    }
+  }
+}

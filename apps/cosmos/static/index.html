@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="forge-colours" content="own">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cosmos</title>
+  <meta name="color-scheme" content="dark">
+  <!-- the first frame is dark even before app.css arrives: no white flash -->
+  <style>html, body { background: #04050b; color: #e8ecf8; }</style>
+  <link rel="stylesheet" href="/app.css">
+  <script type="importmap">
+    { "imports": { "three": "/vendor/three.module.min.js" } }
+  </script>
+</head>
+<body>
+  <main id="menu" class="menu">
+    <canvas id="menu-sky" class="menu-sky"></canvas>
+    <div class="menu-card">
+      <h1>Cosmos</h1>
+      <p class="sub">The real solar system, the stars around it, and a place to play with gravity.</p>
+      <div id="mode-list" class="mode-list"><p class="menu-finding">Finding the modes&hellip;</p></div>
+      <p class="credit" id="credit"></p>
+    </div>
+  </main>
+  <div id="stage" class="stage" hidden></div>
+  <div id="toast" class="toast" hidden></div>
+  <button id="go-fullscreen" class="fullscreen-btn" type="button" title="Full screen (f)">Full screen</button>
+  <script src="/shared/forge_sound.js"></script>
+  <script src="/shared/forge_chrome.js"></script>
+  <script src="/shared/forge_idle.js"></script>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

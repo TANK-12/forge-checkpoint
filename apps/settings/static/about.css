@@ -1,0 +1,10 @@
+/* The About card's top: version, edition, licence and the support report. */
+.about-forge { display: grid; gap: 8px; margin-bottom: 14px; }
+.about-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.about-head strong { font-size: 16px; }
+.about-edition { font-size: 12px; padding: 1px 8px; border-radius: 999px; border: 1px solid var(--border); }
+.about-rows { display: grid; gap: 2px; }
+.about-row { display: grid; grid-template-columns: 120px 1fr; gap: 10px; font-size: 13px; }
+.about-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
+#about-line.bad, #about-said.bad { color: var(--bad, #e06c6c); }
+.about-features { margin: 6px 0; padding-left: 18px; font-size: 12px; }

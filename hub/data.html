@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where your things are kept</title>
+<link rel="stylesheet" href="/shared/forge.css">
+<link rel="stylesheet" href="place.css">
+</head>
+<body>
+<!-- Where the user's things are kept: the place, its size and free room,
+     Move (a verified copy, the old copy kept), and the welcome again.
+     data.js fills it; forge_portable.py serves it once a place is in use. -->
+<div class="shell">
+  <div class="brand">FORGE<i>.</i></div>
+  <main class="card" id="card" aria-live="polite">
+    <p class="waiting"><span class="spin"></span>Looking&hellip;</p>
+  </main>
+</div>
+<script src="place.js"></script>
+<script src="data.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "name": "Clockwork tent",
+  "note": "Three sharp corners and a tangle of small loops inside, like the escapement of a watch drawn in one line. Exponent 0.19 bits per iteration, dimension about 1.40. What I love is how clean the outer edge is: chaos inside, a perfectly calm tent outside.",
+  "author": "Claude",
+  "made": "2026-10-09T10:09:00",
+  "data": {
+    "code": "WNJSUVKXAJDF",
+    "coeffs": [
+      1.0,
+      0.1,
+      -0.3,
+      0.6,
+      0.8,
+      0.9,
+      -0.2,
+      1.1,
+      -1.2,
+      -0.3,
+      -0.9,
+      -0.7
+    ],
+    "palette": "ember",
+    "exposure": 1.25,
+    "gamma": 1.25,
+    "lyapunov": 0.192685,
+    "dimension": 1.3971
+  }
+}

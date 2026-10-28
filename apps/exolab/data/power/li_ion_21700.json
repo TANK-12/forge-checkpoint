@@ -1,0 +1,8 @@
+{
+  "id": "li_ion_21700",
+  "name": "Li-ion pack (21700 NMC cells)",
+  "kind": "battery",
+  "specific_energy_wh_kg": 180,
+  "note": "Pack-level energy per kilo including case and wiring.",
+  "source": "Typical NMC 21700 packs: cells 240-270 Wh/kg, packs 150-200 Wh/kg."
+}

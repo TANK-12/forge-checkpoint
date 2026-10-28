@@ -1,0 +1,116 @@
+{
+  "name": "emberfield",
+  "label": "Emberfield",
+  "tagline": "Farm the valley, raid the wilds",
+  "help": {
+    "about": "Farm a valley through the seasons, get to know the town, and raid the wilds for what the farm cannot grow. You choose how hard death is when you start a valley.",
+    "keys": [
+      [
+        "W A S D",
+        "Walk"
+      ],
+      [
+        "Shift",
+        "Run"
+      ],
+      [
+        "Q",
+        "Roll"
+      ],
+      [
+        "Click",
+        "Shoot"
+      ],
+      [
+        "Space",
+        "Use"
+      ],
+      [
+        "E",
+        "Eat"
+      ],
+      [
+        "1 to 9",
+        "Pick from the bar"
+      ],
+      [
+        "F",
+        "Full screen"
+      ],
+      [
+        "Esc",
+        "Menu"
+      ]
+    ],
+    "features": [
+      "Farm and seasons",
+      "Town and people",
+      "The wilds",
+      "Crafting and cooking",
+      "Saved valleys",
+      "Simple and advanced settings"
+    ]
+  },
+  "port": 8434,
+  "module": "web_app:app",
+  "src_dir": ".",
+  "accent": "#e08a3c",
+  "icon": "🔥",
+  "fullscreen": "auto",
+  "group": "pixel-games",
+  "order": 7,
+  "section": "play",
+  "ready_timeout": 45,
+  "seed": [
+    "tools/seed_art.py",
+    "tools/seed_content.py"
+  ],
+  "manifest": {
+    "summary": "A pixel farming and adventure game: grow a seeded valley, sell and craft, walk to the town, and fight down the cave mouth at night. Content (items, recipes, sounds) is data in ~/ForgeGameData, art in ~/ForgeArtData, saves in ~/EmberfieldData.",
+    "features": [
+      {
+        "name": "Farm and seasons",
+        "description": "Till, plant, water and sleep to grow crops; days turn into four 28-day seasons, and a fall or a night's sleep both turn the day the same way."
+      },
+      {
+        "name": "Town and people",
+        "description": "A road out to a town, a village and two farmsteads where seven people keep a daily schedule and talk; every house can be walked into."
+      },
+      {
+        "name": "Wilds and death rules",
+        "description": "A torchlit cavern that is different every day and worse at night; dying follows the rule chosen per valley (soft, character or full permadeath, which deletes the save and never writes it back)."
+      },
+      {
+        "name": "Crafting, cooking and a chest",
+        "description": "Workbench and hearth recipes from data, tool upgrades that work a 3x3, and a chest the save remembers."
+      },
+      {
+        "name": "Eating",
+        "description": "Press e when hurt to eat the smallest carried meal that fills your hearts; how much a food heals is its optional heals field (or its sell price / 30). The HUD shows the food you carry."
+      },
+      {
+        "name": "Named valleys and a tidy save list",
+        "description": "Name a new valley on the title screen; saves list newest first with day, season, gold, death rule and how long ago, and a new valley always starts on day 1."
+      },
+      {
+        "name": "Settings, simple and advanced",
+        "description": "Day length, zoom and sound are sliders paired with number boxes; the world-model and voice experiments and the background-core budget sit under Advanced, which stays open once used."
+      },
+      {
+        "name": "Smooth inside the hub",
+        "description": "Dark from the first frame with a loading card, one frame loop, the HUD redrawn only when it changes, and fully paused (no frames, timers or fetches, audio suspended) while the hub hides it."
+      }
+    ],
+    "data_dir": "~/EmberfieldData (saves, settings, voice cache); content in ~/ForgeGameData, art in ~/ForgeArtData",
+    "standalone_launch": "cd ~/Forge/apps/emberfield && FORGE_SHARED_DIR=~/Forge/shared .venv/bin/python -m uvicorn web_app:app --host 127.0.0.1 --port 8434",
+    "api_base": "/api",
+    "known_gaps": [
+      "Not yet played by hand at normal day length after the 2026-10-19 sweep; checks were headless Chrome only, not the Forge WebKitGTK window."
+    ],
+    "docs": [
+      "README.md",
+      "WIP.md",
+      "MANIFEST.json"
+    ]
+  }
+}

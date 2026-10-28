@@ -1,0 +1,25 @@
+{
+  "id": "haumea",
+  "name": "Haumea",
+  "kind": "dwarf",
+  "parent": "sun",
+  "order": 92,
+  "radius_km": 780,
+  "gm_km3_s2": 267.4,
+  "color": "#e4e2dd",
+  "summary": "Spins so fast (a day under four hours) that it is stretched into an egg shape. It has a ring and two small moons.",
+  "elements": {
+    "model": "kepler",
+    "epoch_jd": 2461200.5,
+    "a_au": 43.06029023650952,
+    "e": 0.1944430148898797,
+    "i_deg": 28.20847393040364,
+    "node_deg": 121.7860561329425,
+    "peri_deg": 240.6905472508661,
+    "M_deg": 223.2104118812299,
+    "n_deg_day": 0.003488097731816818,
+    "frame": "ecliptic",
+    "source": "JPL Small-Body Database, osculating elements at JD 2461200.5"
+  },
+  "notes": "Radius is the mean of a strongly elongated body."
+}

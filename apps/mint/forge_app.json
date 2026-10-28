@@ -1,0 +1,75 @@
+{
+  "name": "mint",
+  "label": "Mint",
+  "tagline": "Where $300 a week could go, tested on real history with fake money",
+  "help": {
+    "about": "Where $300 a week could go: plans tested on real market history with pretend money. Nothing here touches real money.",
+    "features": [
+      "Plan",
+      "Lab",
+      "Paper",
+      "Ready?",
+      "Learn"
+    ]
+  },
+  "port": 8470,
+  "module": "web_app:app",
+  "src_dir": ".",
+  "accent": "#5fd3b0",
+  "icon": "🪙",
+  "order": 14,
+  "section": "research",
+  "ready_timeout": 60,
+  "manifest": {
+    "summary": "A research and fake-money sandbox for the owner's money. Plan compares savings, Australian shares, a growth fund, extra super and coin-flip CFD trading over thousands of futures replayed from real monthly history. Lab tests trading ideas on real daily prices with every real cost (spread, overnight funding, brokerage, currency), keeps the last 30% of the years out of tuning as test years, and runs a luck test against coin-flip traders. Paper runs fake-money accounts forward only. Ready? is the checklist an idea must pass before any real money. Learn holds the published figures with sources. Mint never connects to a broker, never logs in and never moves money.",
+    "features": [
+      {
+        "name": "Plan",
+        "description": "POST /api/plan: a 12-month block bootstrap of ASX 200 and S&P 500 (in AUD, dividends in) and the RBA cash rate since 2001, shared by every path in paths.json; fans, share below money in, worst falls against the comfort level, rough after-tax, HECS and side-income rows; an optional goal adds a dashed line to the chart (named above the chart instead when it is more than twice the highest path) and says on each card how many futures reach it and by which year half do; start, weekly, years and goal each have a slider paired with the number field, and a half-typed field waits instead of sending."
+      },
+      {
+        "name": "Lab",
+        "description": "Backtest, tuning sweep and coin-flip traders over the engine in mint/engine.py; strategies are one file each in mint/strategies/ (found by scanning), venues in venues.json, markets in symbols.json."
+      },
+      {
+        "name": "Paper",
+        "description": "Fake-money accounts stored as config plus orders and replayed from their creation day; manual orders fill at the next open, bots are frozen, archive never deletes."
+      },
+      {
+        "name": "Ready?",
+        "description": "Tuning, test years, luck at least 95% (higher when more ideas were tried), beat the plain fund forward, 90 days and 20 trades in or out, worst fall inside comfort; only then a plan the owner would carry out himself."
+      },
+      {
+        "name": "Learn",
+        "description": "learn.json: published figures (ASIC REP 828, Plus500 FY2025, Vanguard, RBA, ATO) and Mint's own backtest results, each with its source."
+      }
+    ],
+    "data_dir": "~/.local/share/forge/mint (prices/ cache, paper/ accounts, settings.json); MINT_DATA_DIR overrides",
+    "services": [
+      "Yahoo Finance chart API (no key) and RBA table A2 for prices, cached; nothing else leaves the laptop"
+    ],
+    "dependencies": {
+      "required": [
+        "fastapi",
+        "uvicorn",
+        "pydantic"
+      ],
+      "optional": [
+        "Forge shared kit (forge.css, forge_chrome.js)",
+        "pytest, httpx, websockets (tests and tests/check_ui.py)"
+      ]
+    },
+    "standalone_launch": "cd ~/Forge/apps/mint && FORGE_SHARED_DIR=~/Forge/shared .venv/bin/python -m uvicorn web_app:app --host 127.0.0.1 --port 8470",
+    "api_base": "/api",
+    "known_gaps": [
+      "Research only: no broker link by design",
+      "Prices come from Yahoo's unofficial chart API, which can change or block"
+    ],
+    "docs": [
+      "README.md",
+      "WIP.md",
+      "docs/",
+      "../../docs/library/money/"
+    ]
+  }
+}

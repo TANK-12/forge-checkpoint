@@ -1,0 +1,38 @@
+{
+  "label": "Forge Light",
+  "order": 5,
+  "tags": [
+    "light"
+  ],
+  "mode": "light",
+  "about": "The same Forge in daylight: white glass, dark text, a soft paper wallpaper and a cool blue accent.",
+  "look": "classic",
+  "layout": "forge",
+  "colours": {
+    "accent": "#3b6fd8",
+    "bg": "#eef1f6",
+    "panel": "#ffffff",
+    "panel_2": "#f3f5f9",
+    "border": "#d4d9e2",
+    "text": "#1b2130",
+    "muted": "#5c6577"
+  },
+  "font": "inter",
+  "wallpaper": [
+    "forge:paper.jpg",
+    ""
+  ],
+  "settings": {
+    "particles": "off",
+    "dim": 0.0,
+    "wall_tint": false,
+    "glass_style": "frosted",
+    "glass": 0.8,
+    "border": "subtle",
+    "widget_look": "glass"
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {}
+  }
+}

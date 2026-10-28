@@ -1,0 +1,49 @@
+{
+  "id": "jupiter",
+  "name": "Jupiter",
+  "kind": "planet",
+  "parent": "sun",
+  "order": 50,
+  "radius_km": 69911,
+  "gm_km3_s2": 126686531.9,
+  "color": "#d8b48a",
+  "bands": [
+    "#d8b48a",
+    "#b98a5e",
+    "#efdcc0",
+    "#a9774f"
+  ],
+  "pole": {
+    "ra_deg": 268.057,
+    "dec_deg": 64.495
+  },
+  "summary": "More than twice the mass of every other planet combined. The Great Red Spot is a storm wider than Earth that has been raging for centuries.",
+  "elements": {
+    "model": "standish",
+    "a": [
+      5.202887,
+      -0.00011607
+    ],
+    "e": [
+      0.04838624,
+      -0.00013253
+    ],
+    "i": [
+      1.30439695,
+      -0.00183714
+    ],
+    "L": [
+      34.39644051,
+      3034.74612775
+    ],
+    "varpi": [
+      14.72847983,
+      0.21252668
+    ],
+    "node": [
+      100.47390909,
+      0.20469106
+    ],
+    "source": "JPL approximate planetary elements (E.M. Standish), 1800-2050 table"
+  }
+}

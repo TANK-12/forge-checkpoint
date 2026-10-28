@@ -1,0 +1,64 @@
+/* look: Business | Plain and professional: a solid background with the company logo, flat panels, no effects; settings locked by a password */
+/* What else Business asks for (particles, music, 3D and animations off, flat
+   glass, the lock, the company logo) is in business.json beside this file,
+   read by forge_theme.look_rules. Every rule is scoped to body.look-business. */
+body.look-business {
+  --biz-bg: #14171c; --biz-panel: #1b1f26; --biz-panel-2: #222731; --biz-line: #2d333e;
+  --gap: 12px; --radius: 6px; --bar-h: 46px; --tile-w: 244px;
+  --glass-fill: var(--biz-panel); --glass-line: var(--biz-line);
+  font-family: "Inter", "Segoe UI", "Helvetica Neue", Arial, system-ui, sans-serif;
+  background: var(--biz-bg);
+}
+/* the background: one plain colour, nothing moving over it */
+body.look-business .wall { background: var(--biz-bg) !important; transform: none !important; filter: none !important; }
+body.look-business #wall-blur, body.look-business #wall-tint, body.look-business #wall-fg,
+body.look-business .chroma, body.look-business #pulse-flash, body.look-business #pulse-light,
+body.look-business #pulse-glow, body.look-business #pulse-fx, body.look-business #scrim,
+body.look-business #particles, body.look-business #visual { display: none !important; }
+body.look-business #company-mark span { color: #8a93a3; font-weight: 500; }
+/* panels: solid, square-ish, a hairline edge, no blur and no shadow */
+body.look-business .glass { background: var(--biz-panel); border-color: var(--biz-line); box-shadow: none;
+  -webkit-backdrop-filter: none; backdrop-filter: none; }
+/* the bar: full width along the top edge, like an office suite's header */
+body.look-business #bar { top: 0; left: 0; right: 0; border-radius: 0; border-width: 0 0 1px; padding: 0 12px;
+  background: var(--biz-panel); }
+body.look-business #stage, body.look-business #home { top: calc(var(--bar-h) + 16px); }
+body.look-business .bar-btn { border-radius: 4px; }
+body.look-business .bar-btn:hover { background: var(--biz-panel-2); }
+body.look-business .brand { letter-spacing: .08em; font-weight: 600; }
+body.look-business #zen-btn, body.look-business #ambient-btn, body.look-business #music-btn { display: none !important; }
+body.look-business #workspaces { background: transparent; gap: 2px; }
+body.look-business .ws { border-radius: 4px; background: transparent; }
+body.look-business .ws.active { background: var(--biz-panel-2); color: var(--text);
+  box-shadow: inset 0 -2px 0 var(--accent); }
+body.look-business .chip { border-radius: 4px; background: var(--biz-panel-2); }
+/* the home screen: a quiet clock, no greeting, no glow */
+body.look-business .hero .clock { font-size: clamp(40px, 5.5vw, 68px); font-weight: 300; letter-spacing: -.02em;
+  color: #e9ecf1; background: none; animation: none; filter: none; }
+body.look-business .hero .date { font-size: 15px; color: #a3abb8; text-shadow: none; }
+body.look-business #home .hero > div:first-child::before { display: none; }
+body.look-business #search { border-radius: 4px; background: var(--biz-panel); border: 1px solid var(--biz-line); box-shadow: none; }
+body.look-business #search:focus { border-color: var(--accent); box-shadow: none; }
+body.look-business .fchip { border-radius: 4px; background: var(--biz-panel); border: 1px solid var(--biz-line); box-shadow: none; }
+body.look-business .fchip.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+/* the app list: plain cards in a grid, a coloured edge on hover, no lift */
+body.look-business .section-head .s-pill { background: transparent; border: 0; box-shadow: none; padding-left: 0; }
+body.look-business .section-head .s-icon { display: none; }
+body.look-business .section-head .s-label { font-size: 12px; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; color: #a3abb8; }
+body.look-business .section-head .s-count { background: var(--biz-panel-2); color: #a3abb8; }
+body.look-business .tile { background: var(--biz-panel); border: 1px solid var(--biz-line); border-radius: 6px;
+  box-shadow: none; transition: border-color 120ms, background 120ms; }
+body.look-business .tile::before, body.look-business .ripple { display: none; }
+body.look-business .tile:hover, body.look-business .tile.focus { transform: none; box-shadow: none;
+  background: var(--biz-panel-2); border-color: var(--accent); }
+body.look-business .tile:active { transform: none; }
+body.look-business .tile .icon { border-radius: 6px; box-shadow: none; transition: none;
+  background: color-mix(in srgb, var(--tile-accent) 16%, var(--biz-panel-2)); }
+body.look-business .tile:hover .icon, body.look-business .tile.focus .icon { transform: none; }
+body.look-business #dock { border-radius: 6px; background: var(--biz-panel); box-shadow: none; }
+body.look-business .dock-item { border-radius: 4px; }
+/* an open app: a plain frame with a hairline edge */
+body.look-business .workspace { border-radius: 4px; box-shadow: none; }
+body.look-business .workspace .inner { border-radius: 4px; }
+body.look-business .popup { border-radius: 6px; }

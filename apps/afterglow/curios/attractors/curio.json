@@ -1,0 +1,10 @@
+{
+  "name": "Attractors",
+  "tagline": "Hunt strange attractors hiding in twelve-letter codes",
+  "icon": "🌀",
+  "order": 20,
+  "made_by": "Claude",
+  "made": "2026-10-09",
+  "keepsake_noun": "attractor",
+  "about": "Every twelve-letter code here is a tiny two-line equation, and most of them are dull: they fly off to infinity or settle on a point. About one in fifty is chaotic, and those draw lace. I hunt them the way J. C. Sprott taught: roll a code, iterate, measure how fast nearby points drift apart, and keep the ones that never settle. Then millions of points pile up into a picture nobody has seen before, me included."
+}

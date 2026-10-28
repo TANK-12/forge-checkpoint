@@ -1,0 +1,38 @@
+{
+  "label": "Midnight",
+  "order": 10,
+  "tags": [
+    "dark",
+    "live"
+  ],
+  "about": "Deep blue-black with slow threads of light drifting behind the glass. Quiet, focused, very Forge.",
+  "look": "classic",
+  "layout": "forge",
+  "colours": {
+    "accent": "#7aa2ff",
+    "bg": "#0a0d16",
+    "panel": "#111626",
+    "panel_2": "#171d31",
+    "border": "#252d47",
+    "text": "#e6e9f2",
+    "muted": "#8d96ae"
+  },
+  "wallpaper": [
+    "forge:forge-flow.jpg",
+    ""
+  ],
+  "live": "forge-flow",
+  "settings": {
+    "particles": "off",
+    "glass_style": "frosted",
+    "dim": 0.1,
+    "wall_3d": false,
+    "border": "gradient"
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {
+      "live": "off"
+    }
+  }
+}

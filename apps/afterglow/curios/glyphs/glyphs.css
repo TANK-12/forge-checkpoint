@@ -1,0 +1,91 @@
+/* Glyphs: floating panels over the dot field. Everything is scoped to .glyphs. */
+.glyphs { position: absolute; inset: 0; font-size: 13px; }
+.glyphs .gl-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.glyphs .ag-panel h3 { text-transform: none; letter-spacing: 0.01em; font-size: 12.5px; }
+.glyphs .ag-panel { backdrop-filter: blur(6px); }
+
+.glyphs .gl-left {
+  position: absolute; top: 14px; left: 14px; width: 274px;
+  display: flex; flex-direction: column; gap: 10px;
+  max-height: calc(100% - var(--gl-bar, 120px) - 42px); overflow-y: auto; scrollbar-width: thin;
+  scrollbar-gutter: stable; /* the same width whether or not Advanced makes it scroll */
+}
+.glyphs .gl-left > .ag-panel { flex: none; }
+.glyphs .gl-seg-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12.5px; }
+.glyphs .gl-seg-row .ag-seg button { padding: 5px 8px; }
+.glyphs .gl-tools { justify-content: space-between; }
+.glyphs .gl-tools .ag-btn { font-size: 12px; padding: 4px 9px; }
+
+.glyphs .gl-help .ag-panel-body { gap: 7px; }
+.glyphs .gl-help-line { margin: 0; font-size: 12px; line-height: 1.45; color: var(--muted); }
+.glyphs .gl-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.glyphs .gl-chip {
+  font: 12px ui-monospace, "JetBrains Mono", "DejaVu Sans Mono", monospace; padding: 2px 7px;
+  border-radius: 6px; cursor: pointer; color: var(--accent);
+  background: rgba(255, 180, 84, 0.08); border: 1px solid rgba(255, 180, 84, 0.22);
+}
+.glyphs .gl-chips.fns .gl-chip { color: #cbbdff; background: rgba(165, 139, 255, 0.08); border-color: rgba(165, 139, 255, 0.24); }
+.glyphs .gl-chip:hover, .glyphs .gl-chip:focus-visible { border-color: var(--accent); outline: none; }
+
+.glyphs .gl-gallery {
+  position: absolute; top: 14px; right: 14px; width: 212px; box-sizing: border-box;
+  display: flex; flex-direction: column; max-height: calc(100% - var(--gl-bar, 120px) - 42px);
+}
+.glyphs .gl-gallery .ag-panel-body { overflow-y: auto; gap: 3px; scrollbar-width: thin; min-height: 0; }
+.glyphs .gl-piece {
+  display: flex; align-items: center; gap: 10px; width: 100%; padding: 4px 6px 4px 4px; box-sizing: border-box;
+  border-radius: 9px; border: 1px solid transparent; background: transparent;
+  color: var(--text); font: inherit; font-size: 13px; text-align: left; cursor: pointer;
+}
+.glyphs .gl-piece:hover, .glyphs .gl-piece:focus-visible { border-color: rgba(255, 180, 84, 0.45); outline: none; }
+.glyphs .gl-piece.on { background: rgba(255, 180, 84, 0.12); border-color: rgba(255, 180, 84, 0.38); color: var(--accent); }
+.glyphs .gl-piece canvas { width: 40px; height: 40px; border-radius: 7px; flex: none; }
+.glyphs .gl-small { margin: 0; font-size: 12px; }
+
+.glyphs .gl-bar {
+  position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%);
+  width: min(780px, calc(100% - 28px)); box-sizing: border-box;
+  display: flex; flex-direction: column; gap: 7px; padding: 10px 14px 11px;
+}
+.glyphs .gl-head { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+.glyphs .gl-name {
+  font-family: Georgia, "Noto Serif", "DejaVu Serif", serif; font-style: italic; font-size: 17px; color: var(--accent);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.glyphs .gl-time { margin-left: auto; font: 12px ui-monospace, "DejaVu Sans Mono", monospace; color: var(--muted); }
+.glyphs .gl-input { position: relative; display: flex; align-items: center; gap: 10px; }
+.glyphs .gl-fx { font: 13px ui-monospace, "DejaVu Sans Mono", monospace; color: var(--muted); white-space: nowrap; }
+.glyphs .gl-formula {
+  flex: 1; min-width: 0; font: 15px ui-monospace, "JetBrains Mono", "DejaVu Sans Mono", monospace;
+  padding: 7px 10px; border-radius: 8px; color: #fff3e2;
+  background: rgba(0, 0, 0, 0.38); border: 1px solid var(--border);
+}
+.glyphs .gl-formula:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255, 180, 84, 0.14); }
+.glyphs .gl-formula.bad { border-color: rgba(242, 99, 125, 0.75); }
+.glyphs .gl-caret {
+  position: absolute; bottom: 3px; width: 9px; height: 3px; border-radius: 2px;
+  background: #ff7d93; box-shadow: 0 0 6px #ff7d93; pointer-events: none;
+}
+.glyphs .gl-foot { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.glyphs .gl-status { flex: 1; min-width: 200px; font-size: 12.5px; color: var(--muted); line-height: 1.35; }
+.glyphs .gl-status.bad { color: #ff9cad; }
+.glyphs .gl-foot .ag-btn { min-width: 66px; }
+
+.glyphs .gl-keep {
+  position: absolute; left: 50%; transform: translateX(-50%); bottom: calc(var(--gl-bar, 120px) + 24px);
+  width: min(400px, calc(100% - 28px)); box-sizing: border-box; display: flex; flex-direction: column; gap: 8px; z-index: 2;
+  border-color: rgba(255, 180, 84, 0.35);
+}
+.glyphs .gl-keep h3 { margin: 0; }
+.glyphs .gl-field-label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--muted); }
+.glyphs .gl-keep input, .glyphs .gl-keep textarea {
+  font: inherit; font-size: 14px; color: var(--text); background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border); border-radius: 8px; padding: 6px 9px; resize: vertical;
+}
+.glyphs .gl-keep input:focus, .glyphs .gl-keep textarea:focus { outline: none; border-color: var(--accent); }
+
+.glyphs .gl-readout {
+  position: absolute; pointer-events: none; font: 12px ui-monospace, "DejaVu Sans Mono", monospace;
+  color: #e9e1d6; background: rgba(10, 8, 16, 0.7); padding: 3px 8px; border-radius: 6px; white-space: pre;
+}
+.glyphs[data-palette="paper"] .gl-readout { color: #2a2420; background: rgba(255, 250, 238, 0.85); }

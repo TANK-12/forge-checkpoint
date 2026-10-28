@@ -1,0 +1,10 @@
+{
+  "id": "comfort",
+  "name": "Strap comfort and cuff stiffness",
+  "pressure_long_kpa": 4.3,
+  "pressure_short_kpa": 13.3,
+  "about": "Below 4.3 kPa (32 mmHg, capillary closing pressure, Landis 1930) a strap can be worn all day. Up to about 13.3 kPa (100 mmHg) is tolerable for short use; above that it hurts and restricts blood flow (blood-pressure-cuff territory). Approximate guidelines.",
+  "cuff_normal_n_per_mm": 3.0,
+  "cuff_axial_n_per_mm": 1.0,
+  "cuff_note": "Strap plus soft tissue: about 2-5 N/mm across the limb, less along it (straps slide). Approximate."
+}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Forge live preview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  html, body { margin: 0; height: 100%; background: #07090f; overflow: hidden; }
+  body.light { background: #f3eee5; }
+</style>
+</head>
+<body>
+<canvas id="live-wall" hidden style="position:fixed;inset:0;width:100%;height:100%;display:block"></canvas>
+<div id="companion-layer" style="position:fixed;inset:0;pointer-events:none;z-index:90;overflow:hidden"></div>
+<script src="../forge_live.js"></script>
+<script>
+  /* ?scene=<id>&companion=<id>&t=<s>&accent=%23rrggbb&mode=light&pose=walk&lite=1&res=1
+     With t: one still frame, title becomes "ready". Without t: runs live. */
+  (function () {
+    var q = new URLSearchParams(location.search);
+    ForgeLive.base = "../";
+    var o = {
+      live: q.get("scene") || "",
+      companion: q.get("companion") || "",
+      mode: q.get("mode") === "light" ? "light" : "dark",
+      lite: q.get("lite") === "1",
+      bottom: +(q.get("bottom") || 0),
+    };
+    if (q.get("accent")) o.accent = q.get("accent");
+    if (q.get("res")) o.res = +q.get("res");
+    if (q.get("pose")) o.pose = q.get("pose");
+    if (q.get("t") !== null && q.get("t") !== "") o.t = +q.get("t");
+    if (o.mode === "light") document.body.classList.add("light");
+    ForgeLive.apply(o).then(function () {
+      var s = ForgeLive.state();
+      var ok = (!o.live || s.live === o.live) && (!o.companion || s.companion === o.companion);
+      document.title = ok ? "ready" : "failed";
+    });
+  })();
+</script>
+</body>
+</html>

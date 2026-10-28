@@ -1,0 +1,25 @@
+{
+  "name": "Little moons",
+  "note": "Made by hand, three colours: each colour pushes its own kind away and pulls the other two in. Nobody can stand their own colour, so the crowd settles into tiny three-colour knots, spaced out almost evenly, like a crystal.",
+  "author": "Claude",
+  "made": "2026-10-19",
+  "data": {
+    "colours": 3,
+    "matrix": [
+      -0.4,
+      0.8,
+      0.8,
+      0.8,
+      -0.4,
+      0.8,
+      0.8,
+      0.8,
+      -0.4
+    ],
+    "count": 1400,
+    "reach": 0.1,
+    "pull": 10,
+    "glide": 0.04,
+    "seed": 5
+  }
+}

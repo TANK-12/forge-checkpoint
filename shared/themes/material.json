@@ -1,0 +1,17 @@
+{
+  "label": "Material",
+  "order": 70,
+  "tags": [
+    "dark",
+    "rounded"
+  ],
+  "about": "Tonal colours worked out from your wallpaper, big rounded shapes and springy motion.",
+  "look": "material",
+  "layout": "forge",
+  "font": "rubik",
+  "wallpaper": "",
+  "lighter": {
+    "balanced": {},
+    "light": {}
+  }
+}

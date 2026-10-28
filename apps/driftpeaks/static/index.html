@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="forge-colours" content="own">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Drift Peaks</title>
+  <!-- Dark from the very first frame, before app.css has arrived. The game
+       does not link /shared/forge.css: its .panel, label and 14px base rules
+       would hide and shrink the game's own panels. -->
+  <style>html, body { background: #0d1226; color: #f4f6fb; margin: 0; }</style>
+  <link rel="stylesheet" href="app.css">
+  <script src="/shared/forge_sound.js"></script>
+  <script src="/shared/forge_chrome.js"></script>
+</head>
+<body>
+  <canvas id="view"></canvas>
+  <p id="loading">Loading the mountain…</p>
+
+  <div id="hud" hidden>
+    <div class="hud-left"><b id="hud-dist">0 m</b><span id="hud-score">0</span></div>
+    <div class="hud-right"><span id="hud-coins">0</span><span class="coin-icon"></span>
+      <button id="pause-btn" class="icon" title="Pause (Esc)">&#10074;&#10074;</button></div>
+    <div id="combo"></div>
+    <div id="popups"></div>
+    <div id="fps" hidden></div>
+  </div>
+
+  <section id="title" class="panel" hidden>
+    <h1>Drift Peaks</h1>
+    <p class="sub">Tap or press Space to jump. Hold in the air to backflip.</p>
+    <div class="modes" role="radiogroup" aria-label="Way to ride"></div>
+    <p id="mode-help" class="help"></p>
+    <div id="goals-box"></div>
+    <button id="play-btn" class="big">Ride</button>
+    <div class="row">
+      <button id="settings-btn">Settings</button>
+      <button id="art-btn">Art</button>
+    </div>
+    <p id="bests" class="help"></p>
+  </section>
+
+  <section id="over" class="panel" hidden>
+    <h2 id="over-title">Run over</h2>
+    <div id="over-stats" class="stats"></div>
+    <div id="over-goals"></div>
+    <button id="again-btn" class="big">Ride again</button>
+    <button id="menu-btn">Menu</button>
+  </section>
+
+  <section id="pause" class="panel" hidden>
+    <h2>Paused</h2>
+    <button id="resume-btn" class="big">Resume</button>
+    <button id="quit-btn">End run</button>
+  </section>
+
+  <section id="settings" class="panel wide" hidden>
+    <h2>Settings</h2>
+    <div class="row"><label class="toggle"><input type="checkbox" id="adv-toggle"> Advanced</label>
+      <button id="reset-btn">Reset to defaults</button></div>
+    <div id="settings-form"></div>
+    <p class="music-note" id="music-note"></p>
+    <button id="settings-close" class="big">Done</button>
+  </section>
+
+  <section id="art" class="panel wide" hidden>
+    <h2>Art</h2>
+    <p class="help">Every shape in the game is a list of flat polygons, each painted with a colour role.
+      They are kept in Forge's shared game store, so an edit here is the same file any other
+      Forge tool would open.</p>
+    <div id="art-grid"></div>
+    <div id="art-edit" hidden>
+      <canvas id="art-preview" width="320" height="240"></canvas>
+      <div class="art-side">
+        <h3 id="art-name"></h3>
+        <textarea id="art-json" spellcheck="false"></textarea>
+        <p id="art-status" class="help"></p>
+        <p class="help" id="art-roles"></p>
+        <div class="row"><button id="art-save">Save</button><button id="art-revert">Put the original back</button><button id="art-back">Back</button></div>
+      </div>
+    </div>
+    <button id="art-close" class="big">Done</button>
+  </section>
+
+  <script type="module" src="js/game.js"></script>
+</body>
+</html>

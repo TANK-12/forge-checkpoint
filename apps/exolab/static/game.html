@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="forge-colours" content="own" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Exo Lab: test range</title>
+    <link rel="stylesheet" href="game/game.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "/shared/vendor/three/three.module.min.js",
+          "three/addons/": "/shared/vendor/three/addons/",
+          "three-vrm": "/shared/vendor/three-vrm/three-vrm.module.min.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <canvas id="view"></canvas>
+
+    <div id="hud">
+      <div id="bars">
+        <div id="modes"></div>
+        <div class="bar" id="energy"><i></i><span></span><em>Energy</em></div>
+        <div class="bar" id="hp"><i></i><span></span><em>Armour</em></div>
+        <div id="speed"></div>
+      </div>
+      <div id="timer"></div>
+      <div id="stats"></div>
+      <div id="msgs"></div>
+      <div id="prompt"></div>
+      <div id="banner" hidden>Arms broken: the frame took more than it was built for. Press R to repair.</div>
+      <div id="crosshair"></div>
+      <div id="fps"></div>
+      <div id="demo" hidden></div>
+    </div>
+
+    <div id="loading"><h1>Exo Lab: test range</h1><p>Starting...</p></div>
+
+    <div id="pause" hidden>
+      <div class="panel">
+        <h1>Exo Lab: test range</h1>
+        <p class="sub">Every number in this game comes from the suit you built in the tester.</p>
+        <div class="buttons">
+          <button id="resume">Play</button>
+          <button id="restart" type="button" title="Walls, crates and targets come back; the best lap is kept">Restart</button>
+          <a class="btn" href="/">Back to Exo Lab</a>
+        </div>
+        <div class="controls">
+        <div>
+        <h3>Keyboard and mouse</h3>
+        <div class="keys">
+          <div><b>WASD</b> move · <b>mouse</b> look (click to capture)</div>
+          <div><b>Shift</b> sprint · <b>Alt</b> walk</div>
+          <div><b>Space</b> jump, again in the air to boost jump</div>
+          <div><b>Q</b> or double-tap a direction: boost dash</div>
+          <div><b>Ctrl</b> or <b>C</b>: slide while sprinting, ground slam in the air</div>
+          <div><b>Left click</b> or <b>F</b> punch · <b>E</b> lift a crate, then click to throw</div>
+          <div><b>1</b> Armour · <b>2</b> Strength · <b>3</b> Speed · <b>4</b> Cloak (again to switch off)</div>
+          <div><b>R</b> repair broken arms · <b>Backspace</b> back to the start · <b>Esc</b> this menu</div>
+        </div>
+        </div>
+        <div>
+        <h3>PS5 controller</h3>
+        <div class="keys" id="padkeys"></div>
+        </div>
+        </div>
+        <p id="padline" class="sub"></p>
+        <p id="notes" class="sub"></p>
+      </div>
+    </div>
+
+    <!-- The shared Forge script, before the game module: inside Forge it holds
+         the game's animation frames while Exo Lab is not on screen. -->
+    <script src="/shared/forge_chrome.js"></script>
+    <script type="module" src="game/main.js"></script>
+  </body>
+</html>

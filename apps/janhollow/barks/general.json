@@ -1,0 +1,77 @@
+{
+ "label": "Anyone, anywhere",
+ "weight": 1,
+ "exchanges": [
+  {
+   "say": "Did you hear the hum change this morning, {listener}?",
+   "replies": [
+    "I thought it was me.",
+    "Tamsin says it's fine.",
+    "Every morning, I swear."
+   ]
+  },
+  {
+   "say": "How's your day going?",
+   "replies": [
+    "Slowly, which is how I like it.",
+    "Ask me after lunch.",
+    "Better now, thanks."
+   ]
+  },
+  {
+   "say": "Have you seen my good pen anywhere?",
+   "replies": [
+    "Try the mess hall.",
+    "Dez had one.",
+    "Which one is the good one?"
+   ]
+  },
+  {
+   "say": "It's quiet today.",
+   "replies": [
+    "Don't say that out loud.",
+    "I'll take quiet.",
+    "Give it an hour."
+   ]
+  },
+  {
+   "say": "Remind me what day it is.",
+   "replies": [
+    "It's {time}, if that helps.",
+    "The one after yesterday.",
+    "Too early to say."
+   ]
+  },
+  {
+   "say": "You look like you need a coffee, {listener}.",
+   "replies": [
+    "I need two.",
+    "That obvious?",
+    "I've had three."
+   ]
+  },
+  {
+   "say": "Is it me, or is it warm in the {room}?",
+   "replies": [
+    "It's you.",
+    "Ilya's been at the vents again.",
+    "It's always warm in here."
+   ]
+  },
+  {
+   "say": "Busy?",
+   "replies": [
+    "Always.",
+    "Not for you.",
+    "Pretending to be."
+   ]
+  }
+ ],
+ "hello": [
+  "Hello, {you}.",
+  "Settling in all right?",
+  "Mind your step, {you}.",
+  "Good to see a new face.",
+  "Shout if you need anything."
+ ]
+}

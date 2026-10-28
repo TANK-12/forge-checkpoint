@@ -1,0 +1,52 @@
+/* forge_lightbox.css -- the image viewer from forge_lightbox.js, which loads
+   this sheet itself. Fixed colours rather than the palette variables, so it
+   looks the same in pages that do not use forge.css. */
+
+/* An image that would open on click. */
+img.fz-hint { cursor: zoom-in; }
+
+/* The zoom engine (ForgeZoom): also used by viewers of an app's own. */
+.fz-stage { touch-action: none; overflow: hidden; user-select: none; -webkit-user-select: none; }
+.fz-img { transform-origin: 50% 50%; will-change: transform; -webkit-user-drag: none; }
+.fz-img.fz-zoomed { cursor: grab; }
+.fz-stage:active .fz-img.fz-zoomed { cursor: grabbing; }
+
+html.fl-open, html.fl-open body { overflow: hidden; }
+
+.fl-overlay {
+  position: fixed; inset: 0; z-index: 2147483000;
+  background: rgba(8, 8, 10, 0.92);
+  animation: fl-fade 0.15s ease-out;
+}
+.fl-overlay[hidden] { display: none; }
+.fl-stage {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.fl-img {
+  display: block; max-width: none; max-height: none;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  background: repeating-conic-gradient(#2a2a2e 0% 25%, #222226 0% 50%) 50% / 20px 20px;
+}
+.fl-img.fl-loading { visibility: hidden; }
+.fl-close {
+  position: absolute; top: 14px; right: 14px;
+  width: 42px; height: 42px; border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(20, 20, 24, 0.75); color: #f2f2f2;
+  font-size: 20px; line-height: 1; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.fl-close:hover, .fl-close:focus-visible { background: rgba(60, 60, 68, 0.9); border-color: rgba(255, 255, 255, 0.6); outline: none; }
+.fl-hint {
+  position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%);
+  display: flex; gap: 12px; align-items: center;
+  padding: 5px 12px; border-radius: 999px;
+  background: rgba(20, 20, 24, 0.7); color: rgba(240, 240, 240, 0.8);
+  font: 12px/1.4 system-ui, sans-serif; white-space: nowrap;
+  pointer-events: none;
+}
+.fl-pct { font-variant-numeric: tabular-nums; color: #fff; font-weight: 600; }
+
+@keyframes fl-fade { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .fl-overlay { animation: none; } }

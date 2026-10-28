@@ -1,0 +1,16 @@
+/* motion: Spring | Panes bounce in with a little overshoot; tiles spring up and the icon wiggles when you point */
+/* lighter: balanced=glide, light=still */
+/* Scoped to body.motion-spring (shared/motion/, task 377). The entrance keeps the
+   hub's timing rule: the move takes the first 16th of the run, then holds
+   (see home-in in hub/index.html), and moves transform only, never opacity.
+   The hub's reduced-motion and Animations-off rules switch all of it off. */
+@keyframes motion-spring-in { from { transform: translateY(16px) scale(.95) } 3.5% { transform: translateY(-3px) scale(1.012) } 5% { transform: translateY(1px) scale(.998) } 6.25% { transform: none } to { transform: none } }
+body.motion-spring #home.enter :is(.tile, .section-head, .more-btn:not([hidden]), .fchip, #recent-wrap h3, .hero > div:first-child, #search, .widgets .wg) { animation-name: motion-spring-in; }
+@media (prefers-reduced-motion: no-preference) {
+  body.motion-spring .tile { transition-timing-function: cubic-bezier(.34, 1.56, .64, 1); transition-duration: 340ms; }
+  body.motion-spring .tile:hover, body.motion-spring .tile.focus { transform: translateY(-6px) scale(1.02); }
+  body.motion-spring:not(.no-anim) .tile:hover .icon { animation: motion-spring-wiggle 520ms ease-in-out 1; }
+  body.motion-spring .dock-item { transition-timing-function: cubic-bezier(.34, 1.56, .64, 1); }
+  @keyframes motion-spring-wiggle { 0%, 100% { transform: scale(1.12) rotate(0) } 25% { transform: scale(1.14) rotate(-9deg) }
+    55% { transform: scale(1.12) rotate(6deg) } 80% { transform: scale(1.12) rotate(-2deg) } }
+}

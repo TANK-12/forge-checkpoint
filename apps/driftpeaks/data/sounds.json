@@ -1,0 +1,95 @@
+{
+ "jump": {
+  "label": "Jump",
+  "event": "jump",
+  "wave": "noise",
+  "duration": 0.14,
+  "gain": 0.18,
+  "filter": 2600,
+  "filter_to": 900
+ },
+ "land": {
+  "label": "Land",
+  "event": "land",
+  "wave": "noise",
+  "duration": 0.12,
+  "gain": 0.22,
+  "filter": 900,
+  "filter_to": 300
+ },
+ "flip": {
+  "label": "Backflip",
+  "event": "flip",
+  "wave": "triangle",
+  "freq": 520,
+  "freq_to": 880,
+  "duration": 0.18,
+  "gain": 0.2
+ },
+ "combo": {
+  "label": "Combo boost",
+  "event": "combo",
+  "wave": "triangle",
+  "freq": 660,
+  "freq_to": 1320,
+  "duration": 0.28,
+  "gain": 0.2,
+  "repeat": 2
+ },
+ "coin": {
+  "label": "Coin",
+  "event": "coin",
+  "wave": "sine",
+  "freq": 1180,
+  "freq_to": 1560,
+  "duration": 0.09,
+  "gain": 0.16
+ },
+ "grind": {
+  "label": "Grind",
+  "event": "grind",
+  "wave": "sawtooth",
+  "freq": 180,
+  "freq_to": 170,
+  "duration": 0.25,
+  "gain": 0.06
+ },
+ "goat": {
+  "label": "Goat caught",
+  "event": "goat",
+  "wave": "square",
+  "freq": 420,
+  "freq_to": 300,
+  "duration": 0.16,
+  "gain": 0.1,
+  "repeat": 2
+ },
+ "crash": {
+  "label": "Crash",
+  "event": "crash",
+  "wave": "noise",
+  "duration": 0.5,
+  "gain": 0.3,
+  "filter": 1200,
+  "filter_to": 120
+ },
+ "goal": {
+  "label": "Goal complete",
+  "event": "goal",
+  "wave": "triangle",
+  "freq": 784,
+  "freq_to": 1046,
+  "duration": 0.35,
+  "gain": 0.2,
+  "repeat": 3
+ },
+ "thunder": {
+  "label": "Thunder",
+  "event": "thunder",
+  "wave": "noise",
+  "duration": 1.4,
+  "gain": 0.25,
+  "filter": 400,
+  "filter_to": 60
+ }
+}

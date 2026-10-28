@@ -1,0 +1,46 @@
+{
+ "label": "Dez, the dock hand",
+ "jobs": [
+  "dock hand"
+ ],
+ "weight": 2,
+ "exchanges": [
+  {
+   "say": "I owe you one, {listener}. Or is it two?",
+   "replies": [
+    "It's three.",
+    "Who's counting?",
+    "Two, and a dinner."
+   ]
+  },
+  {
+   "say": "The barge is due, or so they tell me.",
+   "replies": [
+    "They always tell you that.",
+    "Let's hope it's coffee.",
+    "Any day now."
+   ]
+  },
+  {
+   "say": "Can you hold this for one second? One second.",
+   "replies": [
+    "What is it?",
+    "That's what you said last time.",
+    "Go on."
+   ]
+  },
+  {
+   "say": "Watch the crates. I've stacked them creatively.",
+   "replies": [
+    "I can see that.",
+    "Creatively?",
+    "Somebody will trip on those."
+   ]
+  }
+ ],
+ "hello": [
+  "Watch the crates.",
+  "Barge is due, or so they tell me.",
+  "Need a hand with anything, {you}?"
+ ]
+}

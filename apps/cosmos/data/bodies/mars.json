@@ -1,0 +1,43 @@
+{
+  "id": "mars",
+  "name": "Mars",
+  "kind": "planet",
+  "parent": "sun",
+  "order": 40,
+  "radius_km": 3389.5,
+  "gm_km3_s2": 42828.375,
+  "color": "#c9643b",
+  "pole": {
+    "ra_deg": 317.681,
+    "dec_deg": 52.887
+  },
+  "summary": "A cold desert world with the tallest volcano in the solar system, Olympus Mons, and a canyon, Valles Marineris, as long as the United States is wide.",
+  "elements": {
+    "model": "standish",
+    "a": [
+      1.52371034,
+      1.847e-05
+    ],
+    "e": [
+      0.0933941,
+      7.882e-05
+    ],
+    "i": [
+      1.84969142,
+      -0.00813131
+    ],
+    "L": [
+      -4.55343205,
+      19140.30268499
+    ],
+    "varpi": [
+      -23.94362959,
+      0.44441088
+    ],
+    "node": [
+      49.55953891,
+      -0.29257343
+    ],
+    "source": "JPL approximate planetary elements (E.M. Standish), 1800-2050 table"
+  }
+}

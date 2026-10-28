@@ -1,0 +1,4 @@
+{"id": "shoulder_rom", "name": "Shoulder range sweep", "kind": "shoulder_rom", "order": 1,
+ "about": "Sweeps every arm direction a person can reach (plane of elevation by elevation, at neutral and extreme arm twist) and checks the exo can follow: joint limits, gimbal lock, collisions with the body, how far its centre sits from the real shoulder joint, and the strap pressure that misalignment causes.",
+ "params": {"plane_step": 10, "elev_step": 10, "elbow_deg": 30, "check_twist": true},
+ "rules": {"followed_pass_pct": 95, "followed_warn_pct": 85}}

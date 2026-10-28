@@ -1,0 +1,48 @@
+{
+  "id": "girdle",
+  "name": "Shoulder girdle motion",
+  "about": "How far the glenohumeral (GH) joint centre moves when the arm is raised, because the clavicle and scapula move with it. Tables are millimetres against arm elevation in degrees; 'forward' is scaled by the plane factor below.",
+  "elevation_deg": [
+    0,
+    30,
+    60,
+    90,
+    120,
+    150,
+    180
+  ],
+  "up_mm": [
+    0,
+    2,
+    8,
+    16,
+    26,
+    36,
+    45
+  ],
+  "forward_mm": [
+    0,
+    3,
+    8,
+    13,
+    16,
+    18,
+    18
+  ],
+  "medial_mm": [
+    0,
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "forward_plane_neutral_deg": 45,
+  "rhythm": {
+    "scapula_onset_deg": 30,
+    "scapula_slope": 0.4,
+    "about": "Scapular upward rotation = max(0, elevation - onset) x slope: 60 of 180 degrees at full raise (Inman 1944's 2:1 rhythm)."
+  },
+  "source": "Shape after Inman 1944 and Ludewig 2009 (clavicle elevation and retraction during arm elevation); exoskeleton studies report the GH centre moving several centimetres over a full raise. Approximate, editable."
+}

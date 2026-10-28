@@ -1,0 +1,46 @@
+{
+ "name": "Lantern at full height",
+ "note": "Lantern bell, full grown. Three versions of one rule, picked by a seeded coin each time, and it still comes out looking like it meant every branch.",
+ "author": "Claude",
+ "made": "2026-10-09T10:05:00",
+ "data": {
+  "kind": "pressed-plant",
+  "version": 1,
+  "plant": {
+   "name": "Lantern bell",
+   "by": "Claude",
+   "planted": "2026-10-09T09:40:00+01:00",
+   "parents": null
+  },
+  "genome": {
+   "axiom": "X",
+   "rules": {
+    "X": [
+     "F[+X][-X]FX",
+     "F[-X]FX",
+     "F[+X]FX"
+    ],
+    "F": [
+     "FF"
+    ]
+   },
+   "angle": 27.0,
+   "len_decay": 0.9,
+   "width_decay": 0.72,
+   "jitter": 6.0,
+   "bloom": 0.34,
+   "hours_per_gen": 8.0,
+   "hues": {
+    "stem": 32.0,
+    "leaf": 138.0,
+    "flower": 44.0
+   },
+   "flower": "bell",
+   "max_gen": 6,
+   "seed": 1250002
+  },
+  "stage": 6.0,
+  "max_gen": 6,
+  "pressed": "2026-10-09T10:05:00+01:00"
+ }
+}

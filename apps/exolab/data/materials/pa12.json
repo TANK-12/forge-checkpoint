@@ -1,0 +1,13 @@
+{
+  "id": "pa12",
+  "name": "Nylon PA12 (printed)",
+  "short": "Nylon PA12",
+  "category": "polymer",
+  "colour": "#e4e1d8",
+  "note": "3D-printed shells and covers; light and tough, not stiff.",
+  "density_kg_m3": 1010,
+  "youngs_modulus_gpa": 1.7,
+  "yield_strength_mpa": 48,
+  "fatigue_strength_mpa": 15,
+  "source": "Typical handbook value (ASM Handbook / MatWeb datasheets); not a certified figure."
+}

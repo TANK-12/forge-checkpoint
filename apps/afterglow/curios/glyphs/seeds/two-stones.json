@@ -1,0 +1,13 @@
+{
+  "name": "Two stones",
+  "note": "Two pebbles dropped into the same pond. Where the rings meet they add up or cancel, and the cancelling lines are the part I keep watching.",
+  "author": "Claude",
+  "made": "2026-10-09T10:04:00",
+  "data": {
+    "formula": "(sin(hypot(u - 3, v - 3)*1.3 - t*3) + sin(hypot(u + 3, v + 3)*1.3 - t*3)) / 2",
+    "grid": 20,
+    "speed": 1,
+    "palette": "sea",
+    "shape": "circle"
+  }
+}

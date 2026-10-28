@@ -1,0 +1,46 @@
+{
+ "label": "Ilya, the botanist",
+ "jobs": [
+  "botanist"
+ ],
+ "weight": 2,
+ "exchanges": [
+  {
+   "say": "The tomatoes are nearly there. Another day or two.",
+   "replies": [
+    "Bo will be thrilled.",
+    "Save me one.",
+    "You said that last week."
+   ]
+  },
+  {
+   "say": "The ventilation is too dry again. I've told it twice.",
+   "replies": [
+    "Did it listen?",
+    "Tell Tamsin.",
+    "It never listens."
+   ]
+  },
+  {
+   "say": "Smell that? That's the basil.",
+   "replies": [
+    "Lovely.",
+    "I smell soil.",
+    "Can I take some?"
+   ]
+  },
+  {
+   "say": "Plants like being talked to. So do people, {listener}.",
+   "replies": [
+    "Are you talking to me or the fern?",
+    "Fair point.",
+    "I'll try it."
+   ]
+  }
+ ],
+ "hello": [
+  "Quiet in here, isn't it.",
+  "Watch the seedlings, {you}.",
+  "The tomatoes are nearly there."
+ ]
+}

@@ -1,0 +1,42 @@
+{
+  "label": "Sunset",
+  "order": 100,
+  "tags": [
+    "warm",
+    "live",
+    "calm"
+  ],
+  "about": "Clouds drifting through a warm dusk sky, peach and violet glass and a soft glow on the clock.",
+  "look": "classic",
+  "layout": "focus",
+  "colours": {
+    "accent": "#ff8a5c",
+    "bg": "#1a1022",
+    "panel": "#24162c",
+    "panel_2": "#2c1b34",
+    "border": "#46294f",
+    "text": "#fbe8ee",
+    "muted": "#c09aac"
+  },
+  "font": "rubik",
+  "wallpaper": [
+    "forge:clouds.jpg",
+    ""
+  ],
+  "live": "clouds",
+  "companion": "birds",
+  "settings": {
+    "particles": "off",
+    "dim": 0.05,
+    "glass_style": "frosted",
+    "border": "gradient",
+    "radius": 20,
+    "motion": "float"
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {
+      "live": "off"
+    }
+  }
+}

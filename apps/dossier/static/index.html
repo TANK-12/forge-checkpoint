@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dossier</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/shared/forge.css">
+<link rel="stylesheet" href="/app.css">
+<script src="/shared/forge_dialog.js"></script>
+</head>
+<body>
+<div class="shell">
+
+  <div class="topbar">
+    <div class="brand">Dos<span>sier</span></div>
+    <div class="views">
+      <button data-view="world" class="on">World</button>
+      <button data-view="library">Library</button>
+      <button data-view="subject">Dossier</button>
+      <button data-view="links">Connections</button>
+      <button data-view="watch">Watch</button>
+      <button data-view="jobs">Jobs</button>
+    </div>
+    <div class="spacer"></div>
+    <span class="pill" id="pill-queue" hidden></span>
+    <span class="pill clickable" id="pill-store" role="button" tabindex="0">storage</span>
+    <span class="pill" id="pill-jan">Jan</span>
+    <button class="ghost" id="go-fullscreen" title="Hide the Forge sidebar (f). F11 fills the screen.">Full screen</button>
+  </div>
+
+  <div class="main">
+
+    <!-- ============================ WORLD ============================ -->
+    <section class="view on" id="view-world">
+      <div class="pad">
+        <div class="split">
+          <div>
+            <div class="mapwrap">
+              <svg id="worldmap" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet"></svg>
+              <div class="maptip" id="maptip"></div>
+              <div class="mapctl">
+                <button class="ghost" id="zoom-in" title="Zoom in">+</button>
+                <button class="ghost" id="zoom-out" title="Zoom out">&minus;</button>
+                <button class="ghost" id="zoom-reset" title="Reset view">&#8635;</button>
+              </div>
+            </div>
+            <div class="legend">
+              <span><i style="background:#1b1f27"></i>nothing held</span>
+              <span><i style="background:color-mix(in srgb, #e0a75e 30%, #1b1f27)"></i>a few</span>
+              <span><i style="background:color-mix(in srgb, #e0a75e 65%, #1b1f27)"></i>several</span>
+              <span><i style="background:#e0a75e"></i>most covered</span>
+              <span class="spacer"></span>
+              <span>Drag to pan, scroll to zoom, click a country.</span>
+            </div>
+
+            <div class="legend arcbar" id="arc-controls">
+              <span class="muted">Ties between countries</span>
+              <span class="spacer"></span>
+              <span class="muted small" id="arc-count"></span>
+            </div>
+
+            <div class="card offmap-card" id="offmap-card" style="margin-top:14px" hidden>
+              <h3>Not on the map <span class="muted small" id="offmap-count"></span></h3>
+              <div class="small muted">Historical states, places too small for this map,
+                and subjects with no recorded country. Click one to see what is held.</div>
+              <div class="offmap" id="offmap"></div>
+            </div>
+
+            <div class="card" id="country-panel" style="margin-top:14px" hidden></div>
+          </div>
+
+          <div>
+            <div class="card">
+              <h3>State of the world</h3>
+              <div id="briefing-body" class="small muted">Reading the briefing…</div>
+              <div class="row" style="margin-top:10px">
+                <button class="primary" id="briefing-build">Build briefing</button>
+                <select id="briefing-days">
+                  <option value="7">last 7 days</option>
+                  <option value="14" selected>last 14 days</option>
+                  <option value="30">last 30 days</option>
+                  <option value="3650">everything held</option>
+                </select>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Add a subject</h3>
+              <input id="add-name" placeholder="Name of a person, party, country, company, war…" style="width:100%">
+              <div class="row" style="margin-top:8px">
+                <select id="add-type"></select>
+                <select id="add-phase">
+                  <option value="quick">quick pass</option>
+                  <option value="deep">deep dive</option>
+                  <option value="images">pictures</option>
+                  <option value="tour">read aloud</option>
+                </select>
+                <button class="primary" id="add-go">Research</button>
+              </div>
+              <div class="hint">A quick pass takes about a minute and fills the
+                encyclopedic baseline, the timeline and the quotes. A deep dive
+                reads the articles and extracts corroborated claims, and takes
+                considerably longer.</div>
+            </div>
+            <div class="card">
+              <h3>Coverage</h3>
+              <div id="coverage" class="small muted">Counting…</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================== LIBRARY =========================== -->
+    <section class="view" id="view-library">
+      <div class="pad">
+        <div class="row" style="margin-bottom:14px">
+          <input id="lib-search" placeholder="Search by name, office, party or country…" style="flex:1;min-width:200px">
+          <select id="lib-type"><option value="">every type</option></select>
+          <select id="lib-depth">
+            <option value="">any depth</option>
+            <option value="quick">quick pass only</option>
+            <option value="deep">deep dived</option>
+          </select>
+          <select id="lib-sort" title="Order of the list">
+            <option value="name">A to Z</option>
+            <option value="updated">recently refreshed</option>
+            <option value="added">recently added</option>
+            <option value="sources">most sources</option>
+            <option value="claims">most claims</option>
+          </select>
+          <button class="placefilter" id="lib-place" type="button" hidden
+                  title="Stop filtering by place">
+            <span>Place: <b id="lib-place-name"></b></span><span aria-hidden="true">×</span>
+          </button>
+          <span class="muted small" id="lib-count">loading…</span>
+        </div>
+        <div class="grid" id="lib-grid"><div class="empty">Reading the library…</div></div>
+        <button class="ghost lib-more" id="lib-more" type="button" hidden>Show more</button>
+      </div>
+    </section>
+
+    <!-- =========================== SUBJECT =========================== -->
+    <section class="view" id="view-subject">
+      <div class="pad">
+        <div id="subject-body"><div class="empty">Pick a subject from the library or the map.</div></div>
+      </div>
+    </section>
+
+    <!-- ============================ JOBS ============================= -->
+    <!-- ========================= CONNECTIONS ========================= -->
+    <section class="view" id="view-links">
+      <div class="pad">
+        <div class="split">
+          <div>
+            <div class="card">
+              <h3>Mind map</h3>
+              <div class="row">
+                <input type="text" id="graph-centre" placeholder="a person, party, country…" style="flex:1" list="graph-names">
+                <select id="graph-depth">
+                  <option value="1">1 hop</option>
+                  <option value="2" selected>2 hops</option>
+                  <option value="3">3 hops</option>
+                </select>
+                <button class="primary" id="graph-draw">Draw</button>
+              </div>
+              <div id="graph-canvas" class="graphbox"><div class="muted small pad">Name a subject to see what it connects to.</div></div>
+              <div class="hint" id="graph-note">Filled circles have a dossier of their own — click one to open it.
+                Hollow ones are named by someone's record but not researched yet; click to re-centre on them.
+                Drag to pan, scroll to zoom.</div>
+            </div>
+          </div>
+
+          <div>
+            <div class="card">
+              <h3>How are they linked?</h3>
+              <div class="row">
+                <input type="text" id="path-a" placeholder="from…" style="flex:1" list="graph-names">
+                <input type="text" id="path-b" placeholder="to…" style="flex:1" list="graph-names">
+                <button class="primary" id="path-go">Find</button>
+              </div>
+              <div id="path-result" class="small muted" style="margin-top:10px">
+                Two subjects, and the shortest chain of recorded relations between them.
+              </div>
+              <div class="hint">Every hop is a stored relation with a source behind it —
+                nothing here is a model's guess about who knows whom.</div>
+            </div>
+            <div class="card">
+              <h3>The graph</h3>
+              <div class="small muted" id="graph-stats">counting…</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <datalist id="graph-names"></datalist>
+    </section>
+
+    <!-- ============================ WATCH ============================ -->
+    <section class="view" id="view-watch">
+      <div class="pad">
+        <div class="split">
+          <div>
+            <div class="card">
+              <h3>Keep the library current</h3>
+              <div class="hint">News is gathered per subject when that subject is
+                researched, so a library left alone slowly goes stale and the briefing
+                quietly describes an older world. The watcher closes that loop: on a
+                timer it queues another quick pass over whichever subjects have gone
+                longest without one, and the ordinary merge rules fold in whatever is
+                new. Nothing already held is lost or duplicated.</div>
+              <div class="row" style="margin-top:12px">
+                <label class="switch">
+                  <input type="checkbox" id="watch-enabled">
+                  <span>Watch for news</span>
+                </label>
+                <span class="spacer"></span>
+                <button class="primary" id="watch-now">Sweep now</button>
+              </div>
+              <div class="row" style="margin-top:10px">
+                <label class="small muted">every</label>
+                <select id="watch-hours">
+                  <option value="1">hour</option>
+                  <option value="3">3 hours</option>
+                  <option value="6" selected>6 hours</option>
+                  <option value="12">12 hours</option>
+                  <option value="24">day</option>
+                  <option value="168">week</option>
+                </select>
+                <label class="small muted">refresh</label>
+                <input type="number" id="watch-per" value="12" min="1" max="200" style="width:76px">
+                <label class="small muted">subjects a time</label>
+              </div>
+              <div class="small muted" id="watch-status" style="margin-top:10px">reading…</div>
+              <div class="hint">It never clears a pause, never pushes past a queue that
+                is still working, and never overrides the memory guard — so a bulk run
+                you started always takes precedence, and a sweep that has to wait is
+                simply retried later.</div>
+            </div>
+
+            <div class="card">
+              <h3>Get all the new info</h3>
+              <div class="hint">Gives every subject already held the past five years of
+                news and its full encyclopedia article. The news is Wikipedia's daily
+                Current Events digest — sixty month pages, downloaded once and shared by
+                the whole library — and an item belongs to a subject because it links that
+                subject's article, not because a name looked similar. Every item keeps the
+                outlets it cites. New research passes do this on their own; this catches up
+                what was researched before. No model is used.
+                <b>Your old data is kept:</b> news merges in without replacing anything, and a
+                subject that already has its article keeps it. Each dossier also has its own
+                <i>Get new info</i> button.</div>
+              <div class="row" style="margin-top:12px">
+                <button class="primary" id="history-start">Get new info for every subject</button>
+                <button class="ghost" id="history-stop" disabled hidden>Stop</button>
+              </div>
+              <div class="bar"><i id="history-bar" style="width:0%"></i></div>
+              <div class="small muted" id="history-status">reading…</div>
+              <div class="joblog" id="history-log" style="height:140px;margin-top:8px"></div>
+            </div>
+
+            <div class="card">
+              <h3>Next to be refreshed</h3>
+              <div class="small muted">The subjects that have gone longest without a look.</div>
+              <div id="watch-next" class="watchlist"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="card">
+              <h3>Just in</h3>
+              <div class="small muted">Most recently refreshed, newest first.</div>
+              <div id="watch-fresh" class="watchlist"></div>
+            </div>
+            <div class="card">
+              <h3>Recent sweeps</h3>
+              <div id="watch-sweeps" class="small muted">none yet</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="view-jobs">
+      <div class="pad">
+        <div class="split">
+          <div>
+            <div class="card">
+              <h3>Bulk research — set it going and leave it</h3>
+              <div id="recipes"></div>
+              <div class="row" style="margin-top:12px">
+                <label class="small muted">how many</label>
+                <input type="number" id="recipe-limit" value="100" min="1" max="500" style="width:80px">
+                <select id="recipe-phase">
+                  <option value="quick">quick pass each</option>
+                  <option value="deep">deep dive each</option>
+                  <option value="images">pictures each</option>
+                  <option value="tour">read each aloud</option>
+                </select>
+                <span class="small muted">into the active queue</span>
+              </div>
+              <div class="hint">Subjects are queued most-covered-first, measured by
+                how many language Wikipedias carry an article on them. A job stopped
+                halfway has still done the consequential ones. The queue is on disk,
+                so closing the app costs at most the subject in flight — a pause is
+                still a pause tomorrow morning. Subjects already in the library are
+                skipped unless the queue is set to redo them.</div>
+            </div>
+
+            <div class="card">
+              <h3>Queues</h3>
+              <div id="queue-list"></div>
+              <div class="row" style="margin-top:8px">
+                <input type="text" id="queue-new-name" placeholder="name a new queue" style="flex:1">
+                <button class="ghost" id="queue-new">Add queue</button>
+              </div>
+              <label class="small muted" style="display:block;margin-top:10px">
+                <input type="checkbox" id="queue-redo"> redo subjects I already hold
+              </label>
+              <div class="hint">Off, the active queue skips any subject already in
+                the library and marks it skipped rather than researching it twice.
+                On, it researches everything again — which is what you want after
+                the pipeline learns to collect something new.</div>
+            </div>
+
+            <div class="card">
+              <h3>Queue</h3>
+              <div class="row">
+                <button class="primary" id="q-start">Start</button>
+                <button class="ghost" id="q-pause">Pause</button>
+                <button class="ghost" id="q-stop">Stop</button>
+                <button class="ghost" id="q-clear">Clear finished</button>
+                <button class="ghost" id="q-deepen">Deepen 25 held subjects</button>
+              </div>
+              <div class="bar"><i id="q-bar" style="width:0%"></i></div>
+              <div class="small muted" id="q-summary">idle</div>
+              <div id="q-jobs" style="margin-top:10px;max-height:280px;overflow:auto"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="card">
+              <h3>Live log</h3>
+              <div class="joblog" id="q-log">nothing running</div>
+            </div>
+            <div class="card">
+              <h3>Failures</h3>
+              <div class="small muted" id="q-errors">none</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+<dialog id="loc-dialog" class="loc-dialog">
+  <h3>Library folder</h3>
+  <p class="muted" id="loc-current"></p>
+  <div id="loc-found"></div>
+  <div class="loc-search">
+    <input id="loc-folder" placeholder="Look in another folder, e.g. a backup drive" spellcheck="false">
+    <button class="ghost" id="loc-search" type="button">Search here</button>
+  </div>
+  <div class="loc-actions"><button class="ghost" id="loc-close" type="button">Close</button></div>
+</dialog>
+
+<script src="/shared/forge_idle.js"></script>
+<script src="/shared/forge_chrome.js"></script>
+<script src="/shared/forge_lightbox.js"></script>
+<script src="/shared/forge.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>

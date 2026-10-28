@@ -1,0 +1,47 @@
+{
+  "label": "Code Rain",
+  "order": 86,
+  "tags": [
+    "neon",
+    "retro",
+    "live",
+    "dark"
+  ],
+  "about": "Green glyphs raining slowly down a terminal, monospace type, square corners and a helper robot.",
+  "look": "outline",
+  "layout": "dense",
+  "colours": {
+    "accent": "#3cff7a",
+    "bg": "#020604",
+    "panel": "#06100a",
+    "panel_2": "#0a170e",
+    "border": "#164a26",
+    "text": "#c9f9d6",
+    "muted": "#5fa877"
+  },
+  "font_stack": "\"JetBrains Mono\", \"DejaVu Sans Mono\", \"Liberation Mono\", monospace",
+  "wallpaper": [
+    "forge:code-rain.jpg",
+    ""
+  ],
+  "live": "code-rain",
+  "companion": "robot",
+  "settings": {
+    "particles": "off",
+    "dim": 0.0,
+    "glass_style": "flat",
+    "glass": 0.88,
+    "border": "accent",
+    "shadows": false,
+    "radius": 2,
+    "wall_3d": false,
+    "icon_style": "classic",
+    "motion": "slide"
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {
+      "live": "off"
+    }
+  }
+}

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mint</title>
+  <link rel="stylesheet" href="/shared/forge.css">
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+  <header class="mint-top">
+    <span class="brand"><span class="brand-mark" aria-hidden="true">🪙</span> Mint</span>
+    <nav id="tabs" class="tabs" role="tablist">
+      <a href="#plan" data-tab="plan" role="tab">Plan</a>
+      <a href="#lab" data-tab="lab" role="tab">Lab</a>
+      <a href="#paper" data-tab="paper" role="tab">Paper</a>
+      <a href="#ready" data-tab="ready" role="tab">Ready?</a>
+      <a href="#learn" data-tab="learn" role="tab">Learn</a>
+    </nav>
+    <div class="top-tools">
+      <div class="mode-switch" id="mode-switch" role="group" title="Simple shows the main controls; Advanced shows every setting">
+        <button type="button" data-mode="simple">Simple</button>
+        <button type="button" data-mode="advanced">Advanced</button>
+      </div>
+      <button type="button" class="btn" id="go-fullscreen" title="Full screen: hides the Forge sidebar. Esc comes back.">Full screen</button>
+    </div>
+  </header>
+  <p class="fake-banner">Fake money only. Mint never connects to a broker, never logs in and never moves money.</p>
+
+  <main>
+    <section id="tab-plan" class="panel" role="tabpanel">
+      <form class="card plan-form" onsubmit="return false">
+        <label class="field">Start with ($)<input id="p-start" type="number" min="0" max="10000000" step="50"><input type="range" data-for="p-start" min="0" max="20000" step="100" aria-label="Start with, slider"></label>
+        <label class="field">Then each week ($)<input id="p-weekly" type="number" min="0" max="5000" step="10"><input type="range" data-for="p-weekly" min="0" max="2000" step="10" aria-label="Then each week, slider"></label>
+        <label class="field">For (years)<input id="p-years" type="number" min="1" max="40" step="1" required><input type="range" data-for="p-years" min="1" max="40" step="1" aria-label="For how many years, slider"></label>
+        <label class="field" title="A balance you want to reach, in the same dollars as the amounts shown. Each path then says how often it gets there and when half the futures have.">Goal ($, optional)<input id="p-goal" type="number" min="0" max="100000000" step="1000" placeholder="e.g. 50000"><input type="range" data-for="p-goal" min="0" max="1000000" step="5000" aria-label="Goal, slider"></label>
+        <label class="field" title="Only used for the super cap. It stays in Mint's settings on this laptop.">Salary before tax ($, optional)<input id="p-salary" type="number" min="0" max="10000000" step="1000" placeholder="for the super cap"></label>
+        <label class="field wide">How big a fall can you sit through?<select id="p-comfort"></select></label>
+        <label class="tick-field"><input id="p-cautious" type="checkbox"> Cautious: assume shares do a little worse than the past</label>
+        <label class="tick-field"><input id="p-today" type="checkbox"> Show amounts in today's dollars</label>
+      </form>
+      <p id="plan-status" class="status" role="status"></p>
+      <p id="plan-history" class="muted"></p>
+      <div class="card">
+        <h2>The middle future for each path, by years from now</h2>
+        <div id="plan-chart" class="chart-host"><p class="muted loading">Working out a thousand futures from real history…</p></div>
+        <details class="more"><summary>The numbers as a table</summary><div id="plan-table" class="scroll-x"></div></details>
+      </div>
+      <div id="plan-cards" class="cards">
+        <article class="card path-card waiting"><p class="muted">Working out the paths…</p></article>
+        <article class="card path-card waiting"><p class="muted">Working out the paths…</p></article>
+        <article class="card path-card waiting"><p class="muted">Working out the paths…</p></article>
+      </div>
+      <h2>Before investing</h2>
+      <div id="plan-info" class="cards"></div>
+      <p id="plan-tax" class="muted small"></p>
+    </section>
+
+    <section id="tab-lab" class="panel" role="tabpanel">
+      <p class="muted">Test a trading idea on real past prices with every real cost, next to simply buying the plain fund with the same deposits. The last 30% of the years are test years: a sweep picks its setting on the earlier years only, and a luck test reruns the idea's own trades on coin-flip copies of the same days.</p>
+      <div class="lab-grid">
+        <form class="card" id="lab-form" onsubmit="return false">
+          <label class="field">Account<select id="l-venue"></select></label>
+          <label class="field">Market<select id="l-market"></select></label>
+          <label class="field">Idea<select id="l-strategy"></select></label>
+          <div id="l-params" class="params adv"></div>
+          <div class="row3">
+            <label class="field">Start with ($)<input id="l-start" type="number" value="100" min="0"></label>
+            <label class="field">Add each time ($)<input id="l-deposit" type="number" value="300" min="0"></label>
+            <label class="field adv">Every (days)<input id="l-every" type="number" value="7" min="1" max="31"></label>
+          </div>
+          <label class="field" id="l-lev-field" hidden>Leverage<input id="l-lev" type="number" value="5" min="1" step="1"><span id="l-lev-cap" class="muted small"></span></label>
+          <label class="field adv">Stop-loss (% fall; 0 means none)<input id="l-stop" type="number" value="0" min="0" max="50"></label>
+          <div class="row3 adv">
+            <label class="field">From<input id="l-from" type="date"></label>
+            <label class="field">To<input id="l-to" type="date"></label>
+            <label class="field">Tuning years (%)<input id="l-split" type="number" value="70" min="30" max="90"></label>
+          </div>
+          <label class="field adv">Coin-flip copies in the luck test<input id="l-luck" type="number" value="200" min="0" max="500"></label>
+          <div class="row">
+            <button id="l-run" class="btn btn-primary" type="button">Test it</button>
+            <button id="l-sweep" class="btn adv" type="button">Tune it</button>
+          </div>
+          <fieldset class="zero">
+            <legend>Coin-flip traders</legend>
+            <p class="muted small">Traders with no skill at all, on real prices with real costs: the baseline any idea has to beat.</p>
+            <div class="row3">
+              <label class="field">Years<input id="l-zyears" type="number" value="1" min="0.25" max="20" step="0.25"></label>
+              <label class="field adv">Traders<input id="l-zruns" type="number" value="200" min="20" max="500"></label>
+              <label class="field adv">Trades a year<input id="l-ztrades" type="number" value="25" min="1" max="500"></label>
+              <label class="field adv">Days held<input id="l-zhold" type="number" value="5" min="1" max="120"></label>
+            </div>
+            <button id="l-zero" class="btn" type="button">Run coin-flip traders</button>
+          </fieldset>
+        </form>
+        <div>
+          <div id="lab-about" class="card about"></div>
+          <div id="lab-out"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-paper" class="panel" role="tabpanel">
+      <div class="paper-grid">
+        <aside>
+          <button id="paper-new" class="btn btn-primary" type="button">New paper account</button>
+          <form id="paper-form" class="card" hidden>
+            <label class="field">Name<input id="n-name" maxlength="60" placeholder="optional"></label>
+            <label class="field">Who trades it<select id="n-kind"><option value="manual">I place the trades</option><option value="bot">An idea from the Lab trades it</option></select></label>
+            <label class="field">Account<select id="n-venue"></select></label>
+            <label class="field">Market<select id="n-market"></select></label>
+            <div id="n-bot" hidden>
+              <label class="field">Idea<select id="n-strategy"></select></label>
+              <div id="n-params" class="params adv"></div>
+            </div>
+            <div class="row3">
+              <label class="field">Start with ($)<input id="n-start" type="number" value="100" min="0"></label>
+              <label class="field">Add each week ($)<input id="n-deposit" type="number" value="300" min="0"></label>
+            </div>
+            <p id="n-min" class="muted small" hidden></p>
+            <label class="field" id="n-lev-field" hidden>Leverage<input id="n-lev" type="number" value="1" min="1"></label>
+            <label class="field adv">Stop-loss (% fall)<input id="n-stop" type="number" value="0" min="0" max="50"></label>
+            <button id="n-make" class="btn btn-primary" type="submit">Make it</button>
+          </form>
+          <nav id="paper-list" class="acct-list" aria-label="Paper accounts"><p class="muted">Loading accounts…</p></nav>
+        </aside>
+        <div id="paper-detail"></div>
+      </div>
+    </section>
+
+    <section id="tab-ready" class="panel" role="tabpanel">
+      <p class="muted">Before a trading idea gets real money it has to pass every check below. Until then the plan is the plain fund.</p>
+      <label class="field narrow">Paper account<select id="ready-account"></select></label>
+      <div id="ready-out"></div>
+    </section>
+
+    <section id="tab-learn" class="panel" role="tabpanel">
+      <div id="learn-out"><p class="muted">Loading the published figures…</p></div>
+    </section>
+  </main>
+  <script>
+    /* The first frame shows the tab the address names, in the last mode used,
+       before app.js and the settings arrive (route() and setMode() take over). */
+    (function () {
+      var tab = (location.hash.slice(1) || "plan").split("/")[0];
+      var panel = document.getElementById("tab-" + tab) ? tab : "plan";
+      document.getElementById("tab-" + panel).classList.add("active");
+      document.querySelector('#tabs [data-tab="' + panel + '"]').setAttribute("aria-selected", "true");
+      var mode = "simple";
+      try {
+        if (localStorage.getItem("mint.mode") === "advanced") mode = "advanced";
+      } catch (e) {
+        /* storage blocked: Simple until the settings say otherwise */
+      }
+      document.body.classList.toggle("advanced", mode === "advanced");
+      document.querySelector('#mode-switch [data-mode="' + mode + '"]').classList.add("on");
+    })();
+  </script>
+
+  <div id="toast" class="toast hidden" role="status"></div>
+  <script src="/shared/forge_chrome.js"></script>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="forge-colours" content="own">
+<!-- Dark from the very first frame: color-scheme tells the browser to paint
+     the empty page dark before any CSS arrives, and the html background holds
+     it there while the scripts below load and bake the sprite library. -->
+<meta name="color-scheme" content="dark">
+<title>Emberfield</title>
+<style>
+  html{background:#12100e}
+  /* Declared so the browser renders form controls, dropdown popups and
+     scrollbars in dark mode. Without it the <option> list inside a <select>
+     is drawn with the system's light palette while the text colour is
+     inherited from this dark theme -- white on white, unreadable. */
+  :root{
+    color-scheme:dark;
+    --bg:#12100e; --panel:#1c1815; --panel-2:#25201b; --line:#3a322a;
+    --ink:#efe6d8; --muted:#a29481; --muted-solid:#a29481;
+    --accent:#e08a3c; --accent-2:#c4702c; --on-accent:#1a1206;
+    --hp:#c0483f; --shadow:0 12px 40px #0009;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:14px/1.5 "Iowan Old Style","Palatino Linotype",Georgia,serif;
+       overflow:hidden;height:100vh}
+  #stage{display:block;width:100vw;height:100vh;image-rendering:pixelated;cursor:crosshair}
+
+  .veil{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+        background:radial-gradient(120% 100% at 50% 0%,#2a211a 0%,#0d0b09 70%);z-index:10;
+        overflow:auto;padding:20px}
+  .veil[hidden]{display:none}
+  /* Thin scrollbars for the menus that outgrow a short window. WebKitGTK (the
+     Forge hub) reads only the -webkit- rules; Chrome and Firefox the others. */
+  .veil{scrollbar-width:thin;scrollbar-color:#4a3f34 transparent}
+  .veil::-webkit-scrollbar{width:8px;height:8px}
+  .veil::-webkit-scrollbar-track{background:transparent}
+  .veil::-webkit-scrollbar-thumb{background:#4a3f34;border-radius:8px}
+  .veil::-webkit-scrollbar-thumb:hover{background:#6a5a49}
+  /* Each screen eases in rather than snapping, on opacity and transform only. */
+  @keyframes card-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .card{animation:card-in .18s ease-out}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+        padding:26px 30px;min-width:380px;max-width:560px;box-shadow:var(--shadow);
+        margin:auto}
+  h1{margin:0 0 2px;font-size:34px;letter-spacing:.5px;color:var(--accent)}
+  h2{margin:0 0 14px;font-size:15px;font-weight:600;letter-spacing:.4px}
+  .sub{color:var(--muted);font-size:13px;margin:0 0 22px}
+  label{display:block;font-size:12px;letter-spacing:.3px;color:var(--muted);
+        margin:14px 0 5px;text-transform:lowercase}
+  select,input[type=text],input[type=number]{width:100%;background:var(--panel-2);
+        color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:8px 10px;
+        font:inherit;font-size:13px}
+  /* Styled explicitly. A <select> inherits this page's colours but its popup
+     list does not -- every option has to be told, or the dropdown opens as
+     pale text on a pale system background. */
+  option{background:#25201b;color:#efe6d8}
+  ::placeholder{color:#8d8071;opacity:1}
+  input[type=range]{width:100%;accent-color:var(--accent)}
+  /* A slider and the number box that mirrors it (settings). */
+  .pair{display:flex;gap:10px;align-items:center}
+  .pair input[type=range]{flex:1;min-width:0}
+  .pair input[type=number]{width:74px;flex:none;text-align:right}
+  .pair .unit{font-size:12px;color:var(--muted);min-width:76px}
+  details.adv{margin-top:20px;border-top:1px solid var(--line);padding-top:12px}
+  details.adv summary{cursor:pointer;color:var(--muted);font-size:13px}
+  details.adv summary:hover{color:var(--accent)}
+  .btn{background:var(--accent);color:var(--on-accent);border:0;border-radius:9px;
+       padding:10px 18px;font:inherit;font-weight:700;cursor:pointer;font-size:14px}
+  .btn:hover{background:var(--accent-2)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:400}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+  .btn.danger{background:transparent;color:#d98079;border:1px solid #5c3a36;font-weight:400}
+  .btn.danger:hover{border-color:#d98079}
+  .row{display:flex;gap:10px;align-items:center;margin-top:20px}
+  .row.wrap{flex-wrap:wrap}
+  .spacer{flex:1}
+  .choices{display:grid;gap:8px}
+  .choice{border:1px solid var(--line);border-radius:9px;padding:10px 12px;cursor:pointer;
+          background:var(--panel-2);color:var(--ink)}
+  .choice:hover{border-color:var(--accent)}
+  .choice.on{border-color:var(--accent);background:#2e2418}
+  .choice{min-width:0;overflow-wrap:anywhere}
+  .choice b{display:block;font-size:13px}
+  .choice span{font-size:11.5px;color:var(--muted)}
+  .note{font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.5}
+  .choice.trade{display:flex;justify-content:space-between;align-items:baseline;
+        gap:12px;padding:8px 12px}
+  .choice.trade b{display:inline;font-size:13px}
+  .choice.trade span{font-size:11.5px;white-space:nowrap}
+  .choice.trade.poor{opacity:.45}
+  .choice.trade.poor:hover{border-color:var(--line);cursor:not-allowed}
+  .warn{font-size:11.5px;color:#d9a06a;margin-top:10px;line-height:1.5}
+
+  /* The HUD sits over bright grass as often as over dark water, so it carries
+     its own backing rather than relying on a text shadow to stay legible. */
+  #hud{position:fixed;top:10px;left:12px;z-index:5;pointer-events:none;
+       font-size:13px;background:#12100ecc;border:1px solid #3a322a;
+       border-radius:9px;padding:7px 11px;backdrop-filter:blur(3px)}
+  #hud b{color:var(--accent)}
+  #hearts{letter-spacing:1px;color:var(--hp);font-size:14px}
+  #hint{position:fixed;bottom:12px;left:12px;z-index:5;pointer-events:none;
+        color:#efe6d8cc;font-size:12px;background:#12100ecc;border-radius:8px;
+        padding:5px 10px}
+  #tut{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:6;
+       background:#1c1815e8;border:1px solid var(--line);border-left:3px solid var(--accent);
+       border-radius:10px;padding:11px 16px;max-width:560px;box-shadow:var(--shadow);
+       font-size:13.5px}
+  #tut[hidden]{display:none}
+  #tut b{color:var(--accent)}
+  .pill{display:inline-block;border:1px solid var(--line);border-radius:20px;
+        padding:1px 8px;font-size:10.5px;color:#c9bba6;margin-right:5px;
+        margin-top:4px}
+  .pill.on{border-color:var(--accent);color:var(--accent)}
+
+  /* The hotbar: nine slots, the selected one lifted. Bottom-centre because
+     that is where your eye already is when you are standing over a crop. */
+  #bar{position:fixed;bottom:12px;right:12px;z-index:5;display:flex;gap:5px;
+       pointer-events:none}
+  #bar .slot{width:52px;height:56px;border:1px solid var(--line);border-radius:8px;
+       background:#12100ed8;display:flex;flex-direction:column;align-items:center;
+       justify-content:flex-end;padding-bottom:3px;position:relative;overflow:hidden}
+  #bar .slot{transition:transform .15s ease-out}
+  #bar .slot.on{border-color:var(--accent);background:#2e2418e8;transform:translateY(-4px)}
+  #bar .slot .k{position:absolute;top:2px;left:4px;font-size:9.5px;color:#8d8071}
+  #bar .slot .n{font-size:9.5px;color:#c9bba6;line-height:1.1;text-align:center;
+       max-width:50px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+  #bar .slot .q{position:absolute;top:2px;right:4px;font-size:9.5px;color:var(--accent)}
+  #bar canvas{image-rendering:pixelated;margin-top:6px}
+
+  #toast{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:7;
+       background:#1c1815e8;border:1px solid var(--line);border-radius:9px;
+       padding:8px 14px;font-size:13px;box-shadow:var(--shadow);pointer-events:none;
+       transition:opacity .35s}
+  #toast[hidden]{display:none}
+
+  /* The sleep fade. A cut straight to the next morning reads as a bug; a
+     one-second dip to black reads as a night passing. */
+  #fade{position:fixed;inset:0;background:#070604;z-index:9;pointer-events:none;
+        opacity:0;transition:opacity .55s}
+  #fade.on{opacity:1}
+
+  /* Narrower windows. The tutorial, the key hint and the hotbar all sit along
+     the bottom edge, and below about 2100 px they ran into each other. First
+     the tutorial steps up above the hotbar; below 1250 px the key hint moves to
+     the top right corner beside the top-left box, the tutorial below the lower
+     of the two (ui.js placeTopBoxes measures them), and toasts to the bottom. */
+  @media (max-width:2100px){ #tut{bottom:84px} }
+  @media (max-width:1250px){
+    #hint{bottom:auto;top:10px;left:auto;right:12px;
+          max-width:calc(100vw - var(--hud-w, 300px) - 40px);text-align:right}
+    #tut{bottom:auto;top:calc(var(--top-clear, 96px) + 8px);
+         max-width:min(560px,calc(100vw - 24px))}
+    #toast{top:auto;bottom:84px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .card{animation:none}
+    #bar .slot{transition:none}
+  }
+</style>
+
+<canvas id="stage"></canvas>
+
+<div id="hud" hidden></div>
+<div id="hint" hidden>WASD to walk · shift to run · <b>q</b> to roll · <b>click</b> to shoot · <b>space</b> to use · <b>e</b> to eat · 1-9 to pick · <b>f</b> full screen · Esc for the menu</div>
+<div id="bar" hidden></div>
+<div id="tut" hidden></div>
+<div id="toast" hidden></div>
+<div id="fade"></div>
+
+<div class="veil" id="veil">
+  <!-- Filled in before any script runs, so the first frame is the title and a
+       loading line rather than an empty box. boot() replaces it. -->
+  <div class="card" id="card"><h1>Emberfield</h1><p class="sub">Loading…</p></div>
+</div>
+
+<script src="/shared/forge_art.js"></script>
+<script src="/shared/forge_sound.js"></script>
+<!-- The ?v= stamp: these files carry no cache headers, so a browser may keep
+     an old copy for days while this page is always fresh. Bump it whenever a
+     script changes, or a reload pairs this page with stale scripts. -->
+<script src="/audio.js?v=2026-10-19"></script>
+<script>
+"use strict";
+
+/* ------------------------------------------------------------------ core
+   The state object and the handful of utilities every other module leans on.
+   The systems themselves live alongside this file, loaded in order right after
+   it: world.js (loading, baking, collision, saves), render.js (the frame),
+   play.js (simulation and every verb), ui.js (the HUD and the screens). The
+   boot sequence and the input handlers stay at the bottom of this file.
+
+   These are classic scripts sharing one global scope on purpose -- the same
+   arrangement audio.js and selftest.js already use -- so there is no import
+   wiring, only an order. */
+
+const $ = (s) => document.querySelector(s);
+const TILE = 16;
+
+/* ---------------------------------------------------------------- state */
+const S = {
+  art: null, atlas: null, library: null, content: null,
+  settings: null, caps: null,
+  world: null, tilesMeta: null,
+  ground: new Map(),       // paletteId -> baked ground canvas
+  palette: "emberfield-spring",
+  player: { x: 0, y: 0, dir: "down", moving: false, speed: 62, hp: 6, maxHp: 6, hurtT: 0,
+            rollT: 0, rollCool: 0, rollX: 0, rollY: 0 },
+  cam: { x: 0, y: 0 },
+  clock: { day: 1, minutes: 6 * 60, season: "spring" },
+  keys: new Set(),
+  mouse: { x: 0, y: 0, down: false },
+  running: false,
+  lastT: 0,
+  zoom: 3,
+  deathRule: "character",
+  name: "Emberfield",
+  tutStep: 0,
+  /* --- save state. Everything here survives a reload; the world itself does
+     not, because it is rebuilt from its seed. --- */
+  tileEdits: {},   // "x,y" -> tile name, the ground you have worked
+  crops: {},       // "x,y" -> { id, stage, days, watered }
+  inv: {},         // itemId -> count
+  storage: {},     // itemId -> count, the chest in your house
+  toolTier: {},    // toolId -> upgrade level (0 = base), crafted at the workbench
+  hotbar: [],      // up to 9 { kind, id }
+  slot: 0,
+  gold: 0,
+  /* --- transient: rebuilt every session, never saved --- */
+  inWilds: false,
+  inInterior: false,
+  valley: null,      // the valley's state, parked while you are underground
+  parked: null,      // the valley's state, parked while you are inside a house
+  npcs: [],          // the valley's residents; valley only, rebuilt on return
+  foes: [],
+  shots: [],
+  fireT: 0,
+  loopId: 0,         // the pending frame, so there is only ever one loop
+  starting: false,   // a valley is being grown; Begin and Continue wait
+  travelling: false, // a cavern or a room is on its way
+  savingSettings: false,
+  dead: false,       // a death screen is up; only its own button leaves it
+  sleeping: false,   // the night's fade is running
+};
+
+const SEASON_PALETTE = {
+  spring: "emberfield-spring", summer: "emberfield-summer",
+  autumn: "emberfield-autumn", winter: "emberfield-winter",
+};
+const SEASONS = ["spring", "summer", "autumn", "winter"];
+
+/* How fast a day passes, in real seconds for a full 24 hours.
+
+   Session 1 declared MINUTES_PER_SECOND = 2 and then multiplied by 60 again in
+   the step loop, so a whole day went by in twelve real seconds -- you could not
+   walk from the farm to the town without the sun setting on you. It is one
+   number now, it comes from settings, and ?daysec= overrides it, because the
+   length of a day is the single most useful thing to shorten while testing
+   anything that depends on days passing. */
+function dayLength() { return Math.max(20, S.settings.day_seconds || 900); }
+function minutesPerSecond() { return 1440 / dayLength(); }
+
+/* ------------------------------------------------------------ utilities */
+/* A stable per-tile hash. The nature layer must look identical every time the
+   ground is baked, or the grass would crawl whenever the season changed. */
+function hash2(x, y) {
+  let h = x * 374761393 + y * 668265263;
+  h = (h ^ (h >> 13)) * 1274126177;
+  return ((h ^ (h >> 16)) >>> 0) / 4294967296;
+}
+
+function tileKind(name) {
+  return (S.tilesMeta[name] || {}).kind || "grass";
+}
+
+function key(x, y) { return x + "," + y; }
+
+function tileAt(x, y) {
+  if (x < 0 || y < 0 || x >= S.world.width || y >= S.world.height) return "cliff_face";
+  return S.world.tiles[y][x];
+}
+
+/* Content lookups. Everything the game knows about a crop, a tool or a foe
+   comes from the store on disk -- there is no table of crops in this file. */
+function lookup(type, id) { return (S.content.types[type] || {})[id] || null; }
+function all(type) { return Object.values(S.content.types[type] || {}); }
+
+/* Anything the game refuses gets the same short note, so you learn the sound
+   rather than having to read the toast every time. */
+function refuse(text) { Sound.play("refuse"); toast(text); }
+
+function toast(text, ms = 1900) {
+  const el = $("#toast");
+  el.hidden = false; el.textContent = text; el.style.opacity = "1";
+  clearTimeout(S.toastT);
+  S.toastT = setTimeout(() => { el.style.opacity = "0"; }, ms);
+}
+
+function isNight() { const h = S.clock.minutes / 60; return h < 5.5 || h >= 20; }
+
+/* Text bound for innerHTML: a server message or a save's name. */
+function esc(text) {
+  return String(text).replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+}
+
+/* fetch + JSON that fails loudly. A plain fetch resolves on a 500 or a 422 and
+   the caller then trips over the error page as if it were data; this throws
+   with the server's own reason instead, so every caller has one path to catch. */
+async function api(url, options) {
+  const opts = Object.assign({}, options);
+  if (opts.json !== undefined) {
+    opts.method = opts.method || "POST";
+    opts.headers = { "Content-Type": "application/json" };
+    opts.body = JSON.stringify(opts.json);
+    delete opts.json;
+  }
+  let res;
+  try { res = await fetch(url, opts); } catch (e) {
+    throw new Error("the Emberfield server is not answering");
+  }
+  if (!res.ok) {
+    let why = `${res.status} ${res.statusText}`.trim();
+    try {
+      const body = await res.json();
+      if (typeof body.detail === "string") why = body.detail;
+    } catch (e) { /* not JSON; the status line will do */ }
+    throw new Error(why);
+  }
+  return res.json();
+}
+
+/* The one frame loop. Every place that starts play goes through here, so a
+   quick pause and resume, or two starts in a row, can never leave two loops
+   running the world at double speed. */
+function kickLoop() {
+  if (!S.loopId) S.loopId = requestAnimationFrame(loop);
+}
+</script>
+
+<script src="/world.js?v=2026-10-19"></script>
+<script src="/render.js?v=2026-10-19"></script>
+<script src="/play.js?v=2026-10-19"></script>
+<script src="/ui.js?v=2026-10-19"></script>
+
+<script>
+"use strict";
+
+/* ---------------------------------------------------------------- input */
+/* Browsers refuse to start audio before the user has interacted with the page,
+   so the context is created here rather than at boot. Doing it at boot leaves a
+   suspended context that never recovers. */
+function wakeAudio() { Sound.unlock(); }
+addEventListener("pointerdown", wakeAudio, { once: false });
+
+/* A key typed into a text field (the valley name, the seed, a settings
+   number box) is text, not a game command: f must not flip full screen while
+   typing "Fernfield". Escape just leaves the field, so a second Escape pauses
+   or resumes as usual. Sliders, buttons and tick boxes are not text fields. */
+function typingInto(el) {
+  if (!el || !el.tagName) return false;
+  if (el.isContentEditable || el.tagName === "TEXTAREA" || el.tagName === "SELECT") return true;
+  return el.tagName === "INPUT"
+    && !["range", "checkbox", "radio", "button", "submit", "reset", "color"].includes(el.type);
+}
+
+addEventListener("keydown", (e) => {
+  wakeAudio();
+  const k = e.key.toLowerCase();
+  if (typingInto(e.target)) {
+    if (k === "escape") e.target.blur();
+    return;
+  }
+  /* Escape pauses and closes the in-game menus. Not on a death screen (it
+     used to carry on at 0 hp, or undo a full permadeath) and not mid-sleep. */
+  if (k === "escape") {
+    if (S.world && !S.dead && !S.sleeping) S.running ? pauseScreen() : resume();
+    return;
+  }
+  if (k === "f" && !S.keys.has("shift")) {
+    // Only when it cannot be mistaken for movement -- f is not a walk key, so
+    // this is safe, but it is checked before keys are recorded all the same.
+    toggleFullscreen(); return;
+  }
+  if (!S.running) return;
+  if (k >= "1" && k <= "9") {
+    const index = parseInt(k, 10) - 1;
+    if (index < S.hotbar.length) { S.slot = index; drawHotbar(); Sound.play("select"); }
+    return;
+  }
+  if (k === " ") { e.preventDefault(); if (!e.repeat) interact(); return; }
+  if (k === "e" && !e.repeat) { eat(); return; }
+  if (k === "q" && !e.repeat) {
+    // Roll in whatever direction is already held, so it reads as part of
+    // moving rather than as a separate aimed action.
+    let rx = 0, ry = 0;
+    if (S.keys.has("a") || S.keys.has("arrowleft")) rx -= 1;
+    if (S.keys.has("d") || S.keys.has("arrowright")) rx += 1;
+    if (S.keys.has("w") || S.keys.has("arrowup")) ry -= 1;
+    if (S.keys.has("s") || S.keys.has("arrowdown")) ry += 1;
+    startRoll(rx, ry);
+    return;
+  }
+  S.keys.add(k);
+  if (["arrowup", "arrowdown", "arrowleft", "arrowright"].includes(k)) e.preventDefault();
+});
+addEventListener("keyup", (e) => S.keys.delete(e.key.toLowerCase()));
+addEventListener("blur", () => { S.keys.clear(); S.mouse.down = false; });
+addEventListener("resize", resize);
+addEventListener("mousemove", (e) => { S.mouse.x = e.clientX; S.mouse.y = e.clientY; });
+addEventListener("mousedown", (e) => { if (e.button === 0 && S.running) S.mouse.down = true; });
+addEventListener("mouseup", () => { S.mouse.down = false; });
+addEventListener("contextmenu", (e) => { if (S.running) e.preventDefault(); });
+/* Leaving the tab or closing the window should not cost you the day. */
+addEventListener("beforeunload", () => {
+  if (S.world && navigator.sendBeacon) {
+    navigator.sendBeacon(`/api/saves/${saveSlot()}`,
+      new Blob([JSON.stringify(savePayload())], { type: "application/json" }));
+  }
+});
+
+/* ----------------------------------------------------------------- boot */
+/* If the server is not up yet (Forge still starting it, or it was restarted)
+   the page says so calmly and tries again by itself, waiting longer each time
+   and not at all while nobody can see it. */
+const bootRetry = { tries: 0, timer: 0, waiting: false };
+function retryBootSoon(error) {
+  const wait = Math.min(30, 2 * 2 ** bootRetry.tries);
+  bootRetry.tries++;
+  showVeil(`<h1>Emberfield</h1>
+    <p class="sub">Could not start yet: ${esc(error.message)}.</p>
+    <p class="note">Trying again by itself in ${wait} s.</p>
+    <div class="row"><button class="btn ghost" id="retryNow">Try now</button></div>`);
+  clearTimeout(bootRetry.timer);
+  const again = () => {
+    clearTimeout(bootRetry.timer);
+    bootRetry.timer = 0;
+    if (offScreen()) { bootRetry.waiting = true; return; }
+    bootRetry.waiting = false;
+    boot();
+  };
+  bootRetry.timer = setTimeout(again, wait * 1000);
+  $("#retryNow").addEventListener("click", again, { once: true });
+}
+function bootIfWaiting() {
+  if (bootRetry.waiting && !offScreen()) { bootRetry.waiting = false; boot(); }
+}
+addEventListener("message", bootIfWaiting);
+document.addEventListener("visibilitychange", bootIfWaiting);
+
+boot();
+async function boot() {
+  resize();
+  showVeil(`<h1>Emberfield</h1><p class="sub">Loading the sprite library…</p>`);
+  try {
+    S.library = await ForgeArt.load("/api/art/library");
+    S.content = await api("/api/content");
+    S.settings = await api("/api/settings");
+    S.caps = await api("/api/capabilities");
+  } catch (e) {
+    retryBootSoon(e);
+    return;
+  }
+  bootRetry.tries = 0;
+  Sound.load(S.content);
+  Sound.setVolume((S.settings.volume != null ? S.settings.volume : 70) / 100);
+  Sound.setMuted(!!S.settings.muted);
+  S.zoom = S.settings.zoom || 3;
+  const packs = Object.keys(S.library.packs || {}).length;
+  if (!packs) {
+    showVeil(`<h1>Emberfield</h1>
+      <p class="sub">The valley's starting art is missing.</p>
+      <p class="note">Forge writes it the first time Emberfield starts. Close
+      Emberfield and open it again; if this stays, the Emberfield log in Logs says why.</p>`);
+    return;
+  }
+  if (!Object.keys(S.content.types.crops || {}).length) {
+    showVeil(`<h1>Emberfield</h1>
+      <p class="sub">The valley's crops, items and recipes are missing.</p>
+      <p class="note">Forge writes them the first time Emberfield starts. Close
+      Emberfield and open it again; if this stays, the Emberfield log in Logs says why.</p>`);
+    return;
+  }
+  /* ?seed=... jumps straight into a named valley, so a seed worth keeping can
+     be shared as a link. ?hour=, ?season= and ?daysec= set the light, the
+     palette and the length of a day, which is also how the renderer gets
+     checked without a human at the keys. */
+  const q = new URLSearchParams(location.search);
+  if (q.has("season")) S.clock.season = q.get("season");
+  if (q.has("hour")) S.clock.minutes = parseFloat(q.get("hour")) * 60;
+  if (q.has("zoom")) S.zoom = parseInt(q.get("zoom"), 10) || S.zoom;
+  if (q.has("daysec")) S.settings.day_seconds = parseInt(q.get("daysec"), 10) || 900;
+  /* ?screen=settings opens a menu directly. Same family as ?seed and ?hour:
+     these links are how the interface gets checked without a human clicking
+     through to it, and they are useful to keep for reporting a bug. */
+  if (q.get("screen") === "settings") { settingsScreen(); return; }
+  if (q.get("screen") === "shop") {
+    // Some gold and a few things worth selling, or the screen shows two empty
+    // lists and proves nothing.
+    S.gold = 240;
+    give("emberfield-turnip", 6);
+    give("emberfield-slime-gel", 3);
+    shopScreen();
+    return;
+  }
+  if (q.get("screen") === "craft" || q.get("screen") === "storage") {
+    // Enough materials that the recipes are not all greyed out.
+    give("emberfield-slime-gel", 6);
+    give("emberfield-ash", 6);
+    give("emberfield-ember-shard", 2);
+    give("emberfield-turnip", 5);
+    give("emberfield-barley", 3);
+    give("emberfield-charcoal", 3);
+    give("emberfield-glue", 2);
+    give("emberfield-ember-glass", 1);
+    if (q.get("screen") === "craft") craftScreen("workbench");
+    else { S.storage["emberfield-charcoal"] = 2; storageScreen(); }
+    return;
+  }
+  /* ?selftest=1 exposes the game's own functions and loads the checks in
+     static/selftest.js. Farming, growth, combat and saving all live in this
+     file, so they cannot be reached from the Python suite -- this is how they
+     get exercised for real rather than assumed to work. */
+  if (q.get("selftest") && !window.EmberTest) {   // once, even if boot retries
+    window.EmberTest = {
+      S, lookup, all, canStand, setTile, VERBS, plant, harvest, growOvernight,
+      startingKit, rebuildHotbar, fire, hurtPlayer, inSafeRegion, topUpFoes,
+      savePayload, minutesPerSecond, facingTile, interact, sleep,
+      enterWilds, leaveWilds, Sound,
+      stock, sellable, buyItem, sellItem, openChest, rollLoot, sunLight,
+      stepCombat,
+      enterBuilding, leaveBuilding, buildNpcs, stepNpcs, talkTo, npcTarget,
+      resolvePlace, bfsPath,
+      craftable, canCraft, craftRecipe, deposit, withdraw, toolRadius, applyToolArea,
+      saveSlot, dryTheField, startRoll, step,
+      eat, bestFood, foodHeals, carriedFood, turnDay, freshClock, give, hud,
+    };
+    const script = document.createElement("script");
+    script.src = "/selftest.js?v=2026-10-19";
+    document.head.appendChild(script);
+  }
+  if (q.has("seed")) {
+    const raw = q.get("seed");
+    const seed = seedFrom(raw);
+    let data;
+    try {
+      data = await api("/api/world/new", {
+        json: { seed, death_rule: q.get("rule") || "character", name: "Emberfield" },
+      });
+    } catch (e) { retryBootSoon(e); return; }
+    await startWorld(data, null);
+    if (q.has("demo")) await demo(q.get("demo"));
+    return;
+  }
+  titleScreen();
+}
+
+/* A scripted setup used to check the renderer without a human at the keyboard:
+   ?seed=7&demo=farm plants a plot at mixed growth stages, ?demo=night puts foes
+   on screen. It only ever calls the same functions play does. */
+async function demo(what) {
+  const plot = S.world.regions.farm.plot;
+  if (what === "farm" || what === "both") {
+    const crops = all("crops");
+    let i = 0;
+    for (let y = plot.y; y < plot.y + plot.h; y++) {
+      for (let x = plot.x; x < plot.x + plot.w; x++) {
+        const crop = crops[i % crops.length];
+        if (!crop.seasons.includes(S.clock.season)) { i++; continue; }
+        setTile(x, y, i % 3 === 0 ? "tilled_wet" : "tilled");
+        S.crops[key(x, y)] = {
+          id: crop.id, stage: i % crop.stages.length, days: 0, watered: i % 3 === 0,
+        };
+        i++;
+      }
+    }
+    S.player.x = (plot.x + plot.w / 2) * TILE;
+    S.player.y = (plot.y + plot.h + 2) * TILE;
+  }
+
+  /* Stand the player one tile *above* an oak's trunk -- inside what used to be
+     solid canopy. If they are drawn there at all, the hit box no longer
+     swallows the whole footprint, and the depth sort puts the leaves in front
+     of them. That is the whole bug fix in one frame. */
+  if (what === "tree") {
+    const oak = S.world.objects.find((o) =>
+      o.sprite === "tree_oak" &&
+      Math.hypot(o.x - S.world.spawn[0], o.y - S.world.spawn[1]) < 26);
+    if (oak) {
+      // Offset to the canopy's edge rather than dead centre, so the player is
+      // visibly *behind* the leaves instead of completely swallowed by them.
+      S.player.x = oak.x * TILE + 2;
+      S.player.y = (oak.y - 1) * TILE + 10;
+      S.player.dir = "down";
+    }
+  }
+
+  /* Straight down the hole, so the cavern can be looked at without walking
+     the length of the valley to the cave mouth first. */
+  if (what === "wilds" || what === "wilds-night") {
+    if (what === "wilds-night") { S.clock.minutes = 22 * 60; applyPalette(); }
+    enterWilds().then(() => {
+      // Away from the entrance, which is deliberately the one quiet corner.
+      const deep = S.world.regions.deep;
+      const way = S.world.regions.entrance;
+      /* Walk toward the deep end until we are clear of the quiet ground by the
+         entrance, or the screenshot shows an empty room. */
+      for (let t = 0.3; t <= 0.9; t += 0.1) {
+        const tx = Math.round(way[0] + (deep[0] - way[0]) * t);
+        const ty = Math.round(way[1] + (deep[1] - way[1]) * t);
+        if (!blockedAtPixel(tx * TILE + 8, ty * TILE + 8) && !inSafeRegion(tx, ty)) {
+          S.player.x = tx * TILE + 8; S.player.y = ty * TILE + 8;
+          break;
+        }
+      }
+    });
+    return;
+  }
+
+  /* Stand in a settlement, or step into a house -- so the town, the village and
+     a room can be looked at without walking the valley first. */
+  if (what === "town" || what === "village" || what === "farmstead") {
+    const key = what === "farmstead" ? "farmstead-north" : what;
+    const c = S.world.regions[key + "_centre"] || S.world.regions[key];
+    if (c) { S.player.x = (c[0] + 0.5) * TILE; S.player.y = (c[1] + 0.5) * TILE; }
+    S.clock.minutes = 11 * 60;
+    applyPalette();
+    return;
+  }
+  if (what === "house" || what === "npc-house") {
+    const wantPlayer = what === "house";
+    /* The door *object* in world.objects carries the building id and use:'door'
+       -- the entry in regions.buildings is only the registry. enterBuilding
+       reads obj.building, so it has to be handed the object. */
+    const door = S.world.objects.find((o) =>
+      o.use === "door" && (wantPlayer
+        ? o.building === "emberfield-house-player"
+        : o.building.includes("village-1")));
+    if (door) {
+      S.player.x = (door.door[0] + 0.5) * TILE;
+      S.player.y = (door.door[1] + 0.5) * TILE;
+      await enterBuilding(door);
+    }
+    return;
+  }
+
+  if (what === "night" || what === "both") {
+    S.clock.minutes = 22 * 60;
+    /* Out of the farm and into the open, because the farm is deliberately safe
+       and a night screenshot taken inside the fence shows nothing at all. */
+    const farm = S.world.regions.farm;
+    for (let radius = 6; radius < 30 && inSafeRegion(
+           Math.floor(S.player.x / TILE), Math.floor(S.player.y / TILE)); radius++) {
+      const tx = farm.x + farm.w + radius, ty = farm.y + Math.floor(farm.h / 2);
+      if (tx < S.world.width - 2 && !blockedAtPixel(tx * TILE + 8, ty * TILE + 8)) {
+        S.player.x = tx * TILE + 8; S.player.y = ty * TILE + 8;
+      }
+    }
+    applyPalette();
+  }
+}
+</script>
+<script src="/shared/forge_chrome.js"></script>

@@ -1,0 +1,8 @@
+{
+  "label": "Index",
+  "about": "A centred table of contents: a small clock, then every app as one line with its description, all sections open.",
+  "order": 75,
+  "home": {"hero": "small", "sections": "all", "tiles": "list", "recent": false, "chips": false, "align": "center"},
+  "settings": {"widgets": false, "greeting": false},
+  "lighter": {"balanced": {}, "light": {}}
+}

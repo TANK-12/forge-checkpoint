@@ -1,0 +1,46 @@
+{
+  "label": "Beige Box",
+  "order": 74,
+  "tags": [
+    "light",
+    "retro",
+    "fun"
+  ],
+  "mode": "light",
+  "solid": true,
+  "about": "A nineties desktop: teal backdrop, grey bevelled buttons that press in, a navy title bar and square corners.",
+  "look": "bevel",
+  "layout": "shelf",
+  "colours": {
+    "accent": "#000080",
+    "bg": "#088888",
+    "panel": "#c0c0c0",
+    "panel_2": "#d4d0c8",
+    "border": "#808080",
+    "text": "#000000",
+    "muted": "#2e2e2e"
+  },
+  "font_stack": "\"MS Sans Serif\", \"Tahoma\", \"DejaVu Sans\", \"Liberation Sans\", sans-serif",
+  "wallpaper": "",
+  "live": "",
+  "companion": "",
+  "settings": {
+    "particles": "off",
+    "dim": 0.0,
+    "wall_tint": false,
+    "glass_style": "flat",
+    "glass": 1.0,
+    "border": "none",
+    "shadows": false,
+    "radius": 0,
+    "gaps": 6,
+    "wall_3d": false,
+    "icon_style": "classic",
+    "motion": "still",
+    "widget_look": "glass"
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {}
+  }
+}

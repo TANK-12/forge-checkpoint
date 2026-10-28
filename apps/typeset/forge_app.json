@@ -1,0 +1,32 @@
+{
+  "name": "typeset",
+  "label": "Typeset",
+  "tagline": "Typst documents, CVs and letters to PDF",
+  "help": {
+    "about": "Write documents, CVs and letters from a template and turn them into PDFs.",
+    "features": [
+      "Templates",
+      "Documents",
+      "PDF"
+    ]
+  },
+  "port": 8491,
+  "module": "web_app:app",
+  "src_dir": ".",
+  "accent": "#5b8fd0",
+  "icon": "📃",
+  "order": 26,
+  "section": "create",
+  "ready_timeout": 30,
+  "ram_class": "light",
+  "store": {"github": "private"},
+  "manifest": {
+    "summary": "Write in Typst on the left, see the pages on the right as you type, Export PDF puts <name>.pdf beside the document. Each document is a folder in ~/Documents/Typeset holding main.typ and its pictures; Typst only reads inside that folder. New documents start from templates/ (templates.json is the registry: blank, report, CV, letter). Typst is pinned in typeset.json and fetched once through shared/forge_fetch.py.",
+    "data_dir": "~/.local/share/forge/typeset",
+    "dependencies": {"required": ["shared/forge_fetch.py"], "optional": ["typst (fetched)", "gio (Move to trash)"]},
+    "docs": ["README.md", "WIP.md"]
+  },
+  "export": [
+    {"id": "documents", "label": "Documents and their pictures", "kind": "folder", "path": "~/Documents/Typeset"}
+  ]
+}

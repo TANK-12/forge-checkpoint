@@ -1,0 +1,43 @@
+{
+  "id": "pluto",
+  "name": "Pluto",
+  "kind": "dwarf",
+  "parent": "sun",
+  "order": 90,
+  "radius_km": 1188.3,
+  "gm_km3_s2": 869.3,
+  "color": "#d2bba0",
+  "pole": {
+    "ra_deg": 132.993,
+    "dec_deg": -6.163
+  },
+  "summary": "A dwarf planet in the Kuiper Belt with a heart-shaped nitrogen-ice plain. It and Charon orbit a point in the space between them.",
+  "elements": {
+    "model": "standish",
+    "a": [
+      39.48211675,
+      -0.00031596
+    ],
+    "e": [
+      0.2488273,
+      5.17e-05
+    ],
+    "i": [
+      17.14001206,
+      4.818e-05
+    ],
+    "L": [
+      238.92903833,
+      145.20780515
+    ],
+    "varpi": [
+      224.06891629,
+      -0.04062942
+    ],
+    "node": [
+      110.30393684,
+      -0.01183482
+    ],
+    "source": "JPL approximate planetary elements (E.M. Standish), 1800-2050 table"
+  }
+}

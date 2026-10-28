@@ -1,0 +1,931 @@
+{
+ "model": "exo_full",
+ "character": "hairsample_female",
+ "frame": "body frame at VRM rest pose: +X the character's left, +Y up, +Z forward, metres; nodes have identity transforms, vertices are world positions",
+ "attach": "Object3D.attach each node to its VRM humanoid bone (extras.bone) while the VRM is at rest",
+ "glb": "exo_full.glb",
+ "parts": [
+  {
+   "name": "chest",
+   "part": "chest",
+   "bone": "upperChest",
+   "side": "",
+   "kind": "shell",
+   "material": "cfrp_qi",
+   "slot": "carbon",
+   "fit_gap_mm": 8.0,
+   "thickness_mm": 3.0,
+   "fit_target": [
+    "env_skin_body",
+    "env_skin_face",
+    "env_tops_visible",
+    "env_shoes"
+   ],
+   "area_m2": 0.05547,
+   "tris": 3692
+  },
+  {
+   "name": "back",
+   "part": "back",
+   "bone": "upperChest",
+   "side": "",
+   "kind": "shell",
+   "material": "cfrp_qi",
+   "slot": "carbon",
+   "fit_gap_mm": 10.0,
+   "thickness_mm": 3.0,
+   "fit_target": [
+    "env_skin_body",
+    "env_skin_face",
+    "env_tops_visible",
+    "env_shoes"
+   ],
+   "area_m2": 0.06204,
+   "tris": 4460
+  },
+  {
+   "name": "abdomen",
+   "part": "abdomen",
+   "bone": "spine",
+   "side": "",
+   "kind": "shell",
+   "material": "pa12",
+   "slot": "nylon",
+   "fit_gap_mm": 6.0,
+   "thickness_mm": 3.0,
+   "fit_target": [
+    "env_skin_body",
+    "env_skin_face",
+    "env_tops_visible",
+    "env_shoes"
+   ],
+   "area_m2": 0.05706,
+   "tris": 3956
+  },
+  {
+   "name": "pelvis",
+   "part": "pelvis",
+   "bone": "hips",
+   "side": "",
+   "kind": "shell",
+   "material": "cfrp_qi",
+   "slot": "carbon",
+   "fit_gap_mm": 8.0,
+   "thickness_mm": 3.0,
+   "fit_target": [
+    "env_skin_body",
+    "env_skin_face",
+    "env_tops_visible",
+    "env_shoes"
+   ],
+   "area_m2": 0.07213,
+   "tris": 4184
+  },
+  {
+   "name": "pauldron_L",
+   "part": "pauldron",
+   "bone": "leftUpperArm",
+   "side": "L",
+   "kind": "shell",
+   "material": "cfrp_qi",
+   "slot": "carbon",
+   "fit_gap_mm": 8.0,
+   "thickness_mm": 2.5,
+   "fit_target": [
+    "env_skin_body",
+    "env_skin_face",
+    "env_tops_visible",
+    "env_shoes"
+   ],
+   "area_m2": 0.01047,
+   "tris": 1102
+  },
+  {
+   "name": "pauldron_R",
+   "part": "pauldron",
+   "bone": "rightUpperArm",
+   "side": "R",
+   "kind": "shell",
+   "material": "cfrp_qi",
+   "slot": "carbon",
+   "fit_gap_mm": 8.0,
+   "thickness_mm": 2.5,
+   "fit_target": [
+    "env_skin_body",
+    "env_skin_face",
+    "env_tops_visible",
+    "env_shoes"
+   ],
+   "area_m2": 0.01056,
+   "tris": 1094
+  },
+  {
+   "name": "upper_arm_shell_L",
+   "part": "upper_arm_shell",
+   "bone": "leftUpperArm",
+   "side": "L",
+   "kind": "shell",
+   "material": "pa12",
+   "slot": "nylon",
+   "fit_gap_mm": 6.0,
+   "thickness_mm": 2.5,
+   "fit_target": [
+    "env_skin_body",
+    "env_skin_face",
+    "env_tops_visible",
+    "env_shoes"
+   ],
+   "area_m2": 0.00413,
+   "tris": 980
+  },
+  {
+   "name": "upper_arm_shell_R",
+   "part": "upper_arm_shell",
+   "bone": "rightUpperArm",
+   "side": "R",
+   "kind": "shell",
+   "material": "pa12",
+   "slot": "nylon",
+   "fit_gap_mm": 6.0,
+   "thickness_mm": 2.5,
+   "fit_target": [
+    "env_skin_body",
+    "env_skin_face",
+    "env_tops_visible",
+    "env_shoes"
+   ],
+   "area_m2": 0.00416,
+   "tris": 970
+  },
+  {
+   "name": "gauntlet_L",
+   "part": "gauntlet",
+   "bone": "leftLowerArm",
+   "side": "L",
+   "kind": "shell",
+   "material": "pa12",
+   "slot": "nylon",
+   "fit_gap_mm": 5.0,
+   "thickness_mm": 2.5,
+   "fit_target": [
+    "env_skin_body",
+    "env_skin_face",
+    "env_tops_visible",
+    "env_shoes"
+   ],
+   "area_m2": 0.00714,
+   "tris": 1508
+  },
+  {
+   "name": "gauntlet_R",
+   "part": "gauntlet",
+   "bone": "rightLowerArm",
+   "side": "R",
+   "kind": "shell",
+   "material": "pa12",
+   "slot": "nylon",
+   "fit_gap_mm": 5.0,
+   "thickness_mm": 2.5,
+   "fit_target": [
+    "env_skin_body",
+    "env_skin_face",
+    "env_tops_visible",
+    "env_shoes"
+   ],
+   "area_m2": 0.00719,
+   "tris": 1554
+  },
+  {
+   "name": "hand_guard_L",
+   "part": "hand_guard",
+   "bone": "leftHand",
+   "side": "L",
+   "kind": "shell",
+   "material": "pa12",
+   "slot": "nylon",
+   "fit_gap_mm": 4.0,
+   "thickness_mm": 2.0,
+   "fit_target": [
+    "env_skin_body",
+    "env_skin_face",
+    "env_tops_visible",
+    "env_shoes"
+   ],
+   "area_m2": 0.00461,
+   "tris": 1186
+  },
+  {
+   "name": "hand_guard_R",
+   "part": "hand_guard",
+   "bone": "rightHand",
+   "side": "R",
+   "kind": "shell",
+   "material": "pa12",
+   "slot": "nylon",
+   "fit_gap_mm": 4.0,
+   "thickness_mm": 2.0,
+   "fit_target": [
+    "env_skin_body",
+    "env_skin_face",
+    "env_tops_visible",
+    "env_shoes"
+   ],
+   "area_m2": 0.00461,
+   "tris": 1140
+  },
+  {
+   "name": "thigh_shell_L",
+   "part": "thigh_shell",
+   "bone": "leftUpperLeg",
+   "side": "L",
+   "kind": "shell",
+   "material": "cfrp_qi",
+   "slot": "carbon",
+   "fit_gap_mm": 7.0,
+   "thickness_mm": 2.5,
+   "fit_target": [
+    "env_skin_body",
+    "env_skin_face",
+    "env_tops_visible",
+    "env_shoes"
+   ],
+   "area_m2": 0.04379,
+   "tris": 1908
+  },
+  {
+   "name": "thigh_shell_R",
+   "part": "thigh_shell",
+   "bone": "rightUpperLeg",
+   "side": "R",
+   "kind": "shell",
+   "material": "cfrp_qi",
+   "slot": "carbon",
+   "fit_gap_mm": 7.0,
+   "thickness_mm": 2.5,
+   "fit_target": [
+    "env_skin_body",
+    "env_skin_face",
+    "env_tops_visible",
+    "env_shoes"
+   ],
+   "area_m2": 0.04385,
+   "tris": 1920
+  },
+  {
+   "name": "shin_shell_L",
+   "part": "shin_shell",
+   "bone": "leftLowerLeg",
+   "side": "L",
+   "kind": "shell",
+   "material": "cfrp_qi",
+   "slot": "carbon",
+   "fit_gap_mm": 6.0,
+   "thickness_mm": 2.5,
+   "fit_target": [
+    "env_skin_body",
+    "env_skin_face",
+    "env_tops_visible",
+    "env_shoes"
+   ],
+   "area_m2": 0.03584,
+   "tris": 2242
+  },
+  {
+   "name": "shin_shell_R",
+   "part": "shin_shell",
+   "bone": "rightLowerLeg",
+   "side": "R",
+   "kind": "shell",
+   "material": "cfrp_qi",
+   "slot": "carbon",
+   "fit_gap_mm": 6.0,
+   "thickness_mm": 2.5,
+   "fit_target": [
+    "env_skin_body",
+    "env_skin_face",
+    "env_tops_visible",
+    "env_shoes"
+   ],
+   "area_m2": 0.03584,
+   "tris": 2308
+  },
+  {
+   "name": "boot_L",
+   "part": "boot",
+   "bone": "leftFoot",
+   "side": "L",
+   "kind": "shell",
+   "material": "pa12",
+   "slot": "nylon",
+   "fit_gap_mm": 6.0,
+   "thickness_mm": 3.0,
+   "fit_target": [
+    "shoes_outer"
+   ],
+   "area_m2": 0.06578,
+   "tris": 3800
+  },
+  {
+   "name": "boot_R",
+   "part": "boot",
+   "bone": "rightFoot",
+   "side": "R",
+   "kind": "shell",
+   "material": "pa12",
+   "slot": "nylon",
+   "fit_gap_mm": 6.0,
+   "thickness_mm": 3.0,
+   "fit_target": [
+    "shoes_outer"
+   ],
+   "area_m2": 0.06587,
+   "tris": 3812
+  },
+  {
+   "name": "helmet",
+   "part": "helmet",
+   "bone": "head",
+   "side": "",
+   "kind": "shell",
+   "material": "cfrp_qi",
+   "slot": "carbon",
+   "fit_gap_mm": 12.0,
+   "thickness_mm": 4.0,
+   "fit_target": [
+    "env_skin_body",
+    "env_skin_face",
+    "env_tops_visible",
+    "env_shoes"
+   ],
+   "area_m2": 0.13927,
+   "tris": 6606
+  },
+  {
+   "name": "upper_arm_cuff_L",
+   "part": "upper_arm_cuff",
+   "bone": "leftUpperArm",
+   "side": "L",
+   "kind": "cuff",
+   "material": "polycarbonate",
+   "slot": "polycarbonate",
+   "fit_gap_mm": 6.0,
+   "thickness_mm": 2.5,
+   "fit_target": [
+    "env_skin_body",
+    "env_skin_face",
+    "env_tops_visible",
+    "env_shoes"
+   ],
+   "area_m2": 0.02773,
+   "tris": 1737
+  },
+  {
+   "name": "upper_arm_cuff_R",
+   "part": "upper_arm_cuff",
+   "bone": "rightUpperArm",
+   "side": "R",
+   "kind": "cuff",
+   "material": "polycarbonate",
+   "slot": "polycarbonate",
+   "fit_gap_mm": 6.0,
+   "thickness_mm": 2.5,
+   "fit_target": [
+    "env_skin_body",
+    "env_skin_face",
+    "env_tops_visible",
+    "env_shoes"
+   ],
+   "area_m2": 0.02769,
+   "tris": 1722
+  },
+  {
+   "name": "forearm_cuff_L",
+   "part": "forearm_cuff",
+   "bone": "leftLowerArm",
+   "side": "L",
+   "kind": "cuff",
+   "material": "polycarbonate",
+   "slot": "polycarbonate",
+   "fit_gap_mm": 5.0,
+   "thickness_mm": 2.5,
+   "fit_target": [
+    "env_skin_body",
+    "env_skin_face",
+    "env_tops_visible",
+    "env_shoes"
+   ],
+   "area_m2": 0.02492,
+   "tris": 1501
+  },
+  {
+   "name": "forearm_cuff_R",
+   "part": "forearm_cuff",
+   "bone": "rightLowerArm",
+   "side": "R",
+   "kind": "cuff",
+   "material": "polycarbonate",
+   "slot": "polycarbonate",
+   "fit_gap_mm": 5.0,
+   "thickness_mm": 2.5,
+   "fit_target": [
+    "env_skin_body",
+    "env_skin_face",
+    "env_tops_visible",
+    "env_shoes"
+   ],
+   "area_m2": 0.02493,
+   "tris": 1496
+  }
+ ],
+ "materials": {
+  "carbon": {
+   "base": [
+    0.03,
+    0.032,
+    0.036
+   ],
+   "roughness": 0.42,
+   "emission": 0.0
+  },
+  "nylon": {
+   "base": [
+    0.5,
+    0.52,
+    0.54
+   ],
+   "roughness": 0.75,
+   "emission": 0.0
+  },
+  "polycarbonate": {
+   "base": [
+    0.1,
+    0.13,
+    0.16
+   ],
+   "roughness": 0.22,
+   "emission": 0.0
+  },
+  "accent": {
+   "base": [
+    0.1,
+    0.75,
+    1.0
+   ],
+   "roughness": 0.35,
+   "emission": 4.0
+  }
+ },
+ "material_slots": {
+  "cfrp_qi": "carbon",
+  "pa12": "nylon",
+  "polycarbonate": "polycarbonate",
+  "al_7075_t6": "nylon"
+ },
+ "hide_rule": {
+  "mesh": "Body",
+  "material": "F00_002_01_Tops_01_CLOTH",
+  "hide_face_if_dominant_joint": [
+   "name contains 'Skirt' (J_Sec_*Skirt*)",
+   "name contains 'Sleeve' (J_Sec_*Sleeve*)",
+   "VRM humanoid bone in leftUpperArm, rightUpperArm, leftLowerArm, rightLowerArm, leftHand, rightHand",
+   "VRM humanoid bone == 'hips' (the flared top of the skirt, waist to y 0.88; without it the flare pokes through the hip belt and thigh shells)",
+   "VRM humanoid bone in spine, chest, upperChest, leftShoulder, rightShoulder, J_Sec_L_Bust1, J_Sec_R_Bust1 (this model: the chest, back, abdomen and pauldrons cover the bodice, whose edges otherwise poke through them; the skin is complete under every one of these faces, so the shells are fitted to the skin)"
+  ],
+  "arm_weight_min": 0.3,
+  "arm_bones": [
+   "leftUpperArm",
+   "rightUpperArm",
+   "leftLowerArm",
+   "rightLowerArm",
+   "leftHand",
+   "rightHand"
+  ],
+  "hide_face_if_arm_weight": "mean skin weight of the face's three vertices on leftUpperArm, rightUpperArm, leftLowerArm, rightLowerArm, leftHand, rightHand >= 0.3 (the sleeve root at the armhole, which otherwise sticks out as spikes)",
+  "extra_dominant": [
+   "spine",
+   "chest",
+   "upperChest",
+   "leftShoulder",
+   "rightShoulder",
+   "J_Sec_L_Bust1",
+   "J_Sec_R_Bust1"
+  ],
+  "dominant_joint": "per face: the joint with the largest summed skin weight over the face's three vertices",
+  "keep": "every other dress face (collar, bodice over the chest and back), which the torso shells are fitted over",
+  "skin_under": "the body skin under every hidden face is complete (checked by a body-only render per model), so hiding leaves no holes; it does bare the hips and legs"
+ },
+ "skin": {
+  "undersuit": true,
+  "closed_helmet": true
+ },
+ "notes": [
+  "Hair (Hair001) is not a fit target: the helmet and back plates sit inside the hair volume, so hide Hair001 while a helmet is on, or accept hair poking through.",
+  "Hiding the skirt bares the hips and legs; the 'skin' field says how the page dresses them: undersuit true tints the body skin below the face black, cover puts the skin faces whose centre at rest lies from from_m to to_m metres above the cover bone in dark shorts (a straight hem round each thigh).",
+  "Shells follow the dress bodice where it covers the skin (torso), the shoes for boots and stirrups, and the skin everywhere else."
+ ],
+ "fit_check": {
+  "checked": "2026-10-08 13:10",
+  "script": "~/Models/exolab/suit_check.py",
+  "surface": "the visible body at VRM rest: skin, kept dress faces (hide_rule), shoes, minus faces buried under another of these (suit_body.buried_faces); hair not included",
+  "samples": "every shell vertex and face centre; 'inner' = vertices closer than gap + thickness/2",
+  "penetration": "crossing_tris: shell triangles that intersect a body triangle (a shell edge through a body face or a body edge through a shell face); must be 0. inside_by_normal: samples on the back side of their nearest body face, for information only (wrong near open edges such as the dress hem and the shoe opening)",
+  "min_gap": "min_gap_mm: smallest unsigned distance of any sample to the body; must be at least 1.0 mm",
+  "total_tris": 54878,
+  "parts": {
+   "abdomen": {
+    "expected_gap_mm": 6.0,
+    "thickness_mm": 3.0,
+    "min_gap_mm": 4.1,
+    "median_inner_mm": 6.0,
+    "p05_inner_mm": 5.8,
+    "max_outer_mm": 9.39,
+    "inner_verts": 1136,
+    "samples": 6677,
+    "crossing_tris": 0,
+    "inside_by_normal": 0
+   },
+   "back": {
+    "expected_gap_mm": 10.0,
+    "thickness_mm": 3.0,
+    "min_gap_mm": 8.79,
+    "median_inner_mm": 10.0,
+    "p05_inner_mm": 9.88,
+    "max_outer_mm": 14.02,
+    "inner_verts": 1266,
+    "samples": 7762,
+    "crossing_tris": 0,
+    "inside_by_normal": 0
+   },
+   "boot_L": {
+    "expected_gap_mm": 6.0,
+    "thickness_mm": 3.0,
+    "min_gap_mm": 3.35,
+    "median_inner_mm": 6.0,
+    "p05_inner_mm": 5.97,
+    "max_outer_mm": 9.58,
+    "inner_verts": 935,
+    "samples": 6383,
+    "crossing_tris": 0,
+    "inside_by_normal": 0
+   },
+   "boot_R": {
+    "expected_gap_mm": 6.0,
+    "thickness_mm": 3.0,
+    "min_gap_mm": 3.63,
+    "median_inner_mm": 6.0,
+    "p05_inner_mm": 5.94,
+    "max_outer_mm": 9.61,
+    "inner_verts": 924,
+    "samples": 6407,
+    "crossing_tris": 0,
+    "inside_by_normal": 0
+   },
+   "chest": {
+    "expected_gap_mm": 8.0,
+    "thickness_mm": 3.0,
+    "min_gap_mm": 5.99,
+    "median_inner_mm": 8.0,
+    "p05_inner_mm": 7.73,
+    "max_outer_mm": 11.63,
+    "inner_verts": 1287,
+    "samples": 6595,
+    "crossing_tris": 0,
+    "inside_by_normal": 0
+   },
+   "forearm_cuff_L": {
+    "expected_gap_mm": 5.0,
+    "thickness_mm": 2.5,
+    "min_gap_mm": 3.95,
+    "median_inner_mm": 5.0,
+    "p05_inner_mm": 4.93,
+    "max_outer_mm": 8.07,
+    "inner_verts": 459,
+    "samples": 2663,
+    "crossing_tris": 0,
+    "inside_by_normal": 0
+   },
+   "forearm_cuff_R": {
+    "expected_gap_mm": 5.0,
+    "thickness_mm": 2.5,
+    "min_gap_mm": 3.86,
+    "median_inner_mm": 5.0,
+    "p05_inner_mm": 4.92,
+    "max_outer_mm": 8.09,
+    "inner_verts": 456,
+    "samples": 2646,
+    "crossing_tris": 0,
+    "inside_by_normal": 0
+   },
+   "gauntlet_L": {
+    "expected_gap_mm": 5.0,
+    "thickness_mm": 2.5,
+    "min_gap_mm": 3.73,
+    "median_inner_mm": 5.01,
+    "p05_inner_mm": 4.85,
+    "max_outer_mm": 7.73,
+    "inner_verts": 659,
+    "samples": 3008,
+    "crossing_tris": 0,
+    "inside_by_normal": 0
+   },
+   "gauntlet_R": {
+    "expected_gap_mm": 5.0,
+    "thickness_mm": 2.5,
+    "min_gap_mm": 3.66,
+    "median_inner_mm": 5.0,
+    "p05_inner_mm": 4.78,
+    "max_outer_mm": 7.97,
+    "inner_verts": 692,
+    "samples": 3080,
+    "crossing_tris": 0,
+    "inside_by_normal": 0
+   },
+   "hand_guard_L": {
+    "expected_gap_mm": 4.0,
+    "thickness_mm": 2.0,
+    "min_gap_mm": 3.45,
+    "median_inner_mm": 4.0,
+    "p05_inner_mm": 3.92,
+    "max_outer_mm": 6.47,
+    "inner_verts": 469,
+    "samples": 2249,
+    "crossing_tris": 0,
+    "inside_by_normal": 0
+   },
+   "hand_guard_R": {
+    "expected_gap_mm": 4.0,
+    "thickness_mm": 2.0,
+    "min_gap_mm": 3.43,
+    "median_inner_mm": 4.0,
+    "p05_inner_mm": 3.97,
+    "max_outer_mm": 6.47,
+    "inner_verts": 436,
+    "samples": 2148,
+    "crossing_tris": 0,
+    "inside_by_normal": 0
+   },
+   "helmet": {
+    "expected_gap_mm": 12.0,
+    "thickness_mm": 4.0,
+    "min_gap_mm": 6.91,
+    "median_inner_mm": 12.0,
+    "p05_inner_mm": 8.31,
+    "max_outer_mm": 16.42,
+    "inner_verts": 2484,
+    "samples": 11931,
+    "crossing_tris": 0,
+    "inside_by_normal": 0
+   },
+   "pauldron_L": {
+    "expected_gap_mm": 8.0,
+    "thickness_mm": 2.5,
+    "min_gap_mm": 6.82,
+    "median_inner_mm": 8.0,
+    "p05_inner_mm": 7.9,
+    "max_outer_mm": 10.94,
+    "inner_verts": 384,
+    "samples": 2032,
+    "crossing_tris": 0,
+    "inside_by_normal": 0
+   },
+   "pauldron_R": {
+    "expected_gap_mm": 8.0,
+    "thickness_mm": 2.5,
+    "min_gap_mm": 7.02,
+    "median_inner_mm": 8.0,
+    "p05_inner_mm": 7.93,
+    "max_outer_mm": 11.11,
+    "inner_verts": 398,
+    "samples": 2029,
+    "crossing_tris": 0,
+    "inside_by_normal": 0
+   },
+   "pelvis": {
+    "expected_gap_mm": 8.0,
+    "thickness_mm": 3.0,
+    "min_gap_mm": 4.52,
+    "median_inner_mm": 8.0,
+    "p05_inner_mm": 5.27,
+    "max_outer_mm": 11.53,
+    "inner_verts": 1758,
+    "samples": 7612,
+    "crossing_tris": 0,
+    "inside_by_normal": 0
+   },
+   "shin_shell_L": {
+    "expected_gap_mm": 6.0,
+    "thickness_mm": 2.5,
+    "min_gap_mm": 4.56,
+    "median_inner_mm": 6.0,
+    "p05_inner_mm": 5.96,
+    "max_outer_mm": 8.89,
+    "inner_verts": 686,
+    "samples": 3943,
+    "crossing_tris": 0,
+    "inside_by_normal": 0
+   },
+   "shin_shell_R": {
+    "expected_gap_mm": 6.0,
+    "thickness_mm": 2.5,
+    "min_gap_mm": 4.26,
+    "median_inner_mm": 6.0,
+    "p05_inner_mm": 5.94,
+    "max_outer_mm": 8.99,
+    "inner_verts": 693,
+    "samples": 4068,
+    "crossing_tris": 0,
+    "inside_by_normal": 0
+   },
+   "thigh_shell_L": {
+    "expected_gap_mm": 7.0,
+    "thickness_mm": 2.5,
+    "min_gap_mm": 4.13,
+    "median_inner_mm": 7.0,
+    "p05_inner_mm": 6.74,
+    "max_outer_mm": 9.87,
+    "inner_verts": 726,
+    "samples": 3434,
+    "crossing_tris": 0,
+    "inside_by_normal": 0
+   },
+   "thigh_shell_R": {
+    "expected_gap_mm": 7.0,
+    "thickness_mm": 2.5,
+    "min_gap_mm": 4.01,
+    "median_inner_mm": 7.0,
+    "p05_inner_mm": 6.7,
+    "max_outer_mm": 9.87,
+    "inner_verts": 737,
+    "samples": 3450,
+    "crossing_tris": 0,
+    "inside_by_normal": 0
+   },
+   "upper_arm_cuff_L": {
+    "expected_gap_mm": 6.0,
+    "thickness_mm": 2.5,
+    "min_gap_mm": 4.87,
+    "median_inner_mm": 6.0,
+    "p05_inner_mm": 5.97,
+    "max_outer_mm": 9.09,
+    "inner_verts": 585,
+    "samples": 3093,
+    "crossing_tris": 0,
+    "inside_by_normal": 0
+   },
+   "upper_arm_cuff_R": {
+    "expected_gap_mm": 6.0,
+    "thickness_mm": 2.5,
+    "min_gap_mm": 4.93,
+    "median_inner_mm": 6.0,
+    "p05_inner_mm": 5.96,
+    "max_outer_mm": 9.08,
+    "inner_verts": 559,
+    "samples": 3048,
+    "crossing_tris": 0,
+    "inside_by_normal": 0
+   },
+   "upper_arm_shell_L": {
+    "expected_gap_mm": 6.0,
+    "thickness_mm": 2.5,
+    "min_gap_mm": 4.86,
+    "median_inner_mm": 6.01,
+    "p05_inner_mm": 5.93,
+    "max_outer_mm": 8.9,
+    "inner_verts": 459,
+    "samples": 1899,
+    "crossing_tris": 0,
+    "inside_by_normal": 0
+   },
+   "upper_arm_shell_R": {
+    "expected_gap_mm": 6.0,
+    "thickness_mm": 2.5,
+    "min_gap_mm": 4.78,
+    "median_inner_mm": 6.01,
+    "p05_inner_mm": 5.94,
+    "max_outer_mm": 8.9,
+    "inner_verts": 441,
+    "samples": 1866,
+    "crossing_tris": 0,
+    "inside_by_normal": 0
+   }
+  },
+  "sanity": {
+   "boot_L on its side": {
+    "ok": true,
+    "detail": "centroid x +0.046"
+   },
+   "boot_R on its side": {
+    "ok": true,
+    "detail": "centroid x -0.047"
+   },
+   "forearm_cuff_L on its side": {
+    "ok": true,
+    "detail": "centroid x +0.470"
+   },
+   "forearm_cuff_R on its side": {
+    "ok": true,
+    "detail": "centroid x -0.469"
+   },
+   "gauntlet_L on its side": {
+    "ok": true,
+    "detail": "centroid x +0.452"
+   },
+   "gauntlet_R on its side": {
+    "ok": true,
+    "detail": "centroid x -0.454"
+   },
+   "hand_guard_L on its side": {
+    "ok": true,
+    "detail": "centroid x +0.579"
+   },
+   "hand_guard_R on its side": {
+    "ok": true,
+    "detail": "centroid x -0.579"
+   },
+   "pauldron_L on its side": {
+    "ok": true,
+    "detail": "centroid x +0.138"
+   },
+   "pauldron_R on its side": {
+    "ok": true,
+    "detail": "centroid x -0.139"
+   },
+   "shin_shell_L on its side": {
+    "ok": true,
+    "detail": "centroid x +0.054"
+   },
+   "shin_shell_R on its side": {
+    "ok": true,
+    "detail": "centroid x -0.055"
+   },
+   "thigh_shell_L on its side": {
+    "ok": true,
+    "detail": "centroid x +0.094"
+   },
+   "thigh_shell_R on its side": {
+    "ok": true,
+    "detail": "centroid x -0.095"
+   },
+   "upper_arm_cuff_L on its side": {
+    "ok": true,
+    "detail": "centroid x +0.231"
+   },
+   "upper_arm_cuff_R on its side": {
+    "ok": true,
+    "detail": "centroid x -0.230"
+   },
+   "upper_arm_shell_L on its side": {
+    "ok": true,
+    "detail": "centroid x +0.300"
+   },
+   "upper_arm_shell_R on its side": {
+    "ok": true,
+    "detail": "centroid x -0.301"
+   },
+   "chest in front of the chest": {
+    "ok": true,
+    "detail": "centroid z +0.082 vs upperChest z +0.016"
+   },
+   "back behind the back": {
+    "ok": true,
+    "detail": "centroid z -0.044"
+   },
+   "pauldron_L at +X near the left shoulder": {
+    "ok": true,
+    "detail": "centroid x +0.138, leftUpperArm x +0.108"
+   },
+   "helmet around the head": {
+    "ok": true,
+    "detail": "bbox [-0.124  1.412 -0.132]..[0.124 1.645 0.111], head [-0.     1.422 -0.008], eye y 1.484"
+   },
+   "boot_L at the left foot": {
+    "ok": true,
+    "detail": "y 0.012..0.173, foot [ 0.046  0.137 -0.025]"
+   },
+   "boot_L above the floor": {
+    "ok": true,
+    "detail": "min y 0.0122, allowed -0.0020"
+   },
+   "boot_R at the right foot": {
+    "ok": true,
+    "detail": "y 0.012..0.173, foot [-0.047  0.137 -0.025]"
+   },
+   "boot_R above the floor": {
+    "ok": true,
+    "detail": "min y 0.0122, allowed -0.0020"
+   }
+  },
+  "passed": true,
+  "failures": []
+ },
+ "build": {
+  "script": "~/Models/exolab/suit_build.py",
+  "blend": "~/Models/exolab/blends/exo_suits_20261008-130948.blend",
+  "blender": "5.2.2 LTS",
+  "date": "2026-10-08 13:10",
+  "totals": {
+   "tris": 54878,
+   "parts": 23
+  }
+ }
+}

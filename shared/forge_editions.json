@@ -1,0 +1,42 @@
+{
+  "about": "Forge editions and the features each turns on. Every download is the same; a signed licence file (shared/forge_licence.py) picks the edition, and with none Forge is the default edition. A feature belongs to the lowest edition that has it; an edition has its own features plus those of the edition it inherits. when_off is what a feature does when this edition lacks it: hidden or read_only, never anything that keeps a user from their own data. owner is hub or an app folder in apps/. Ask through shared/forge_edition.py: enabled(\"feature\"). Declared, not yet enforced: no existing code path calls enabled() until the owner picks the editions, so a Forge with no licence (his own laptop included) loses nothing, the Business look lock included.",
+  "default": "free",
+  "editions": {
+    "free": {
+      "label": "Forge",
+      "inherits": null,
+      "what": "Every app, for personal use. Export and backups are always here."
+    },
+    "plus": {
+      "label": "Forge Plus",
+      "inherits": "free",
+      "what": "For one person who wants to support Forge: the beta channel and extras."
+    },
+    "business": {
+      "label": "Forge Business",
+      "inherits": "plus",
+      "seats": true,
+      "what": "Use at a business, per seat: the Business look's lock and company update mirror."
+    }
+  },
+  "features": {
+    "beta_channel": {
+      "edition": "plus",
+      "owner": "hub",
+      "when_off": "hidden",
+      "what": "Get beta builds from the update feed"
+    },
+    "business_lock": {
+      "edition": "business",
+      "owner": "settings",
+      "when_off": "read_only",
+      "what": "Password lock for the Business look"
+    },
+    "update_mirror": {
+      "edition": "business",
+      "owner": "hub",
+      "when_off": "hidden",
+      "what": "Read updates from the company's own address"
+    }
+  }
+}

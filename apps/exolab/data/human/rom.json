@@ -1,0 +1,32 @@
+{
+  "id": "rom",
+  "name": "Shoulder range of motion",
+  "about": "Highest arm elevation (degrees from hanging) reachable in each plane of elevation (0 = out to the side, 90 = straight forward, 130+ = across the body, negative = behind). Axial rotation range shrinks as the arm rises.",
+  "plane_deg": [
+    -90,
+    -60,
+    -30,
+    0,
+    30,
+    60,
+    90,
+    120,
+    140
+  ],
+  "max_elevation_deg": [
+    60,
+    65,
+    120,
+    180,
+    180,
+    180,
+    180,
+    160,
+    120
+  ],
+  "axial_internal_deg": 70,
+  "axial_external_deg": 90,
+  "axial_shrink_overhead": 0.35,
+  "elbow_flexion_max_deg": 145,
+  "source": "Approximate adult norms (AAOS; Soucie et al. 2011): flexion 180, abduction 180, extension 60, internal rotation 70, external rotation 90. Envelope shape is an approximation, editable."
+}

@@ -1,0 +1,8 @@
+{"id": "lift_cycle", "name": "Box lift cycle", "kind": "lift", "order": 4,
+ "about": "Lifts a box with both hands from waist height to overhead and back, again and again: peak torque, joint speed and power, energy per lift and how many lifts one battery charge gives.",
+ "params": {"box_kg": 12, "keys": [
+   {"t": 0.0, "plane": 90, "elev": 20, "axial": 0, "elbow": 95},
+   {"t": 1.5, "plane": 90, "elev": 165, "axial": 0, "elbow": 15},
+   {"t": 2.0, "plane": 90, "elev": 165, "axial": 0, "elbow": 15},
+   {"t": 3.5, "plane": 90, "elev": 20, "axial": 0, "elbow": 95}], "fps": 30, "usable_battery": 0.8},
+ "rules": {}}

@@ -1,0 +1,9 @@
+{"id": "shoulder_hold", "name": "Hold a load", "kind": "hold", "order": 3,
+ "about": "Holds a load still at standard poses for a minute: motor torque against its continuous rating, what the human still has to carry against a sustainable effort, beam safety factors, and how far the hand sags.",
+ "params": {"duration_s": 60, "poses": [
+   {"name": "Arm forward, level", "plane": 90, "elev": 90, "axial": 0, "elbow": 0, "payload_kg": 5},
+   {"name": "Arm out to the side", "plane": 0, "elev": 90, "axial": 0, "elbow": 0, "payload_kg": 5},
+   {"name": "Overhead", "plane": 90, "elev": 165, "axial": 0, "elbow": 5, "payload_kg": 5},
+   {"name": "Carry at the side", "plane": 90, "elev": 10, "axial": 0, "elbow": 90, "payload_kg": 10},
+   {"name": "Tool at chest height", "plane": 80, "elev": 60, "axial": 20, "elbow": 80, "payload_kg": 3}]},
+ "rules": {}}

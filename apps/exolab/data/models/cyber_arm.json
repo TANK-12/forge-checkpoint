@@ -1,0 +1,8 @@
+{
+  "id": "cyber_arm",
+  "name": "Cybernetic arm",
+  "kind": "cyber_limb",
+  "status": "planned",
+  "chunk": 3,
+  "about": "A powered prosthetic arm on the humanoid skeleton: socket at the stump, wrist and grip drives. Tests: grip, lift, range, socket load."
+}

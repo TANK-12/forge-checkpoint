@@ -1,0 +1,41 @@
+{
+  "label": "Graphite",
+  "order": 98,
+  "tags": [
+    "dark",
+    "calm",
+    "work"
+  ],
+  "about": "Quiet and businesslike: graphite cards with soft shadows over a dim flowing backdrop, a calm blue accent and a list of apps.",
+  "look": "cards",
+  "layout": "dashboard",
+  "colours": {
+    "accent": "#5b9cf0",
+    "bg": "#121417",
+    "panel": "#1b1e23",
+    "panel_2": "#22262c",
+    "border": "#30353d",
+    "text": "#e7eaee",
+    "muted": "#8d949e"
+  },
+  "font": "inter",
+  "wallpaper": [
+    "forge:forge-flow.jpg",
+    ""
+  ],
+  "live": "",
+  "companion": "",
+  "settings": {
+    "particles": "off",
+    "dim": 0.35,
+    "glass_style": "flat",
+    "glass": 0.95,
+    "border": "subtle",
+    "radius": 12,
+    "motion": "glide"
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {}
+  }
+}

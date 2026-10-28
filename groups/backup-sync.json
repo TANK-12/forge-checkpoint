@@ -1,0 +1,19 @@
+{
+  "id": "backup-sync",
+  "label": "Backup and sync",
+  "tagline": "Snapshots, the rescue drive and syncing",
+  "icon": "🛟",
+  "accent": "#5fb3b3",
+  "order": 23,
+  "section": "system",
+  "tabs": true,
+  "members": [
+    "backup",
+    "syncthing"
+  ],
+  "tab_labels": {
+    "backup": "Backup",
+    "syncthing": "Syncthing"
+  },
+  "note": "Relay task 383. Undo this fold with \"off\": true; the apps keep their own folders and data."
+}

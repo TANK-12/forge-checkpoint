@@ -1,0 +1,41 @@
+{
+  "label": "Neon",
+  "order": 50,
+  "tags": [
+    "fun",
+    "live",
+    "dark",
+    "synthwave"
+  ],
+  "about": "Synthwave: a neon grid racing toward a striped sun, magenta and cyan glow on every edge.",
+  "look": "classic",
+  "layout": "forge",
+  "colours": {
+    "accent": "#ff3ec8",
+    "bg": "#0b0716",
+    "panel": "#140c26",
+    "panel_2": "#1b1133",
+    "border": "#3a1f5c",
+    "text": "#f3e8ff",
+    "muted": "#a08cc4"
+  },
+  "font": "rubik",
+  "wallpaper": [
+    "forge:synthwave.jpg",
+    ""
+  ],
+  "live": "synthwave",
+  "settings": {
+    "particles": "off",
+    "radius": 12,
+    "border": "accent",
+    "glass_style": "frosted",
+    "wall_3d": false
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {
+      "live": "off"
+    }
+  }
+}

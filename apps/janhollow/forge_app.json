@@ -1,0 +1,125 @@
+{
+  "name": "janhollow",
+  "label": "Janhollow",
+  "tagline": "A space station that lives on its own",
+  "help": {
+    "about": "A space station whose crew live their own days, whether you watch or not. Look in on them, read the log, and come back later to see what changed. The crew's own words need Jan, a local AI app.",
+    "features": [
+      "The station",
+      "Crew",
+      "Away modes",
+      "Day length",
+      "The log"
+    ]
+  },
+  "port": 8448,
+  "module": "web_app:app",
+  "src_dir": ".",
+  "accent": "#5bd6c4",
+  "icon": "🛰️",
+  "fullscreen": "auto",
+  "group": "pixel-games",
+  "order": 7,
+  "section": "play",
+  "ready_timeout": 45,
+  "seed": [
+    "tools/seed_art.py",
+    "tools/make_art32.py",
+    "tools/make_space_art.py",
+    "tools/seed_content.py",
+    "tools/seed_items.py",
+    "tools/seed_worlds.py"
+  ],
+  "manifest": {
+    "summary": "A pixel space station that lives on its own: eight crew with jobs, homes and schedules walking four decks and a lift, with local Jan models giving them voices.",
+    "features": [
+      {
+        "name": "The station",
+        "description": "Four decks of 25 rooms, built from data — walls, doors and the lift pad are derived from room rectangles, never declared."
+      },
+      {
+        "name": "Crew",
+        "description": "Eight crew, each one JSON file with a job, a home, a personality, relationships and a daily schedule they actually walk."
+      },
+      {
+        "name": "Away modes",
+        "description": "Pause when unfocused (the default), keep running when closed, idle when closed, or time-skip with a summary."
+      },
+      {
+        "name": "Day length",
+        "description": "2 to 720 real minutes for a station day, default 40, as a slider paired with a number field."
+      },
+      {
+        "name": "Saving",
+        "description": "Autosave every 60 seconds and on shutdown, plus manual slots. The station itself is rebuilt from files, never stored."
+      },
+      {
+        "name": "Town log",
+        "description": "What the crew did and when, capped and saved with the world. Filters for talk, stories and comings and goings, plus one person's lines; new lines are added in place, so a line you scrolled up to read stays put."
+      },
+      {
+        "name": "Written lines",
+        "description": "With Voices off or Jan not answering, crew who share a room still talk in short written lines fitted to job, room and hour, and greet you in passing. Off, now and then, or often. One JSON file per set in barks/; no model runs."
+      },
+      {
+        "name": "Crew chatter",
+        "description": "Crew in the same room talk to each other on a local 0.8B, two or three turns, with speech bubbles and a town log."
+      },
+      {
+        "name": "The quality guard",
+        "description": "Ten rules every generated line must pass before it is shown; rejected samples are logged for whoever tunes the prompt next."
+      },
+      {
+        "name": "A narrator",
+        "description": "A 4B writes the day's event from what the crew actually did, and the paragraph for a time-skip."
+      },
+      {
+        "name": "Memory and relationships",
+        "description": "Talking to someone warms you to them and both sides remember it; the memory goes back into the next prompt."
+      }
+    ],
+    "data_dir": "~/ForgeGameData/janhollow",
+    "services": [
+      "Jan at http://127.0.0.1:1337/v1 — required for any dialogue; the station runs fine without it, silently."
+    ],
+    "dependencies": {
+      "required": [
+        "fastapi",
+        "uvicorn",
+        "pydantic"
+      ],
+      "optional": [
+        "Jan, for the crew to say anything"
+      ]
+    },
+    "standalone_launch": "FORGE_SHARED_DIR=~/Forge/shared .venv/bin/python -m uvicorn web_app:app --port 8448",
+    "api_base": "http://127.0.0.1:8448",
+    "jan_roles": {
+      "chatter": "0.8B, CPU, one line of crew dialogue",
+      "narrator": "4B, iGPU, daily events and time-skip summaries"
+    },
+    "known_gaps": [
+      "The player bar floats over the top row of the deck, more so in a narrow window.",
+      "No quests, and the narrator never moves crew on or off the station.",
+      "Memories are the last line said to you plus the day's story; nothing summarises them.",
+      "Props do not block movement.",
+      "The 0.8B's dialogue is coherent but plainly small-model."
+    ],
+    "improve_next": [
+      "Move the player bar to a slim bottom dock (app review JH-I4)",
+      "Small jobs the crew can ask of you (app review JH-I5)",
+      "Props that block movement",
+      "Quests and consequences (session 5)",
+      "Try a bigger chatter model — one edit in janhollow/roles.py",
+      "Memories that summarise and age",
+      "Crew coming and going"
+    ],
+    "docs": [
+      "MANIFEST.json",
+      "manifests/roadmap.json",
+      "manifests/session-02.json",
+      "manifests/session-01.json",
+      "README.md"
+    ]
+  }
+}

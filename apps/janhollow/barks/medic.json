@@ -1,0 +1,46 @@
+{
+ "label": "Mira, the medic",
+ "jobs": [
+  "medic"
+ ],
+ "weight": 2,
+ "exchanges": [
+  {
+   "say": "Have you been drinking enough water, {listener}?",
+   "replies": [
+    "Probably not.",
+    "Yes, doctor.",
+    "Coffee counts."
+   ]
+  },
+  {
+   "say": "Did you hear what Dez did in the cargo bay?",
+   "replies": [
+    "Tell me everything.",
+    "I don't want to know.",
+    "Again?"
+   ]
+  },
+  {
+   "say": "Stretch. You're standing like a question mark.",
+   "replies": [
+    "Better?",
+    "It's how I'm built.",
+    "Fine, fine."
+   ]
+  },
+  {
+   "say": "Come by the medbay later. Nothing serious.",
+   "replies": [
+    "That's what they all say.",
+    "I'll come after lunch.",
+    "Is it the stretching again?"
+   ]
+  }
+ ],
+ "hello": [
+  "You look well enough, {you}.",
+  "Come by the medbay if anything aches.",
+  "Drink some water today."
+ ]
+}

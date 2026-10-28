@@ -1,0 +1,5 @@
+{"id": "reach_across", "name": "Reach across the body", "about": "Reach level across the chest to the other shoulder (horizontal adduction): the arm passes close to the chest and the mechanism must not hit it.", "keys": [
+ {"t": 0.0, "plane": 90, "elev": 30, "axial": 0, "elbow": 40},
+ {"t": 1.0, "plane": 130, "elev": 95, "axial": 10, "elbow": 60},
+ {"t": 1.4, "plane": 130, "elev": 95, "axial": 10, "elbow": 60},
+ {"t": 2.4, "plane": 90, "elev": 30, "axial": 0, "elbow": 40}]}

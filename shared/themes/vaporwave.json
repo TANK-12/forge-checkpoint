@@ -1,0 +1,43 @@
+{
+  "label": "Vaporwave",
+  "order": 104,
+  "tags": [
+    "retro",
+    "neon",
+    "live",
+    "fun"
+  ],
+  "about": "Pink and cyan on a neon grid at sunset, chunky outlines and a glitchy entrance.",
+  "look": "outline",
+  "layout": "launcher",
+  "colours": {
+    "accent": "#ff6ad5",
+    "bg": "#140a24",
+    "panel": "#1f1035",
+    "panel_2": "#271543",
+    "border": "#5a2a7a",
+    "text": "#fde8ff",
+    "muted": "#b79ad0"
+  },
+  "font": "rubik",
+  "wallpaper": [
+    "forge:synthwave.jpg",
+    ""
+  ],
+  "live": "synthwave",
+  "companion": "",
+  "settings": {
+    "particles": "off",
+    "dim": 0.0,
+    "glass_style": "frosted",
+    "border": "accent",
+    "radius": 10,
+    "motion": "glitch"
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {
+      "live": "off"
+    }
+  }
+}

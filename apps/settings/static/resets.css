@@ -1,0 +1,39 @@
+/* Resets and Pick for my machine (resets.js, Relay task 323). */
+
+/* The reset at the foot of every page, System panel and About. */
+.card-foot { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--border); }
+body.dense .card.gen > .card-foot { grid-column: 1 / -1; }
+.card-foot .btn:disabled { opacity: .55; cursor: default; }
+
+/* The ask-first dialog (it reuses the lock dialog's backdrop and box). */
+.reset-box { width: min(520px, calc(100vw - 32px)); max-height: calc(100vh - 64px); overflow: auto; }
+.reset-box h3 { margin: 0 0 6px; }
+.rd-list { margin: 8px 0; padding-left: 18px; font-size: 13px; line-height: 1.5; }
+.rd-list li { overflow-wrap: anywhere; }
+.rd-steps { display: grid; gap: 8px; margin: 10px 0; }
+.rd-step { display: grid; gap: 4px; font-size: 13px; }
+.rd-opt { margin-left: 22px; color: var(--muted); font-size: 12.5px; }
+.rd-note { margin-top: 8px; }
+
+/* The Undo toast after a reset. */
+.reset-toast { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 900; display: flex; align-items: center; gap: 10px;
+  max-width: min(640px, calc(100vw - 32px)); padding: 10px 14px; border: 1px solid var(--border); border-radius: 12px;
+  background: var(--panel, #151b26); box-shadow: 0 8px 28px rgba(0, 0, 0, .45); font-size: 13px; }
+.reset-toast[hidden] { display: none; }
+.reset-toast .linkish { background: none; border: 0; color: var(--muted); cursor: pointer; font-size: 14px; }
+
+/* The Reset groups card and the kept copies in About. */
+.rg-list, .rb-list { display: grid; gap: 2px; margin-top: 8px; }
+.rg-row, .rb-row { display: flex; align-items: center; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--border); }
+.rg-row:last-child, .rb-row:last-child { border-bottom: 0; }
+.rg-row .grow, .rb-row .grow { flex: 1; min-width: 0; }
+.rg-name { font-weight: 600; font-size: 13.5px; }
+.rb-row { font-size: 13px; }
+
+/* Pick for my machine. */
+.mc-facts { margin: 10px 0 6px; }
+.mc-list { margin: 0; padding-left: 18px; font-size: 13px; line-height: 1.55; }
+.mc-rows { display: grid; gap: 8px; margin: 12px 0 6px; }
+.mc-rows .lp-row { display: grid; grid-template-columns: 120px minmax(0, 1fr); align-items: center; gap: 12px; }
+.mc-tag { font-size: 11px; opacity: .8; }
+#mc-about { min-height: 1.2em; }

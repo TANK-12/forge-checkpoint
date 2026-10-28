@@ -1,0 +1,46 @@
+{
+ "label": "End of the day",
+ "hours": [
+  "evening"
+ ],
+ "weight": 1.2,
+ "exchanges": [
+  {
+   "say": "Long day?",
+   "replies": [
+    "The longest.",
+    "Long enough.",
+    "They're all long out here."
+   ]
+  },
+  {
+   "say": "Cards tonight, {listener}?",
+   "replies": [
+    "Only if Mira's dealing.",
+    "I still owe you from last time.",
+    "Go on then."
+   ]
+  },
+  {
+   "say": "I could sleep for a week.",
+   "replies": [
+    "Not on my shift you won't.",
+    "Same.",
+    "Try the couch in the lounge."
+   ]
+  },
+  {
+   "say": "Anything happen today I should know about?",
+   "replies": [
+    "Not a thing.",
+    "Ask Mira, she knows everything.",
+    "The usual."
+   ]
+  }
+ ],
+ "hello": [
+  "Evening, {you}.",
+  "Nearly done for the day?",
+  "Dinner's on, if you're hungry."
+ ]
+}

@@ -1,0 +1,21 @@
+{
+  "id": "pictures",
+  "label": "Pictures",
+  "tagline": "Wallpapers, screenshots, recordings and painting",
+  "icon": "🖼️",
+  "accent": "#d19a66",
+  "order": 22,
+  "section": "watch",
+  "tabs": true,
+  "members": [
+    "wallpapers",
+    "snap",
+    "paint"
+  ],
+  "tab_labels": {
+    "wallpapers": "Wallpapers",
+    "snap": "Snap",
+    "paint": "Paint"
+  },
+  "note": "Relay task 383. Undo this fold with \"off\": true; the apps keep their own folders and data."
+}

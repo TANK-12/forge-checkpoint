@@ -1,0 +1,20 @@
+{
+  "_readme": "shared/forge_gpuload.py. names: part of a process name (as in /proc/<pid>/comm, 15 letters at most) -> what the hub's note calls it. heavy: parts of process names that ease Forge all the way off whenever they use the GPU at all (games). Matching ignores case.",
+  "names": {
+    "blender": "Blender",
+    "llama": "Jan",
+    "jan": "Jan",
+    "ollama": "Ollama",
+    "gamescope": "a game",
+    ".exe": "a game",
+    "wine": "a game",
+    "steam": "Steam",
+    "godot": "Godot",
+    "ffmpeg": "ffmpeg",
+    "obs": "OBS",
+    "firefox": "Firefox",
+    "chrome": "Chrome",
+    "python": "a Python job"
+  },
+  "heavy": ["gamescope", ".exe", "wine", "steam_app"]
+}

@@ -1,0 +1,13 @@
+/* high-contrast-dark (shared/themes/high-contrast-dark.json): the most legible Forge, solid and outlined. */
+html[data-forge-theme="high-contrast-dark"] #wall, html[data-forge-theme="high-contrast-dark"] #wall-blur { background: var(--bg) !important; filter: none !important; }
+html[data-forge-theme="high-contrast-dark"] #wall-fg, html[data-forge-theme="high-contrast-dark"] #scrim { display: none; }
+html[data-forge-theme="high-contrast-dark"] { --glass-fill: var(--bg); --glass-line: var(--text); --muted: var(--text); }
+html[data-forge-theme="high-contrast-dark"] .hero .clock { background-image: none; color: var(--text); -webkit-text-fill-color: var(--text); filter: none; font-weight: 600; animation: none; }
+html[data-forge-theme="high-contrast-dark"] .hero .date, html[data-forge-theme="high-contrast-dark"] .hero .greet { color: var(--text); text-shadow: none; font-weight: 600; }
+html[data-forge-theme="high-contrast-dark"] .tile .name { font-size: 1.08em; font-weight: 700; }
+html[data-forge-theme="high-contrast-dark"] .tile .tag { color: var(--text); }
+html[data-forge-theme="high-contrast-dark"] .tile:hover, html[data-forge-theme="high-contrast-dark"] .tile.focus, html[data-forge-theme="high-contrast-dark"] #search:focus, html[data-forge-theme="high-contrast-dark"] .fchip:focus-visible, html[data-forge-theme="high-contrast-dark"] :focus-visible {
+  outline: 3px solid var(--accent); outline-offset: 2px; }
+html[data-forge-theme="high-contrast-dark"] .tile .icon { color: var(--text); }
+html[data-forge-theme="high-contrast-dark"] .section-head .s-label, html[data-forge-theme="high-contrast-dark"] #recent-wrap h3 { color: var(--text); font-weight: 700; text-shadow: none; }
+html[data-forge-theme="high-contrast-dark"] #home .hero > div:first-child::before { display: none; }

@@ -1,0 +1,164 @@
+{
+ "about": "Where the weekly money could go, for Mint's Plan tab. One entry per path; adding a path is one entry here. kind cash: a savings account on the RBA cash rate. kind fund: a mix of the assets below, minus fees and tax. kind zero_skill: a CFD trader who picks directions by coin flip, run by the Lab on real prices with every real cost. Futures for cash and fund paths are built from 12-month runs of real months since history.first_month, the same months for every path in a future, so they share the same luck. A dividend income comes from symbols.json (dividend_yield_pct). Figures come from docs/library/money/2026-10-09-research-*.md; 'assumption' marks a reasoned guess.",
+ "history": {
+  "first_month": "2000-12",
+  "block_months": 12,
+  "assets": {
+   "au": {
+    "label": "Australian shares: S&P/ASX 200 plus dividends",
+    "symbol": "^AXJO",
+    "income_tax_pct": 0.4,
+    "income_tax_note": "Dividends of 4.0% a year, about 75% franked: tax at 32% on the grossed-up amount less the franking credit is about 0.4% of the balance a year (computed)."
+   },
+   "us": {
+    "label": "US shares: S&P 500 plus dividends, in Australian dollars",
+    "symbol": "^GSPC",
+    "fx": ["AUDUSD=X", "6A=F"],
+    "income_tax_pct": 0.48,
+    "income_tax_note": "Dividends of 1.5% a year taxed at 32% (the 15% US withholding counts towards it): about 0.48% of the balance a year (computed)."
+   },
+   "cash": {
+    "label": "RBA cash rate",
+    "symbol": "rba-cash",
+    "rate": true
+   }
+  }
+ },
+ "tax": {
+  "marginal": 0.32,
+  "gain_tax": 0.16,
+  "super_contributions": 0.15,
+  "concessional_cap": 32500,
+  "super_guarantee": 0.12,
+  "note": "On a salary between $45,001 and $135,000: 30% tax plus 2% Medicare levy on the next dollar; half of a gain held over a year is taxed, so 16% of it, and a gain on money held under a year is taxed in full; dividends kept in a fund were taxed the year they came and count in the cost base, so selling does not tax them again; super contributions taxed 15%; the $32,500 concessional cap counts the employer's 12% Super Guarantee too, so salary sacrifice can add $32,500 less 12% of the salary (ATO)."
+ },
+ "inflation_pct": 2.7,
+ "cautious_cut_pct": 1.5,
+ "comfort": [
+  {"fall": 0.15, "label": "A 15% fall would keep me up at night"},
+  {"fall": 0.3, "label": "I can sit through a 30% fall", "default": true},
+  {"fall": 0.5, "label": "I can watch half of it vanish for a while, as in 2008"}
+ ],
+ "paths": [
+  {
+   "id": "savings",
+   "kind": "cash",
+   "short": "Savings",
+   "label": "High-interest savings account",
+   "colour": "#3987e5",
+   "summary": "A bank account paying about the cash rate plus a little: 5.00% today at Macquarie with no conditions. Guaranteed by the government up to $250,000 per person per bank. The interest is taxed at your rate every year, so 5.00% keeps about 3.4%.",
+   "margin_pct": 0.4,
+   "income_tax": 0.32,
+   "sources": [
+    "RBA cash rate 4.60% from 30 Sep 2026 (RBA table A2)",
+    "Macquarie savings 5.00% with no conditions",
+    "Financial Claims Scheme: $250,000 per person per bank (APRA)"
+   ],
+   "assumptions": ["The bank paid 0.4 points over the cash rate in every past month (today's gap; an assumption)."]
+  },
+  {
+   "id": "aus_shares",
+   "kind": "fund",
+   "short": "Aussie shares",
+   "label": "Australian shares index fund (VAS or A200)",
+   "colour": "#d95926",
+   "summary": "One ETF holding the 200 to 300 biggest Australian companies, bought once a month. Fees 0.07% a year plus $3 a buy. Dividends are taxed each year (franking credits cover most of it), and 16% of the gain when you sell after a year.",
+   "mix": {"au": 1.0},
+   "fee_pct": 0.07,
+   "brokerage": 3.0,
+   "gain_tax": 0.16,
+   "sources": [
+    "VAS fee 0.07%, A200 0.04% (issuers)",
+    "Brokerage $3 a trade (Stake, Moomoo)",
+    "S&P/ASX 200 prices from Yahoo; dividends 4.0% a year measured from VAS.AX and STW.AX"
+   ],
+   "assumptions": []
+  },
+  {
+   "id": "growth_fund",
+   "kind": "fund",
+   "short": "Growth fund",
+   "label": "All-growth shares fund, Australia and the world (DHHF)",
+   "colour": "#199e70",
+   "summary": "One ETF holding thousands of companies, roughly 40% Australian and 60% overseas, bought once a month. Fees 0.19% a year plus $3 a buy. The overseas part rises and falls with the dollar.",
+   "mix": {"au": 0.4, "us": 0.6},
+   "fee_pct": 0.19,
+   "brokerage": 3.0,
+   "gain_tax": 0.16,
+   "sources": [
+    "DHHF fee 0.19% (Betashares)",
+    "Overseas part modelled with the S&P 500 in Australian dollars (AUD/USD from Yahoo; CME Australian dollar futures before May 2006)"
+   ],
+   "assumptions": [
+    "The S&P 500 stands in for world shares: the US is most of a world index but not all of it, so a real world fund will differ."
+   ]
+  },
+  {
+   "id": "super",
+   "kind": "fund",
+   "short": "Super",
+   "label": "Extra super by salary sacrifice (growth option)",
+   "colour": "#c98500",
+   "summary": "Your employer pays part of your salary into super before tax. Giving up $300 of take-home pay puts about $375 into super, because super contributions are taxed 15% instead of a typical 32%. The catch: it is locked until you are 60.",
+   "mix": {"au": 0.4, "us": 0.6},
+   "fee_pct": 0.6,
+   "drag_pct": 0.7,
+   "pre_tax": true,
+   "gain_tax": 0.0,
+   "locked": "Locked until 60. Up to $50,000 of voluntary contributions can come out early for a first home through the First Home Super Saver scheme.",
+   "sources": [
+    "Contributions tax 15%, concessional cap $32,500 (ATO)",
+    "First Home Super Saver: $15,000 a year, $50,000 in total (ATO)"
+   ],
+   "assumptions": [
+    "Fund fees 0.6% a year (typical growth option; an assumption).",
+    "Tax inside super on earnings about 0.7% of the balance a year after franking credits (an assumption)."
+   ]
+  },
+  {
+   "id": "cfd",
+   "kind": "zero_skill",
+   "short": "CFD trading",
+   "label": "Trading ASX 200 CFDs with no real edge",
+   "colour": "#d55181",
+   "summary": "A Plus500-style account trading the ASX 200 at 5x leverage, about 25 trades a year held 5 days, each direction picked by a coin flip, paying a Plus500-style spread and overnight funding (the ASX 200 spread and the 3% funding markup are assumptions: Plus500's own figures could not be read). This is what trading looks like until someone proves an edge. ASIC found 68% of Australian retail CFD clients lost money in FY24.",
+   "symbol": "^AXJO",
+   "venue": "cfd",
+   "leverage": 5,
+   "trades_per_year": 25,
+   "hold_days": 5,
+   "max_years": 10,
+   "gain_tax": 0.32,
+   "sources": [
+    "ASIC REP 828: 68% of retail CFD clients lost money in FY24",
+    "Costs from published broker fees: no commission, the 0.7% conversion fee and nightly funding are Plus500's published terms; the ASX 200 spread (0.02%) and the 3% markup over the cash rate are assumptions"
+   ],
+   "assumptions": [
+    "Profit is taxed as income at 32%; losses are not used against other income here.",
+    "Runs at most 10 years: a trading account is a quick-income track, and longer windows of real history repeat too much."
+   ]
+  }
+ ],
+ "info": [
+  {
+   "id": "hecs",
+   "label": "Pay off a HECS-HELP debt early?",
+   "lines": [
+    "A HECS debt grows with indexation: 2.8% for 2026. Paying it early is a sure 2.8% a year, tax-free.",
+    "Each dollar of income over $69,528 repays 15 cents. Just over that line the yearly repayment can be smaller than a year's indexation, so a debt can barely shrink on its own.",
+    "Savings at 5.00% keep about 3.4% after tax, so paying early is roughly a draw with savings and worse than shares over the long run. It does end the 15 cents a dollar on income over $69,528."
+   ],
+   "sources": ["ATO HELP indexation 2.8% (2026) and repayment thresholds"]
+  },
+  {
+   "id": "side_income",
+   "label": "Side income Claude can help build",
+   "lines": [
+    "Local clients (small-business sites, booking forms, Python automations): $0 to $8,000 in year one, 5 to 8 hours a week. The hard part is finding clients, not building.",
+    "Freelance platforms (Upwork, Fiverr): $0 to $5,000, 5 to 10 hours a week, much of it unpaid bidding at first.",
+    "A paid niche tool or template (Gumroad, itch.io): $0 to $2,000. About half of listed indie products earn nothing."
+   ],
+   "sources": ["Mint's research notes on side income (the ranking; year-one figures are judgement)"]
+  }
+ ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Garden",
+  "tagline": "L-system plants that keep growing while you are away",
+  "icon": "🌱",
+  "order": 30,
+  "made_by": "Claude",
+  "made": "2026-10-09",
+  "keepsake_noun": "plant",
+  "about": "My garden. Every plant is a little grammar: a few rewriting rules, a branch angle, some colours, and a seed for its quirks. They grow with real time, one generation every several hours, so the garden you left yesterday is not quite the garden you come back to. Cross two plants and their child mixes both genomes with a small mutation; press one you like and it keeps, flat and labelled, like a herbarium sheet."
+}

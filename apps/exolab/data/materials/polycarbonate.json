@@ -1,0 +1,13 @@
+{
+  "id": "polycarbonate",
+  "name": "Polycarbonate",
+  "short": "Polycarbonate",
+  "category": "polymer",
+  "colour": "#9fc7e0",
+  "note": "Impact-resistant visors and clear covers.",
+  "density_kg_m3": 1200,
+  "youngs_modulus_gpa": 2.35,
+  "yield_strength_mpa": 62,
+  "fatigue_strength_mpa": 14,
+  "source": "Typical handbook value (ASM Handbook / MatWeb datasheets); not a certified figure."
+}

@@ -1,0 +1,35 @@
+{
+  "id": "library",
+  "label": "Library",
+  "tagline": "Read books, comics, articles and papers, and search them",
+  "icon": "📚",
+  "accent": "#c9a227",
+  "order": 17,
+  "section": "research",
+  "tabs": true,
+  "merged": true,
+  "members": [
+    "inkforge",
+    "comix",
+    "shelf",
+    "papers",
+    "librarian",
+    "calibre-web",
+    "yarr",
+    "linkding",
+    "kiwix"
+  ],
+  "tab_labels": {
+    "inkforge": "Reader",
+    "comix": "Comics",
+    "shelf": "Articles",
+    "papers": "Papers",
+    "librarian": "Search",
+    "calibre-web": "E-books",
+    "yarr": "Feeds",
+    "linkding": "Bookmarks",
+    "kiwix": "Wikipedia"
+  },
+  "help": "Everything you read in one place: manga and PDFs, comics, saved articles, new papers, and one search over all of it.",
+  "note": "Relay task 383. Undo this fold with \"off\": true; the apps keep their own folders and data."
+}

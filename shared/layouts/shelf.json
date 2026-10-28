@@ -1,0 +1,8 @@
+{
+  "label": "Shelf",
+  "about": "Apps sorted onto shelves: each section heading with its apps as big icons underneath, a small clock above.",
+  "order": 80,
+  "home": {"hero": "small", "sections": "all", "tiles": "icons", "recent": true, "chips": true, "align": "left"},
+  "settings": {"widgets": false},
+  "lighter": {"balanced": {}, "light": {}}
+}

@@ -1,0 +1,30 @@
+{
+  "_about": "What the Business look asks of Forge beyond business.css (forge_theme.look_rules). Its forces hold these settings while Business is chosen; his own values come back when he picks another look.",
+  "locked": true,
+  "company_logo": true,
+  "accent": "#3d6fb6",
+  "forces": {
+    "particles": "off",
+    "particles_in_apps": false,
+    "music": false,
+    "visualiser": "off",
+    "visualiser_in_apps": false,
+    "wall_3d": false,
+    "wall_parallax": 0,
+    "wall_tint": false,
+    "wall_blur": 0,
+    "pulse_glow": false,
+    "ambient_entrance": false,
+    "animations": false,
+    "lite_effects": "always",
+    "shadows": false,
+    "glass_style": "flat",
+    "glass": 1.0,
+    "behind_apps": "plain",
+    "theme_source": "neutral",
+    "border": "subtle",
+    "greeting": false,
+    "live_wallpaper": "",
+    "companion": ""
+  }
+}

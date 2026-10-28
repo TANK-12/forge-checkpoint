@@ -1,0 +1,4 @@
+/* Latte (shared/themes/latte.json): cream and coffee, soft and warm. */
+html[data-forge-theme="latte"] .hero .clock { font-weight: 400; letter-spacing: -.02em; }
+html[data-forge-theme="latte"] .hero .greet { font-style: italic; }
+html[data-forge-theme="latte"] .tile:hover, html[data-forge-theme="latte"] .tile.focus { box-shadow: 0 14px 30px rgba(90, 60, 30, .16), 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }

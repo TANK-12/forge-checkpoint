@@ -1,0 +1,27 @@
+{
+  "id": "learn",
+  "label": "Learn",
+  "tagline": "Cards due today, lessons, Japanese and typing",
+  "icon": "🎓",
+  "accent": "#59d499",
+  "order": 18,
+  "section": "life",
+  "tabs": true,
+  "merged": true,
+  "members": [
+    "recall",
+    "tutor",
+    "kotoba",
+    "study-companion",
+    "typing"
+  ],
+  "tab_labels": {
+    "recall": "Cards due",
+    "tutor": "Tutor",
+    "kotoba": "Japanese",
+    "study-companion": "Course notes",
+    "typing": "Typing"
+  },
+  "help": "One place to learn: flashcards when due, a teacher for coding and school subjects, Japanese words from anime, your course notes, and typing drills.",
+  "note": "Relay task 383. Undo this fold with \"off\": true; the apps keep their own folders and data."
+}

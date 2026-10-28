@@ -1,0 +1,23 @@
+{
+  "id": "research-place",
+  "label": "Research",
+  "tagline": "Sourced portfolios, signals and plans",
+  "icon": "🔎",
+  "accent": "#61afef",
+  "order": 10,
+  "section": "research",
+  "tabs": true,
+  "members": [
+    "dossier",
+    "foresight",
+    "searxng",
+    "watch"
+  ],
+  "tab_labels": {
+    "dossier": "Dossier",
+    "foresight": "Foresight",
+    "searxng": "Web search",
+    "watch": "Page watch"
+  },
+  "note": "Relay task 383. Undo this fold with \"off\": true; the apps keep their own folders and data."
+}

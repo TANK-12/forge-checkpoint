@@ -1,0 +1,46 @@
+/* look: Brain Shell | A 6 px screen frame with rounded inner corners, the bar as a notch hanging from the top edge, dot workspaces */
+/* Numbers are Brain Shell's own (src/theme/Metrics.qml and Colors.qml, read
+   into ~/hypr-for-windows/BRAIN-SHELL-PORT.md): border 6, corner radius 17,
+   notch radius 15, notch height 40, background #121414, text #e2e2e2,
+   subtext #c0c8c9, border #414849. "active" is matugen's wallpaper colour,
+   which here is the Forge accent, taken from the same wallpaper. */
+body.look-brain {
+  --bs-bg: color-mix(in srgb, var(--accent) 5%, #121414);
+  --bs-border: #414849; --text: #e2e2e2; --muted: #c0c8c9;
+  --radius: 17px; --gap: 16px; --bar-h: 40px;
+  --glass-fill: color-mix(in srgb, var(--bs-bg) 88%, transparent); --glass-line: var(--bs-border);
+}
+/* the frame: everything outside a rounded rectangle 6 px in is painted solid */
+body.look-brain::before { content: ""; position: fixed; inset: 6px; border-radius: 17px; pointer-events: none;
+  z-index: 45; box-shadow: 0 0 0 60px var(--bs-bg); }
+body.look-brain.chromeless::before, body.look-brain.immersive::before { display: none; }
+/* the bar is a notch: flush with the frame, rounded underneath, with concave
+   shoulders where it meets the top edge */
+body.look-brain #bar { top: 0; left: 14vw; right: 14vw; height: 46px; padding: 6px 20px 0; border-radius: 0 0 15px 15px;
+  background: var(--bs-bg); border: 0; box-shadow: none; z-index: 46; }
+body.look-brain #bar::before, body.look-brain #bar::after { content: ""; position: absolute; top: 6px; width: 15px; height: 15px; }
+body.look-brain #bar::before { left: -15px; background: radial-gradient(circle at 0 100%, transparent 14.5px, var(--bs-bg) 15px); }
+body.look-brain #bar::after { right: -15px; background: radial-gradient(circle at 100% 100%, transparent 14.5px, var(--bs-bg) 15px); }
+body.look-brain #stage, body.look-brain #home { top: calc(46px + 10px); left: 16px; right: 16px; }
+body.look-brain #stage { bottom: 16px; }
+body.look-brain .brand i { color: var(--accent); }
+/* workspaces are Brain Shell's dots: empty 19% white, open 50%, active white and long */
+body.look-brain #workspaces { background: rgba(0, 0, 0, .125); gap: 6px; padding: 6px 10px; }
+body.look-brain .ws { font-size: 0; min-width: 10px; width: 10px; height: 10px; padding: 0; border-radius: 5px;
+  background: rgba(255, 255, 255, .5); transition: width 300ms cubic-bezier(.3, 1.4, .5, 1), background 200ms; }
+body.look-brain .ws.active { width: 28px; min-width: 28px; background: #ffffff; }
+body.look-brain .ws::after { display: none; }
+body.look-brain .ws.failed { background: #fa6b94; }
+body.look-brain .chip { background: transparent; color: var(--muted); }
+body.look-brain .tile { border: 1px solid var(--bs-border); border-radius: 17px;
+  background: color-mix(in srgb, var(--bs-bg) 90%, transparent); }
+body.look-brain .tile .icon { border-radius: 12px; background: color-mix(in srgb, var(--accent) 22%, var(--bs-bg)); color: var(--accent); box-shadow: none; }
+body.look-brain .section-head .s-pill, body.look-brain #search, body.look-brain .fchip:not(.on) { background: var(--bs-bg); border-color: var(--bs-border); }
+/* the dock is a notch too, from the bottom edge */
+body.look-brain #dock { bottom: 0; border-radius: 15px 15px 0 0; padding: 8px 14px 12px; background: var(--bs-bg); border: 0; box-shadow: none; z-index: 46; }
+body.look-brain #dock::before, body.look-brain #dock::after { content: ""; position: absolute; bottom: 6px; width: 15px; height: 15px; }
+body.look-brain #dock::before { left: -15px; background: radial-gradient(circle at 0 0, transparent 14.5px, var(--bs-bg) 15px); }
+body.look-brain #dock::after { right: -15px; background: radial-gradient(circle at 100% 0, transparent 14.5px, var(--bs-bg) 15px); }
+body.look-brain .dock-item { border-radius: 12px; }
+body.look-brain .workspace { padding: 2px; border-radius: 17px; background: var(--accent); box-shadow: none; }
+body.look-brain .workspace .inner { border-radius: 15px; }

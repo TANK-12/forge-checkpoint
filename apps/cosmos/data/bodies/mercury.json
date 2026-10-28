@@ -1,0 +1,43 @@
+{
+  "id": "mercury",
+  "name": "Mercury",
+  "kind": "planet",
+  "parent": "sun",
+  "order": 10,
+  "radius_km": 2439.7,
+  "gm_km3_s2": 22031.868,
+  "color": "#a39e98",
+  "pole": {
+    "ra_deg": 281.0103,
+    "dec_deg": 61.4155
+  },
+  "summary": "The smallest planet and the closest to the Sun. Its day (sunrise to sunrise) lasts 176 Earth days, twice its year.",
+  "elements": {
+    "model": "standish",
+    "a": [
+      0.38709927,
+      3.7e-07
+    ],
+    "e": [
+      0.20563593,
+      1.906e-05
+    ],
+    "i": [
+      7.00497902,
+      -0.00594749
+    ],
+    "L": [
+      252.2503235,
+      149472.67411175
+    ],
+    "varpi": [
+      77.45779628,
+      0.16047689
+    ],
+    "node": [
+      48.33076593,
+      -0.12534081
+    ],
+    "source": "JPL approximate planetary elements (E.M. Standish), 1800-2050 table"
+  }
+}

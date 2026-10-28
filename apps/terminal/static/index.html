@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Terminal</title>
+<link rel="stylesheet" href="/shared/forge.css">
+<link rel="stylesheet" href="vendor/xterm.css">
+<link rel="stylesheet" href="app.css">
+<style>
+  :root { --accent: #8fd18a; --accent-2: #6fb56a; --on-accent: #07140a; }
+  /* dark from the first frame, even if /shared/forge.css is slow or missing */
+  html { background: var(--bg, #0f1115); color: var(--text, #e6e9ef); }
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="bar">
+    <div id="tabs" class="tabs" role="tablist"></div>
+    <button class="btn icon" id="new-tab" title="New tab (Ctrl+Shift+T)">+</button>
+    <button class="btn icon" id="split-right" title="Split right (Ctrl+Shift+D)">◫</button>
+    <button class="btn icon" id="split-down" title="Split down (Ctrl+Shift+E)">⊟</button>
+    <div class="grow"></div>
+    <button class="btn icon" id="font-down" title="Smaller text (Ctrl+-)">A−</button>
+    <span id="font-size" class="muted small"></span>
+    <button class="btn icon" id="font-up" title="Bigger text (Ctrl+=)">A+</button>
+    <button class="btn icon" id="open-prefs" type="button" title="Terminal settings" aria-haspopup="dialog" aria-expanded="false">⚙</button>
+    <button class="btn icon" id="go-fullscreen" type="button" title="Full screen">⛶</button>
+  </header>
+  <main id="screens">
+    <div id="starting" class="starting" role="status"><span class="muted">Starting your shell…</span></div>
+    <div id="down" class="down hidden" role="status">
+      <div class="down-card">
+        <b>Can't reach the Terminal backend</b>
+        <span id="down-why" class="muted small"></span>
+        <span class="muted small">Retrying by itself.</span>
+        <button class="btn" id="down-retry" type="button">Try now</button>
+      </div>
+    </div>
+    <div id="find" class="find hidden" role="search">
+      <input id="find-q" type="text" placeholder="Find in scrollback" spellcheck="false" autocomplete="off">
+      <span id="find-count" class="small"></span>
+      <button class="btn icon toggle" id="find-case" type="button" title="Match case" aria-pressed="false">Aa</button>
+      <button class="btn icon toggle" id="find-word" type="button" title="Whole word" aria-pressed="false"><u>ab</u></button>
+      <button class="btn icon toggle" id="find-regex" type="button" title="Regular expression" aria-pressed="false">.*</button>
+      <button class="btn icon" id="find-prev" type="button" title="Previous match (Shift+Enter)">↑</button>
+      <button class="btn icon" id="find-next" type="button" title="Next match (Enter)">↓</button>
+      <button class="btn icon" id="find-close" type="button" title="Close (Escape)">✕</button>
+    </div>
+  </main>
+</div>
+<div id="menu" class="menu hidden"></div>
+<div id="prefs" class="prefs hidden" role="dialog" aria-label="Terminal settings">
+  <div class="prefs-head"><b>Terminal settings</b><button class="btn icon" id="prefs-close" type="button" title="Close (Escape)">✕</button></div>
+  <div id="prefs-body"></div>
+  <button class="btn" id="prefs-reset" type="button">Back to defaults</button>
+</div>
+<div id="toast" class="toast hidden"></div>
+
+<script src="vendor/xterm.js"></script>
+<script src="vendor/addon-fit.js"></script>
+<script src="vendor/addon-web-links.js"></script>
+<script src="vendor/addon-search.js"></script>
+<script src="/shared/forge_chrome.js"></script>
+<script src="/shared/forge_idle.js"></script>
+<script src="/shared/forge.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

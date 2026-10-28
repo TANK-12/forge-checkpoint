@@ -1,0 +1,16 @@
+{
+  "id": "subject",
+  "name": "Test subject",
+  "character": "hairsample_female",
+  "sex": "female",
+  "body_mass_kg": 55.0,
+  "note": "Segment lengths come from the character's own skeleton; mass and strength are editable.",
+  "strength": {
+    "shoulder_flexion_nm": 35.0,
+    "shoulder_abduction_nm": 30.0,
+    "elbow_flexion_nm": 35.0,
+    "sustained_fraction": 0.15,
+    "source": "Approximate healthy adult female isometric maxima (published norms such as Harbo et al. 2012 vary widely); 15% of maximum is the classic limit for holding a load for long (Rohmert 1960). Edit to your own."
+  },
+  "hand_offset_m": 0.08
+}

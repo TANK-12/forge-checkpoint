@@ -1,0 +1,55 @@
+{
+  "id": "girdle_tracking",
+  "name": "Girdle-tracking shoulder",
+  "kind": "girdle",
+  "about": "The tilted gimbal rides on a passive two-joint link on the back that lets its centre move up, down, forward and back with the real shoulder joint. A spring carries the link's weight. Misalignment is only what it takes to drag the passive joints along.",
+  "first_axis": {
+    "plane_deg": -30,
+    "elevation_deg": 140
+  },
+  "pod_radius_m": 0.14,
+  "joints": [
+    {
+      "name": "J1",
+      "actuator": "harmonic_m",
+      "limits_deg": [
+        -270,
+        270
+      ]
+    },
+    {
+      "name": "J2",
+      "actuator": "harmonic_m",
+      "limits_deg": [
+        -175,
+        175
+      ]
+    },
+    {
+      "name": "J3 arm twist",
+      "actuator": "qdd_planetary",
+      "limits_deg": [
+        -270,
+        270
+      ]
+    }
+  ],
+  "girdle": {
+    "range_up_mm": 60,
+    "range_down_mm": 20,
+    "range_forward_mm": 40,
+    "range_back_mm": 40,
+    "friction_n": 6.0,
+    "moving_mass_kg": 1.4,
+    "spring_balance": 0.85,
+    "joint": "free_bearing"
+  },
+  "centre_offset_mm": [
+    0,
+    0,
+    0
+  ],
+  "slider": true,
+  "j2_side": -1,
+  "design_note": "First axis, J2 side and motor ring radius picked by a design search over the shoulder range sweep (2026-10-08): the side keeps the middle motor outside the head and neck, and both gimbal-lock directions sit just outside the human range (up and slightly behind overhead, and into the chest). J1 and J3 turn up to 270 degrees each way through a cable wrap. J3 (arm twist) uses the fast, backdrivable quasi-direct drive: the twist needs speed more than torque, and near gimbal lock it spins fastest."
+}

@@ -1,0 +1,5 @@
+/* Spooky (shared/themes/spooky.json): pumpkin glow on a moonlit purple night. */
+html[data-forge-theme="spooky"] .hero .clock { background-image: linear-gradient(180deg, #fff3e0 20%, var(--accent) 100%); background-size: 100% 100%; animation: none;
+  filter: drop-shadow(0 0 24px color-mix(in srgb, var(--accent) 45%, transparent)); }
+html[data-forge-theme="spooky"] .hero .greet { color: #c9a8ff; }
+html[data-forge-theme="spooky"] .tile:hover, html[data-forge-theme="spooky"] .tile.focus { box-shadow: 0 14px 30px rgba(0, 0, 0, .45), 0 0 28px color-mix(in srgb, var(--accent) 35%, transparent); }

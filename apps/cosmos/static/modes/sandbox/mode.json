@@ -1,0 +1,7 @@
+{
+  "name": "Gravity sandbox",
+  "tagline": "Throw stars, planets and black holes around and watch orbits, slingshots and collisions happen.",
+  "icon": "🌌",
+  "order": 20,
+  "entry": "mode.js"
+}

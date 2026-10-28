@@ -1,0 +1,91 @@
+{
+  "about": "Gamepad controls for the Exo Lab game: the one place the pad's bindings live. pad.js reads it and main.js wires it in; the pause menu and the HUD hints are built from it. Buttons use PS5 names; 'layouts' says where each one sits in the browser's Gamepad API. Edit a binding here and reload the game.",
+  "pad": {
+    "deadzone": 0.15,
+    "trigger": 0.3,
+    "trigger_release": 0.2,
+    "look_speed": [3.0, 2.0],
+    "look_curve": 1.7,
+    "invert_y": false,
+    "menu_stick": 0.6,
+    "menu_repeat_s": [0.38, 0.14],
+    "latch_rest_s": 0.25,
+    "menu_stick_release": 0.4,
+    "menu_rest_s": 0.12,
+    "mouse_quiet_s": 2,
+    "analog": ["l2", "r2"],
+    "about": "analog: buttons read by how far they are pulled (the triggers): pressed past trigger, let go only under trigger_release. latch_rest_s: L3 sprint ends once the move stick has rested this long, and a second L3 click ends it only after running this long. menu_stick: how far the stick must go to move the pause menu (and to count as the pad being used; a drifting stick does not); it keeps moving that way down to menu_stick_release. menu_rest_s: after a direction held as the menu opens, a waking press, focus lost or got back, the menu takes a direction again once its buttons are let go and its stick has rested this long: in play inside the deadzone (a gentle walk is not a rest), on the menu inside the let-go line, and the frame it comes in counts nothing (a stick swinging through the centre in a dodge has not rested; a d-pad let go is let go). mouse_quiet_s: for this long after a pad button or a firm stick, mouse clicks do nothing (the DualSense touchpad is also a desktop touchpad); after that the first click only hands the controls back to the mouse, and while the pad is in use mouse moves do not turn the camera; keys still work. deadzone: a stick inside it reads zero; raise it for a worn pad whose stick drifts past it (the soldier creeps, and focus loss pauses the game)."
+  },
+  "layouts": [
+    {
+      "id": "standard",
+      "about": "W3C standard mapping: Chrome, Firefox and WebKitGTK (libmanette) give the DualSense this layout over USB and Bluetooth.",
+      "when": { "mapping": "standard" },
+      "buttons": {
+        "cross": 0, "circle": 1, "square": 2, "triangle": 3,
+        "l1": 4, "r1": 5, "l2": 6, "r2": 7,
+        "create": 8, "options": 9, "l3": 10, "r3": 11,
+        "up": 12, "down": 13, "left": 14, "right": 15,
+        "ps": 16, "touchpad": 17
+      },
+      "axes": { "lx": 0, "ly": 1, "rx": 2, "ry": 3 }
+    },
+    {
+      "id": "dualsense_raw",
+      "about": "A browser with no mapping for the pad passes the Linux hid-playstation order through: L2 and R2 as plain buttons 6 and 7, the d-pad on axes 6 and 7.",
+      "when": { "mapping": "", "id": "054c.*(0ce6|0df2)|dualsense" },
+      "buttons": {
+        "cross": 0, "circle": 1, "triangle": 2, "square": 3,
+        "l1": 4, "r1": 5, "l2": 6, "r2": 7,
+        "create": 8, "options": 9, "ps": 10, "l3": 11, "r3": 12
+      },
+      "axes": { "lx": 0, "ly": 1, "rx": 3, "ry": 4 },
+      "hat": { "x": 6, "y": 7 }
+    }
+  ],
+  "names": {
+    "cross": "✕", "circle": "○", "square": "□", "triangle": "△",
+    "l1": "L1", "r1": "R1", "l2": "L2", "r2": "R2", "l3": "L3", "r3": "R3",
+    "create": "Create", "options": "Options", "ps": "PS", "touchpad": "Touchpad",
+    "up": "▲", "down": "▼", "left": "◀", "right": "▶"
+  },
+  "sticks": [
+    { "stick": "left", "do": "move", "does": "move (tilt a little to walk, all the way to run)" },
+    { "stick": "right", "do": "look", "does": "look" }
+  ],
+  "bindings": [
+    { "button": "cross", "do": "jump", "does": "jump, again in the air to boost jump" },
+    { "button": "l3", "do": "latch:sprint", "does": "sprint (click the left stick; on until you stop, or click again mid-run)" },
+    { "button": "l1", "do": "dash", "does": "boost dash where the left stick points" },
+    { "button": "circle", "do": "crouch", "does": "slide while sprinting, ground slam in the air" },
+    { "button": "r2", "do": "punch", "does": "punch, or throw the crate you hold" },
+    { "button": "r1", "do": "punch", "does": "punch, or throw the crate you hold" },
+    { "button": "square", "do": "use", "does": "lift a crate, again to put it down" },
+    { "button": "l2", "do": "hold:walk", "does": "walk (hold)" },
+    { "button": "up", "do": "mode:armour", "does": "Armour mode (again to switch off)" },
+    { "button": "right", "do": "mode:strength", "does": "Strength mode" },
+    { "button": "down", "do": "mode:speed", "does": "Speed mode" },
+    { "button": "left", "do": "mode:cloak", "does": "Cloak mode" },
+    { "button": "triangle", "do": "repair", "does": "repair broken arms" },
+    { "button": "create", "do": "respawn", "does": "back to the start" },
+    { "button": "options", "do": "pause", "does": "pause menu" }
+  ],
+  "menu": {
+    "prev": ["up", "left"],
+    "next": ["down", "right"],
+    "press": ["cross"],
+    "back": ["circle", "options"],
+    "stick": "left"
+  },
+  "rumble": {
+    "about": "Event from the sim -> [milliseconds, strong motor 0-1, weak motor 0-1]. Leave an event out for no rumble.",
+    "boost": [110, 0.35, 0.7],
+    "slam": [260, 1.0, 0.6],
+    "punch": [70, 0.25, 0.6],
+    "wall": [200, 0.8, 0.5],
+    "throw": [90, 0.3, 0.5],
+    "hurt": [180, 0.6, 0.9],
+    "break": [450, 1.0, 1.0],
+    "down": [500, 1.0, 0.8]
+  }
+}

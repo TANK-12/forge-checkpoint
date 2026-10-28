@@ -1,0 +1,15 @@
+{
+  "id": "free_bearing",
+  "name": "Free bearing (passive)",
+  "kind": "passive",
+  "mass_kg": 0.15,
+  "torque_cont_nm": 0,
+  "torque_peak_nm": 0,
+  "speed_max_rad_s": 100,
+  "efficiency": 1.0,
+  "stiffness_nm_rad": 0,
+  "backdrivable": true,
+  "power_cont_w": 0,
+  "note": "Lets the joint turn freely; carries no moment about its axis.",
+  "source": "Deep-groove bearing pair with housing."
+}

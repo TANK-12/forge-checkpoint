@@ -1,0 +1,19 @@
+/* Retro (shared/themes/retro.json): green phosphor, square pixels. */
+html[data-forge-theme="retro"] .hero .clock { font-weight: 700; letter-spacing: 0;
+  background-image: none; color: var(--accent); -webkit-background-clip: border-box; background-clip: border-box;
+  text-shadow: 0 0 18px color-mix(in srgb, var(--accent) 55%, transparent); filter: none; animation: none; }
+html[data-forge-theme="retro"] .hero .date, html[data-forge-theme="retro"] .hero .greet {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--accent) 40%, transparent); }
+html[data-forge-theme="retro"] .tile { border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  background: color-mix(in srgb, var(--bg) 82%, transparent); }
+html[data-forge-theme="retro"] .tile::before { display: none; }
+html[data-forge-theme="retro"] .tile:hover, html[data-forge-theme="retro"] .tile.focus {
+  transform: translate(-2px, -2px); border-color: var(--accent);
+  box-shadow: 4px 4px 0 color-mix(in srgb, var(--accent) 45%, transparent); }
+html[data-forge-theme="retro"] .tile .icon { border-radius: 0; box-shadow: none; }
+html[data-forge-theme="retro"] .tile:hover .icon, html[data-forge-theme="retro"] .tile.focus .icon { transform: none; }
+html[data-forge-theme="retro"] .section-head .s-pill, html[data-forge-theme="retro"] .more-btn,
+html[data-forge-theme="retro"] .fchip, html[data-forge-theme="retro"] #search, html[data-forge-theme="retro"] .section-head .s-icon,
+html[data-forge-theme="retro"] .section-head .s-count { border-radius: 0; }
+html[data-forge-theme="retro"] #search:focus { box-shadow: 0 0 0 2px var(--accent); }
+html[data-forge-theme="retro"] ::selection { background: var(--accent); color: var(--bg); }

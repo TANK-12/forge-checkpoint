@@ -1,0 +1,16 @@
+/* The Themes and Home layout cards (themes.js); the cards themselves are
+   styled by shared/forge_theme_cards.js. */
+.theme-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 12px 0 10px; }
+.theme-chips { display: flex; flex-wrap: wrap; gap: 6px; flex: 1; min-width: 0; }
+.theme-chip { font: inherit; font-size: 12.5px; color: var(--muted); background: var(--panel-2);
+  border: 1px solid var(--border); border-radius: 999px; padding: 3px 12px; cursor: pointer; }
+.theme-chip:hover { color: var(--text); border-color: var(--accent); }
+.theme-chip[aria-pressed="true"] { color: var(--on-accent); background: var(--accent); border-color: var(--accent); font-weight: 600; }
+.theme-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; }
+.layout-cards { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); margin-top: 12px; }
+.theme-save { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 16px; }
+.theme-save input { font: inherit; color: inherit; background: var(--panel-2); border: 1px solid var(--border);
+  border-radius: 6px; padding: 6px 10px; min-width: 200px; }
+label.switch.theme-desktop { margin-top: 14px; }
+#theme-desktop-note { margin-top: 4px; }
+#themes-said { margin-top: 10px; min-height: 1.2em; }

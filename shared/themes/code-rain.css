@@ -1,0 +1,5 @@
+/* Code Rain (shared/themes/code-rain.json): green terminal glow. */
+html[data-forge-theme="code-rain"] .hero .clock { background-image: none; color: var(--accent); -webkit-text-fill-color: var(--accent); animation: none; font-weight: 500;
+  filter: drop-shadow(0 0 16px color-mix(in srgb, var(--accent) 55%, transparent)); }
+html[data-forge-theme="code-rain"] .hero .greet::before { content: "> "; }
+html[data-forge-theme="code-rain"] .tile:hover .name, html[data-forge-theme="code-rain"] .tile.focus .name { color: var(--accent); text-shadow: 0 0 10px color-mix(in srgb, var(--accent) 60%, transparent); }

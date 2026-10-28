@@ -1,0 +1,47 @@
+{
+  "label": "Pastel",
+  "order": 64,
+  "tags": [
+    "light",
+    "pastel",
+    "live",
+    "fun"
+  ],
+  "mode": "light",
+  "about": "Candy pastels: pink, mint and lilac blobs floating in a lava lamp, rounded type and butterflies at the edges.",
+  "look": "soft",
+  "layout": "shelf",
+  "colours": {
+    "accent": "#d264a8",
+    "bg": "#fbf2f7",
+    "panel": "#fffafd",
+    "panel_2": "#f6ecf4",
+    "border": "#ecd6e6",
+    "text": "#3b2a3a",
+    "muted": "#745c78"
+  },
+  "font": "rubik",
+  "wallpaper": [
+    "forge:lava-light.jpg",
+    "forge:lava.jpg",
+    ""
+  ],
+  "live": "lava",
+  "companion": "butterflies",
+  "settings": {
+    "particles": "off",
+    "dim": 0.0,
+    "wall_tint": false,
+    "glass": 0.82,
+    "border": "subtle",
+    "radius": 24,
+    "motion": "spring",
+    "widget_look": "glass"
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {
+      "live": "off"
+    }
+  }
+}

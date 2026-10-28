@@ -1,0 +1,27 @@
+{
+  "id": "life",
+  "label": "Life",
+  "tagline": "Your days, habits, timers and alarms",
+  "icon": "🌱",
+  "accent": "#98c379",
+  "order": 1,
+  "section": "life",
+  "tabs": true,
+  "members": [
+    "calendar",
+    "reps",
+    "focus",
+    "recipes",
+    "homebox",
+    "radicale"
+  ],
+  "tab_labels": {
+    "calendar": "Calendar",
+    "reps": "Reps",
+    "focus": "Focus",
+    "recipes": "Recipes",
+    "homebox": "Home inventory",
+    "radicale": "Calendar sync"
+  },
+  "note": "Relay task 383. Undo this fold with \"off\": true; the apps keep their own folders and data."
+}

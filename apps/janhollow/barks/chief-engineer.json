@@ -1,0 +1,46 @@
+{
+ "label": "Tamsin, the chief engineer",
+ "jobs": [
+  "chief engineer"
+ ],
+ "weight": 2,
+ "exchanges": [
+  {
+   "say": "She's running sweet today. Don't jinx it.",
+   "replies": [
+    "Wouldn't dream of it.",
+    "Who, the reactor?",
+    "Touch wood."
+   ]
+  },
+  {
+   "say": "If you hear a knocking, that's normal. Mostly.",
+   "replies": [
+    "Mostly?",
+    "Very reassuring.",
+    "I'll pretend I didn't."
+   ]
+  },
+  {
+   "say": "Who's been using my good spanner, {listener}?",
+   "replies": [
+    "Not me.",
+    "It's in the cargo bay.",
+    "Which one is good?"
+   ]
+  },
+  {
+   "say": "I had a word with the coolant pump. It's behaving now.",
+   "replies": [
+    "You talk to it?",
+    "Thank you, pump.",
+    "Good."
+   ]
+  }
+ ],
+ "hello": [
+  "Busy. Mind the cables.",
+  "She's running sweet today.",
+  "Don't touch anything red, {you}."
+ ]
+}

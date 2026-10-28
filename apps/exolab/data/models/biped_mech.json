@@ -1,0 +1,8 @@
+{
+  "id": "biped_mech",
+  "name": "Bipedal mech",
+  "kind": "mech",
+  "status": "planned",
+  "chunk": 4,
+  "about": "A two-legged walker with a cockpit, on the legion leg kit. Tests: static stability, leg loads, gait, drop."
+}

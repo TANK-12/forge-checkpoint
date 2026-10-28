@@ -1,0 +1,46 @@
+{
+  "id": "earth",
+  "name": "Earth",
+  "kind": "planet",
+  "parent": "sun",
+  "order": 30,
+  "radius_km": 6371.0,
+  "gm_km3_s2": 398600.435,
+  "color": "#3f7fe0",
+  "pole": {
+    "ra_deg": 0.0,
+    "dec_deg": 90.0
+  },
+  "summary": "Home. The only place known to have life, and the densest planet in the solar system.",
+  "elements": {
+    "model": "standish",
+    "a": [
+      1.00000261,
+      5.62e-06
+    ],
+    "e": [
+      0.01671123,
+      -4.392e-05
+    ],
+    "i": [
+      -1.531e-05,
+      -0.01294668
+    ],
+    "L": [
+      100.46457166,
+      35999.37244981
+    ],
+    "varpi": [
+      102.93768193,
+      0.32327364
+    ],
+    "node": [
+      0.0,
+      0.0
+    ],
+    "barycenter_partner": "moon",
+    "barycenter_ratio": 0.0121505856,
+    "source": "JPL approximate planetary elements (E.M. Standish), 1800-2050 table"
+  },
+  "surface": "ocean"
+}

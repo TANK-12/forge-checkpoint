@@ -1,0 +1,94 @@
+{
+  "name": "pixelforge",
+  "label": "PixelForge",
+  "tagline": "Sprites and animation, shared",
+  "help": {
+    "about": "Draw sprites and animate them frame by frame, with palettes and sounds to match. Asking for a sprite in words needs Jan, a local AI app.",
+    "features": [
+      "Sprite editor",
+      "Drawing tools",
+      "Palettes",
+      "Sounds"
+    ]
+  },
+  "port": 8435,
+  "module": "web_app:app",
+  "src_dir": ".",
+  "accent": "#c86fd3",
+  "icon": "👾",
+  "order": 8,
+  "section": "create",
+  "ready_timeout": 45,
+  "seed": [
+    "emberfield:tools/seed_art.py"
+  ],
+  "manifest": {
+    "summary": "The shared sprite, palette and sound editor for every Forge app's art, with a Jan-powered sketcher for sprites and floor plans.",
+    "features": [
+      {
+        "name": "Sprite editor",
+        "description": "Palette-indexed character rows with frames, animation preview and undo, written straight into ~/ForgeArtData."
+      },
+      {
+        "name": "Drawing tools",
+        "description": "Pencil, fill, line, box and colour pick (B, F, L, R, I), each one undo step, plus mirror drawing (M) and an onion skin of the previous frame (O). The tools are a registry in static/tools.js: a new tool is one entry."
+      },
+      {
+        "name": "Sliders with number boxes",
+        "description": "A frame's hold time and every number in a sound recipe have a slider paired with a typed value."
+      },
+      {
+        "name": "Palettes",
+        "description": "Colour lives in the palette, not the sprite, so re-skinning a whole world is one file."
+      },
+      {
+        "name": "Sounds",
+        "description": "The shared synth sound library, edited and auditioned in the browser."
+      },
+      {
+        "name": "Ask Jan — sprites",
+        "description": "Describe a sprite and a local model composes it as a list of shapes, which the backend rasterises into real pixel art. Previewed first; nothing is saved until you keep it."
+      },
+      {
+        "name": "Ask Jan — floor plans",
+        "description": "The same prompt at tile scale: a room, a hut, a cargo bay, drawn from tile ids that actually exist in the library and saved as a shared 'structures' entry any game can read."
+      }
+    ],
+    "data_dir": "~/ForgeArtData (art), ~/ForgeGameData (sounds and structures)",
+    "services": [
+      "Jan at http://127.0.0.1:1337/v1 — only for the Ask Jan panel; the editor is fully usable without it."
+    ],
+    "dependencies": {
+      "required": [
+        "fastapi",
+        "uvicorn",
+        "pydantic"
+      ],
+      "optional": [
+        "Jan, for the Ask Jan panel"
+      ]
+    },
+    "jan_roles": {
+      "art": "Composes shapes for a sprite or a floor plan. Defaults to Qwen3.5-4B (~60-80s a drawing); the 9B draws better and takes about twice as long."
+    },
+    "the_finding_behind_ask_jan": "These models cannot draw a pixel grid. Asked for 16 rows of 16 palette characters on 2026-09-16, the 4B returned an entirely transparent image and the 9B returned rows of 16, 17 and 18 characters of noise. Asked for a short list of rectangles, ellipses, lines and pixels, both produced sensible output first time. So the model composes and janart.py draws.",
+    "known_gaps": [
+      "Generated sprites are crude: usable as a sketch to edit, not as finished art.",
+      "Floor plans are the better half and nothing consumes them yet.",
+      "The Ask Jan preview shows one drawing at a time and keeps no history beyond the last one.",
+      "A drawing takes 60-80 seconds, which is a long time to sit watching a button.",
+      "Palette colour edits have no undo and no unsaved marker; Save palette is the only way to keep them."
+    ],
+    "improve_next": [
+      "Make palette edits undoable and show when they are unsaved",
+      "A select-and-move tool for regions",
+      "Keep a few recent drawings rather than only the last",
+      "Let a game stamp a saved structure into a map",
+      "Offer the 9B with an honest note about the wait",
+      "Send the current sprite back as a starting point, so Jan can revise instead of redraw"
+    ],
+    "docs": [
+      "README.md"
+    ]
+  }
+}

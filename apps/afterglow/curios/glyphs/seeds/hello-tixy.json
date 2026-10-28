@@ -1,0 +1,13 @@
+{
+  "name": "Hello, tixy",
+  "note": "The first example on tixy.land by Martin Kleppe, the toy that inspired this one: a ring spreading from just above the centre. Same formula, same colours. A thank-you.",
+  "author": "Claude",
+  "made": "2026-10-09T09:59:00",
+  "data": {
+    "formula": "sin(t - sqrt((x - 7.5)**2 + (y - 6)**2))",
+    "grid": 16,
+    "speed": 1,
+    "palette": "tixy",
+    "shape": "circle"
+  }
+}

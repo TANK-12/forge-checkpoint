@@ -1,0 +1,66 @@
+{
+  "name": "cosmos",
+  "label": "Cosmos",
+  "tagline": "Map of the solar system, and gravity games",
+  "help": {
+    "about": "A map of the solar system and the stars around it, a gravity sandbox to throw planets about in, and orbit puzzles. The star catalogue is a separate download, fetched the first time you ask for it.",
+    "features": [
+      "Map",
+      "Gravity sandbox",
+      "Orbit puzzles"
+    ]
+  },
+  "port": 8446,
+  "module": "web_app:app",
+  "src_dir": ".",
+  "accent": "#8fb4ff",
+  "icon": "🪐",
+  "fullscreen": "auto",
+  "order": 15,
+  "section": "play",
+  "ready_timeout": 30,
+  "manifest": {
+    "summary": "A 3D map of the real solar system for any date from 1800 to 2050, zooming out through 110,000 real stars to a model of the Milky Way, a 2D gravity sandbox, and 3D orbit puzzles. An arcade shooter, a 3D spaceflight sim and a music visualizer are on the roadmap.",
+    "features": [
+      {
+        "name": "Map",
+        "description": "Sun, planets, dwarf planets and 21 moons at their real positions, with orbits, a time control, click-to-focus details, an enlarged or true-scale toggle, the HYG star catalog (a star brightness slider with a number field) and a labelled model of the galaxy. Moons are fitted to JPL Horizons (most within a degree or two, 2000-2045). A body's details say what is coming up in Earth's sky: the Moon's phase and its next full and new moon, and a planet's next opposition."
+      },
+      {
+        "name": "Gravity sandbox",
+        "description": "Place stars, planets and black holes, fling them, and watch orbits, slingshots and mergers. Leapfrog integration, massless particle discs, trajectory preview, presets and saving. Presets open centred in the part of the screen the panels leave free and zoomed to fit it; the mass of new objects has a slider and a number field."
+      },
+      {
+        "name": "Orbit puzzles",
+        "description": "Launch a probe in 3D and let real gravity carry it: reach moving planets, capture into orbit, pass rings, land. Ten hand-made levels (the last three with real masses), an endless mode that proves each level solvable, and a huge no-fail galaxy playground (40 star systems on spiral arms) where every star you fly close to is discovered and saved. Path previews, burns, ghosts, stars per level, and a Power saver frame cap."
+      }
+    ],
+    "data_dir": "~/ForgeGameData/cosmos/scenarios (sandbox presets and saves); COSMOS_STARS_DIR or ~/.cache/forge/cosmos (star catalog, fetched by Get the stars); ~/ForgeGameData/cosmos/levels (puzzle levels); ~/ForgeGameData/cosmos/puzzle-progress.json (stars); ~/ForgeGameData/sounds/cosmos-*.json (puzzle sounds)",
+    "services": [],
+    "dependencies": {
+      "required": [
+        "fastapi",
+        "uvicorn"
+      ],
+      "optional": [
+        "an internet connection once, for Get the stars",
+        "Forge shared kit (shared/forge_content.py, forge_sound.js) for puzzle sounds"
+      ]
+    },
+    "standalone_launch": "cd ~/Forge/apps/cosmos && FORGE_SHARED_DIR=~/Forge/shared .venv/bin/python -m uvicorn web_app:app --host 127.0.0.1 --port 8446",
+    "api_base": "/api",
+    "known_gaps": [
+      "Planet elements are JPL's approximate set, valid 1800-2050; outside that the map still runs but drifts.",
+      "Moon orbits use each planet's equator in place of JPL's Laplace planes: Iapetus is up to about 25 degrees off along its orbit and Triton up to about 8 by 2045.",
+      "Mimas swings about 44 degrees back and forth over 70 years in its resonance with Tethys, which a fixed ellipse cannot follow: it is within about 12 degrees from 2000 to 2027 and drifts far off after that. Tethys drifts to about 4.5 degrees by 2045.",
+      "Earth's Moon is within about 2 degrees (a mean ellipse leaves out the Sun's largest tugs), so a full moon's time can be a few hours off.",
+      "The Milky Way at galaxy scale is a drawn model, not data."
+    ],
+    "docs": [
+      "README.md",
+      "WIP.md",
+      "MANIFEST.json",
+      "manifests/roadmap.json"
+    ]
+  }
+}

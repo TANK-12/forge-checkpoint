@@ -1,0 +1,13 @@
+{
+  "name": "Paper dunes",
+  "note": "Stripes that should be straight, bent by smooth noise, drifting like sand ripples. Squares, because dunes on paper look like woodcut.",
+  "author": "Claude",
+  "made": "2026-10-09T10:00:00",
+  "data": {
+    "formula": "sin(x*0.5 + noise(x/6, y/6, t/5)*4 - t*0.8)",
+    "grid": 24,
+    "speed": 1,
+    "palette": "paper",
+    "shape": "square"
+  }
+}

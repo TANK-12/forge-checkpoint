@@ -1,0 +1,137 @@
+html, body { height: 100%; margin: 0; }
+[hidden], .hidden { display: none !important; }
+#app { display: flex; flex-direction: column; height: 100vh; }
+
+.bar {
+  display: flex; align-items: center; gap: 6px; padding: 6px 8px;
+  border-bottom: 1px solid var(--border); background: var(--panel);
+}
+.bar .grow { flex: 1; }
+.btn.icon { min-width: 34px; padding: 5px 8px; }
+#font-size { min-width: 26px; text-align: center; }
+
+.tabs { display: flex; gap: 4px; overflow-x: auto; min-width: 0; scrollbar-width: none; flex: 0 1 auto; }
+.tabs::-webkit-scrollbar { display: none; } /* WebKitGTK ignores scrollbar-width */
+.tab {
+  display: flex; align-items: center; gap: 6px; flex: none; max-width: 220px;
+  padding: 5px 6px 5px 12px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--panel-2); color: var(--muted); cursor: pointer; user-select: none;
+  font-size: 13px;
+}
+.tab .label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tab.active { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.tab.dead .label { text-decoration: line-through; opacity: .7; }
+.tab .x {
+  border: 0; background: none; color: inherit; cursor: pointer; font: inherit;
+  width: 20px; height: 20px; border-radius: 5px; line-height: 1; opacity: .7;
+}
+.tab .x:hover { background: #0003; opacity: 1; }
+.tab { transition: background-color .15s ease, color .15s ease, border-color .15s ease; }
+/* new output (accent) or a bell (amber) in a tab that is not in front; it sits
+   in the chip's left padding, so showing it moves nothing */
+.tab { position: relative; }
+.tab .mark {
+  position: absolute; left: 3px; top: 50%; width: 6px; height: 6px; margin-top: -3px;
+  border-radius: 50%; display: none;
+}
+.tab .mark.activity { display: block; background: var(--accent); }
+.tab .mark.bell { display: block; background: #f2c66d; animation: ring 1s ease-out 2; }
+@keyframes ring { 50% { box-shadow: 0 0 0 4px #f2c66d44; } }
+.tab input.rename {
+  width: 130px; padding: 1px 6px; font-size: 13px; border-radius: 5px;
+  border-color: var(--accent); background: var(--bg); color: var(--text);
+}
+
+#screens { flex: 1; min-height: 0; position: relative; background: var(--bg); }
+.screen { position: absolute; inset: 0; display: flex; }
+.screen[hidden] { display: none; }
+/* split panes: nested flex boxes with a draggable divider between two */
+.pane { position: relative; min-width: 0; min-height: 0; padding: 6px 4px 4px 10px; overflow: hidden; }
+.pane .xterm { height: 100%; }
+.pane.focused { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 55%, transparent); }
+.split { display: flex; min-width: 0; min-height: 0; }
+.split.row { flex-direction: row; }
+.split.col { flex-direction: column; }
+.divider { flex: 0 0 5px; background: var(--border); opacity: .6; cursor: col-resize; touch-action: none; }
+.split.col > .divider { cursor: row-resize; }
+.divider:hover, .divider.dragging { background: var(--accent); opacity: 1; }
+.tab .panes { font-size: 11px; opacity: .75; }
+.screen .xterm { height: 100%; }
+.screen .xterm-viewport { background: transparent !important; }
+
+.menu {
+  position: fixed; z-index: 50; min-width: 210px; padding: 5px;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+  box-shadow: 0 10px 30px #0008;
+}
+.menu button {
+  display: flex; justify-content: space-between; gap: 20px; width: 100%;
+  padding: 7px 10px; border: 0; border-radius: 6px; background: none;
+  color: var(--text); font: inherit; text-align: left; cursor: pointer;
+}
+.menu button:hover { background: var(--accent); color: var(--on-accent); }
+.menu button:disabled { opacity: .4; pointer-events: none; }
+.menu kbd { color: var(--muted); font-size: 11px; }
+.menu button:hover kbd { color: inherit; }
+.menu hr { border: 0; border-top: 1px solid var(--border); margin: 4px 0; }
+
+.find {
+  position: absolute; top: 8px; right: 14px; z-index: 5;
+  display: flex; align-items: center; gap: 4px; padding: 5px 6px;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+  box-shadow: 0 8px 24px #0007;
+}
+.find input {
+  width: 220px; padding: 5px 8px; border-radius: 6px; font: inherit; font-size: 13px;
+  border: 1px solid var(--border); background: var(--panel-2); color: var(--text); outline: none;
+}
+.find input:focus { border-color: var(--accent); }
+.find input.miss { border-color: #f07178; }
+#find-count { min-width: 74px; text-align: center; color: var(--muted); font-variant-numeric: tabular-nums; }
+.find .btn.icon { min-width: 28px; padding: 4px 6px; font-size: 12px; }
+.find .toggle[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+
+/* settings panel (the gear): built from PREFS in app.js */
+.prefs {
+  position: fixed; z-index: 40; width: 320px; max-width: calc(100vw - 12px);
+  display: flex; flex-direction: column; gap: 12px; padding: 12px 14px 14px;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+  box-shadow: 0 10px 30px #0008;
+}
+.prefs-head { display: flex; align-items: center; justify-content: space-between; }
+#prefs-body { display: flex; flex-direction: column; gap: 12px; }
+.pref.range { display: grid; grid-template-columns: 1fr 84px; gap: 4px 10px; align-items: center; }
+.pref.range label { grid-column: 1 / -1; }
+.pref input[type="range"] { width: 100%; padding: 0; border: 0; background: none; accent-color: var(--accent); }
+.pref input[type="number"] { width: 100%; padding: 4px 6px; font-variant-numeric: tabular-nums; }
+.pref.select { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.pref.select select { min-width: 140px; padding: 4px 8px; }
+.pref.check { display: flex; align-items: center; gap: 8px; }
+.pref label { cursor: pointer; }
+#prefs-reset { align-self: flex-start; }
+
+/* shown only if the page takes a while to open its first shell */
+.starting {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  animation: fade-in .2s ease-out .4s both;
+}
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* menu, find bar and settings fade in; the backend-down card */
+@keyframes pop { from { opacity: 0; transform: translateY(-4px) scale(.98); } to { opacity: 1; transform: none; } }
+.menu:not(.hidden), .find:not(.hidden), .prefs:not(.hidden) { animation: pop .15s ease-out; }
+.down {
+  position: absolute; inset: 0; z-index: 6; display: grid; place-items: center;
+  animation: pop .2s ease-out;
+}
+.down-card {
+  display: flex; flex-direction: column; align-items: center; gap: 8px; max-width: 360px;
+  padding: 22px 26px; text-align: center; border-radius: 12px;
+  background: var(--panel); border: 1px solid var(--border); box-shadow: 0 10px 30px #0006;
+}
+.down-card .btn { margin-top: 6px; }
+@media (prefers-reduced-motion: reduce) {
+  .menu:not(.hidden), .find:not(.hidden), .prefs:not(.hidden), .down, .tab .mark.bell { animation: none; }
+  .starting { animation-duration: 0s; } /* keeps the delay, drops the fade */
+  .tab { transition: none; }
+}

@@ -1,0 +1,8 @@
+{
+  "label": "Dashboard",
+  "about": "Information first: a small clock, the widgets up top, Jump back in, then each section as a tidy list with what every app does.",
+  "order": 70,
+  "home": {"hero": "small", "sections": "all", "tiles": "list", "recent": true, "chips": true, "align": "left"},
+  "settings": {"widgets": true, "greeting": true},
+  "lighter": {"balanced": {}, "light": {}}
+}

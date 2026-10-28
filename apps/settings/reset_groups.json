@@ -1,0 +1,206 @@
+{
+  "_about": "Groups of settings that are reset together. Read by resets.py. A group puts back the forge_theme settings it names (\"sections\": every setting of those Settings pages, including the copies a page collects with `also`; \"keys\": single settings), the auto-close rules (\"autoclose\": true) and runs System actions (\"system\": panel, action, label, and an optional body and \"option\" a person can untick). \"card\": true lists the group on the Reset groups card; a System panel names its own group in system_settings/panels.json (\"reset\") for the button at its foot. Adding a group is one entry here. \"keep_on_reset_all\" lists the settings Reset all settings leaves alone because they are things he made, not choices (app folders, hidden and archived apps, saved size mixes, company profiles, and the look kept for Back to my old look). \"keep_on_page_reset\" lists more settings a page or group reset leaves alone (the look: a layout reset should not turn the Business look off); Reset all still resets them.",
+  "keep_on_reset_all": [
+    "hidden_apps",
+    "archived_apps",
+    "app_folders",
+    "size_presets",
+    "business_companies",
+    "business_company",
+    "look_before_lock"
+  ],
+  "keep_on_page_reset": [
+    "look"
+  ],
+  "groups": [
+    {
+      "id": "visual",
+      "label": "Visual effects",
+      "about": "Glass and blur, shadows, animations, particles, the 3D wallpaper, the visualiser, background mode's beat effects and the desktop's particles and visualiser.",
+      "card": true,
+      "sections": [
+        "Background mode"
+      ],
+      "keys": [
+        "glass_style",
+        "glass_strength",
+        "glass",
+        "wall_blur",
+        "behind_apps",
+        "shadows",
+        "animations",
+        "anim_speed",
+        "particles",
+        "particles_shown",
+        "particles_in_apps",
+        "particle_amount",
+        "particle_size",
+        "particle_speed",
+        "particle_fps",
+        "particle_fps_in_apps",
+        "wall_parallax",
+        "wall_3d",
+        "wall_3d_depth",
+        "wall_3d_beat",
+        "wall_3d_mode",
+        "wall_3d_drift",
+        "wall_tint",
+        "wall_tint_strength",
+        "visualiser_shown",
+        "visualiser_gain",
+        "visualiser_opacity",
+        "visualiser_colours",
+        "visualiser_in_apps",
+        "visualiser",
+        "visualiser_size",
+        "desktop_particles",
+        "desktop_particle_kind",
+        "desktop_particle_amount",
+        "desktop_particle_fps",
+        "desktop_particles_rest",
+        "desktop_visualiser",
+        "desktop_visualiser_size",
+        "desktop_visualiser_fps",
+        "zen_effects",
+        "lite_effects"
+      ]
+    },
+    {
+      "id": "power",
+      "label": "Power and frame rates",
+      "about": "Every Speed and detail setting: frame rate caps, the battery versions, the low battery saver, easing off when the GPU is busy, video quality.",
+      "card": true,
+      "sections": [
+        "Speed and detail"
+      ]
+    },
+    {
+      "id": "network",
+      "label": "Wi-Fi and Bluetooth",
+      "words": "wifi wi-fi bluetooth forget",
+      "about": "Forgets saved Wi-Fi networks and paired Bluetooth devices. Nothing in Forge's own settings changes.",
+      "card": true,
+      "system": [
+        {
+          "panel": "wifi",
+          "action": "forget_all",
+          "label": "Forget saved Wi-Fi networks",
+          "body": {
+            "keep_current": true
+          },
+          "option": {
+            "key": "keep_current",
+            "label": "Keep the network in use now"
+          }
+        },
+        {
+          "panel": "bluetooth",
+          "action": "remove_all",
+          "label": "Forget paired Bluetooth devices"
+        }
+      ]
+    },
+    {
+      "id": "look",
+      "label": "Look and size",
+      "about": "The look, colours, glass, layout, sizes and the accent colour. The wallpaper stays.",
+      "card": true,
+      "sections": [
+        "Colours inside apps",
+        "Size",
+        "Glass and layout"
+      ],
+      "keys": [
+        "accent",
+        "unify_accent"
+      ]
+    },
+    {
+      "id": "screens",
+      "label": "Bar, dock, home screen and widgets",
+      "about": "The top bar and dock, the home screen, widgets, the desktop's widgets and full screen.",
+      "card": true,
+      "sections": [
+        "Top bar and dock",
+        "Home screen",
+        "Widgets",
+        "On the desktop",
+        "Full screen"
+      ]
+    },
+    {
+      "id": "autoclose",
+      "label": "Auto-close rules",
+      "words": "auto-close",
+      "about": "Every app's RAM and idle rule back to its default.",
+      "card": true,
+      "autoclose": true
+    },
+    {
+      "id": "keys",
+      "label": "Keyboard shortcuts",
+      "about": "Forge's own keys back to the ones it came with.",
+      "card": true,
+      "sections": [
+        "Forge keys"
+      ]
+    },
+    {
+      "id": "wifi",
+      "label": "Wi-Fi",
+      "words": "wifi wi-fi forget",
+      "about": "Forgets saved Wi-Fi networks.",
+      "system": [
+        {
+          "panel": "wifi",
+          "action": "forget_all",
+          "label": "Forget saved Wi-Fi networks",
+          "body": {
+            "keep_current": true
+          },
+          "option": {
+            "key": "keep_current",
+            "label": "Keep the network in use now"
+          }
+        }
+      ]
+    },
+    {
+      "id": "bluetooth",
+      "label": "Bluetooth",
+      "words": "bluetooth forget",
+      "about": "Forgets every paired device.",
+      "system": [
+        {
+          "panel": "bluetooth",
+          "action": "remove_all",
+          "label": "Forget paired Bluetooth devices"
+        }
+      ]
+    },
+    {
+      "id": "display",
+      "label": "Display",
+      "about": "Night light back to off, sunset to sunrise and its usual warmth. The brightness stays.",
+      "system": [
+        {
+          "panel": "display",
+          "action": "defaults",
+          "label": "Night light back to its defaults"
+        }
+      ]
+    },
+    {
+      "id": "notifications",
+      "label": "Notifications",
+      "about": "Do not disturb off and notifications on the lock screen again.",
+      "system": [
+        {
+          "panel": "notifications",
+          "action": "defaults",
+          "label": "Notifications back to their defaults"
+        }
+      ]
+    }
+  ]
+}

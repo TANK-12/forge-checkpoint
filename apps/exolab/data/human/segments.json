@@ -1,0 +1,63 @@
+{
+  "id": "segments",
+  "name": "Body segment table",
+  "source": "de Leva P. (1996) Adjustments to Zatsiorsky-Seluyanov's segment inertia parameters. J Biomech 29(9):1223-1230, Table 4 (mass % of body, centre of mass % of length from the proximal joint, radii of gyration % of length: sagittal, transverse, longitudinal).",
+  "female": {
+    "upper_arm": {
+      "mass_pct": 2.55,
+      "com_pct": 57.54,
+      "r_pct": [
+        27.8,
+        26.0,
+        14.8
+      ]
+    },
+    "forearm": {
+      "mass_pct": 1.38,
+      "com_pct": 45.59,
+      "r_pct": [
+        26.1,
+        25.7,
+        9.4
+      ]
+    },
+    "hand": {
+      "mass_pct": 0.56,
+      "com_pct": 74.74,
+      "r_pct": [
+        53.1,
+        45.4,
+        33.5
+      ]
+    }
+  },
+  "male": {
+    "upper_arm": {
+      "mass_pct": 2.71,
+      "com_pct": 57.72,
+      "r_pct": [
+        28.5,
+        26.9,
+        15.8
+      ]
+    },
+    "forearm": {
+      "mass_pct": 1.62,
+      "com_pct": 45.74,
+      "r_pct": [
+        27.6,
+        26.5,
+        12.1
+      ]
+    },
+    "hand": {
+      "mass_pct": 0.61,
+      "com_pct": 79.0,
+      "r_pct": [
+        62.8,
+        51.3,
+        40.1
+      ]
+    }
+  }
+}

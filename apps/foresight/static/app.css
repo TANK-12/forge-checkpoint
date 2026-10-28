@@ -1,0 +1,294 @@
+/* Foresight's own widgets. The palette, buttons, inputs and panels come from
+   /shared/forge.css; only what is genuinely unique to this tool lives here —
+   the tier picker, the finding cards and the answer blocks. */
+
+:root {
+  --accent: #7fd1a8;
+  --accent-2: #5fb389;
+  --on-accent: #08150f;
+
+  --rules: #7fd1a8;   /* an answer arithmetic produced */
+  --model: #a99bff;   /* an answer a model produced */
+  --rising: #f2a154;
+  --falling: #6ea8fe;
+}
+
+/* The light look (the hub's Light theme): the same hues, dark enough to read
+   on a light panel and to carry white text. */
+html[data-forge-mode="light"] {
+  --rules: #1d7a50;
+  --model: #5b47c9;
+  --rising: #a95a10;
+  --falling: #2457b0;
+}
+
+body { margin: 0; }
+
+/* Buttons. The shared kit styles .btn, not the bare .primary and .ghost this
+   page has always used, so without these they drew as the engine's grey
+   native buttons. */
+button.primary, button.ghost, .tierpick button, .subject-panel button {
+  border: 1px solid var(--border); border-radius: 7px; padding: 7px 13px;
+  background: var(--panel-2); color: var(--text);
+}
+button.primary { background: var(--accent-2); border-color: var(--accent-2); color: var(--on-accent); font-weight: 600; }
+button.ghost { background: transparent; }
+button.primary:hover:not(:disabled), button.ghost:hover:not(:disabled),
+.tierpick button:hover:not(:disabled) { border-color: var(--accent); }
+button.primary:hover:not(:disabled) { filter: brightness(1.08); }
+button:disabled { opacity: .55; cursor: default; }
+button.small { padding: 4px 10px; font-size: 12px; }
+button.linkish {
+  background: none; border: 0; padding: 0; color: inherit; font: inherit;
+  font-weight: 600; text-align: left; cursor: pointer;
+}
+button.linkish:hover, button.linkish:focus-visible { color: var(--accent); text-decoration: underline; }
+input[type="range"] { padding: 0; border: 0; background: transparent; accent-color: var(--accent); width: 160px; }
+.shell { display: flex; flex-direction: column; height: 100vh; }
+
+/* --- top bar -------------------------------------------------------------
+   These match Dossier's, deliberately: the shared kit supplies cards, buttons
+   and the palette but not the shell, so the two apps would drift apart
+   visually if each invented its own. */
+.topbar {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap; row-gap: 8px;
+  padding: 10px 16px; border-bottom: 1px solid var(--border);
+  background: var(--panel); flex: 0 0 auto;
+}
+.brand { font-weight: 650; letter-spacing: .2px; }
+.brand span { color: var(--accent); }
+.views { display: flex; gap: 4px; flex-wrap: wrap; }
+.views button {
+  background: transparent; border: 1px solid transparent; color: var(--muted);
+  padding: 6px 12px; border-radius: 7px; cursor: pointer; font-size: 13px;
+}
+.views button:hover { color: var(--text); background: var(--panel-2); }
+.views button.on { color: var(--on-accent); background: var(--accent); border-color: var(--accent); }
+.topbar .spacer { flex: 1; }
+/* The shared chrome puts its Close app button in this bar with a z-index meant
+   for a floating button. As a flex item that z-index still counts, so the
+   button drew over the subject panel and hid the panel's own Close. */
+.topbar #forge-close-app { z-index: auto; }
+.pill {
+  font-size: 11.5px; color: var(--muted); border: 1px solid var(--border);
+  border-radius: 999px; padding: 3px 10px; white-space: nowrap;
+}
+.pill.ok { color: var(--good); border-color: color-mix(in srgb, var(--good) 40%, var(--border)); }
+.pill.bad { color: var(--bad); border-color: color-mix(in srgb, var(--bad) 40%, var(--border)); }
+.pill.busy { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); }
+
+/* --- layout --------------------------------------------------------------
+   Only the active view is drawn. Without this every view stacks down the page
+   at once, which is exactly what the first screenshot of this app showed. */
+.main { flex: 1; overflow: hidden; display: flex; }
+.view { display: none; width: 100%; overflow: auto; }
+.view.on { display: block; }
+.pad { padding: 18px 20px 60px; }
+.spacer { flex: 1; }
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+/* forge.css gives every label a bottom margin for stacked forms; in a row
+   it lifts the label off the line its controls sit on. */
+.row > label { margin-bottom: 0; }
+.muted { color: var(--muted); }
+.small { font-size: 12px; }
+.hint {
+  font-size: 12px; color: var(--muted); background: var(--panel-2);
+  border-left: 2px solid var(--border); padding: 8px 11px;
+  border-radius: 0 7px 7px 0; margin: 10px 0; line-height: 1.5;
+}
+.card h3 { margin: 0 0 10px; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+.split { display: grid; grid-template-columns: minmax(0,1fr) 340px; gap: 18px; align-items: start; }
+.asklayout { display: grid; grid-template-columns: minmax(0,1fr) 360px; gap: 18px; align-items: start; }
+@media (max-width: 1100px) {
+  .split, .asklayout { grid-template-columns: minmax(0,1fr); }
+}
+
+.switch { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; font-size: 12.5px; }
+.switch input { margin: 0; }
+
+textarea#ask-box {
+  width: 100%; resize: vertical; font: inherit; line-height: 1.45;
+}
+
+/* --- the tier picker ------------------------------------------------------
+   The rules tier is visually distinct from the model tiers on purpose: which
+   one answered is the single most important thing about an answer here. */
+.tierpick { display: flex; gap: 8px; flex-wrap: wrap; }
+.tierpick button {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+  padding: 8px 12px; text-align: left; min-width: 120px;
+}
+.tierpick button .lbl { font-weight: 600; }
+.tierpick button .sub { font-size: 11px; opacity: .75; }
+.tierpick button.on { color: var(--on-accent); background: var(--accent); border-color: var(--accent); }
+.tierpick button.norobot { border-color: color-mix(in srgb, var(--rules) 50%, var(--border)); }
+.tierpick button.norobot.on { background: var(--rules); border-color: var(--rules); }
+
+.solvers { margin-top: 8px; }
+.solver {
+  padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 12.5px;
+}
+.solver:last-child { border-bottom: 0; }
+.solver b { display: block; }
+
+/* --- answers -------------------------------------------------------------- */
+.answer { margin-top: 12px; }
+.answer .who {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; text-transform: none; letter-spacing: .01em;
+  padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border);
+}
+.answer .who.rules { color: var(--rules); border-color: color-mix(in srgb, var(--rules) 45%, var(--border)); }
+.answer .who.model { color: var(--model); border-color: color-mix(in srgb, var(--model) 45%, var(--border)); }
+.answer pre.text {
+  white-space: pre-wrap; word-break: break-word; margin: 10px 0 0;
+  font: inherit; line-height: 1.5;
+}
+.answer .question { font-weight: 600; margin-bottom: 6px; }
+details.thinking { margin-top: 10px; }
+details.thinking summary { cursor: pointer; font-size: 12px; color: var(--muted); }
+details.thinking pre {
+  white-space: pre-wrap; font-size: 12px; color: var(--muted);
+  border-left: 2px solid var(--border); padding-left: 10px; margin-top: 8px;
+}
+
+/* --- findings ------------------------------------------------------------- */
+.finding {
+  border: 1px solid var(--border); border-radius: 10px; padding: 12px;
+  margin-bottom: 10px; background: var(--panel);
+}
+.finding .head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.finding .head b, .finding .head .linkish { font-size: 14px; }
+.filters { margin-bottom: 12px; }
+.filters input[type="search"] { width: 220px; }
+.answer .when { margin-left: 8px; font-size: 11px; color: var(--muted); }
+.finding.rising { border-left: 3px solid var(--rising); }
+.finding.falling { border-left: 3px solid var(--falling); }
+.finding .detail { color: var(--muted); font-size: 12.5px; margin-top: 4px; }
+.finding .age { color: var(--muted); font-size: 11.5px; margin-left: auto; white-space: nowrap; }
+/* Older than its source's freshness window: still shown, plainly not news. */
+.finding.stale { opacity: .5; filter: grayscale(1); }
+.finding.stale .age { font-style: italic; }
+.age-note {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px;
+  margin-bottom: 12px; background: var(--panel); font-size: 13px;
+}
+.age-note[hidden] { display: none; }
+
+/* A sparkline drawn from the evidence, so a claim shows its working. */
+.spark { display: block; margin-top: 8px; width: 100%; height: 40px; }
+.spark polyline { fill: none; stroke: var(--accent); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.spark .last { stroke: var(--rising); stroke-width: 5; stroke-linecap: round; }
+
+.bar {
+  height: 6px; background: var(--panel-2); border-radius: 999px;
+  overflow: hidden; margin: 10px 0 6px;
+}
+.bar i { display: block; height: 100%; background: var(--accent); transition: width .3s; }
+
+.joblog {
+  font-family: ui-monospace, monospace; font-size: 11.5px; line-height: 1.5;
+  max-height: 460px; overflow: auto; color: var(--muted); white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.watchlist { margin-top: 8px; max-height: 380px; overflow: auto; }
+.watchrow {
+  display: flex; justify-content: space-between; gap: 10px; padding: 5px 0;
+  border-bottom: 1px solid var(--border); font-size: 12.5px;
+}
+.watchrow:last-child { border-bottom: 0; }
+.watchrow .linkish { font-weight: 400; }
+
+.sourcerow { padding: 10px 0; border-bottom: 1px solid var(--border); }
+.sourcerow:last-child { border-bottom: 0; }
+.sourcerow .caveat { color: var(--muted); font-size: 12px; margin-top: 4px; }
+.tag {
+  display: inline-block; padding: 1px 7px; border-radius: 999px;
+  border: 1px solid var(--border); font-size: 11px; color: var(--muted);
+}
+.tag.norobot { color: var(--rules); border-color: color-mix(in srgb, var(--rules) 45%, var(--border)); }
+
+.empty { color: var(--muted); padding: 28px; text-align: center; }
+
+
+/* --- plans and scenarios -------------------------------------------------
+   The indicator row is the whole point of this tab, so it is styled to be
+   read at a glance: the outcome first, colour-coded, then the claim, then
+   what it would mean. A wall of undifferentiated text is what the first
+   version looked like and it was unreadable. */
+.scenario { margin-top: 12px; }
+.scenario > .head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.scenario > .head b { font-size: 14px; }
+.scenario .basis { color: var(--muted); font-size: 11.5px; margin: 2px 0 10px; }
+
+.branch { margin-top: 10px; }
+.branch .head { display: flex; align-items: baseline; gap: 10px; }
+
+.indicator {
+  display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap;
+  padding: 5px 0; border-bottom: 1px solid var(--border); font-size: 12.5px;
+}
+.indicator:last-child { border-bottom: none; }
+.indicator .outcome {
+  flex: none; min-width: 104px; font-size: 11px; letter-spacing: .02em;
+  color: var(--muted);
+}
+.indicator.met .outcome { color: var(--rising); }
+.indicator.missed .outcome { color: var(--falling); }
+.indicator.unscorable .outcome { color: var(--warn, #f2a154); }
+.indicator .claim { flex: 1; min-width: 220px; font-variant-numeric: tabular-nums; }
+.indicator .means { color: var(--muted); font-size: 11.5px; flex-basis: 100%; }
+
+.ledger-row {
+  display: flex; justify-content: space-between; gap: 12px;
+  padding: 4px 0; border-bottom: 1px solid var(--border);
+}
+.ledger-row:last-child { border-bottom: none; }
+.ledger-row .k { color: var(--muted); }
+.ledger-row .v { font-variant-numeric: tabular-nums; }
+
+/* thin, quiet scrollbars: Chrome and WebKitGTK draw ::-webkit-scrollbar
+   (Chrome ignores it once scrollbar-color is set), Firefox the standard ones */
+@supports not selector(::-webkit-scrollbar) {
+  * { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--text) 18%, transparent) transparent; }
+}
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-button { display: none; }
+::-webkit-scrollbar-track, ::-webkit-scrollbar-corner { background: transparent; }
+::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--text) 18%, transparent); border-radius: 8px;
+  border: 2px solid transparent; background-clip: padding-box; }
+::-webkit-scrollbar-thumb:hover { background-color: color-mix(in srgb, var(--text) 30%, transparent); }
+
+/* --- the subject panel ----------------------------------------------------
+   Slides in from the right over a dimmed page; the page under it keeps its
+   place. Without motion when the system asks for less. */
+.subject-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, .45); z-index: 39; }
+.subject-panel {
+  position: fixed; top: 0; right: 0; bottom: 0; width: min(560px, 100vw);
+  background: var(--panel); border-left: 1px solid var(--border);
+  box-shadow: -18px 0 48px rgba(0, 0, 0, .45); z-index: 40;
+  overflow: auto; padding: 16px 18px 40px; outline: none;
+  animation: sp-in .18s ease-out;
+}
+.subject-panel[hidden], .subject-backdrop[hidden] { display: none; }
+@keyframes sp-in { from { transform: translateX(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+.sp-head { display: flex; align-items: flex-start; gap: 10px; }
+.sp-head h2 { margin: 0; font-size: 18px; }
+.subject-panel h3 { margin: 16px 0 8px; font-size: 13px; color: var(--muted); font-weight: 600; }
+.sp-summary {
+  white-space: pre-wrap; word-break: break-word; font: inherit; font-size: 12.5px;
+  line-height: 1.5; margin: 10px 0 0; color: var(--text);
+}
+.sp-series { padding: 8px 0; border-bottom: 1px solid var(--border); }
+.sp-series:last-child { border-bottom: 0; }
+.sp-top { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; font-size: 13px; }
+.sp-value { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.sp-series .spark { height: 32px; margin-top: 4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bar i { transition: none; }
+  .subject-panel { animation: none; }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Fireflies",
+  "note": "Each dot rolls its own dice every two-thirds of a second, offset by its own rand(i), and the lucky few flash and fade. Under them, a slow violet breath of noise. It is the only piece here that feels like it is looking back at you.",
+  "author": "Claude",
+  "made": "2026-10-09T10:03:00",
+  "data": {
+    "formula": "rand(i + floor(t*1.5 + rand(i)*9)) > 0.94 ? 1 - fract(t*1.5 + rand(i)*9) : -0.12 - noise(x/5, y/5, t/3)*0.12",
+    "grid": 24,
+    "speed": 1,
+    "palette": "ember",
+    "shape": "circle"
+  }
+}

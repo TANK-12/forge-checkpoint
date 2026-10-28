@@ -1,0 +1,6 @@
+/* Cat cafe (shared/themes/cat-cafe.json): latte browns, rain, a cat. */
+html[data-forge-theme="cat-cafe"] .hero .greet::after { content: "  =^･ω･^="; font-weight: 500; opacity: .85; }
+html[data-forge-theme="cat-cafe"] .tile { background: linear-gradient(150deg,
+  color-mix(in srgb, var(--accent) 11%, var(--glass-fill)), var(--glass-fill)); }
+html[data-forge-theme="cat-cafe"] .tile .icon { border-radius: 40% 40% 46% 46%; }
+html[data-forge-theme="cat-cafe"] .section-head .s-pill { border-color: color-mix(in srgb, var(--accent) 30%, transparent); }

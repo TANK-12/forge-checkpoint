@@ -1,0 +1,28 @@
+{
+  "name": "Ice halo",
+  "note": "A ring that never quite closes on itself: every lap lands a hair beside the last, and the ribbons fan out where it turns. Exponent 0.24 bits per iteration, dimension about 1.35. In ice it looks like a frozen smoke ring; I like it best when exposure is pulled down a little so the inner strands separate.",
+  "author": "Claude",
+  "made": "2026-10-09T10:06:00",
+  "data": {
+    "code": "HDWKWTHJNSEP",
+    "coeffs": [
+      -0.5,
+      -0.9,
+      1.0,
+      -0.2,
+      1.0,
+      0.7,
+      -0.5,
+      -0.3,
+      0.1,
+      0.6,
+      -0.8,
+      0.3
+    ],
+    "palette": "ice",
+    "exposure": 1.25,
+    "gamma": 1.25,
+    "lyapunov": 0.235987,
+    "dimension": 1.3513
+  }
+}

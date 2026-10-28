@@ -1,0 +1,8 @@
+{
+  "label": "Forge",
+  "about": "The home screen as it is: a big clock, widgets, Jump back in, and one row of big tiles per section with the rest folded behind \"N more\".",
+  "order": 0,
+  "home": {"hero": "big", "sections": "rows", "tiles": "big", "recent": true, "chips": true, "align": "left"},
+  "settings": {},
+  "lighter": {"balanced": {}, "light": {}}
+}

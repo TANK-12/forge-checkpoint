@@ -1,0 +1,8 @@
+{
+  "label": "Simple",
+  "about": "Easy to take in: the time, one big search box, Jump back in, then every app in one grid of big tiles. No widgets, no sections.",
+  "order": 20,
+  "home": {"hero": "small", "sections": "flat", "tiles": "big", "recent": true, "chips": false, "align": "center"},
+  "settings": {"widgets": false, "greeting": true, "tile_width": 252},
+  "lighter": {"balanced": {}, "light": {}}
+}

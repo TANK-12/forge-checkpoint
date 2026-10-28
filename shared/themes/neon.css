@@ -1,0 +1,14 @@
+/* Neon (shared/themes/neon.json): synthwave magenta and cyan. */
+html[data-forge-theme="neon"] { --neon-2: #2de2e6; }
+html[data-forge-theme="neon"] .hero .clock { font-weight: 600;
+  background-image: linear-gradient(180deg, #fff 20%, color-mix(in srgb, var(--accent) 70%, #fff) 60%, var(--neon-2) 100%);
+  background-size: 100% 100%; animation: none; filter: drop-shadow(0 0 22px color-mix(in srgb, var(--accent) 55%, transparent)); }
+html[data-forge-theme="neon"] .hero .greet { color: var(--neon-2); text-shadow: 0 0 12px color-mix(in srgb, var(--neon-2) 60%, transparent); }
+html[data-forge-theme="neon"] .tile { border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); }
+html[data-forge-theme="neon"] .tile:hover, html[data-forge-theme="neon"] .tile.focus { border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent), 0 0 26px color-mix(in srgb, var(--accent) 50%, transparent),
+    inset 0 0 18px color-mix(in srgb, var(--accent) 16%, transparent); }
+html[data-forge-theme="neon"] #search:focus { border-color: var(--neon-2);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--neon-2) 50%, transparent), 0 0 24px color-mix(in srgb, var(--neon-2) 35%, transparent); }
+html[data-forge-theme="neon"] #dock, html[data-forge-theme="neon"] #bar {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent), 0 0 30px color-mix(in srgb, var(--accent) 18%, transparent); }

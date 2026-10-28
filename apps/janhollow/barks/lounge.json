@@ -1,0 +1,47 @@
+{
+ "label": "Off duty",
+ "rooms": [
+  "lounge",
+  "observation",
+  "library"
+ ],
+ "weight": 1.2,
+ "exchanges": [
+  {
+   "say": "Look at that view, {listener}.",
+   "replies": [
+    "Never gets old.",
+    "It's the same view as yesterday.",
+    "Beautiful."
+   ]
+  },
+  {
+   "say": "What are you reading?",
+   "replies": [
+    "Something about tides.",
+    "The manual, sadly.",
+    "Nothing you'd like."
+   ]
+  },
+  {
+   "say": "Mind if I sit with you a while?",
+   "replies": [
+    "Not at all.",
+    "If you're quiet.",
+    "Pull up a seat."
+   ]
+  },
+  {
+   "say": "Do you ever miss real weather?",
+   "replies": [
+    "Every day.",
+    "I miss rain.",
+    "Not the cold."
+   ]
+  }
+ ],
+ "hello": [
+  "Take the good chair, {you}.",
+  "Nice and quiet in here."
+ ]
+}

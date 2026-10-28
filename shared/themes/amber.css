@@ -1,0 +1,7 @@
+/* Amber Terminal (shared/themes/amber.json): amber phosphor, scanlines and a glow. */
+html[data-forge-theme="amber"] .hero .clock { background-image: none; color: var(--accent); -webkit-text-fill-color: var(--accent); animation: none; font-weight: 400;
+  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--accent) 55%, transparent)); }
+html[data-forge-theme="amber"] .hero .greet, html[data-forge-theme="amber"] .tile .name, html[data-forge-theme="amber"] .section-head .s-label { text-shadow: 0 0 8px color-mix(in srgb, var(--accent) 45%, transparent); }
+html[data-forge-theme="amber"] .tile .name { color: var(--accent); }
+html[data-forge-theme="amber"] #home::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 1;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, .18) 0 1px, transparent 1px 3px); mix-blend-mode: multiply; }

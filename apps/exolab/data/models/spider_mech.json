@@ -1,0 +1,8 @@
+{
+  "id": "spider_mech",
+  "name": "Spider mech",
+  "kind": "mech",
+  "status": "planned",
+  "chunk": 4,
+  "about": "A six-legged walker on the legion leg kit. Tests: stability margin, leg loads, gait, drop."
+}

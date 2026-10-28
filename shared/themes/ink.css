@@ -1,0 +1,8 @@
+/* Ink (shared/themes/ink.json): black ink on white paper. */
+html[data-forge-theme="ink"] #wall, html[data-forge-theme="ink"] #wall-blur { background: var(--bg) !important; filter: none !important; }
+html[data-forge-theme="ink"] #wall-fg, html[data-forge-theme="ink"] #scrim { display: none; }
+html[data-forge-theme="ink"] .hero .clock { background-image: none; color: var(--text); -webkit-text-fill-color: var(--text); filter: none; font-weight: 300; animation: none; }
+html[data-forge-theme="ink"] .hero .date, html[data-forge-theme="ink"] .hero .greet { color: var(--text); text-shadow: none; }
+html[data-forge-theme="ink"] .hero .greet { font-style: italic; font-weight: 400; }
+html[data-forge-theme="ink"] #home .hero > div:first-child::before { display: none; }
+html[data-forge-theme="ink"] .tile:hover .name, html[data-forge-theme="ink"] .tile.focus .name { text-decoration: underline; text-underline-offset: 3px; }

@@ -1,0 +1,16 @@
+{
+  "id": "hydraulic",
+  "name": "Hydraulic actuator (pump in the backpack)",
+  "kind": "hydraulic",
+  "mass_kg": 0.8,
+  "remote_mass_kg": 4.0,
+  "torque_cont_nm": 150,
+  "torque_peak_nm": 300,
+  "speed_max_rad_s": 5,
+  "efficiency": 0.45,
+  "stiffness_nm_rad": 20000,
+  "backdrivable": false,
+  "power_cont_w": 600,
+  "note": "Huge force from a small joint, but the pump, oil and hoses weigh a lot and waste energy.",
+  "source": "Typical of compact hydraulic joint actuators in legged robots; system efficiency 30-50%; approximate."
+}

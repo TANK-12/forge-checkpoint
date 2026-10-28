@@ -1,0 +1,68 @@
+# Runs only on demand; downloads the fixed checkpoint, never builds a new one.
+name: Check saved checkpoint
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: macos-latest, target: macos-arm64 }
+          - { os: macos-15-intel, target: macos-x64 }
+          - { os: windows-latest, target: windows-x64 }
+          - { os: ubuntu-latest, target: linux-x64 }
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Test install helpers with fixture archives
+        run: |
+          python -m pip install pytest
+          python -m pytest -q tests/test_checkpoint.py
+      - name: Download saved checkpoint
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET: ${{ matrix.target }}
+        run: |
+          mkdir checkpoint
+          case "$TARGET" in windows-*) suffix=zip ;; *) suffix=tar.gz ;; esac
+          gh release download checkpoint-2026-10-28 --repo "$GITHUB_REPOSITORY" \
+            --pattern "forge-0.2.0-$TARGET.$suffix" --pattern SHA256SUMS --dir checkpoint
+      - name: Verify and unpack
+        shell: python
+        env:
+          TARGET: ${{ matrix.target }}
+        run: |
+          import hashlib, os, pathlib, tarfile, zipfile
+          folder = pathlib.Path('checkpoint')
+          target = os.environ['TARGET']
+          suffix = 'zip' if target.startswith('windows-') else 'tar.gz'
+          name = f'forge-0.2.0-{target}.{suffix}'
+          expected = dict(line.split('  ', 1)[::-1] for line in (folder/'SHA256SUMS').read_text().splitlines())
+          assert hashlib.sha256((folder/name).read_bytes()).hexdigest() == expected[name]
+          if suffix == 'zip':
+              with zipfile.ZipFile(folder/name) as archive: archive.extractall(folder)
+          else:
+              with tarfile.open(folder/name) as archive: archive.extractall(folder, filter='data')
+      - name: Smoke every shipped app without opening a window
+        shell: bash
+        env:
+          TARGET: ${{ matrix.target }}
+        run: |
+          case "$TARGET" in
+            macos-*) checkpoint/Forge/Forge.app/Contents/MacOS/Forge --smoke --report smoke.json ;;
+            windows-*) checkpoint/Forge/runtime/python.exe checkpoint/Forge/forge_portable.py --smoke --report smoke.json ;;
+            *) checkpoint/Forge/forge --smoke --report smoke.json ;;
+          esac
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: checkpoint-smoke-${{ matrix.target }}
+          path: smoke.json

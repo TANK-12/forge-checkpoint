@@ -1,0 +1,67 @@
+{
+  "name": "files",
+  "label": "Files",
+  "tagline": "Browse, copy, move and preview your files",
+  "help": {
+    "about": "Browse your files: copy, move, rename, preview them and open archives.",
+    "features": [
+      "Browse",
+      "Change files",
+      "Archives",
+      "Preview",
+      "Drag in and out"
+    ]
+  },
+  "port": 8458,
+  "module": "web_app:app",
+  "src_dir": ".",
+  "accent": "#7fb8d8",
+  "icon": "\ud83d\uddc2\ufe0f",
+  "order": 96,
+  "section": "system",
+  "ready_timeout": 30,
+  "role": "files",
+  "manifest": {
+    "summary": "A file manager: browse, copy, move, rename, trash (never delete), restore, extract and compress, with thumbnails and a preview pane.",
+    "features": [
+      {
+        "name": "Browse",
+        "description": "Sidebar places and drives, breadcrumb with typed paths, back/forward/up, list and grid views, sort, name search, hidden files."
+      },
+      {
+        "name": "Change files",
+        "description": "Copy/cut/paste and drag and drop as background jobs with a progress bar, rename, new folder, move to trash (gio trash only) and restore from the trash."
+      },
+      {
+        "name": "Archives",
+        "description": "Extract here and Compress to .zip with bsdtar, with a progress percentage counted per entry."
+      },
+      {
+        "name": "Preview",
+        "description": "Image, video, audio and text preview pane; thumbnails for images, videos and PDFs."
+      },
+      {
+        "name": "Folder watch",
+        "description": "The open folder redraws by itself when something is added, removed or renamed in it, keeping selection, scroll and thumbnails; a folder that vanishes falls back to the one above."
+      },
+      {
+        "name": "Drag in and out",
+        "description": "Files dropped from outside Forge are copied in (file:// links as a copy job, otherwise uploaded with progress); rows dragged out carry file:// links for other apps."
+      },
+      {
+        "name": "More windows",
+        "description": "Ctrl+N, the bar's New window button, middle-click on a folder or place, or a folder's menu opens another native Forge window of Files, each with its own folder and history; drag between them to copy."
+      }
+    ],
+    "known_gaps": [
+      "Folders dropped from outside are refused with a message; drop the files inside them.",
+      "Restore only covers the home trash, not .Trash-1000 on other drives.",
+      "Desktop drag in/out is checked with synthetic events in headless Chrome only, not yet inside the WebKitGTK Forge window.",
+      "New windows need a Forge restart after 2026-10-24 (forge.py and forge_popout.py changed); before it, Ctrl+N does nothing inside Forge."
+    ],
+    "docs": [
+      "README.md",
+      "WIP.md"
+    ]
+  }
+}

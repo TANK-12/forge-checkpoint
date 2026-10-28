@@ -1,0 +1,19 @@
+{
+  "label": "Tiled",
+  "order": 75,
+  "tags": [
+    "dark",
+    "compact"
+  ],
+  "about": "Close to a tiling desktop: tight gaps, sharp corners, a turning gradient border and every app as a compact tile.",
+  "look": "hyprland",
+  "layout": "dense",
+  "wallpaper": "",
+  "settings": {
+    "particles": "off"
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {}
+  }
+}

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; frame-src 'none'; object-src 'none'">
+<title>Typeset</title>
+<link rel="stylesheet" href="/shared/forge.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <h1>Typeset</h1>
+  <span class="muted small">Documents in <code id="docs-dir">...</code></span>
+</header>
+<main class="desk">
+  <aside class="side">
+    <form id="new-form" class="new">
+      <h2>New document</h2>
+      <input id="new-name" type="text" placeholder="Name, like Cover letter" maxlength="80" aria-label="Name of the new document">
+      <select id="new-template" aria-label="Start from"></select>
+      <button class="btn btn-primary" type="submit">Make it</button>
+    </form>
+    <h2>Documents</h2>
+    <div id="docs" class="docs"></div>
+    <details class="help">
+      <summary>Typst in brief</summary>
+      <dl>
+        <dt><code>= Heading</code></dt><dd>a heading; <code>==</code> is one level down</dd>
+        <dt><code>*bold*</code> <code>_italic_</code></dt><dd>emphasis</dd>
+        <dt><code>- item</code> <code>+ item</code></dt><dd>a list, a numbered list</dd>
+        <dt><code>#image("photo.jpg", width: 60%)</code></dt><dd>a picture from Add a file</dd>
+        <dt><code>#table(columns: 2, [a], [b])</code></dt><dd>a table</dd>
+        <dt><code>$ a^2 + b^2 = c^2 $</code></dt><dd>maths</dd>
+        <dt><code>#pagebreak()</code></dt><dd>a new page</dd>
+        <dt><code>\</code> at a line's end</dt><dd>a line break</dd>
+      </dl>
+    </details>
+  </aside>
+  <section class="edit" id="edit" hidden>
+    <div class="bar">
+      <h2 id="doc-name" title="The document's folder name"></h2>
+      <form id="rename-form" class="rename" hidden>
+        <input id="rename-to" type="text" maxlength="80" aria-label="New name">
+        <button class="btn" type="submit">Rename</button>
+      </form>
+      <span id="status" class="muted small" role="status"></span>
+      <span class="grow"></span>
+      <label class="btn" for="asset" title="A picture or data file, kept beside the document">Add a file</label>
+      <input id="asset" type="file" hidden>
+      <button class="btn" id="rename" type="button">Rename</button>
+      <button class="btn btn-danger" id="trash" type="button">Move to trash</button>
+      <button class="btn btn-primary" id="export" type="button">Export PDF</button>
+    </div>
+    <textarea id="src" spellcheck="false" aria-label="The document's Typst text"></textarea>
+    <ul id="problems" class="problems" hidden></ul>
+    <div id="files" class="files muted small"></div>
+  </section>
+  <section class="view" id="view" hidden>
+    <div class="bar">
+      <span id="pages" class="muted small"></span>
+      <span class="grow"></span>
+      <a id="pdf-link" class="btn" hidden download>Download the PDF</a>
+      <button class="btn" id="zoom" type="button" aria-pressed="false">Actual size</button>
+    </div>
+    <div id="sheets" class="sheets"></div>
+  </section>
+  <section class="empty" id="empty">
+    <p><b>Make a document under New document</b>: a blank page, a report, a CV or a letter.</p>
+    <p class="muted small">The preview follows as you type. Export PDF puts the PDF beside it.</p>
+  </section>
+</main>
+<div id="toast"></div>
+<script src="/shared/forge.js"></script>
+<script src="app.js"></script>
+<script src="/shared/forge_chrome.js"></script>
+</body>
+</html>

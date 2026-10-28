@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; frame-src 'none'; object-src 'none'">
+<title>Convert</title>
+<link rel="stylesheet" href="/shared/forge.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <h1>Convert</h1>
+  <span class="muted small">Saves to <code id="out-dir">...</code></span>
+</header>
+<main class="wrap">
+  <section id="drop" class="drop">
+    <p><b>Drop files here</b> to convert them</p>
+    <p class="muted small" id="kinds"></p>
+    <div class="row">
+      <label class="btn btn-primary" for="pick">Choose files</label>
+      <input id="pick" type="file" multiple hidden>
+      <span class="muted small">or a file already on this computer:</span>
+      <input id="path" type="text" placeholder="~/Music/song.flac" spellcheck="false">
+      <button class="btn" id="add-path" type="button">Add</button>
+    </div>
+  </section>
+  <section class="queue-head hidden" id="queue-head">
+    <h2>To convert</h2>
+    <span class="grow"></span>
+    <button class="btn" id="clear-done" type="button">Clear finished</button>
+    <button class="btn btn-primary" id="convert-all" type="button">Convert all</button>
+  </section>
+  <section id="queue" class="queue"></section>
+  <section>
+    <h2>Converted</h2>
+    <div id="recent" class="recent"><div class="muted small">reading...</div></div>
+  </section>
+</main>
+<div id="toast" class="toast hidden"></div>
+<script src="/shared/forge.js"></script>
+<script src="app.js"></script>
+<script src="/shared/forge_chrome.js"></script>
+</body>
+</html>

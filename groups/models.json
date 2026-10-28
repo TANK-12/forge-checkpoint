@@ -1,0 +1,21 @@
+{
+  "id": "models",
+  "label": "Models",
+  "tagline": "Download, try, tune and serve local AI models",
+  "icon": "🧠",
+  "accent": "#7aa2f7",
+  "order": 5,
+  "section": "assistants",
+  "tabs": true,
+  "merged": true,
+  "members": [
+    "forge-models",
+    "jan-tune"
+  ],
+  "tab_labels": {
+    "forge-models": "My models",
+    "jan-tune": "Tune Jan"
+  },
+  "help": "Forge Models and Jan Tune folded into one place for local AI models. Model Lab has its own tile.",
+  "note": "Relay task 383. Undo this fold with \"off\": true; the apps keep their own folders and data. Relay task 391: Model Lab left the fold for its own tile (the owner's yes)."
+}

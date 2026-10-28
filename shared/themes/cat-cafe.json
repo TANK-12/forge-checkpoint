@@ -1,0 +1,42 @@
+{
+  "label": "Cat café",
+  "order": 40,
+  "tags": [
+    "fun",
+    "cosy",
+    "live",
+    "cat"
+  ],
+  "about": "A rainy afternoon in a warm café, and a little cat who wanders across your apps, stops for a groom and naps.",
+  "look": "classic",
+  "layout": "forge",
+  "colours": {
+    "accent": "#e8b27a",
+    "bg": "#1a1411",
+    "panel": "#251c17",
+    "panel_2": "#2e231d",
+    "border": "#42332a",
+    "text": "#f5e9df",
+    "muted": "#b8a293"
+  },
+  "font": "rubik",
+  "wallpaper": [
+    "forge:rain.jpg",
+    ""
+  ],
+  "live": "rain",
+  "companion": "cat",
+  "settings": {
+    "particles": "off",
+    "radius": 18,
+    "glass_style": "frosted",
+    "border": "subtle",
+    "wall_3d": false
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {
+      "live": "off"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "_about": "The System section of Settings, one entry per panel, in the order the section lists them. A panel is a module in this folder with status(run) and ACTIONS {name: fn(body, run)}; adding one is one module plus one entry here. \"keywords\" are extra words the Settings search finds the panel by. \"reset\" names the group in ../reset_groups.json that the panel's own reset button at its foot runs.",
+  "panels": [
+    {"id": "autoclose", "label": "Auto-close", "icon": "🧹", "about": "Close apps when RAM is high or they have not been used for a while. The RAM guard service does the closing.", "keywords": "ram memory auto close idle unused guard kill", "reset": "autoclose"},
+    {"id": "sound", "label": "Sound", "icon": "🔊", "about": "Output and input devices and their volume (PipeWire, through pactl).", "keywords": "audio volume speaker headphones microphone mic mute output input"},
+    {"id": "bluetooth", "label": "Bluetooth", "icon": "🔵", "about": "Scan, pair, connect and disconnect devices (bluetoothctl).", "keywords": "bluetooth pair connect headphones buds devices", "reset": "bluetooth"},
+    {"id": "wifi", "label": "Wi-Fi", "icon": "📶", "about": "Networks in range and saved ones (NetworkManager, through nmcli).", "keywords": "wifi wireless network internet password hotspot", "reset": "wifi"},
+    {"id": "display", "label": "Display", "icon": "🔆", "about": "Screen brightness and GNOME's night light.", "keywords": "screen brightness night light warmth colour temperature", "reset": "display"},
+    {"id": "power", "label": "Battery", "icon": "🔋", "about": "Battery and charger. CPU caps and power profiles live in the Power app.", "keywords": "battery charger charging power"},
+    {"id": "notifications", "label": "Notifications", "icon": "🔕", "about": "Do not disturb: GNOME stops showing notification banners.", "keywords": "notifications do not disturb dnd banners lock screen", "reset": "notifications"},
+    {"id": "clock", "label": "Date and time", "icon": "🕒", "about": "The clock, time zone and network time. Read-only.", "keywords": "date time clock time zone ntp"}
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "id": "venus",
+  "name": "Venus",
+  "kind": "planet",
+  "parent": "sun",
+  "order": 20,
+  "radius_km": 6051.8,
+  "gm_km3_s2": 324858.592,
+  "color": "#e8c98b",
+  "pole": {
+    "ra_deg": 272.76,
+    "dec_deg": 67.16
+  },
+  "summary": "Nearly Earth's size, with a crushing carbon dioxide atmosphere and a surface hot enough to melt lead. It spins backwards, very slowly.",
+  "elements": {
+    "model": "standish",
+    "a": [
+      0.72333566,
+      3.9e-06
+    ],
+    "e": [
+      0.00677672,
+      -4.107e-05
+    ],
+    "i": [
+      3.39467605,
+      -0.0007889
+    ],
+    "L": [
+      181.9790995,
+      58517.81538729
+    ],
+    "varpi": [
+      131.60246718,
+      0.00268329
+    ],
+    "node": [
+      76.67984255,
+      -0.27769418
+    ],
+    "source": "JPL approximate planetary elements (E.M. Standish), 1800-2050 table"
+  }
+}

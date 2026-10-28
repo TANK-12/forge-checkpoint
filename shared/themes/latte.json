@@ -1,0 +1,44 @@
+{
+  "label": "Latte",
+  "order": 62,
+  "tags": [
+    "light",
+    "cosy",
+    "warm"
+  ],
+  "mode": "light",
+  "about": "Cosy and light: cream, coffee and caramel, soft serif headings, round corners and a little dog for company.",
+  "look": "soft",
+  "layout": "forge",
+  "colours": {
+    "accent": "#a0643a",
+    "bg": "#f4ede4",
+    "panel": "#fbf7f1",
+    "panel_2": "#efe6da",
+    "border": "#ddd0bf",
+    "text": "#3a2c22",
+    "muted": "#6f604f"
+  },
+  "font": "serif",
+  "wallpaper": [
+    "forge:paper.jpg",
+    ""
+  ],
+  "live": "",
+  "companion": "dog",
+  "settings": {
+    "particles": "off",
+    "dim": 0.0,
+    "wall_tint": false,
+    "glass": 0.9,
+    "border": "subtle",
+    "radius": 22,
+    "shadows": true,
+    "motion": "spring",
+    "widget_look": "glass"
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {}
+  }
+}

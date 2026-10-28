@@ -1,0 +1,28 @@
+{
+ "name": "Paper lantern",
+ "note": "The very first thing the attractor hunt found from seed 1, after 17 codes. In ink it reads like a pencil study of a lantern: a curved shell with folds shining through. Exponent 0.29 bits per iteration, dimension about 1.58. It is the one I looked at first through a PNG, before the browser half existed.",
+ "author": "Claude",
+ "made": "2026-10-09T10:15:00",
+ "data": {
+  "code": "NJTGCYYAVCJP",
+  "coeffs": [
+   0.1,
+   -0.3,
+   0.7,
+   -0.6,
+   -1.0,
+   1.2,
+   1.2,
+   -1.2,
+   0.9,
+   -1.0,
+   -0.3,
+   0.3
+  ],
+  "palette": "ink",
+  "exposure": 1.25,
+  "gamma": 1.25,
+  "lyapunov": 0.288904,
+  "dimension": 1.5841
+ }
+}

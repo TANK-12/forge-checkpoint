@@ -1,0 +1,42 @@
+{
+  "label": "Mono",
+  "order": 96,
+  "tags": [
+    "dark",
+    "minimal"
+  ],
+  "solid": true,
+  "about": "Black, white and grey only: a plain dark background, fine type, no colour until you hover.",
+  "look": "minimal",
+  "layout": "focus",
+  "colours": {
+    "accent": "#e8e8e8",
+    "bg": "#0b0b0b",
+    "panel": "#141414",
+    "panel_2": "#1b1b1b",
+    "border": "#2c2c2c",
+    "text": "#f2f2f2",
+    "muted": "#8a8a8a"
+  },
+  "font": "inter",
+  "wallpaper": "",
+  "live": "",
+  "companion": "",
+  "settings": {
+    "particles": "off",
+    "dim": 0.0,
+    "wall_tint": false,
+    "theme_source": "theme",
+    "glass_style": "flat",
+    "glass": 0.95,
+    "border": "subtle",
+    "shadows": false,
+    "radius": 8,
+    "wall_3d": false,
+    "motion": "fade"
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {}
+  }
+}

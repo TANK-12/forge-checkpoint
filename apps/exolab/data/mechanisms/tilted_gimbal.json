@@ -1,0 +1,45 @@
+{
+  "id": "tilted_gimbal",
+  "name": "Tilted gimbal",
+  "kind": "gimbal",
+  "about": "The same three motors, but the first axis points up, slightly back and outward. Gimbal lock then sits just outside the arm's reach: raised overhead slightly behind the body, or pointing into the chest. The centre still stays fixed while the real shoulder joint moves.",
+  "first_axis": {
+    "plane_deg": -30,
+    "elevation_deg": 140
+  },
+  "pod_radius_m": 0.14,
+  "joints": [
+    {
+      "name": "J1",
+      "actuator": "harmonic_m",
+      "limits_deg": [
+        -270,
+        270
+      ]
+    },
+    {
+      "name": "J2",
+      "actuator": "harmonic_m",
+      "limits_deg": [
+        -175,
+        175
+      ]
+    },
+    {
+      "name": "J3 arm twist",
+      "actuator": "harmonic_s",
+      "limits_deg": [
+        -270,
+        270
+      ]
+    }
+  ],
+  "centre_offset_mm": [
+    0,
+    0,
+    0
+  ],
+  "slider": false,
+  "j2_side": -1,
+  "design_note": "First axis, J2 side and motor ring radius picked by a design search over the shoulder range sweep (2026-10-08): the side keeps the middle motor outside the head and neck, and both gimbal-lock directions sit just outside the human range (up and slightly behind overhead, and into the chest). J1 and J3 turn up to 270 degrees each way through a cable wrap."
+}

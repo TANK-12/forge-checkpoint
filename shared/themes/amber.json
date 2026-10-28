@@ -1,0 +1,47 @@
+{
+  "label": "Amber Terminal",
+  "order": 88,
+  "tags": [
+    "retro",
+    "live",
+    "dark"
+  ],
+  "about": "An old amber monitor: warm orange glyphs on black, scanlines, a soft glow and square corners.",
+  "look": "outline",
+  "layout": "index",
+  "colours": {
+    "accent": "#ffb000",
+    "bg": "#0a0700",
+    "panel": "#120d02",
+    "panel_2": "#1a1304",
+    "border": "#4a3608",
+    "text": "#ffd98a",
+    "muted": "#b08b3c"
+  },
+  "font_stack": "\"JetBrains Mono\", \"DejaVu Sans Mono\", \"Liberation Mono\", monospace",
+  "wallpaper": [
+    "forge:code-rain-amber.jpg",
+    "forge:code-rain.jpg",
+    ""
+  ],
+  "live": "code-rain",
+  "companion": "",
+  "settings": {
+    "particles": "off",
+    "dim": 0.0,
+    "glass_style": "flat",
+    "glass": 0.9,
+    "border": "accent",
+    "shadows": false,
+    "radius": 0,
+    "wall_3d": false,
+    "icon_style": "classic",
+    "motion": "fade"
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {
+      "live": "off"
+    }
+  }
+}

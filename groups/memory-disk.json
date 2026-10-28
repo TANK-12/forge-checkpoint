@@ -1,0 +1,23 @@
+{
+  "id": "memory-disk",
+  "label": "Memory and disk",
+  "tagline": "What fills the memory and the drive, and what would free some",
+  "icon": "📊",
+  "accent": "#e3b25a",
+  "order": 19,
+  "section": "system",
+  "tabs": true,
+  "merged": true,
+  "members": [
+    "gauge",
+    "disk",
+    "glances"
+  ],
+  "tab_labels": {
+    "gauge": "Memory",
+    "disk": "Disk space",
+    "glances": "Everything running"
+  },
+  "help": "Gauge and Disk folded into one place: memory in use with Free up memory, and a map of what fills the drive.",
+  "note": "Relay task 383. Undo this fold with \"off\": true; the apps keep their own folders and data."
+}

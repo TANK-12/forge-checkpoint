@@ -1,0 +1,45 @@
+# Python and local environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.pyright/
+# Downloads, build products and local scratch work
+outputs/
+dist/
+build/
+backups/
+node_modules/
+/models/
+*.gguf
+*.safetensors
+*.ckpt
+*.onnx
+*.pt
+*.pth
+*.zip
+*.tar.gz
+*.dmg
+*.exe
+# Personal settings, credentials and runtime state
+.env
+.env.*
+!.env.example
+.config/
+.local/
+.cache/
+*.key
+*.pem
+*.p12
+*.pfx
+*.sqlite*
+*.db
+*.log
+*.session
+.DS_Store
+Thumbs.db
+hub/status.js
+hub/status.json
+hub/theme.js

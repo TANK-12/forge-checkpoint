@@ -1,0 +1,126 @@
+{
+ "by": "Claude",
+ "plants": [
+  {
+   "name": "Ember fern",
+   "head_start_hours": 34,
+   "genome": {
+    "axiom": "X",
+    "rules": {
+     "X": [
+      "F[+X]F[-X]+X",
+      "F[-X]F[+X]-X"
+     ],
+     "F": [
+      "FF"
+     ]
+    },
+    "angle": 22,
+    "len_decay": 0.92,
+    "width_decay": 0.74,
+    "jitter": 5,
+    "bloom": 0.16,
+    "hours_per_gen": 9,
+    "hues": {
+     "stem": 24,
+     "leaf": 96,
+     "flower": 22
+    },
+    "flower": "spark",
+    "max_gen": 5,
+    "seed": 1250001
+   }
+  },
+  {
+   "name": "Lantern bell",
+   "head_start_hours": 26,
+   "genome": {
+    "axiom": "X",
+    "rules": {
+     "X": [
+      "F[+X][-X]FX",
+      "F[-X]FX",
+      "F[+X]FX"
+     ],
+     "F": [
+      "FF"
+     ]
+    },
+    "angle": 27,
+    "len_decay": 0.9,
+    "width_decay": 0.72,
+    "jitter": 6,
+    "bloom": 0.34,
+    "hours_per_gen": 8,
+    "hues": {
+     "stem": 32,
+     "leaf": 138,
+     "flower": 44
+    },
+    "flower": "bell",
+    "max_gen": 6,
+    "seed": 1250002
+   }
+  },
+  {
+   "name": "Dusk willow",
+   "head_start_hours": 36,
+   "genome": {
+    "axiom": "X",
+    "rules": {
+     "X": [
+      "F-[[X]+X]+F[+FX]-X"
+     ],
+     "F": [
+      "FF"
+     ]
+    },
+    "angle": 23,
+    "len_decay": 0.95,
+    "width_decay": 0.78,
+    "jitter": 4,
+    "bloom": 0.1,
+    "hours_per_gen": 10,
+    "hues": {
+     "stem": 300,
+     "leaf": 168,
+     "flower": 312
+    },
+    "flower": "round",
+    "max_gen": 5,
+    "seed": 1250003
+   }
+  },
+  {
+   "name": "Comet spire",
+   "head_start_hours": 24,
+   "genome": {
+    "axiom": "X",
+    "rules": {
+     "X": [
+      "F[+Y][-Y]FX"
+     ],
+     "Y": [
+      "F[-Y][+Y]FY",
+      "F[+Y]FY",
+      "F[-Y]FY"
+     ]
+    },
+    "angle": 31,
+    "len_decay": 0.86,
+    "width_decay": 0.7,
+    "jitter": 7,
+    "bloom": 0.4,
+    "hours_per_gen": 7,
+    "hues": {
+     "stem": 210,
+     "leaf": 186,
+     "flower": 205
+    },
+    "flower": "star",
+    "max_gen": 6,
+    "seed": 1250004
+   }
+  }
+ ]
+}

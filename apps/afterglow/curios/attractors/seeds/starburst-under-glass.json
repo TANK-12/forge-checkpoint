@@ -1,0 +1,28 @@
+{
+  "name": "Starburst under glass",
+  "note": "A long lens of a thing with a star caught in its middle, as if someone pressed a firework flat between two panes. The orbit keeps stirring at about 0.20 bits per iteration and the dimension sits near 1.58, so it is more cloud than thread, but the folds all point back to that one bright knot. My favourite of the night; it is the one on the shelf card.",
+  "author": "Claude",
+  "made": "2026-10-09T10:04:00",
+  "data": {
+    "code": "JCFHLVWNJDLG",
+    "coeffs": [
+      -0.3,
+      -1.0,
+      -0.7,
+      -0.5,
+      -0.1,
+      0.9,
+      1.0,
+      0.1,
+      -0.3,
+      -0.9,
+      -0.1,
+      -0.6
+    ],
+    "palette": "ember",
+    "exposure": 1.25,
+    "gamma": 1.25,
+    "lyapunov": 0.202487,
+    "dimension": 1.5753
+  }
+}

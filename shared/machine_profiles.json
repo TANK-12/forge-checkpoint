@@ -1,0 +1,198 @@
+{
+  "_about": "Pick for my machine (shared/forge_machine.py, Relay task 323, 2026-10-24). The visual levels and power choices it can pick, lightest first, and the settings each one sets. \"forge\" keys are the hub's own, \"desktop\" keys are Forge Desktop's (the desktop extension on Linux, Windows and macOS), \"both\" are shared by the two (the frame rate caps and battery twins apply to the hub and the desktop alike). Adding a level or a choice is one entry here; a key must be a forge_theme setting. gpu and cpu classes are matched in order against the names the machine reports (case-insensitive regular expressions); the first match wins.",
+  "visual": [
+    {
+      "id": "light",
+      "label": "Light",
+      "about": "Few, slow particles, no blur, no shadows, nothing drawn behind an open app.",
+      "forge": {
+        "lite_effects": "always",
+        "shadows": false,
+        "particle_amount": 0.5,
+        "particle_fps": 20,
+        "particle_fps_in_apps": 5,
+        "particles_in_apps": false,
+        "visualiser_in_apps": false,
+        "wall_3d_drift": false,
+        "video_height": "1080"
+      },
+      "desktop": {
+        "desktop_particle_amount": 0.5,
+        "desktop_particle_fps": 20,
+        "desktop_visualiser_fps": 20,
+        "desktop_particles_rest": true
+      }
+    },
+    {
+      "id": "balanced",
+      "label": "Balanced",
+      "about": "Forge's defaults: particles at 30 frames a second, blur and shadows on.",
+      "forge": {
+        "lite_effects": "full",
+        "shadows": true,
+        "particle_amount": 1.0,
+        "particle_fps": 30,
+        "particle_fps_in_apps": 10,
+        "particles_in_apps": true,
+        "visualiser_in_apps": false,
+        "wall_3d_drift": true,
+        "video_height": "2160"
+      },
+      "desktop": {
+        "desktop_particle_amount": 1.0,
+        "desktop_particle_fps": 30,
+        "desktop_visualiser_fps": 30,
+        "desktop_particles_rest": true
+      }
+    },
+    {
+      "id": "rich",
+      "label": "Rich",
+      "about": "More particles at 45 frames a second, blur kept on, the visualiser behind apps too.",
+      "forge": {
+        "lite_effects": "full",
+        "shadows": true,
+        "particle_amount": 1.5,
+        "particle_fps": 45,
+        "particle_fps_in_apps": 15,
+        "particles_in_apps": true,
+        "visualiser_in_apps": true,
+        "wall_3d_drift": true,
+        "video_height": "2160"
+      },
+      "desktop": {
+        "desktop_particle_amount": 1.5,
+        "desktop_particle_fps": 45,
+        "desktop_visualiser_fps": 45,
+        "desktop_particles_rest": true
+      }
+    },
+    {
+      "id": "full",
+      "label": "Full",
+      "about": "Everything at 60 frames a second, twice the particles, the desktop never rests.",
+      "forge": {
+        "lite_effects": "full",
+        "shadows": true,
+        "particle_amount": 2.0,
+        "particle_fps": 60,
+        "particle_fps_in_apps": 30,
+        "particles_in_apps": true,
+        "visualiser_in_apps": true,
+        "wall_3d_drift": true,
+        "video_height": "2160"
+      },
+      "desktop": {
+        "desktop_particle_amount": 2.0,
+        "desktop_particle_fps": 60,
+        "desktop_visualiser_fps": 60,
+        "desktop_particles_rest": false
+      }
+    }
+  ],
+  "power": [
+    {
+      "id": "saver",
+      "label": "Saver",
+      "about": "Least power: 30 frames a second at most, 20 on battery, lighter video, the saver from 40% battery.",
+      "both": {
+        "max_fps": 30,
+        "battery_fps": 20,
+        "battery_particles": 0.3,
+        "battery_particle_fps": 20,
+        "battery_visualiser": false,
+        "battery_saver": 40,
+        "gpu_ease": true,
+        "pause_when_hidden": true,
+        "away_minutes": 2,
+        "pulse_full_fps": false,
+        "video_fps": 30,
+        "battery_video_fps": 30,
+        "battery_video_height": "720",
+        "battery_smooth_scroll": false
+      }
+    },
+    {
+      "id": "balanced",
+      "label": "Balanced",
+      "about": "Forge's defaults: full rate on the charger, half on battery, the saver from 20%.",
+      "both": {
+        "max_fps": 60,
+        "battery_fps": 30,
+        "battery_particles": 0.5,
+        "battery_particle_fps": 20,
+        "battery_visualiser": false,
+        "battery_saver": 20,
+        "gpu_ease": true,
+        "pause_when_hidden": true,
+        "away_minutes": 5,
+        "pulse_full_fps": true,
+        "video_fps": 60,
+        "battery_video_fps": 30,
+        "battery_video_height": "1080",
+        "battery_smooth_scroll": true
+      }
+    },
+    {
+      "id": "performance",
+      "label": "Performance",
+      "about": "Full rate on battery too, the visualiser kept on, the saver only from 10%.",
+      "both": {
+        "max_fps": 60,
+        "battery_fps": 60,
+        "battery_particles": 1.0,
+        "battery_particle_fps": 60,
+        "battery_visualiser": true,
+        "battery_saver": 10,
+        "gpu_ease": true,
+        "pause_when_hidden": true,
+        "away_minutes": 10,
+        "pulse_full_fps": true,
+        "video_fps": 60,
+        "battery_video_fps": 60,
+        "battery_video_height": "1440",
+        "battery_smooth_scroll": true
+      }
+    }
+  ],
+  "gpu_classes": [
+    {
+      "id": "discrete",
+      "label": "a separate graphics card",
+      "visual": "full",
+      "match": "nvidia|geforce|quadro|rtx|gtx|radeon (rx|pro)|arc a[0-9]{3}|arc b[0-9]{3}"
+    },
+    {
+      "id": "modern",
+      "label": "a recent built-in GPU",
+      "visual": "balanced",
+      "match": "iris xe|arc graphics|arc\\(tm\\) graphics|radeon [0-9]{3}m|radeon 8[0-9]{2}s|apple m[0-9]|apple|phoenix|hawk point|rembrandt|strix|krackan|meteor lake|arrow lake|lunar lake|panther lake"
+    },
+    {
+      "id": "older",
+      "label": "an older built-in GPU",
+      "visual": "light",
+      "match": "uhd graphics|hd graphics|iris plus|iris pro|vega|radeon graphics|radeon\\(tm\\) graphics|mali|adreno|llvmpipe|software"
+    }
+  ],
+  "gpu_unknown_visual": "balanced",
+  "cpu_classes": [
+    {
+      "id": "low",
+      "label": "a low-power chip",
+      "match": "core.*[0-9]{4,5}(u|y)\\b|ultra [0-9] [0-9]{3}u|ryzen.*[0-9]{4}u\\b|celeron|pentium|atom|athlon silver|\\bn[0-9]{2,3}\\b"
+    },
+    {
+      "id": "high",
+      "label": "a high-power chip",
+      "match": "core.*[0-9]{4,5}(h|hx|hk|hs)\\b|ryzen.*[0-9]{4}(h|hs|hx)\\b|ultra [0-9] [0-9]{3}h|apple m[0-9] (pro|max|ultra)"
+    }
+  ],
+  "rules": {
+    "_about": "Steps after the GPU class: a high-power chip lifts a recent built-in GPU one level (it gets more watts); little memory or few threads drop one level. Power: a machine with no battery starts on performance, a laptop on balanced; on battery now, or a sustained CPU limit at or under low_watts, steps one down.",
+    "min_ram_gb": 8,
+    "min_threads": 4,
+    "low_watts": 15
+  },
+  "_about_cpu_gpu": "When no GPU name matches a class, the CPU's name is tried too (an AMD chip says 'w/ Radeon 780M Graphics')."
+}

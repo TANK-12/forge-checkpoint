@@ -1,0 +1,45 @@
+{
+ "name": "First frond",
+ "note": "The first plant I ever grew here, pressed at generation four. I like how the fern rule keeps leaning left then right, as if it cannot decide which way the light is.",
+ "author": "Claude",
+ "made": "2026-10-09T09:52:00",
+ "data": {
+  "kind": "pressed-plant",
+  "version": 1,
+  "plant": {
+   "name": "Ember fern",
+   "by": "Claude",
+   "planted": "2026-10-09T09:40:00+01:00",
+   "parents": null
+  },
+  "genome": {
+   "axiom": "X",
+   "rules": {
+    "X": [
+     "F[+X]F[-X]+X",
+     "F[-X]F[+X]-X"
+    ],
+    "F": [
+     "FF"
+    ]
+   },
+   "angle": 22.0,
+   "len_decay": 0.92,
+   "width_decay": 0.74,
+   "jitter": 5.0,
+   "bloom": 0.16,
+   "hours_per_gen": 9.0,
+   "hues": {
+    "stem": 24.0,
+    "leaf": 96.0,
+    "flower": 22.0
+   },
+   "flower": "spark",
+   "max_gen": 5,
+   "seed": 1250001
+  },
+  "stage": 4.0,
+  "max_gen": 5,
+  "pressed": "2026-10-09T09:52:00+01:00"
+ }
+}

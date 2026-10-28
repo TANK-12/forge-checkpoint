@@ -1,0 +1,33 @@
+{
+  "id": "agents",
+  "label": "Agents",
+  "tagline": "Claude sessions, Relay tasks, workers and chat hooks",
+  "icon": "🛰️",
+  "accent": "#8be9fd",
+  "order": 11,
+  "section": "assistants",
+  "tabs": true,
+  "merged": true,
+  "members": [
+    "mission",
+    "relay",
+    "workers",
+    "switchboard",
+    "prompts",
+    "logins",
+    "crewroom",
+    "board"
+  ],
+  "tab_labels": {
+    "mission": "Mission",
+    "relay": "Relay",
+    "workers": "Workers",
+    "switchboard": "Switchboard",
+    "prompts": "Prompts",
+    "logins": "Logins",
+    "crewroom": "Crew Room",
+    "board": "Board"
+  },
+  "help": "Everything about Claude and Jan at work: Mission Control as home, Relay while you are out, workers on other PCs, WhatsApp hooks, prompts and logins.",
+  "note": "Relay task 383. Undo this fold with \"off\": true; the apps keep their own folders and data."
+}

@@ -1,0 +1,13 @@
+{
+  "id": "ti_6al4v",
+  "name": "Titanium Ti-6Al-4V",
+  "short": "Ti-6Al-4V",
+  "category": "metal",
+  "colour": "#b8b3a8",
+  "note": "Strong for its weight and fatigue resistant. Joint housings, hinge pins, high-load links.",
+  "density_kg_m3": 4430,
+  "youngs_modulus_gpa": 114,
+  "yield_strength_mpa": 880,
+  "fatigue_strength_mpa": 510,
+  "source": "Typical handbook value (ASM Handbook / MatWeb datasheets); not a certified figure."
+}

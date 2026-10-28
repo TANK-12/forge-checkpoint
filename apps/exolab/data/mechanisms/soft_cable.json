@@ -1,0 +1,27 @@
+{
+  "id": "soft_cable",
+  "name": "Soft cable exosuit",
+  "kind": "cable",
+  "about": "No rigid shoulder at all: a cable runs from a shoulder-top anchor to the upper-arm cuff and pulls the arm up. Nothing to misalign and no gimbal lock, but it can only pull, and only well when the cable has leverage.",
+  "anchor_up_m": 0.1,
+  "anchor_back_m": 0.03,
+  "cuff_fraction": 0.55,
+  "joints": [
+    {
+      "name": "Cable",
+      "actuator": "cable_bowden",
+      "limits_deg": [
+        -180,
+        180
+      ]
+    }
+  ],
+  "cable_tension_cont_n": 250,
+  "cable_tension_peak_n": 500,
+  "centre_offset_mm": [
+    0,
+    0,
+    0
+  ],
+  "slider": false
+}

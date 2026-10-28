@@ -1,0 +1,52 @@
+{
+  "_doc": "DualSense -> mouse/keys, only while a Forge window has focus. L1 Alt+Space, R1 Alt+M (visualiser settings), PS Ctrl+0 (home). Edit and restart forge-pad.service.",
+  "device_name": "DualSense Wireless Controller",
+  "native_gamepad_windows": [
+    "godot",
+    "eightysix",
+    "steam",
+    "retroarch",
+    "emberfield",
+    "driftpeaks"
+  ],
+  "deadzone": 0.12,
+  "mouse_speed": 8,
+  "scroll_speed": 0.35,
+  "buttons": {
+    "cross": "click:BTN_LEFT",
+    "square": "click:BTN_RIGHT",
+    "circle": "key:KEY_ESC",
+    "triangle": "key:KEY_ENTER",
+    "l1": "key:KEY_LEFTALT+KEY_SPACE",
+    "r1": "key:KEY_LEFTALT+KEY_M",
+    "l2": "key:KEY_LEFTALT+KEY_LEFT",
+    "r2": "key:KEY_LEFTALT+KEY_RIGHT",
+    "create": "key:KEY_TAB",
+    "options": "key:KEY_F11",
+    "l3": "click:BTN_MIDDLE",
+    "r3": "key:KEY_SPACE",
+    "dpad_up": "key:KEY_UP",
+    "dpad_down": "key:KEY_DOWN",
+    "dpad_left": "key:KEY_LEFT",
+    "dpad_right": "key:KEY_RIGHT",
+    "ps": "key:KEY_LEFTCTRL+KEY_0"
+  },
+  "active_windows": [
+    "forge"
+  ],
+  "services": [
+    {
+      "id": "forge-pad",
+      "kind": "always_on",
+      "scope": "user",
+      "description": "Forge pad: PS5 controller drives the desktop",
+      "command": [
+        "{python}",
+        "{here}/forge_pad.py"
+      ],
+      "restart": "on-failure",
+      "restart_sec": 3,
+      "default": "on"
+    }
+  ]
+}

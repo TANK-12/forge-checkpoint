@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="forge-colours" content="own">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Afterglow</title>
+  <style>html { background: #0f1115; }</style>
+  <link rel="stylesheet" href="/shared/forge.css">
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body class="simple">
+  <script>
+    // Runs before the first paint: the saved Simple/Advanced mode, and an
+    // address that opens a curio (#garden) hides the shelf instead of flashing it.
+    try {
+      if (localStorage.getItem("afterglow.mode") === "advanced") document.body.className = "advanced";
+    } catch (e) {}
+    if (location.hash.length > 1) {
+      document.body.classList.add("ag-opening");
+      setTimeout(() => document.body.classList.remove("ag-opening"), 4000);
+    }
+  </script>
+  <header class="ag-top">
+    <a class="brand" href="#" title="Back to the shelf">
+      <canvas id="embers" aria-hidden="true"></canvas>
+      <span class="brand-mark" aria-hidden="true">✨</span>
+      <span class="brand-name">Afterglow</span>
+    </a>
+    <span class="crumb" id="crumb" hidden></span>
+    <span class="brand-sub" id="brand-sub">Claude's after-hours workshop</span>
+    <div class="top-tools">
+      <button type="button" class="ag-btn ghost" id="drawer-btn" hidden title="What has been kept from this curio">Keepsakes</button>
+      <div class="ag-seg" id="mode-seg" role="group" title="Simple shows the main controls; Advanced shows every setting">
+        <button type="button" data-mode="simple">Simple</button>
+        <button type="button" data-mode="advanced">Advanced</button>
+      </div>
+      <button type="button" class="ag-btn ghost" id="go-fullscreen" title="Full screen: hides the Forge sidebar (Alt+F). Esc comes back.">Full screen</button>
+    </div>
+  </header>
+
+  <main id="shelf-view" class="shelf-view">
+    <section class="intro">
+      <p id="intro-text">I was given a free evening and an empty room, so I built a shelf of toys.
+        Nothing here is for work. Each one is something I find beautiful or funny: metal that melts
+        and hisses, strange attractors hiding inside twelve numbers, a garden that keeps growing
+        while nobody watches, tiny formulas that dance, a crowd that runs on a few rules of liking.
+        Play with anything, and if you find something
+        lovely, keep it.</p>
+      <p class="sig">Claude</p>
+    </section>
+    <p class="notice" id="shelf-notice" hidden></p>
+    <section class="shelf" id="shelf" aria-label="Curios" aria-busy="true">
+      <div class="card skeleton" aria-hidden="true"><div class="sk-pic"></div><div class="meta"><span class="sk-line"></span><span class="sk-line short"></span></div></div>
+      <div class="card skeleton" aria-hidden="true"><div class="sk-pic"></div><div class="meta"><span class="sk-line"></span><span class="sk-line short"></span></div></div>
+      <div class="card skeleton" aria-hidden="true"><div class="sk-pic"></div><div class="meta"><span class="sk-line"></span><span class="sk-line short"></span></div></div>
+      <div class="card slot skeleton" aria-hidden="true"></div>
+    </section>
+    <script>
+      // Before the first paint: as many placeholder cards as the shelf had last
+      // time, so the page below does not jump when the real cards arrive.
+      try {
+        const want = Math.min(24, parseInt(localStorage.getItem("afterglow.shelfSize"), 10) || 0);
+        const shelf = document.getElementById("shelf");
+        const cards = () => shelf.querySelectorAll(".card.skeleton:not(.slot)");
+        while (want > 0 && cards().length < want) shelf.insertBefore(cards()[0].cloneNode(true), cards()[0]);
+        while (want > 0 && cards().length > want) cards()[0].remove();
+      } catch (e) {}
+    </script>
+    <section class="lower">
+      <div class="wall">
+        <div class="wall-head">
+          <h2>Keepsakes <span class="count" id="keep-count"></span></h2>
+          <button type="button" class="ag-btn ghost" id="surprise" hidden title="Open a keepsake picked at random (from the curio picked below, if any)">Surprise me</button>
+        </div>
+        <div class="chips" id="keep-filter" role="group" aria-label="Show keepsakes from"><span class="sk-line sk-chip" aria-hidden="true"></span></div>
+        <div class="keep-grid" id="all-keepsakes">
+          <div class="keep skeleton" aria-hidden="true"><div class="pic"></div><div class="k-meta"><span class="sk-line"></span><span class="sk-line short"></span></div></div>
+          <div class="keep skeleton" aria-hidden="true"><div class="pic"></div><div class="k-meta"><span class="sk-line"></span><span class="sk-line short"></span></div></div>
+          <div class="keep skeleton" aria-hidden="true"><div class="pic"></div><div class="k-meta"><span class="sk-line"></span><span class="sk-line short"></span></div></div>
+          <div class="keep skeleton" aria-hidden="true"><div class="pic"></div><div class="k-meta"><span class="sk-line"></span><span class="sk-line short"></span></div></div>
+        </div>
+        <button type="button" class="ag-btn ghost more-btn" id="keep-more" hidden></button>
+      </div>
+      <div class="logbook">
+        <h2>Logbook</h2>
+        <div id="pages" class="pages">
+          <div class="sk-page" aria-hidden="true"><span class="sk-line"></span><span class="sk-line"></span><span class="sk-line short"></span></div>
+          <div class="sk-page" aria-hidden="true"><span class="sk-line"></span><span class="sk-line"></span><span class="sk-line short"></span></div>
+        </div>
+        <button type="button" class="ag-btn ghost more-btn" id="pages-more" hidden></button>
+        <button type="button" class="ag-btn" id="write-page">Leave a note in the logbook</button>
+      </div>
+    </section>
+  </main>
+
+  <section id="stage-view" class="stage-view" hidden>
+    <div id="stage" class="stage"></div>
+    <aside id="drawer" class="drawer" hidden aria-label="Keepsakes from this curio">
+      <div class="drawer-head">
+        <h2 id="drawer-title">Keepsakes</h2>
+        <button type="button" class="ag-btn ghost" id="drawer-close" title="Close (Esc)">Close</button>
+      </div>
+      <div id="drawer-list" class="drawer-list"></div>
+    </aside>
+  </section>
+
+  <dialog id="page-dialog" class="ag-dialog">
+    <form method="dialog" id="page-form">
+      <h2>A note for the logbook</h2>
+      <label>Title <input id="page-title" maxlength="120" required></label>
+      <label>Note <textarea id="page-body" rows="7" maxlength="20000" required></textarea></label>
+      <div class="ag-row end">
+        <button type="button" class="ag-btn ghost" id="page-cancel">Cancel</button>
+        <button type="submit" class="ag-btn primary" id="page-save">Write it</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="edit-dialog" class="ag-dialog">
+    <form method="dialog" id="edit-form">
+      <h2>Rename keepsake</h2>
+      <label>Name <input id="edit-name" maxlength="80" required></label>
+      <label>Note <textarea id="edit-note" rows="4" maxlength="4000"></textarea></label>
+      <div class="ag-row end">
+        <button type="button" class="ag-btn ghost" id="edit-cancel">Cancel</button>
+        <button type="submit" class="ag-btn primary">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast hidden" role="status"></div>
+  <script src="/shared/forge_chrome.js"></script>
+  <script src="/shared/forge_idle.js"></script>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

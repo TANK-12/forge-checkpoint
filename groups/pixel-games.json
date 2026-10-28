@@ -1,0 +1,9 @@
+{
+  "id": "pixel-games",
+  "label": "Pixel games",
+  "tagline": "Pick a pixel world to play",
+  "icon": "👾",
+  "accent": "#9d7bff",
+  "order": 7,
+  "section": "play"
+}

@@ -1,0 +1,53 @@
+{
+  "id": "saturn",
+  "name": "Saturn",
+  "kind": "planet",
+  "parent": "sun",
+  "order": 60,
+  "radius_km": 58232,
+  "gm_km3_s2": 37931206.2,
+  "color": "#e4cf9c",
+  "bands": [
+    "#e4cf9c",
+    "#c9ad76",
+    "#f1e3bf"
+  ],
+  "rings": {
+    "inner_km": 66900,
+    "outer_km": 140180,
+    "color": "#d9c79d"
+  },
+  "pole": {
+    "ra_deg": 40.589,
+    "dec_deg": 83.537
+  },
+  "summary": "Its rings are mostly water ice, hundreds of thousands of kilometres across but typically only about ten metres thick. Saturn would float in a big enough bath.",
+  "elements": {
+    "model": "standish",
+    "a": [
+      9.53667594,
+      -0.0012506
+    ],
+    "e": [
+      0.05386179,
+      -0.00050991
+    ],
+    "i": [
+      2.48599187,
+      0.00193609
+    ],
+    "L": [
+      49.95424423,
+      1222.49362201
+    ],
+    "varpi": [
+      92.59887831,
+      -0.41897216
+    ],
+    "node": [
+      113.66242448,
+      -0.28867794
+    ],
+    "source": "JPL approximate planetary elements (E.M. Standish), 1800-2050 table"
+  }
+}

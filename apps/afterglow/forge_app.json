@@ -1,0 +1,51 @@
+{
+  "name": "afterglow",
+  "label": "Afterglow",
+  "tagline": "Claude's after-hours toys, made for fun",
+  "help": {
+    "about": "Small toys Claude made after hours, for fun: a shelf of curios to open and play with, keepsakes to keep and a logbook of what was made.",
+    "features": [
+      "Shelf",
+      "Keepsakes",
+      "Logbook",
+      "Swarm"
+    ]
+  },
+  "port": 8469,
+  "module": "web_app:app",
+  "src_dir": ".",
+  "accent": "#ffb454",
+  "icon": "✨",
+  "fullscreen": "auto",
+  "order": 18,
+  "section": "play",
+  "ready_timeout": 30,
+  "voice": {"listens": true, "speaks": true},
+  "manifest": {
+    "summary": "Claude's own corner of Forge, built with a free hand: a shelf of small living toys called curios, keepsakes saved from them, and a logbook of Claude's notes. Each curio is one folder under curios/, found by scanning. Later Claude sessions can play headless through play.py and add curios of their own.",
+    "features": [
+      {"name": "Shelf", "description": "Every curios/<id>/curio.json, with a still preview drawn by the curio itself."},
+      {"name": "Keepsakes", "description": "Named finds saved from any curio with a note, an author and a picture; seeds ship in git; nothing is deleted, put-away files move to a folder."},
+      {"name": "Logbook", "description": "Claude's notes about what it built and noticed; shipped pages in logbook/, new ones in the data folder."},
+      {"name": "Keepsake wall", "description": "Filter by curio, the newest 24 with Show all, and Surprise me (a random keepsake, never the same twice running)."},
+      {"name": "Remembered folds", "description": "A curio panel folded or opened by hand stays that way on the next visit."},
+      {"name": "Swarm", "description": "The fifth curio (2026-10-19): particle life, a rule table of which colour likes which; four seeds and a logbook page on why the chases never stop."},
+      {"name": "play.py", "description": "A command line for Claude sessions: list, keep, write logbook pages and run each curio's own commands without the app running."},
+      {"name": "Swarm from the command line", "description": "play.py swarm run and hunt: the real sim.js in node, a line a second of how gathered and how fast, a PNG of the last moment, and --keep for the best find."},
+      {"name": "Claude's swarms", "description": "A list in Swarm of the shipped swarms and any Claude kept from play.py, each with a small picture; a click opens it and puts it in the address, so the Kept drawer and a reload reopen the right one; the open one is marked."},
+      {"name": "Steady shelf", "description": "The empty slot is a slim strip, and a second visit draws one placeholder per curio, so the page does not jump while the shelf loads."}
+    ],
+    "data_dir": "~/ForgeGameData/afterglow (keepsakes/<curio>/, logbook/); AFTERGLOW_DATA overrides",
+    "services": [],
+    "dependencies": {"required": ["fastapi", "uvicorn"], "optional": ["Forge shared kit (forge_chrome.js, forge_idle.js)"]},
+    "standalone_launch": "cd ~/Forge/apps/afterglow && FORGE_SHARED_DIR=~/Forge/shared .venv/bin/python -m uvicorn web_app:app --host 127.0.0.1 --port 8469",
+    "api_base": "/api",
+    "known_gaps": [
+      "Not yet seen inside the real Forge window; every UI check ran in headless Chrome.",
+      "Swarm has not run full screen on the real Iris Xe; play.py swarm needs node on the PATH.",
+      "Read aloud in the chosen voice and garden growth over several real days are untested.",
+      "The copy button's real clipboard path is unit-tested only (headless Chrome refuses the clipboard)."
+    ],
+    "docs": ["README.md", "WIP.md", "docs/"]
+  }
+}

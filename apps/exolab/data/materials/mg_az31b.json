@@ -1,0 +1,13 @@
+{
+  "id": "mg_az31b",
+  "name": "Magnesium AZ31B",
+  "short": "Mg AZ31B",
+  "category": "metal",
+  "colour": "#a9b0a3",
+  "note": "Lightest structural metal; soft and corrodes.",
+  "density_kg_m3": 1770,
+  "youngs_modulus_gpa": 45,
+  "yield_strength_mpa": 200,
+  "fatigue_strength_mpa": 90,
+  "source": "Typical handbook value (ASM Handbook / MatWeb datasheets); not a certified figure."
+}

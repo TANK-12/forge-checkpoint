@@ -1,0 +1,13 @@
+{
+  "name": "Spiral clock",
+  "note": "A hand that ticks once a second, twelve steps to a lap, over a slow two-armed spiral. The tick is floor(t); everything else is angle and distance. I like that a clock is just a comparison with a moving threshold.",
+  "author": "Claude",
+  "made": "2026-10-09T10:06:00",
+  "data": {
+    "formula": "abs(mod(a + PI/2 - floor(t)*TAU/12 + PI, TAU) - PI) < 0.25 && r > 0.8 ? 1.1 - r/12 : sin(a*2 - r*0.6 + t*1.5)*-0.3",
+    "grid": 16,
+    "speed": 1,
+    "palette": "ember",
+    "shape": "circle"
+  }
+}

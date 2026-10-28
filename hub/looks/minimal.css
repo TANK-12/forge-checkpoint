@@ -1,0 +1,44 @@
+/* look: Minimal | Almost no chrome: no glass, fine type, lots of space, colour only where you point */
+body.look-minimal { --gap: 22px; --radius: 6px; --bar-h: 38px; --tile-w: 250px;
+  --glass-fill: transparent; --glass-line: transparent; }
+body.look-minimal .glass { box-shadow: none; }
+body.look-minimal #bar { background: transparent; border: 0; font-weight: 300; }
+body.look-minimal .brand { font-weight: 300; letter-spacing: .3em; }
+body.look-minimal #workspaces { background: transparent; }
+body.look-minimal .ws { background: transparent; font-weight: 300; }
+body.look-minimal .ws.active { background: transparent; color: var(--accent); min-width: 28px; box-shadow: inset 0 -2px 0 var(--accent); border-radius: 0; }
+body.look-minimal .chip { background: transparent; }
+body.look-minimal .hero .clock { font-weight: 100; letter-spacing: -.05em; }
+body.look-minimal #search { background: transparent; border: 0; border-bottom: 1px solid rgba(255, 255, 255, .25);
+  border-radius: 0; box-shadow: none; }
+body.look-minimal #search:focus { border-bottom-color: var(--accent); box-shadow: none; }
+body.look-minimal .fchip { background: transparent; border: 0; font-weight: 300; }
+body.look-minimal .fchip.on { background: transparent; color: var(--accent); box-shadow: none; }
+body.look-minimal .section-head .s-pill { background: transparent; border: 0; box-shadow: none; padding-left: 0; }
+body.look-minimal .section-head .s-icon { display: none; }
+body.look-minimal .section-head .s-label { font-weight: 300; letter-spacing: .08em; text-transform: lowercase; }
+body.look-minimal .section-grid, body.look-minimal #recent { gap: 18px 26px; }
+body.look-minimal .tile { background: transparent; border: 0; box-shadow: none; padding: 10px 4px;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, .55); }
+body.look-minimal .tile::before { display: none; }
+body.look-minimal .tile:hover, body.look-minimal .tile.focus { transform: translateX(4px); box-shadow: none; }
+body.look-minimal .tile:hover .name, body.look-minimal .tile.focus .name { color: var(--tile-accent); }
+body.look-minimal .tile .icon { background: transparent; box-shadow: none; width: 34px; height: 34px; font-size: 22px; }
+body.look-minimal .tile:hover .icon, body.look-minimal .tile.focus .icon { transform: none; }
+body.look-minimal .tile .name { font-weight: 400; }
+body.look-minimal #dock { background: transparent; border: 0; box-shadow: none; }
+body.look-minimal .dock-item { background: transparent; }
+body.look-minimal .workspace { padding: 0; background: transparent; box-shadow: 0 0 0 1px rgba(255, 255, 255, .08); border-radius: 6px; }
+body.look-minimal .workspace .inner { border-radius: 6px; }
+/* No glass means the wallpaper sits right behind the words, so they carry
+   their own shadow and a soft shade falls behind the tile column. */
+body.look-minimal:not(.in-app) #scrim { background: linear-gradient(90deg, rgba(0, 0, 0, .55), rgba(0, 0, 0, .12) 55%, rgba(0, 0, 0, .4)); }
+body.look-minimal #home, body.look-minimal #bar { --muted: rgba(255, 255, 255, .78);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, .85), 0 0 16px rgba(0, 0, 0, .55); }
+body.look-minimal .fchip, body.look-minimal .chip, body.look-minimal .ws { color: rgba(255, 255, 255, .9); }
+body.look-minimal .section-head .s-count { background: transparent; color: rgba(255, 255, 255, .7); }
+/* the clock is gradient-filled text; a text shadow would show through it */
+body.look-minimal .hero .clock { text-shadow: none; }
+/* the filter chips sit over the brightest sky; a faint shade keeps them legible */
+body.look-minimal .fchip { background: rgba(0, 0, 0, .28); border-radius: 999px; }
+body.look-minimal .fchip.on { background: rgba(0, 0, 0, .45); }

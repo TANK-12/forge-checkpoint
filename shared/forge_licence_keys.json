@@ -1,0 +1,4 @@
+{
+  "_about": "Public Ed25519 keys that may sign a Forge licence file, by key id (64 hex characters each). Empty on purpose: no signing key exists yet, so every licence file is refused and Forge runs as the free edition. Make one with: /usr/bin/python3 tools/forge_licence_sign.py keygen k1, then paste the printed hex here as \"k1\": \"...\".",
+  "keys": {}
+}

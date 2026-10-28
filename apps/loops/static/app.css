@@ -1,0 +1,35 @@
+body { margin: 0; height: 100vh; display: flex; flex-direction: column; }
+.top { display: flex; align-items: center; gap: 14px; padding: 10px 18px; background: var(--panel); flex-wrap: wrap; }
+.top h1 { margin: 0; font-size: 1.2rem; }
+.top label { display: flex; align-items: center; gap: 6px; font-size: 0.9rem; }
+.top input[type=number] { width: 4.5em; }
+.play { min-width: 5.5em; }
+.grow { flex: 1; }
+.small { font-size: 0.8rem; }
+main.desk { flex: 1; min-height: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr) 250px; overflow: hidden; }
+h2 { font-size: 0.95rem; margin: 6px 0 0; }
+.side { padding: 14px; border-left: 1px solid var(--border); overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+.side label { display: flex; align-items: center; gap: 8px; }
+.patterns { display: flex; flex-direction: column; gap: 2px; }
+.patterns .row { display: flex; gap: 4px; }
+.patterns .open { flex: 1; text-align: left; padding: 6px 9px; border-radius: 6px; border: 1px solid transparent; background: none; color: var(--text); cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.patterns .open:hover { background: var(--panel); }
+.patterns .open.on { border-color: var(--accent); }
+.patterns .del { background: none; border: 0; color: var(--muted); cursor: pointer; }
+.patterns .del:hover { color: var(--bad); }
+#preview { width: 100%; }
+.status { min-height: 1.2em; font-size: 0.85rem; }
+.status.bad { color: var(--bad); }
+.grid { overflow: auto; padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; }
+.track { display: grid; grid-template-columns: 110px 34px 80px 1fr; align-items: center; gap: 8px; }
+.track .label { font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.track .mute { padding: 3px 0; font-size: 0.75rem; }
+.track .mute.on { background: var(--bad); border-color: var(--bad); color: var(--on-accent); }
+.track input[type=range] { width: 80px; }
+.cells { display: grid; gap: 4px; }
+.cell { height: 34px; min-width: 0; border-radius: 5px; border: 1px solid color-mix(in srgb, var(--border) 65%, var(--text)); background: var(--panel); cursor: pointer; padding: 0; }
+.cell.beat { border-color: color-mix(in srgb, var(--border) 30%, var(--text)); border-width: 2px; }
+.cell[data-v="1"] { background: var(--accent); border-color: var(--accent); }
+.cell[data-v="0.5"] { background: color-mix(in srgb, var(--accent) 50%, var(--panel)); border-color: var(--accent); }
+.cell.now { outline: 3px solid var(--warn); outline-offset: -3px; }
+.track.muted .cells { opacity: 0.4; }

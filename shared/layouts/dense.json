@@ -1,0 +1,8 @@
+{
+  "label": "Dense",
+  "about": "As many apps on one screen as fit: a small clock, no widgets, every app as a compact tile under its section heading.",
+  "order": 30,
+  "home": {"hero": "small", "sections": "all", "tiles": "compact", "recent": true, "chips": true, "align": "left"},
+  "settings": {"widgets": false, "greeting": false, "tile_width": 200},
+  "lighter": {"balanced": {}, "light": {}}
+}

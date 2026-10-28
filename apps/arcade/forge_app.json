@@ -1,0 +1,126 @@
+{
+  "name": "arcade",
+  "label": "Arcade",
+  "tagline": "Nine games, five experiments",
+  "help": {
+    "about": "Nine small games and five experiments. Pick a card to play; some games play along to a music track you choose. The AI opponents need Jan, a local AI app; everything else works without it.",
+    "features": [
+      "Standing Wave",
+      "Aphelion",
+      "Zero Beat",
+      "Hearsay",
+      "Escapement",
+      "Waveguide",
+      "Downbeat",
+      "Catenary",
+      "Lanternfall",
+      "Five experiments"
+    ]
+  },
+  "port": 8433,
+  "module": "web_app:app",
+  "src_dir": ".",
+  "accent": "#6fd39a",
+  "icon": "🕹️",
+  "fullscreen": "auto",
+  "order": 6,
+  "section": "play",
+  "ready_timeout": 45,
+  "manifest": {
+    "summary": "Codename 'Phosphor'. Fourteen small modules - nine games, five generative experiments - in one cabinet, all in a single static/index.html using Canvas 2D and Web Audio with no libraries. The same page also runs as a standalone claude.ai Artifact; the backend exists only for the two things a browser tab cannot do alone.",
+    "features": [
+      {
+        "name": "Standing Wave (game)",
+        "description": "Steer and survive on a live cymatics field driven by the FFT of your MP3; ride the dark nodal lines. Needs a track."
+      },
+      {
+        "name": "Aphelion (game)",
+        "description": "Gravity slingshot. Drag to aim; the predicted trajectory uses the same integrator the probe flies and turns cyan when the shot will reach the beacon."
+      },
+      {
+        "name": "Zero Beat (game)",
+        "description": "Match a target waveform harmonic by harmonic; the monitor tone detunes with your error so a match is an audible unison."
+      },
+      {
+        "name": "Hearsay (game)",
+        "description": "Five crew, one wiped log, gossip that spreads between NPCs. Uses Jan for phrasing only - the case logic is deterministic JS, so it is fully winnable with Jan off."
+      },
+      {
+        "name": "Escapement (game)",
+        "description": "One button. Hold to catch the ring above, release at the top of the arc. A real pendulum constraint - the rope only pulls."
+      },
+      {
+        "name": "Waveguide (game)",
+        "description": "Rotate amber mirrors so the beam lights every receiver. Splitters and walls are fixed scenery. Levels are built then verified by tracing the intended solution before shipping."
+      },
+      {
+        "name": "Downbeat (game)",
+        "description": "One-button rhythm runner; the track is onset-analysed up front and the runner's position is driven off the audio clock so you jump on the beat. Needs a track."
+      },
+      {
+        "name": "Catenary (game)",
+        "description": "Escapement's fair sibling: rings are never further apart than the rope can reach, so no course is ever impossible. Buffered grab, a drawn reach circle, three ropes."
+      },
+      {
+        "name": "Lanternfall (game)",
+        "description": "Your light is your life and it burns down. Wisps hunt a dim lantern; a flare spends light to stun them and they break into sparks. Combo up to x9."
+      },
+      {
+        "name": "Physarum (experiment)",
+        "description": "Slime-mould transport networks: thousands of agents sense and deposit a trail; sensor angle and reach decide veins vs spirals vs lace. Deposit rate rides the bass with a track loaded."
+      },
+      {
+        "name": "Gray-Scott (experiment)",
+        "description": "Reaction-diffusion. Feed and kill are the whole system; a thousandth either way changes the species. Paint with the pointer."
+      },
+      {
+        "name": "Divergence (experiment)",
+        "description": "An ensemble of double pendulums released a millionth of a radian apart; they agree for ~10 s then never again. Readout tracks the spread."
+      },
+      {
+        "name": "Filament (experiment)",
+        "description": "Divergence with the lid off: a 2-4 link chain solved as a mass matrix with RK4, with the starting curve, colour meaning, trail and a kaleidoscope mirror as controls."
+      },
+      {
+        "name": "Waterfall (experiment)",
+        "description": "Your track as a scrolling log-frequency spectrogram with a live waveform scope above it. Needs a track."
+      },
+      {
+        "name": "Typeable console values",
+        "description": "Every numeric experiment knob has a number field beside its slider (Enter or leaving the field applies it, out-of-range values are clamped, the slider follows). Knobs that count things (Steps, Count, Mirror) take whole numbers only. Presets move the sliders and fields too."
+      },
+      {
+        "name": "Best score on each game card",
+        "description": "The menu card shows the best saved for that game, with its unit (for example 'best 412 m'), and nothing when it has not been played."
+      },
+      {
+        "name": "Keyboard flow",
+        "description": "Enter or Space begins from the intro, Retry and Resume take the focus on game over and pause, and the menu returns the focus to the card you left, without ever taking the keyboard from another Forge app."
+      }
+    ],
+    "data_dir": "~/ForgeArcadeData/hearsay_save.json  (only Hearsay persists anything)",
+    "services": [
+      "Jan / llama.cpp @ http://127.0.0.1:1337/v1 (optional; Hearsay falls back to a built-in template brain when Jan is off or the backend is absent). Model id is auto-detected from whatever Jan currently has loaded."
+    ],
+    "dependencies": {
+      "required": [
+        "fastapi",
+        "uvicorn",
+        "httpx"
+      ],
+      "optional": []
+    },
+    "standalone_launch": "FORGE_SHARED_DIR=~/Forge/shared .venv/bin/python -m uvicorn web_app:app --host 127.0.0.1 --port 8433",
+    "api_base": "/api/  (GET /api/status; POST /api/jan/chat; GET/POST/DELETE /api/hearsay/save)",
+    "fullscreen": "Press F or the Full button. Any non-menu screen posts postMessage({forge:'chrome',hidden:true}) so the hub hides its sidebar, and hands it back on the menu.",
+    "known_gaps": [
+      "Game feel and balance are not playtested; Downbeat's jump/gravity constants are reasoned. The menu, the experiment consoles and the pause screen were photographed in headless Chrome on 2026-10-19; no WebKitGTK check of those changes.",
+      "Static checks that DO pass: tools/smoke.js (every module, 3000 frames, random input), tools/wg_sweep.js (30,000 Waveguide boards, zero unsolvable), JS syntax, element-id cross-check, backend endpoint round-trips."
+    ],
+    "docs": [
+      "README.md",
+      "MANIFEST.md",
+      "WIP.md"
+    ]
+  }
+}

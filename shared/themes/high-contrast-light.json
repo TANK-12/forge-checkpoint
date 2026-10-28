@@ -1,0 +1,45 @@
+{
+  "label": "High contrast light",
+  "order": 72,
+  "tags": [
+    "light",
+    "accessible",
+    "contrast"
+  ],
+  "mode": "light",
+  "solid": true,
+  "about": "For reading at a glance: pure white, black text, thick dark outlines, a strong blue focus ring, larger names, no see-through panels.",
+  "look": "outline",
+  "layout": "dense",
+  "colours": {
+    "accent": "#0040c0",
+    "bg": "#ffffff",
+    "panel": "#ffffff",
+    "panel_2": "#f0f0f0",
+    "border": "#000000",
+    "text": "#000000",
+    "muted": "#262626"
+  },
+  "font": "inter",
+  "wallpaper": "",
+  "live": "",
+  "companion": "",
+  "settings": {
+    "particles": "off",
+    "dim": 0.0,
+    "wall_tint": false,
+    "contrast": "high",
+    "glass_style": "flat",
+    "glass": 1.0,
+    "border": "none",
+    "shadows": false,
+    "radius": 6,
+    "wall_3d": false,
+    "motion": "still",
+    "widget_look": "glass"
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {}
+  }
+}

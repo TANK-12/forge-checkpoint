@@ -1,0 +1,41 @@
+{
+  "name": "Comets",
+  "note": "Random rules, seed 16. Most of the crowd sits in loose rings, and a few clusters line up behind themselves and fly, trailing colour. Turn Trails off in Advanced to see how little is really there.",
+  "author": "Claude",
+  "made": "2026-10-19",
+  "data": {
+    "colours": 5,
+    "matrix": [
+      0.25,
+      -0.7,
+      0.5,
+      -0.2,
+      -0.3,
+      -0.95,
+      0.9,
+      0.05,
+      -0.6,
+      0.85,
+      -0.1,
+      -1,
+      -0.45,
+      -0.15,
+      0.15,
+      0.7,
+      -0.3,
+      -0.15,
+      0.7,
+      -0.7,
+      0.4,
+      -0.35,
+      0.3,
+      0.5,
+      -0.05
+    ],
+    "count": 1400,
+    "reach": 0.1,
+    "pull": 10,
+    "glide": 0.04,
+    "seed": 16
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "label": "High contrast dark",
+  "order": 94,
+  "tags": [
+    "dark",
+    "accessible",
+    "contrast"
+  ],
+  "solid": true,
+  "about": "For reading at a glance: pure black, white text, thick white outlines, a yellow focus ring, larger names, no see-through panels.",
+  "look": "outline",
+  "layout": "dense",
+  "colours": {
+    "accent": "#ffd400",
+    "bg": "#000000",
+    "panel": "#000000",
+    "panel_2": "#111111",
+    "border": "#ffffff",
+    "text": "#ffffff",
+    "muted": "#e0e0e0"
+  },
+  "font": "inter",
+  "wallpaper": "",
+  "live": "",
+  "companion": "",
+  "settings": {
+    "particles": "off",
+    "dim": 0.0,
+    "wall_tint": false,
+    "contrast": "high",
+    "glass_style": "flat",
+    "glass": 1.0,
+    "border": "none",
+    "shadows": false,
+    "radius": 6,
+    "wall_3d": false,
+    "motion": "still"
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {}
+  }
+}

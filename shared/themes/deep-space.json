@@ -1,0 +1,42 @@
+{
+  "label": "Deep Space",
+  "order": 84,
+  "tags": [
+    "dark",
+    "live",
+    "space"
+  ],
+  "about": "Drifting through the stars past a faint nebula, with a little hover robot keeping watch.",
+  "look": "classic",
+  "layout": "forge",
+  "colours": {
+    "accent": "#8b7bff",
+    "bg": "#05060c",
+    "panel": "#0c0d18",
+    "panel_2": "#121322",
+    "border": "#20223a",
+    "text": "#e6e6f5",
+    "muted": "#8e8fb0"
+  },
+  "font": "inter",
+  "wallpaper": [
+    "forge:starfield.jpg",
+    ""
+  ],
+  "live": "starfield",
+  "companion": "robot",
+  "settings": {
+    "particles": "off",
+    "dim": 0.0,
+    "glass_style": "liquid",
+    "border": "gradient",
+    "radius": 18,
+    "motion": "zoom"
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {
+      "live": "off"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "bible-today",
+  "label": "Bible",
+  "tagline": "Today's reading and verse, and the whole Bible offline",
+  "icon": "📖",
+  "accent": "#b08d57",
+  "order": 30,
+  "section": "life",
+  "tabs": true,
+  "merged": true,
+  "members": [
+    "devotion",
+    "bible"
+  ],
+  "tab_labels": {
+    "devotion": "Today",
+    "bible": "Read"
+  },
+  "help": "Devotion's daily plan, verse and question as the Today tab, beside the Bible to read and search.",
+  "note": "Relay task 383. Undo this fold with \"off\": true; the apps keep their own folders and data."
+}

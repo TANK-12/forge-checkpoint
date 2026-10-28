@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="forge-colours" content="own">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exo Lab</title>
+<link rel="stylesheet" href="/shared/forge.css">
+<link rel="stylesheet" href="app.css">
+<script type="importmap">
+  {
+    "imports": {
+      "three": "/shared/vendor/three/three.module.min.js",
+      "three/addons/": "/shared/vendor/three/addons/",
+      "three-vrm": "/shared/vendor/three-vrm/three-vrm.module.min.js"
+    }
+  }
+</script>
+</head>
+<body>
+<header>
+  <a class="brand" href="#home">Exo <span>Lab</span></a>
+  <nav class="top" aria-label="Pages">
+    <a data-nav="home" href="#home">Home</a>
+    <a data-nav="tester" href="#tester">Real-world tester</a>
+    <a href="game.html">Game</a>
+  </nav>
+  <span class="spacer"></span>
+  <span class="muted small tagline">Exoskeleton and mech test bench</span>
+  <button id="go-fullscreen" class="btn" type="button" title="Full screen (F11)">Full screen</button>
+</header>
+
+<main id="home">
+  <section class="hero">
+    <h1>Exo Lab</h1>
+    <p>A test bench for exoskeletons and mechs. The tester runs each suit through real
+      physics: shoulder range, everyday motions, holding and lifting. Change a material,
+      a motor or a strap in the editor and the result updates while you watch.</p>
+  </section>
+  <div class="modes">
+    <a class="mode" href="#tester">
+      <b>Real-world tester</b>
+      <p>Bench tests on real numbers: where the shoulder can reach, what the motors and
+        straps feel, how heavy the suit is, and what breaks first.</p>
+      <span class="go">Open the tester →</span>
+    </a>
+    <a class="mode game" href="game.html">
+      <b>Game</b>
+      <p>Exo soldiers on a test range: boost jumps, dashes, slides and suit modes, with
+        stats that come from the same parts you edit here.</p>
+      <span class="go">Play →</span>
+    </a>
+  </div>
+  <h2>Models</h2>
+  <div id="home-models" class="mgrid"><p class="muted">Loading…</p></div>
+  <h2>Tests</h2>
+  <div id="home-tests" class="tgrid"><p class="muted">Loading…</p></div>
+</main>
+
+<main id="tester" hidden>
+  <aside class="col left">
+    <div class="ctl">
+      <label class="sel"><span>Model</span><select id="sel-model"></select></label>
+      <label class="sel"><span>Test</span><select id="sel-test"></select></label>
+      <label class="sel"><span>Compare with</span><select id="sel-compare"></select></label>
+      <div class="row-btns">
+        <button id="btn-run" class="primary" type="button" title="Run the test again">Run</button>
+        <button id="btn-editor" type="button" title="Edit materials, joints and parts">Editor</button>
+        <button id="btn-report" type="button" title="Save this result as a report file">Save report</button>
+        <span class="grow"></span>
+        <span id="run-state" class="chip"></span>
+      </div>
+    </div>
+    <div id="err" class="err" hidden></div>
+    <div id="verdict"></div>
+    <div id="cards" class="cards"></div>
+    <section id="cmp-sec" class="box" hidden>
+      <h3>Compared with <span id="cmp-name"></span></h3>
+      <div id="compare"></div>
+    </section>
+    <section id="derive-sec" class="box" hidden>
+      <h3>Game stats from these parts</h3>
+      <div id="derive"></div>
+    </section>
+  </aside>
+
+  <section class="col mid">
+    <div class="v3d">
+      <canvas id="c3d"></canvas>
+      <div class="v3d-tools cams" role="group" aria-label="Camera">
+        <button type="button" data-cam="shoulder">Shoulder</button>
+        <button type="button" data-cam="front">Front</button>
+        <button type="button" data-cam="side">Side</button>
+        <button type="button" data-cam="back">Back</button>
+        <button type="button" data-cam="top">Top</button>
+      </div>
+      <div class="v3d-tools layers" role="group" aria-label="Show">
+        <label><input type="checkbox" data-layer="mech" checked> Mechanism</label>
+        <label><input type="checkbox" data-layer="suit" checked> Suit</label>
+        <label><input type="checkbox" data-layer="forces" checked> Forces</label>
+        <label><input type="checkbox" data-layer="axes" checked> Axes</label>
+        <label title="The range map wrapped round the shoulder: one dot per arm direction, at arm's length"><input type="checkbox" data-layer="reach" checked> Reach</label>
+        <label title="Where the three motor axes line up: the arm in the outer cone warns, in the inner one it fails"><input type="checkbox" data-layer="lock" checked> Lock zones</label>
+        <label title="Paint every mechanism part green, amber or red by load, not just the ones in trouble"><input type="checkbox" data-layer="heat"> Heat colours</label>
+      </div>
+      <div id="plan" class="plan" hidden></div>
+      <div id="v3d-note" class="v3d-note"></div>
+    </div>
+
+    <div id="playbar" class="playbar" hidden>
+      <button id="btn-play" type="button" title="Play or pause (Space)">Play</button>
+      <button id="btn-worst" type="button" title="Go to the worst frame of this test (W). The arrow keys step a frame, with Shift ten; Home and End go to the ends.">Worst frame</button>
+      <input id="scrub" type="range" min="0" max="0" value="0" aria-label="Frame">
+      <span id="time" class="small muted"></span>
+      <select id="speed" aria-label="Playback speed">
+        <option value="0.25">0.25×</option>
+        <option value="0.5">0.5×</option>
+        <option value="1" selected>1×</option>
+        <option value="2">2×</option>
+      </select>
+      <button id="btn-pose" type="button" title="Set the arm pose yourself">Pose mode</button>
+    </div>
+
+    <div id="posebox" class="posebox" hidden>
+      <label><span>Plane</span><input id="pose-plane" type="range" min="-90" max="140" step="1" value="90"><b><input id="pose-plane-v" type="number" min="-90" max="140" step="1" value="90" aria-label="Plane, degrees">°</b></label>
+      <label><span>Raised</span><input id="pose-elev" type="range" min="0" max="180" step="1" value="60"><b><input id="pose-elev-v" type="number" min="0" max="180" step="1" value="60" aria-label="Raised, degrees">°</b></label>
+      <label><span>Twist</span><input id="pose-axial" type="range" min="-90" max="90" step="1" value="0"><b><input id="pose-axial-v" type="number" min="-90" max="90" step="1" value="0" aria-label="Twist, degrees">°</b></label>
+      <label><span>Elbow</span><input id="pose-elbow" type="range" min="0" max="145" step="1" value="30"><b><input id="pose-elbow-v" type="number" min="0" max="145" step="1" value="30" aria-label="Elbow, degrees">°</b></label>
+      <label><span>In the hand</span><input id="pose-payload_kg" type="range" min="0" max="20" step="0.5" value="0"><b><input id="pose-payload_kg-v" type="number" min="0" max="20" step="0.5" value="0" aria-label="In the hand, kilograms"> kg</b></label>
+    </div>
+
+    <div id="readout" class="readout"></div>
+
+    <section id="map-sec" class="box" hidden>
+      <h3>Shoulder range map</h3>
+      <canvas id="rom-map"></canvas>
+      <div id="map-tip" class="small muted">Point at a cell; click to try that pose.</div>
+    </section>
+    <section id="chart-sec" class="box" hidden>
+      <div id="chart-tabs" class="tabs"></div>
+      <canvas id="chart"></canvas>
+    </section>
+    <section id="sub-sec" class="box" hidden>
+      <h3 id="sub-title"></h3>
+      <div id="sub"></div>
+    </section>
+    <section id="parts-sec" class="box" hidden>
+      <h3>Parts <span id="suit-total" class="muted small"></span></h3>
+      <table id="parts" class="grid"></table>
+    </section>
+  </section>
+
+  <aside id="editor" class="col right" hidden></aside>
+</main>
+
+<div id="toast" class="toast" role="status"></div>
+
+<script>
+  // A link straight to the tester (#tester?...) shows the tester from the
+  // first frame, not the home menu until the page has loaded.
+  if (location.hash.startsWith("#tester")) {
+    document.getElementById("home").hidden = true;
+    document.getElementById("tester").hidden = false;
+  }
+</script>
+
+<script src="/shared/forge_chrome.js"></script>
+<script src="/shared/forge_idle.js"></script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

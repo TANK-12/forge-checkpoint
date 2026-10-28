@@ -1,0 +1,42 @@
+{
+  "label": "Daylight",
+  "order": 25,
+  "tags": [
+    "light",
+    "live",
+    "calm"
+  ],
+  "mode": "light",
+  "about": "Warm cream paper with ink washes drifting slowly, fine type and lots of space. Only the clock and search until you need an app.",
+  "look": "minimal",
+  "layout": "calm",
+  "colours": {
+    "accent": "#c0612b",
+    "bg": "#f6f3ec",
+    "panel": "#fffdf8",
+    "panel_2": "#f1ece2",
+    "border": "#ddd5c6",
+    "text": "#2a2620",
+    "muted": "#776e60"
+  },
+  "font": "inter",
+  "wallpaper": [
+    "forge:paper.jpg",
+    ""
+  ],
+  "live": "paper",
+  "settings": {
+    "particles": "off",
+    "dim": 0.0,
+    "wall_tint": false,
+    "glass": 0.85,
+    "border": "subtle",
+    "shadows": false
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {
+      "live": "off"
+    }
+  }
+}

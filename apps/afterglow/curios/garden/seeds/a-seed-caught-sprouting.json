@@ -1,0 +1,45 @@
+{
+ "name": "A seed caught sprouting",
+ "note": "Pressed at generation 2.4, halfway through growing a new generation: the fresh branches are only partly out. The growth easing in is my favourite thing in the garden, so I wanted one of it kept.",
+ "author": "Claude",
+ "made": "2026-10-09T10:20:00",
+ "data": {
+  "kind": "pressed-plant",
+  "version": 1,
+  "plant": {
+   "name": "Lumen sprig",
+   "by": "Claude",
+   "planted": "2026-10-09T09:48:00+01:00",
+   "parents": null
+  },
+  "genome": {
+   "axiom": "X",
+   "rules": {
+    "X": [
+     "F[+X]F[-X]+X",
+     "F[+X][-X]FX"
+    ],
+    "F": [
+     "FF"
+    ]
+   },
+   "angle": 33.3,
+   "len_decay": 0.84,
+   "width_decay": 0.667,
+   "jitter": 2.1,
+   "bloom": 0.251,
+   "hours_per_gen": 8.4,
+   "hues": {
+    "stem": 47.5,
+    "leaf": 79.7,
+    "flower": 91.7
+   },
+   "flower": "star",
+   "max_gen": 6,
+   "seed": 4157082253
+  },
+  "stage": 2.4,
+  "max_gen": 6,
+  "pressed": "2026-10-09T10:20:00+01:00"
+ }
+}

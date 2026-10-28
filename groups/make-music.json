@@ -1,0 +1,21 @@
+{
+  "id": "make-music",
+  "label": "Make music",
+  "tagline": "Music videos, beats and Suno songs",
+  "icon": "🎛️",
+  "accent": "#c678dd",
+  "order": 9,
+  "section": "create",
+  "tabs": true,
+  "members": [
+    "pulseforge",
+    "loops",
+    "suno"
+  ],
+  "tab_labels": {
+    "pulseforge": "PulseForge",
+    "loops": "Loops",
+    "suno": "Suno"
+  },
+  "note": "Relay task 383. Undo this fold with \"off\": true; the apps keep their own folders and data."
+}

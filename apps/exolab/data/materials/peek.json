@@ -1,0 +1,13 @@
+{
+  "id": "peek",
+  "name": "PEEK (unfilled)",
+  "short": "PEEK",
+  "category": "polymer",
+  "colour": "#c8b27a",
+  "note": "Tough engineering plastic; bushings, cable guides, small brackets.",
+  "density_kg_m3": 1300,
+  "youngs_modulus_gpa": 3.6,
+  "yield_strength_mpa": 100,
+  "fatigue_strength_mpa": 40,
+  "source": "Typical handbook value (ASM Handbook / MatWeb datasheets); not a certified figure."
+}

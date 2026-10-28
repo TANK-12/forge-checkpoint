@@ -1,0 +1,8 @@
+{
+  "label": "Everything",
+  "about": "Every app as a big tile, section by section, nothing folded away. How the home screen looked before the tidy.",
+  "order": 10,
+  "home": {"hero": "big", "sections": "all", "tiles": "big", "recent": true, "chips": true, "align": "left"},
+  "settings": {},
+  "lighter": {"balanced": {}, "light": {}}
+}

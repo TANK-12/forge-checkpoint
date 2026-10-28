@@ -1,0 +1,23 @@
+{
+  "id": "terminal-code",
+  "label": "Terminal and Code",
+  "tagline": "Your shell and VS Code",
+  "icon": "⌨️",
+  "accent": "#98c379",
+  "order": 95,
+  "section": "system",
+  "tabs": true,
+  "members": [
+    "terminal",
+    "code",
+    "cyberchef",
+    "it-tools"
+  ],
+  "tab_labels": {
+    "terminal": "Terminal",
+    "code": "Code",
+    "cyberchef": "CyberChef",
+    "it-tools": "IT tools"
+  },
+  "note": "Relay task 383. Undo this fold with \"off\": true; the apps keep their own folders and data."
+}

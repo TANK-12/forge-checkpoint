@@ -1,0 +1,46 @@
+{
+  "about": "Which software licences a Forge bundle may carry. release/licence_check.py reads each package's licence text and sorts it: review first (needs a person's look), then deny (copyleft that would bind a paid Forge, and the Commons Clause, which forbids selling), then allow. Patterns are fnmatch, case-insensitive, on one licence option; 'A or B' passes when any option is allowed, 'A and B' only when every part is. exceptions names packages whose deny is known and accepted for now, with the reason. build.py runs it on the packages each bundle really holds (a deny with no exception stops the build), and build.py --check-only runs licence_check.py --deny on the apps' own venvs.",
+  "review": [
+    "*LGPL*",
+    "*Lesser General Public*",
+    "*Library General Public*",
+    "*Commercial*",
+    "*Proprietary*"
+  ],
+  "deny": [
+    "*AGPL*",
+    "*Affero*",
+    "*GPL*",
+    "*General Public License*",
+    "*SSPL*",
+    "*Commons Clause*",
+    "*Commons-Clause*"
+  ],
+  "allow": [
+    "MIT",
+    "MIT-*",
+    "MIT *",
+    "*MIT License*",
+    "BSD*",
+    "*BSD License*",
+    "0BSD",
+    "Apache*",
+    "*Apache Software License*",
+    "PSF*",
+    "*Python Software Foundation*",
+    "Python-2.0*",
+    "ISC*",
+    "*ISC License*",
+    "MPL-2.0",
+    "*Mozilla Public License 2.0*",
+    "Unlicense",
+    "*The Unlicense*",
+    "Zlib",
+    "HPND",
+    "CC0*"
+  ],
+  "exceptions": {
+    "pymupdf": "InkForge's PDF reader: AGPL-3.0 or Artifex's paid licence. Accepted for the free 0.1 builds only; the owner decides (swap library, ship InkForge AGPL, or buy the licence) before any paid edition.",
+    "pyphen": "WeasyPrint's hyphenation (Office's PDF export). Tri-licensed GPLv2+, LGPLv2.1+ or MPL-1.1; Forge takes it under MPL-1.1 (file-level copyleft, unchanged files). Relay task 382."
+  }
+}

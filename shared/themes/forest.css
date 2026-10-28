@@ -1,0 +1,5 @@
+/* Forest (shared/themes/forest.json): moss, bark and firefly light. */
+html[data-forge-theme="forest"] .tile { background: linear-gradient(160deg,
+  color-mix(in srgb, var(--accent) 8%, var(--glass-fill)), color-mix(in srgb, #000 15%, var(--glass-fill))); }
+html[data-forge-theme="forest"] .hero .clock { font-weight: 300;
+  background-image: linear-gradient(115deg, #f2f7ee 35%, color-mix(in srgb, var(--accent) 70%, #fff) 50%, #f2f7ee 65%); }

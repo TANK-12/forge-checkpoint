@@ -1,0 +1,247 @@
+{
+ "about": "Markets Mint knows by name. Prices come from Yahoo's public chart feed by this symbol; anything else can be imported as a CSV. cls picks the cost and leverage class in venues.json, kind picks which venues can trade it, spread_pct overrides a venue's class spread for this one market. dividend_yield_pct (price indexes only) is the yearly dividend adjustment a CFD long is credited and a short pays. base (currency pairs only) is the currency a long holds; the pair's overnight funding is on the gap between the two currencies' rates. exchange_suffixes lists the exchanges (Yahoo's suffix: AX for the ASX, L for London) a share or fund missing from this list may come from; no suffix is a US listing. Shanghai, Shenzhen and Tel Aviv are left out on purpose: their index codes look like share codes (000001.SS, TA35.TA).",
+ "exchange_suffixes": [
+  "AX",
+  "NZ",
+  "L",
+  "TO",
+  "V",
+  "HK",
+  "T",
+  "SI",
+  "DE",
+  "F",
+  "PA",
+  "AS",
+  "MI",
+  "MC",
+  "SW",
+  "ST",
+  "OL",
+  "CO",
+  "HE",
+  "IR"
+ ],
+ "symbols": [
+  {
+   "symbol": "VAS.AX",
+   "name": "Vanguard Australian Shares ETF",
+   "cls": "etf",
+   "kind": "etf",
+   "currency": "AUD",
+   "benchmark": "VAS.AX",
+   "fee_pct": 0.07,
+   "blurb": "About 300 of the biggest Australian companies in one fund. The plain benchmark for Australian money."
+  },
+  {
+   "symbol": "A200.AX",
+   "name": "Betashares Australia 200 ETF",
+   "cls": "etf",
+   "kind": "etf",
+   "currency": "AUD",
+   "benchmark": "VAS.AX",
+   "fee_pct": 0.04,
+   "blurb": "The 200 biggest Australian companies, one of the cheapest funds on the ASX."
+  },
+  {
+   "symbol": "STW.AX",
+   "name": "SPDR S&P/ASX 200 Fund",
+   "cls": "etf",
+   "kind": "etf",
+   "currency": "AUD",
+   "benchmark": "STW.AX",
+   "fee_pct": 0.05,
+   "blurb": "The oldest ASX 200 fund (2001). Yahoo's prices start in January 2008, so a backtest on it includes the 2008 crash (about -51% to March 2009). Two pairs of one-day moves near 10% in August and September 2009 look like bad prints that cancel out."
+  },
+  {
+   "symbol": "VGS.AX",
+   "name": "Vanguard MSCI International Shares ETF",
+   "cls": "etf",
+   "kind": "etf",
+   "currency": "AUD",
+   "benchmark": "VGS.AX",
+   "fee_pct": 0.18,
+   "blurb": "About 1,300 big companies outside Australia, priced in Australian dollars."
+  },
+  {
+   "symbol": "IVV.AX",
+   "name": "iShares S&P 500 ETF (ASX)",
+   "cls": "etf",
+   "kind": "etf",
+   "currency": "AUD",
+   "benchmark": "IVV.AX",
+   "fee_pct": 0.04,
+   "blurb": "The 500 biggest US companies, bought on the ASX in Australian dollars."
+  },
+  {
+   "symbol": "NDQ.AX",
+   "name": "Betashares NASDAQ 100 ETF",
+   "cls": "etf",
+   "kind": "etf",
+   "currency": "AUD",
+   "benchmark": "IVV.AX",
+   "fee_pct": 0.48,
+   "blurb": "The 100 biggest non-financial NASDAQ companies: tech heavy, bigger swings."
+  },
+  {
+   "symbol": "DHHF.AX",
+   "name": "Betashares Diversified All Growth ETF",
+   "cls": "etf",
+   "kind": "etf",
+   "currency": "AUD",
+   "benchmark": "DHHF.AX",
+   "fee_pct": 0.19,
+   "blurb": "Thousands of companies, Australian and worldwide, in one fund. Started 2019."
+  },
+  {
+   "symbol": "VDHG.AX",
+   "name": "Vanguard Diversified High Growth ETF",
+   "cls": "etf",
+   "kind": "etf",
+   "currency": "AUD",
+   "benchmark": "VDHG.AX",
+   "fee_pct": 0.27,
+   "blurb": "90% shares, 10% bonds, Australian and worldwide, in one fund. Started 2017."
+  },
+  {
+   "symbol": "^AXJO",
+   "name": "S&P/ASX 200 index (Australia 200 CFD)",
+   "cls": "index_major",
+   "kind": "index",
+   "currency": "AUD",
+   "benchmark": "VAS.AX",
+   "spread_pct": {
+    "cfd": 0.02
+   },
+   "blurb": "The index itself: you can only trade it as a CFD. A long is credited the dividends (about 4.0% a year, measured from VAS.AX and STW.AX over 10 to 15 years), a short pays them; franking credits are not passed on.",
+   "dividend_yield_pct": 4.0
+  },
+  {
+   "symbol": "^GSPC",
+   "name": "S&P 500 index (US 500 CFD)",
+   "cls": "index_major",
+   "kind": "index",
+   "currency": "USD",
+   "benchmark": "IVV.AX",
+   "spread_pct": {
+    "cfd": 0.008
+   },
+   "blurb": "The 500 biggest US companies as a CFD, priced in US dollars. Dividend adjustment about 1.5% a year (measured from IVV.AX over 10 to 15 years).",
+   "dividend_yield_pct": 1.5
+  },
+  {
+   "symbol": "^NDX",
+   "name": "NASDAQ-100 index (US-Tech 100 CFD)",
+   "cls": "index_major",
+   "kind": "index",
+   "currency": "USD",
+   "benchmark": "IVV.AX",
+   "spread_pct": {
+    "cfd": 0.01
+   },
+   "blurb": "US tech giants as a CFD, in US dollars. Dividend adjustment 0.8% a year, an assumption (NDQ.AX's 2.1% includes capital-gains payouts).",
+   "dividend_yield_pct": 0.8
+  },
+  {
+   "symbol": "AUDUSD=X",
+   "name": "AUD/USD exchange rate",
+   "cls": "fx_major",
+   "kind": "fx",
+   "currency": "USD",
+   "base": "AUD",
+   "benchmark": "VAS.AX",
+   "spread_pct": {
+    "cfd": 0.01
+   },
+   "blurb": "US dollars per Australian dollar. The most traded pair for Australians."
+  },
+  {
+   "symbol": "GC=F",
+   "name": "Gold (front-month futures)",
+   "cls": "gold",
+   "kind": "commodity",
+   "currency": "USD",
+   "benchmark": "VAS.AX",
+   "spread_pct": {
+    "cfd": 0.025
+   },
+   "blurb": "Gold in US dollars an ounce. Futures prices jump a little at each monthly roll."
+  },
+  {
+   "symbol": "CL=F",
+   "name": "Crude oil WTI (front-month futures)",
+   "cls": "commodity",
+   "kind": "commodity",
+   "currency": "USD",
+   "benchmark": "VAS.AX",
+   "spread_pct": {
+    "cfd": 0.06
+   },
+   "blurb": "US oil in dollars a barrel. Wild swings, and a jump at every monthly roll."
+  },
+  {
+   "symbol": "BTC-AUD",
+   "name": "Bitcoin in Australian dollars",
+   "cls": "crypto",
+   "kind": "crypto",
+   "currency": "AUD",
+   "benchmark": "VAS.AX",
+   "spread_pct": {
+    "cfd": 0.15
+   },
+   "blurb": "Trades every day of the week. Has fallen more than 75% from a peak more than once."
+  },
+  {
+   "symbol": "BHP.AX",
+   "name": "BHP Group",
+   "cls": "share",
+   "kind": "share",
+   "currency": "AUD",
+   "benchmark": "VAS.AX",
+   "spread_pct": {
+    "cfd": 0.15
+   },
+   "warning": "Picked because it is big today: a company that went bust would not be on this list, so a backtest on a single share flatters the idea (survivor bias).",
+   "blurb": "Australia's biggest miner."
+  },
+  {
+   "symbol": "CBA.AX",
+   "name": "Commonwealth Bank",
+   "cls": "share",
+   "kind": "share",
+   "currency": "AUD",
+   "benchmark": "VAS.AX",
+   "spread_pct": {
+    "cfd": 0.15
+   },
+   "warning": "Picked because it is big today: a company that went bust would not be on this list, so a backtest on a single share flatters the idea (survivor bias).",
+   "blurb": "Australia's biggest bank."
+  },
+  {
+   "symbol": "AAPL",
+   "name": "Apple",
+   "cls": "share",
+   "kind": "share",
+   "currency": "USD",
+   "benchmark": "IVV.AX",
+   "spread_pct": {
+    "cfd": 0.15
+   },
+   "warning": "Picked because it is a winner today: hindsight. A backtest on one famous share says little about the next ten years (survivor bias).",
+   "blurb": "US share in US dollars."
+  },
+  {
+   "symbol": "NVDA",
+   "name": "Nvidia",
+   "cls": "share",
+   "kind": "share",
+   "currency": "USD",
+   "benchmark": "IVV.AX",
+   "spread_pct": {
+    "cfd": 0.15
+   },
+   "warning": "Picked because it is the biggest winner of recent years: pure hindsight. Do not read its backtest as a forecast (survivor bias).",
+   "blurb": "US share in US dollars."
+  }
+ ]
+}

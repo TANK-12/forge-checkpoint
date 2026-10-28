@@ -1,0 +1,25 @@
+{
+  "id": "office-place",
+  "label": "Office",
+  "tagline": "Documents, sheets, slides, PDFs and converting",
+  "icon": "🗂️",
+  "accent": "#6ea8fe",
+  "order": 24,
+  "section": "create",
+  "tabs": true,
+  "members": [
+    "office",
+    "typeset",
+    "convert",
+    "bentopdf",
+    "ocr"
+  ],
+  "tab_labels": {
+    "office": "Office",
+    "typeset": "Typeset",
+    "convert": "Convert",
+    "bentopdf": "PDF tools",
+    "ocr": "Read text"
+  },
+  "note": "Relay task 383. Undo this fold with \"off\": true; the apps keep their own folders and data."
+}

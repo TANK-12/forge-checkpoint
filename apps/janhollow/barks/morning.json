@@ -1,0 +1,46 @@
+{
+ "label": "First thing",
+ "hours": [
+  "morning"
+ ],
+ "weight": 1.2,
+ "exchanges": [
+  {
+   "say": "Morning, {listener}. Sleep well?",
+   "replies": [
+    "Like a rock.",
+    "Not really. The pipes.",
+    "Better than you, by the look of it."
+   ]
+  },
+  {
+   "say": "Who made the coffee this strong?",
+   "replies": [
+    "Vessa. Always Vessa.",
+    "It's the only way.",
+    "Drink it, it's good for you."
+   ]
+  },
+  {
+   "say": "Early start for you, {listener}.",
+   "replies": [
+    "Couldn't sleep.",
+    "The reactor wanted me.",
+    "No such thing on a station."
+   ]
+  },
+  {
+   "say": "The lights came up too fast today.",
+   "replies": [
+    "They always do.",
+    "I'll put a note in.",
+    "My eyes agree."
+   ]
+  }
+ ],
+ "hello": [
+  "Morning, {you}.",
+  "Early riser, are you?",
+  "Coffee's in the mess hall."
+ ]
+}

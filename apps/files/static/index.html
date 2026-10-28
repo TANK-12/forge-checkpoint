@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Files</title>
+<link rel="stylesheet" href="/shared/forge.css">
+<link rel="stylesheet" href="app.css">
+<style>
+  :root { --accent: #7fb8d8; --accent-2: #5f9cbf; --on-accent: #06131c; }
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="bar">
+    <div class="nav">
+      <button class="btn icon" id="back" title="Back (Alt+Left)">←</button>
+      <button class="btn icon" id="fwd" title="Forward (Alt+Right)">→</button>
+      <button class="btn icon" id="up" title="Up a folder (Alt+Up)">↑</button>
+    </div>
+    <nav id="crumbs" class="crumbs" title="Click to go there, double-click to type a path (Ctrl+L)"></nav>
+    <input id="path-edit" class="path-edit hidden" spellcheck="false">
+    <input id="search" type="search" placeholder="Search this folder (Ctrl+F)">
+    <select id="sort" title="Sort by">
+      <option value="name">Name</option>
+      <option value="mtime">Modified</option>
+      <option value="size">Size</option>
+      <option value="kind">Type</option>
+    </select>
+    <button class="btn icon" id="sort-dir" title="Sort direction">↓</button>
+    <button class="btn icon" id="view" title="List or grid (Ctrl+G)">▦</button>
+    <button class="btn icon" id="hidden" title="Show hidden files (Ctrl+H)">👁</button>
+    <button class="btn icon" id="preview-toggle" title="Preview pane (F3)">◧</button>
+    <button class="btn icon" id="new-window" title="New window (Ctrl+N; middle-click a folder to open it in one)">⧉</button>
+    <button class="btn" id="new-folder" title="New folder (Ctrl+Shift+N)">New folder</button>
+    <button class="btn icon" id="go-fullscreen" type="button" title="Full screen">⛶</button>
+  </header>
+
+  <div class="body">
+    <aside id="side"></aside>
+    <main id="main" tabindex="0">
+      <div id="list-head" class="list-head">
+        <span data-sort="name">Name</span><span data-sort="size">Size</span>
+        <span data-sort="kind">Type</span><span data-sort="mtime">Modified</span>
+      </div>
+      <div id="items"></div>
+      <div id="empty" class="empty">Opening the folder…</div>
+    </main>
+    <aside id="preview" class="preview"></aside>
+  </div>
+
+  <footer class="status">
+    <span id="count"></span>
+    <span id="sel"></span>
+    <span class="grow"></span>
+    <span id="job" class="hidden"><span id="job-text"></span> <progress id="job-bar" max="1" value="0"></progress></span>
+    <span id="conn" class="conn hidden">Backend not answering, retrying</span>
+    <span id="free" class="muted"></span>
+  </footer>
+</div>
+
+<div id="menu" class="menu hidden"></div>
+<div id="dialog" class="dialog hidden">
+  <form id="dialog-form" class="card">
+    <label id="dialog-label" for="dialog-input"></label>
+    <input id="dialog-input" spellcheck="false" autocomplete="off">
+    <div class="row">
+      <button type="button" class="btn" id="dialog-cancel">Cancel</button>
+      <button type="submit" class="btn btn-primary" id="dialog-ok">OK</button>
+    </div>
+  </form>
+</div>
+<div id="toast" class="toast hidden"></div>
+
+<script src="/shared/forge_chrome.js"></script>
+<script src="/shared/forge_lightbox.js" data-skip=".ico"></script>
+<script src="/shared/forge.js"></script>
+<script src="/shared/forge_idle.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

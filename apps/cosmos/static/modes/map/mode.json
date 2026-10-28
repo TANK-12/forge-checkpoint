@@ -1,0 +1,7 @@
+{
+  "name": "Solar system and galaxy map",
+  "tagline": "Every planet and major moon where it really is today, out through 110,000 real stars to the Milky Way.",
+  "icon": "🔭",
+  "order": 10,
+  "entry": "mode.js"
+}

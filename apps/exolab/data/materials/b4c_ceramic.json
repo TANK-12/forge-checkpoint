@@ -1,0 +1,13 @@
+{
+  "id": "b4c_ceramic",
+  "name": "Boron carbide ceramic",
+  "short": "B4C ceramic",
+  "category": "ceramic",
+  "colour": "#4a4d52",
+  "note": "Armour strike face: very hard and stiff, brittle (strength here is flexural).",
+  "density_kg_m3": 2520,
+  "youngs_modulus_gpa": 450,
+  "yield_strength_mpa": 350,
+  "fatigue_strength_mpa": 150,
+  "source": "Typical handbook value (ASM Handbook / MatWeb datasheets); not a certified figure."
+}

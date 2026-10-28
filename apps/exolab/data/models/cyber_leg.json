@@ -1,0 +1,8 @@
+{
+  "id": "cyber_leg",
+  "name": "Cybernetic leg",
+  "kind": "cyber_limb",
+  "status": "planned",
+  "chunk": 3,
+  "about": "A powered prosthetic leg: socket, knee and ankle drives. Tests: gait load, stair climb, socket load."
+}

@@ -1,0 +1,73 @@
+{
+  "name": "printforge",
+  "label": "PrintForge",
+  "tagline": "Look over 3D-print files before you slice them",
+  "help": {
+    "about": "Look over 3D-print files before you slice them: turn them round in 3D, see the overhangs and check they fit the bed. It lists the files in the folders you point it at.",
+    "features": [
+      "Library",
+      "3D view",
+      "Print check",
+      "Overhangs",
+      "Bed fit",
+      "Folders"
+    ]
+  },
+  "port": 8462,
+  "module": "web_app:app",
+  "src_dir": ".",
+  "accent": "#e0a458",
+  "icon": "🖨️",
+  "order": 10,
+  "section": "create",
+  "ready_timeout": 30,
+  "manifest": {
+    "summary": "A 3D viewer and checker for STL print files. It finds every STL under the chosen folders (by default ~/Models and ~/Downloads), shows it on a print bed you can turn, pan and zoom, and checks what a slicer cares about: watertight or not, how many separate pieces, size, volume, overhangs that need support, and which print beds it fits. When the print pipeline wrote a build report naming the file, that report shows beside it.",
+    "features": [
+      {
+        "name": "Library",
+        "description": "Every STL under the folders, grouped by project and folder, with size, triangle count and the print scale read from a folder name such as 1-35. Search box."
+      },
+      {
+        "name": "3D view",
+        "description": "three.js view of the print on a bed with a 10 mm grid; 3/4, front, side, back, top and below views, turntable, wireframe, colours, and a bed outline that turns red when the print does not fit. A second click on the open print downloads it again only when the file has changed on disk (exported again)."
+      },
+      {
+        "name": "Print check",
+        "description": "Watertight test (every edge shared by exactly two triangles, facing the right way; zero-area triangles left out), separate-piece count, inside-out warning, size, volume in cm3 (ml of resin if solid) and surface area. Cached per file."
+      },
+      {
+        "name": "Overhangs",
+        "description": "The check lists the area that faces down steeper than the support angle (bed faces left out), and the Overhangs button (key o) colours those faces red in the view (inside-out prints too); Below looks from underneath. Advanced mode sets the angle (30 to 80 degrees, slider and number, saved)."
+      },
+      {
+        "name": "Build report",
+        "description": "When a JSON file in a reports folder beside or above the print names it (the print pipeline's <milestone>_build.json), the panel shows that report's milestone and plain values, the newest when several do, and says when the file has changed since."
+      },
+      {
+        "name": "New exports picked up",
+        "description": "Coming back to PrintForge (from Blender, say) re-reads the open print's size and time, and loads the new version by itself when the file was exported again, once the file has stopped growing. A click on the open print does the same, and retries a check that failed."
+      },
+      {
+        "name": "Bed fit",
+        "description": "Checks each bed class standing as modelled and laid over in any orientation. Beds are editable; advanced mode adds a custom bed with slider and number fields."
+      },
+      {
+        "name": "Folders and pictures",
+        "description": "Advanced mode: edit the folders searched, light brightness, and save a PNG of the view. Open folder shows the file in the file manager."
+      }
+    ],
+    "data_dir": "~/.config/forge-printforge/settings.json (folders, bed, colour, light, support angle, mode); ~/.cache/forge-printforge/info.json (check results per file)",
+    "dependencies": {
+      "required": ["fastapi", "uvicorn", "numpy"],
+      "optional": ["xdg-open"]
+    },
+    "standalone_launch": "cd ~/Forge/apps/printforge && FORGE_SHARED_DIR=~/Forge/shared .venv/bin/python -m uvicorn web_app:app --host 127.0.0.1 --port 8462",
+    "api_base": "/api",
+    "known_gaps": [
+      "Reads STL only (no 3MF or OBJ yet).",
+      "No slicer is installed on this laptop, so there is no send-to-slicer button."
+    ],
+    "docs": ["README.md", "WIP.md"]
+  }
+}

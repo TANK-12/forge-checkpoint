@@ -1,0 +1,55 @@
+{
+ "label": "Over a meal",
+ "rooms": [
+  "mess_hall",
+  "galley"
+ ],
+ "weight": 1.5,
+ "exchanges": [
+  {
+   "say": "Pass the salt, {listener}?",
+   "replies": [
+    "Here you go.",
+    "You've had enough salt.",
+    "Say please."
+   ]
+  },
+  {
+   "say": "What is this, exactly?",
+   "replies": [
+    "Stew, apparently.",
+    "Don't ask, just eat.",
+    "Tuesday."
+   ]
+  },
+  {
+   "say": "Is anyone sitting here?",
+   "replies": [
+    "All yours.",
+    "Dez was, but he's left.",
+    "Sit, sit."
+   ]
+  },
+  {
+   "say": "This is good. What's in it?",
+   "replies": [
+    "Best not to ask.",
+    "Something green.",
+    "Whatever was left."
+   ]
+  },
+  {
+   "say": "Save me some of that, I'm back on shift.",
+   "replies": [
+    "No promises.",
+    "I'll hide a plate.",
+    "Eat faster next time."
+   ]
+  }
+ ],
+ "hello": [
+  "Grab a plate, {you}.",
+  "There's room at this end.",
+  "Hungry?"
+ ]
+}

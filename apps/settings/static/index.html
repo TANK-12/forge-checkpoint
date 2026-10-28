@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Settings</title>
+<link rel="stylesheet" href="/shared/forge.css">
+<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="system.css">
+<link rel="stylesheet" href="business.css">
+<link rel="stylesheet" href="themes.css">
+<link rel="stylesheet" href="resets.css">
+<link rel="stylesheet" href="about.css">
+<style>
+  :root { --accent: #a9b6c8; --accent-2: #8a98ac; --on-accent: #0b1220; }
+</style>
+</head>
+<body class="booting">
+<div id="app">
+  <header data-forge-frame-hide>
+    <div class="brand">Forge <span>Settings</span></div>
+    <div class="spacer"></div>
+    <span class="muted small" id="saved" data-forge-frame-note>Changes apply as you make them.</span>
+    <button class="btn" id="go-fullscreen" type="button">Full screen</button>
+  </header>
+
+  <div class="lock-banner" id="lock-banner" hidden>
+    <span>Business mode is locked. Settings, the background and apps need the password to change.</span>
+    <button class="btn" id="lock-banner-back" type="button">Back to my old look</button>
+    <button class="btn btn-primary" id="lock-banner-open" type="button">Unlock…</button>
+  </div>
+  <div class="lock-back" id="lock-dialog" hidden>
+    <form class="lock-box" id="lock-form" role="dialog" aria-modal="true" aria-labelledby="lock-title" autocomplete="off">
+      <h3 id="lock-title">Unlock Business mode</h3>
+      <p class="muted small" id="lock-why">Enter the password to change settings. It stays unlocked for 10 minutes, or until you lock it again.</p>
+      <input type="password" id="lock-password" placeholder="Password" autocomplete="off" aria-label="Password">
+      <div class="lock-error" id="lock-error" role="alert"></div>
+      <div class="lock-row"><button class="btn lock-go-back" type="button" id="lock-go-back">Back to my old look</button><button class="btn" type="button" id="lock-cancel">Cancel</button><button class="btn btn-primary" type="submit" id="lock-submit">Unlock</button></div>
+    </form>
+  </div>
+
+  <!-- The ask-first dialog and the Undo toast for every reset (resets.js). -->
+  <div class="lock-back" id="reset-dialog" hidden></div>
+  <div class="reset-toast" id="reset-toast" role="status" aria-live="polite" hidden></div>
+
+  <main>
+    <div class="layout">
+    <!-- The sections, one page each: the hand-made cards below plus one per
+         group, listed by app.js. Searching shows matches from every section. -->
+    <nav id="nav" aria-label="Settings sections">
+      <input type="search" id="search" placeholder="Search settings…" autocomplete="off" spellcheck="false">
+      <button type="button" class="changed-only" id="changed-only" aria-pressed="false"
+        title="Show only what you changed from the defaults, each with its own ↺ to put it back">Changed from default <span class="count" id="changed-count"></span></button>
+      <div id="nav-list"></div>
+    </nav>
+    <div class="settings">
+
+      <div class="card boot-card" id="boot-card" aria-live="polite">
+        <h3 id="boot-title">Loading settings…</h3>
+        <div class="muted small" id="boot-text"></div>
+        <button class="btn" id="boot-retry" type="button" hidden>Try now</button>
+      </div>
+
+      <section class="card" data-section="wallpaper" data-title="Wallpaper" data-settings="wallpaper" data-reset-label="Wallpaper" data-keywords="wallpaper desktop background picture image favourites follow">
+        <div class="section-head">
+          <h3>Wallpaper</h3>
+          <label class="switch"><input type="checkbox" id="follow-desktop"> Follow my desktop wallpaper</label>
+        </div>
+        <div class="current">
+          <img id="current-thumb" alt="">
+          <div>
+            <div class="big" id="current-name">…</div>
+            <div class="muted small" id="current-note"></div>
+          </div>
+        </div>
+        <div class="section-head fav-head">
+          <h3>★ Favourites</h3>
+          <button class="btn btn-primary" id="open-wallpapers" type="button">Open Wallpapers</button>
+        </div>
+        <div id="favs" class="favs"></div>
+        <div class="muted small" id="wall-app-note">The Wallpapers app has the whole collection with hidden copies, sizes and
+          favourites, and sets a wallpaper on the desktop, in Forge, or both.</div>
+        <details class="quick">
+          <summary>Quick picker for Forge's wallpaper</summary>
+          <input type="search" id="wall-filter" placeholder="Search wallpapers…">
+          <div id="walls" class="walls"></div>
+        </details>
+      </section>
+
+      <section class="card" data-section="colour" data-title="Colour" data-settings="accent unify_accent" data-reset-label="Colour" data-keywords="colour color accent tint swatch">
+        <h3>Colour</h3>
+        <div class="muted small">Taken from the wallpaper unless you pick one. It tints the bar,
+          the window borders and the dock.</div>
+        <div id="swatches" class="swatches"></div>
+        <div class="choices">
+          <label class="switch"><input type="checkbox" data-key="unify_accent"> Use this colour inside every app</label>
+          <label class="custom">Pick any colour <input type="color" id="custom-accent"></label>
+        </div>
+      </section>
+
+      <!-- Themes and home layouts: one file each in shared/themes and shared/layouts (themes.js). -->
+      <section class="card" id="themes-panel" data-section="themes" data-title="Themes" data-settings="theme_desktop" data-changed="theme" data-reset-label="Theme files" data-keywords="theme themes look looks style skin preset anime sakura retro pixel cosy cat neon synthwave forest ocean light dark business simple midnight daylight paper live moving undo save mine hyprland terminal kitty foot">
+        <div class="section-head"><h3>Themes</h3><span class="muted small" id="theme-now"></span></div>
+        <div class="muted small">A theme sets the colours, font, corners, wallpaper (some of them move) and home layout in one click.
+          Alt+T switches from anywhere in Forge. Undo puts back what the last pick replaced.</div>
+        <div class="theme-tools">
+          <div class="theme-chips" id="theme-chips" role="toolbar" aria-label="Show themes"></div>
+          <button class="btn" id="theme-undo" type="button">Undo</button>
+        </div>
+        <div class="theme-cards" id="theme-cards" aria-live="polite"></div>
+        <form class="theme-save" id="theme-save" autocomplete="off">
+          <input type="text" id="theme-name" placeholder="Name for this look" maxlength="40" spellcheck="false" aria-label="Name for this look">
+          <button class="btn" type="submit">Save my look as a theme</button>
+        </form>
+        <label class="switch theme-desktop"><input type="checkbox" id="theme-desktop"> Also write colour files for Hyprland and the terminal</label>
+        <div class="muted small" id="theme-desktop-note">They go in ~/.config/forge/theme/ and change nothing by themselves:
+          source them from your Hyprland, kitty or foot config to follow the theme. Your own configs are never edited.</div>
+        <div class="muted small" id="themes-said" role="status" aria-live="polite"></div>
+      </section>
+
+      <section class="card" id="layouts-panel" data-section="layouts" data-title="Home layout" data-changed="layout" data-keywords="layout layouts home arrange dense simple plain calm everything sections rows tiles list compact big">
+        <div class="section-head"><h3>Home layout</h3></div>
+        <div class="muted small">How the home screen is arranged. A theme brings one; pick here to change only the layout.</div>
+        <div class="theme-cards layout-cards" id="layout-cards"></div>
+      </section>
+
+      <!-- The Business look: its password lock and company profiles (business.js). -->
+      <section class="card" id="business-panel" data-section="business" data-title="Business" data-settings="business_companies business_company" data-keywords="business lock locked password pin old look back previous undo original company companies logo profile plain professional">
+        <div class="section-head"><h3>Business</h3><span class="biz-state" id="biz-state"></span></div>
+        <div class="muted small" id="biz-about">A plain, professional look for the hub with the company logo on the
+          background. While it is on, every change in Settings, the background and the apps needs the password,
+          and so does leaving it. Particles, music, the visualiser and animations stay off;
+          your own choices come back when you pick another look.</div>
+        <div class="choices">
+          <button class="btn btn-primary" id="biz-on" type="button">Use the Business look</button>
+          <button class="btn btn-primary" id="biz-unlock" type="button">Unlock…</button>
+          <button class="btn" id="biz-relock" type="button">Lock now</button>
+          <button class="btn" id="biz-back" type="button">Back to my old look</button>
+        </div>
+        <h4>Company</h4>
+        <div class="biz-companies" id="biz-companies"></div>
+        <form class="biz-add" id="biz-add">
+          <input type="text" id="biz-name" placeholder="Company name" maxlength="60" autocomplete="off" spellcheck="false">
+          <label class="btn biz-file">Logo… <input type="file" id="biz-logo" accept="image/png,image/jpeg,image/webp,image/svg+xml" hidden></label>
+          <span class="muted small" id="biz-logo-name">No logo picked</span>
+          <button class="btn" type="submit">Add company</button>
+        </form>
+        <h4>Password</h4>
+        <form class="biz-pass" id="biz-pass" autocomplete="off">
+          <input type="password" id="biz-current" placeholder="Current password" autocomplete="off">
+          <input type="password" id="biz-new" placeholder="New password" autocomplete="new-password">
+          <button class="btn" type="submit" id="biz-pass-save">Save password</button>
+        </form>
+        <div class="muted small" id="biz-said" role="status" aria-live="polite"></div>
+      </section>
+
+      <!-- Every other setting: one card per group, built by app.js from the
+           table in shared/forge_theme.py, so a new setting needs no markup. -->
+      <div id="groups" class="groups"></div>
+
+      <!-- Apps: each app's own options, from apps/NAME/options.json
+           (shared/forge_options.py), drawn by app.js with the same rows as the
+           cards above and saved into that app's own file. It says how many
+           apps have no options.json yet, so nobody takes it for all of them. -->
+      <section class="card" id="apps-panel" data-section="app-options" data-title="App options" data-keywords="apps app options per-app own settings calendar logging privacy">
+        <div class="section-head"><h3>App options</h3></div>
+        <div class="muted apps-cover" id="apps-cover">Reading…</div>
+        <div id="apps-list"></div>
+        <div id="apps-without"></div>
+      </section>
+
+      <!-- System: the laptop's own settings. One button per panel in
+           system_settings/panels.json, drawn by system.js; each button is an
+           .item carrying its panel's words, so the search finds panels. -->
+      <section class="card" id="system-panel" data-section="system" data-title="System" data-keywords="system laptop wifi wi-fi bluetooth sound volume brightness night light battery notifications clock ram auto-close">
+        <div class="sys-head">
+          <h3>System</h3>
+          <span class="s-chip" id="sys-ram" title="How full RAM is, as the RAM guard last saw it"></span>
+          <span class="grow"></span>
+          <span class="muted s-said" id="sys-said" role="status" aria-live="polite"></span>
+          <button type="button" class="btn" id="sys-refresh" title="Read this panel again (R)">↻ Read again</button>
+        </div>
+        <div class="muted sys-intro">The laptop's own settings. A change here applies to the laptop at once.</div>
+        <div class="sys-nav" id="sys-nav" role="tablist" aria-label="System panels"></div>
+        <div class="sys-main" id="sys-main"><p class="muted">Reading…</p></div>
+      </section>
+
+      <!-- Pick for my machine: reads the hardware (shared/forge_machine.py)
+           and suggests a visual level and a power choice for Forge and Forge
+           Desktop; applying asks first and can be undone (resets.js). -->
+      <section class="card" id="machine-panel" data-section="machine" data-title="Pick for my machine" data-keywords="pick for my machine hardware detect cpu gpu graphics ram memory battery watt wattage power visual effects level auto suit extension desktop">
+        <div class="section-head"><h3>Pick for my machine</h3><button class="btn" id="mc-again" type="button">↻ Read again</button></div>
+        <div class="muted small">Reads this computer's processor, graphics, memory and battery, then picks how much
+          visual effect and how much power Forge should use. Change either pick before applying.</div>
+        <div id="mc-facts" class="mc-facts"></div>
+        <div class="muted small" id="mc-why"></div>
+        <div class="mc-rows">
+          <div class="lp-row item" data-search="visual effects level light balanced rich full"><span>Visual effects</span><div class="seg" id="mc-visual"></div></div>
+          <div class="lp-row item" data-search="power wattage saver balanced performance battery"><span>Power use</span><div class="seg" id="mc-power"></div></div>
+        </div>
+        <div class="muted small" id="mc-about"></div>
+        <div class="choices">
+          <label class="switch"><input type="checkbox" id="mc-forge" checked> Forge</label>
+          <label class="switch" title="The desktop extension: wallpaper particles, the cover and the bar on the desktop itself"><input type="checkbox" id="mc-desktop" checked> Forge Desktop (the desktop extension)</label>
+          <button class="btn btn-primary" id="mc-apply" type="button">Apply…</button>
+        </div>
+      </section>
+
+      <section class="card" id="layout-panel" data-section="layout" data-title="Layout" data-keywords="layout sidebar tabs one page density compact comfortable width wide pin pinned">
+        <h3>Layout</h3>
+        <div class="muted small">How this Settings app is laid out. Kept in this browser only.</div>
+        <div class="lp-rows">
+          <div class="lp-row"><span>Sections</span><div class="seg" data-pref="nav">
+            <button type="button" data-v="sidebar">Sidebar</button><button type="button" data-v="tabs">Tabs</button><button type="button" data-v="page">One page</button></div></div>
+          <div class="lp-row"><span>Density</span><div class="seg" data-pref="density">
+            <button type="button" data-v="comfy">Comfortable</button><button type="button" data-v="compact">Compact</button></div></div>
+          <div class="lp-row"><span>Width</span><div class="seg" data-pref="width">
+            <button type="button" data-v="normal">Normal</button><button type="button" data-v="wide">Wide</button></div></div>
+          <div class="muted small">Pin a section with the ☆ beside it in the list. Pinned ones go to the top.</div>
+          <button class="btn" id="layout-reset" type="button">Reset layout</button>
+        </div>
+      </section>
+
+      <!-- Reset groups: settings that belong together, from reset_groups.json. -->
+      <section class="card" id="resets-panel" data-section="resets" data-title="Reset" data-keywords="reset defaults default groups visual effects power wifi wi-fi bluetooth forget look size shortcuts auto-close undo">
+        <h3>Reset</h3>
+        <div class="muted small">Put a group of settings that belong together back to the defaults. Each one shows
+          what changes and asks first, and a copy of your settings is kept so Undo puts them back.</div>
+        <div id="rg-list" class="rg-list"></div>
+      </section>
+
+      <section class="card" data-section="about" data-title="About" data-keywords="about version edition licence license key support report diagnostics reset all defaults where kept cache backup copies undo">
+        <h3>About</h3>
+        <!-- Version, edition and licence from /api/about (about.js over
+             shared/forge_edition.py); the editions are declared, not enforced. -->
+        <div class="about-forge">
+          <div class="about-head"><strong id="about-name">Forge</strong><span class="muted small" id="about-version"></span><span class="about-edition" id="about-edition"></span></div>
+          <div class="small" id="about-line"></div>
+          <div class="about-rows" id="about-rows"></div>
+          <details><summary class="muted small">What each edition adds</summary>
+            <ul class="about-features" id="about-features"></ul>
+            <div class="muted small" id="about-enforced"></div>
+          </details>
+          <div class="about-actions">
+            <button class="btn" id="licence-add" type="button">Add a licence file…</button>
+            <button class="btn" id="licence-remove" type="button" hidden>Remove licence…</button>
+            <button class="btn" id="support-report" type="button">Make a support report</button>
+            <input type="file" id="licence-file" accept=".json,.forge-licence,application/json" hidden>
+          </div>
+          <div class="muted small" id="about-said" aria-live="polite"></div>
+        </div>
+        <div class="muted small" id="where"></div>
+        <h4>Kept copies</h4>
+        <div class="muted small">Every reset keeps your settings as they were. Put one back here.</div>
+        <div id="rb-list" class="rb-list"></div>
+        <div class="card-foot"><button class="btn btn-danger" id="reset" type="button">Reset all settings…</button></div>
+      </section>
+
+      <div class="card muted" id="no-match" hidden>No setting matches that search.</div>
+    </div>
+    </div>
+  </main>
+</div>
+<script src="/shared/forge_chrome.js"></script>
+<script src="/shared/forge_lightbox.js"></script>
+<script src="/shared/forge_idle.js"></script>
+<script src="/shared/forge_dialog.js"></script>
+<script src="/shared/forge_theme_cards.js"></script>
+<script src="app.js"></script>
+<script src="resets.js"></script>
+<script src="system.js"></script>
+<script src="business.js"></script>
+<script src="themes.js"></script>
+<script src="about.js"></script>
+</body>
+</html>

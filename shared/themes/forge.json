@@ -1,0 +1,16 @@
+{
+  "label": "Forge",
+  "order": 0,
+  "tags": [
+    "dark",
+    "default"
+  ],
+  "about": "Forge as it comes: frosted glass over your desktop's picture, colours taken from it, a big clock and one row of apps per section.",
+  "look": "classic",
+  "layout": "forge",
+  "wallpaper": "",
+  "lighter": {
+    "balanced": {},
+    "light": {}
+  }
+}

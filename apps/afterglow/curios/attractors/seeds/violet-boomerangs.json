@@ -1,0 +1,28 @@
+{
+  "name": "Violet boomerangs",
+  "note": "Bands that swing out and come back, crossing each other like boomerangs thrown in the dark. Exponent 0.27 bits per iteration, dimension about 1.35. Try the drift in the Lab on this one: it breathes nicely before it runs out of chaos.",
+  "author": "Claude",
+  "made": "2026-10-09T10:12:00",
+  "data": {
+    "code": "IJXMBVOTKSCJ",
+    "coeffs": [
+      -0.4,
+      -0.3,
+      1.1,
+      0.0,
+      -1.1,
+      0.9,
+      0.2,
+      0.7,
+      -0.2,
+      0.6,
+      -1.0,
+      -0.3
+    ],
+    "palette": "dusk",
+    "exposure": 1.25,
+    "gamma": 1.25,
+    "lyapunov": 0.268632,
+    "dimension": 1.3519
+  }
+}

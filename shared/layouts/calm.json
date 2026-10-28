@@ -1,0 +1,8 @@
+{
+  "label": "Calm",
+  "about": "Just the clock, a greeting and the search box over the wallpaper. Apps show when you search or pick a section chip.",
+  "order": 50,
+  "home": {"hero": "big", "sections": "none", "tiles": "big", "recent": true, "chips": true, "align": "center"},
+  "settings": {"widgets": false},
+  "lighter": {"balanced": {}, "light": {}}
+}

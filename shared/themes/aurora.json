@@ -1,0 +1,43 @@
+{
+  "label": "Aurora",
+  "order": 82,
+  "tags": [
+    "nature",
+    "live",
+    "dark",
+    "calm"
+  ],
+  "about": "Northern lights waving slowly over a dark lake, green and violet glow on deep blue glass.",
+  "look": "classic",
+  "layout": "calm",
+  "colours": {
+    "accent": "#4fe0a8",
+    "bg": "#070d14",
+    "panel": "#0d1620",
+    "panel_2": "#121e2a",
+    "border": "#1d3040",
+    "text": "#e2f2ee",
+    "muted": "#88a8a4"
+  },
+  "font": "inter",
+  "wallpaper": [
+    "forge:aurora.jpg",
+    ""
+  ],
+  "live": "aurora",
+  "companion": "",
+  "settings": {
+    "particles": "off",
+    "dim": 0.05,
+    "glass_style": "frosted",
+    "border": "gradient",
+    "radius": 18,
+    "motion": "float"
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {
+      "live": "off"
+    }
+  }
+}

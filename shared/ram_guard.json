@@ -1,0 +1,295 @@
+{
+  "_about": "Every RAM rule on this laptop, in one place, and since 2026-10-22 the CPU, disk, GPU and battery rules too (sections disk, gpu, battery and the extra headroom fields; shared/forge_ram.py measures them). The Power app's guard (apps/power/ram_guard.py, user service forge-ram-guard) reads it every few seconds: above warn_percent it sends one WhatsApp note (only while send_notes is true; otherwise every note goes to log_file only), above kill_percent it shuts down the groups below in order, first entry first, one step at a time, waiting settle_seconds and checking again after each. 'headroom' holds the limits shared/forge_ram.py uses before something heavy starts (the boss before a new session, Claude sessions before a render). RAM in use means total minus MemAvailable, so tmpfs files such as /tmp count and page cache does not. Edits apply on the next check, with no restart.",
+  "_groups": "Each group: name, label (used in log lines and WhatsApp notes), match and exclude (lists of rules; a rule is an object whose keys must all hold: comm = full match of the 15-character process name, args = search in the command line, cwd = search in the working folder, cgroup = search in the cgroup path (flatpak apps sit in app-flatpak-<id>-N.scope), port = listening TCP port). A process belongs to the LAST group that matches it, so a later, more important group always wins. children: processes below a member that match nothing themselves join the group. claim: names of earlier groups whose members this group takes over when they run below it (the Forge Claude app's own claude sessions). one_at_a_time: stop the biggest unit (a member and what runs below it) and check again, instead of the whole group. min_mb: skip a unit (or the whole group) smaller than this. min_percent: only touch this group above this RAM level. signal 'KILL' skips SIGTERM (for a process whose SIGTERM handler would take later groups down with it). stop_command: run first (for a service that systemd would restart under a new pid). If futile_steps steps in a row each lowered RAM by less than futile_drop_percent, something unlisted is filling RAM: the guard says so and pauses futile_pause_minutes. Anything that matches no group is never touched; protected rules are never touched even when a group matches.",
+  "warn_percent": 85,
+  "warn_rearm_percent": 80,
+  "warn_every_minutes": 30,
+  "kill_percent": 90,
+  "confirm_polls": 2,
+  "poll_seconds": 5,
+  "settle_seconds": 15,
+  "futile_drop_percent": 0.5,
+  "futile_steps": 2,
+  "futile_pause_minutes": 10,
+  "term_grace_seconds": 6,
+  "send_notes": false,
+  "_send_notes": "Off since 2026-10-21 (the owner, Relay task 253: no more RAM guard messages to him or a friend). False = warnings, shutdowns and closes are only written to log_file, never sent through notify_command; the guard still shuts things down at kill_percent. Set true to send them on WhatsApp again (applies on the next check).",
+  "notify_command": ["~/.local/bin/relay", "reply"],
+  "log_file": "~/.local/state/forge-power/ram_guard.log",
+  "tmpfs_paths": ["/tmp", "/dev/shm"],
+  "disk": {
+    "_about": "The disk whose free space min_free_gb in a headroom rule means.",
+    "path": "~"
+  },
+  "gpu": {
+    "_about": "One GPU job at a time: forge_ram.py run --gpu (or a rule with gpu: true) waits for this lock and holds it until the job ends; render.sh and others take it with flock(1). check --gpu and status name who holds it (from /proc/locks).",
+    "lock": "/run/user/{uid}/forge-igpu.lock"
+  },
+  "battery": {
+    "_about": "Slow down as the battery drops (the owner 2026-10-22, Relay task 271: with several sessions running it often drains faster than it charges). A step comes on while the battery is draining (plugged in or not) and its percent is under below_percent; once on, it stays on (draining or not) until the battery is resume_margin points above that line, so plugging in never makes it stricter and nothing flaps (the step on now is kept in paused_file). The lowest matching step wins, and each step lists everything it sets. max_relay_sessions: the boss starts no new session past this many (running ones go on; launch-now and important tasks still go). heavy_nice and heavy_cpu_quota: the nice level and systemd CPUQuota of jobs started with forge_ram.py run, and the forge-ram-guard service sets the quota live on the running capped_units (back to none once no step applies). hold: headroom purposes that wait. pause_groups: groups below whose processes the guard pauses (SIGSTOP) and resumes (SIGCONT) once the step lifts; the paused list is kept in paused_file so a restarted guard resumes them, and a stopped guard resumes them on its way out. min_pause_mb: processes smaller than this are not paused (a shell or a grep that only names render.sh); their heavy children are. Jan is never in a pause list. CPU power limits are never touched here (they are the Power app's modes). Edits apply on the next check.",
+    "enabled": true,
+    "power_supply": "/sys/class/power_supply",
+    "resume_margin": 5,
+    "paused_file": "~/.local/state/forge-power/battery_guard.json",
+    "capped_units": ["forge-heavy-*.scope", "battlebot-train.service"],
+    "min_pause_mb": 20,
+    "relay_file": "~/.local/state/forge-power/battery_relay.json",
+    "relay_wait_seconds": 120,
+    "_shutdown": "The low-battery shutdown (the owner 2026-10-22, Relay task 274): a step with stop_groups stops those groups once, the moment it comes on (a paused job is woken first so it can exit; each entry is {group, and optional match, label, resume}: match stops only the processes of that group a rule matches, such as Jan's llama-server without the Jan window; resume is the how-to-resume line of the note). Apps the owner uses himself (Firefox, Discord, editors, terminal Claude sessions), the Forge hub and Claude app, and the boss and WhatsApp window are in no stop list. relay_hand_over: the boss hands every running work session over (it writes its State, then waits in the queue) and starts only tasks he says to launch now; it lists them in relay_file. notify: one WhatsApp note through notify_command saying what stopped, how to resume and what was left_alone, sent even while send_notes is off, once the boss has listed its hand-overs or relay_wait_seconds have passed. Nothing is started again by the guard: Relay starts sessions once the battery is past the steps' max_relay_sessions 0 lines plus resume_margin, a Forge app starts when its page is opened, Jan with jan start.",
+    "steps": [
+      {"name": "easy", "below_percent": 50, "max_relay_sessions": 3, "heavy_nice": 10, "heavy_cpu_quota": "600%"},
+      {"name": "low", "below_percent": 30, "max_relay_sessions": 1, "heavy_nice": 15, "heavy_cpu_quota": "300%", "hold": ["heavy_job"], "pause_groups": ["renders", "battlebot-training", "ai-generation"]},
+      {"name": "critical", "below_percent": 15, "max_relay_sessions": 0, "heavy_nice": 19, "heavy_cpu_quota": "100%", "hold": ["heavy_job", "light_check"], "pause_groups": ["renders", "battlebot-training", "ai-generation", "model-servers"]},
+      {"name": "shutdown", "below_percent": 11, "max_relay_sessions": 0, "heavy_nice": 19, "heavy_cpu_quota": "100%", "hold": ["heavy_job", "light_check"], "pause_groups": ["renders", "battlebot-training", "ai-generation", "model-servers"], "relay_hand_over": true, "notify": true,
+       "stop_groups": [
+        {"group": "jan", "match": [{"comm": "llama-server"}], "label": "Jan's model server", "resume": "say jan start or open Jan (a WhatsApp chat in local mode starts it again too)"},
+        {"group": "model-servers", "resume": "start them again by hand"},
+        {"group": "test-browsers"},
+        {"group": "battlebot-training", "resume": "it starts again by itself once the battery is back up"},
+        {"group": "ai-generation", "label": "AI Studio and its generation", "resume": "open AI Studio in Forge"},
+        {"group": "renders", "resume": "start them again by hand, they do not pick up by themselves"},
+        {"group": "forge-app-backends", "label": "Forge app backends", "resume": "open the app in Forge and it starts again"}
+       ],
+       "left_alone": "Firefox, Discord, your editors, terminal Claude sessions, the Forge window and its Claude app"}
+    ]
+  },
+  "headroom": {
+    "app_warm": {
+      "_why": "Forge starts an app ahead of a click (the pointer resting on its tile, or Start ahead) only while RAM has this much room; a click still starts it whatever the RAM.",
+      "max_ram_percent": 75,
+      "max_swap_percent": 100,
+      "min_available_mb": 3072
+    },
+    "relay_launch": {
+      "_why": "the boss starts no new session while RAM is this full (swap ignored: the owner 2026-10-15, 32 GB RAM, full swap is fine); it waits and tries again each tick.",
+      "max_ram_percent": 85,
+      "max_swap_percent": 100,
+      "_more": "CPU load and free disk for a new session are the own settings (max_load_per_cpu, min_free_gb in its settings.json, editable in its page); the battery caps sessions through battery.steps max_relay_sessions."
+    },
+    "heavy_job": {
+      "_why": "Renders, encodes, model runs and test browsers started through forge_ram.py run: wait for this much room, then run in a scope capped at mem_max with at most swap_max of swap.",
+      "max_ram_percent": 80,
+      "max_swap_percent": 100,
+      "min_available_mb": 2048,
+      "min_free_gb": 5,
+      "max_load_per_cpu": 1.25,
+      "_cpu_why": "2026-10-22: with six Relay sessions, browsers and the hub the 1-minute load sits near 0.6-0.9 per CPU; one render adds about 1.0, so a second render waits for the first instead of both crawling.",
+      "mem_max": "50%",
+      "swap_max": "1G",
+      "_swap_why": "2026-10-20: max_swap_percent was 90. Swap here is an 8 GB zram disk that lives in RAM, so after a long uptime it sits at 93-100% even with 14 GB available, and it held every headless test browser of the Forge sweep for 30-50 minutes. The owner said on 2026-10-15 that full swap is fine (see relay_launch); the RAM limits above still hold heavy jobs back."
+    },
+    "light_check": {
+      "_why": "Small jobs that are already capped (a pytest run, one headless test browser): start them while at least min_available_mb is free, even when total RAM use is past heavy_job's 80%. Use: forge_ram.py run --purpose light_check --name X -- CMD. Added 2026-10-20 after headless checks of the Forge sweep waited 10 minutes at 81% RAM with 6 GB still available.",
+      "max_ram_percent": 88,
+      "max_swap_percent": 100,
+      "min_available_mb": 3072,
+      "min_free_gb": 1,
+      "mem_max": "3G",
+      "swap_max": "512M"
+    },
+    "model_load": {
+      "_why": "Forge Models (apps/forge-models) before it loads a text model: the model's own size (weights, KV cache, buffers) must fit in MemAvailable on top of min_available_mb. 4096 MB keeps RAM under about 87% after the load, below the guard's 90% line (which would stop Jan first). When it does not fit, Forge Models first unloads its own idle models, then refuses the load with this reason. Added 2026-10-27.",
+      "max_ram_percent": 88,
+      "max_swap_percent": 100,
+      "min_available_mb": 4096
+    }
+  },
+  "protected": [
+    {"comm": "gnome-shell|gnome-session.*|Hyprland|Xwayland|pipewire.*|wireplumber|systemd|dbus-.*|earlyoom|gdm.*|sshd"},
+    {"args": "python\\S* \\S*ram_guard\\.py run"}
+  ],
+  "auto_close": {
+    "_about": "the owner's own closing rules on top of the stop order below, one per app (shared/forge_autoclose.py; set in the Settings app's System section). Every group below is a target; an entry here gives it a label, idle signals and defaults, or splits a group with match (checked against every process of a unit). The forge_apps group becomes one target per Forge app found under apps/, matched by its manifest port; a manifest may add auto_close {idle: false, why, enabled, idle_minutes, save, busy} (save: POST path called before closing, the close is skipped if it fails; busy: GET path, the close is skipped while it answers busy true or does not answer). His choices live in rules_file. A rule that is on gives the target its own RAM level (ram_percent, never below ram_min; none = this registry's kill_percent or the group's min_percent) and an idle time. Off = none of his rules: only the emergency order can close it. Below kill_percent a RAM rule only closes something that has run at least rule_min_minutes and is not in front. Idle means none of the target's signals for idle_minutes, counted from when the guard first saw it: requests (a new connection to or from the unit), cpu (above cpu_percent of one core) and focus (the focused window belongs to it, from org.forge.Desktop.FocusedPid in the Forge desktop extension). A Forge app the hub shows in front (~/.local/state/forge/front.json) is in use. Closes below kill_percent are logged and listed in status_file, sent to WhatsApp only when notify is true.",
+    "rules_file": "~/.config/forge/auto_close.json",
+    "status_file": "~/.local/state/forge-power/auto_close.json",
+    "front_file": "~/.local/state/forge/front.json",
+    "idle_check_seconds": 40,
+    "status_every_seconds": 300,
+    "cpu_percent": 3,
+    "rule_min_minutes": 10,
+    "idle_min_mb": 200,
+    "notify": false,
+    "ram_range": [50, 99],
+    "idle_choices": [0, 10, 15, 20, 30, 45, 60, 90, 120, 180, 240, 480],
+    "forge_apps": {
+      "group": "forge-app-backends",
+      "signals": ["requests", "cpu"],
+      "enabled": false,
+      "idle_minutes": 60,
+      "sleep": {
+        "_about": "Forge's own gentler close (forge_sleep.py, Relay task 272): an app backend idle this long is stopped while Forge keeps listening on its port, and the page's next request, or the app coming to the front, starts it again on that socket. The page never reloads and no request fails; the first one after a sleep waits about a second. Idle = not in front, no open TCP connection, no child process, under cpu_percent of one core, and the manifest's busy path (if any) not busy. Skipped for always_on apps, auto_close false or idle false in the manifest, and apps whose rule in Settings is off.",
+        "enabled": true,
+        "idle_minutes": 20,
+        "check_seconds": 30,
+        "cpu_percent": 3
+      }
+    },
+    "targets": [
+      {"name": "jan", "label": "Jan", "icon": "🦙", "group": "jan", "signals": ["requests", "cpu", "focus"], "enabled": true, "idle_minutes": 60, "idle_min_mb": 1000, "note": "The Jan app and its model servers, usually the biggest thing in RAM. Idle-closed only while a model is loaded (over 1 GB)."},
+      {"name": "model-servers", "label": "Other model servers", "group": "model-servers", "signals": ["requests", "cpu"], "enabled": true, "idle_minutes": 30},
+      {"name": "test-browsers", "label": "Headless test browsers", "group": "test-browsers", "signals": ["cpu"], "enabled": true, "idle_minutes": 20, "note": "Left-over check and screenshot browsers with a throwaway profile."},
+      {"name": "battlebot-training", "label": "Battle bot training", "group": "battlebot-training", "idle": false, "why": "it trains without end on purpose (Relay 210)"},
+      {"name": "ai-studio", "label": "AI Studio", "icon": "🎨", "group": "ai-generation", "signals": ["requests", "cpu"], "enabled": true, "idle_minutes": 30, "note": "The AI Studio backend and the image and video servers it starts."},
+      {"name": "firefox-tabs", "label": "Firefox tabs", "icon": "🦊", "group": "browser-tabs-and-chat", "match": [{"comm": "Isolated Web Co"}], "signals": ["cpu"], "idle_minutes": 120, "note": "One tab process at a time; the tab shows a reload button and Firefox stays open."},
+      {"name": "whatsie", "label": "WhatsApp (Whatsie)", "icon": "💬", "group": "browser-tabs-and-chat", "match": [{"cgroup": "app-flatpak-com\\.ktechpit\\.whatsie-"}], "signals": ["focus", "requests"], "idle_minutes": 120, "note": "The ordinary WhatsApp window; the own window is a separate target."},
+      {"name": "discord", "label": "Discord", "group": "browser-tabs-and-chat", "match": [{"cgroup": "app-flatpak-com\\.discordapp\\.Discord-"}], "signals": ["focus"], "idle_minutes": 120},
+      {"name": "steam", "label": "Steam", "group": "browser-tabs-and-chat", "match": [{"cgroup": "app-flatpak-com\\.valvesoftware\\.Steam-"}, {"comm": "steam|steamwebhelper"}], "signals": ["focus", "cpu"], "idle_minutes": 120},
+      {"name": "chrome", "label": "Chrome", "group": "browser-tabs-and-chat", "match": [{"cgroup": "app-flatpak-com\\.google\\.Chrome-"}], "signals": ["focus", "cpu"], "idle_minutes": 120},
+      {"name": "browser-tabs-and-chat", "label": "Other browser and chat processes", "group": "browser-tabs-and-chat", "idle": false, "why": "only named apps are closed for being idle"},
+      {"name": "renders", "label": "Renders and encodes", "group": "renders", "idle": false, "why": "a render is work in progress"},
+      {"name": "editors", "label": "Blender, Godot and other editors", "group": "editors", "idle": false, "why": "unsaved work would be lost", "ram_min": 90},
+      {"name": "forge-app-backends", "label": "Other Forge app backends", "group": "forge-app-backends", "idle": false, "why": "test servers and apps outside the list"},
+      {"name": "claude-code-sessions", "label": "Claude Code sessions", "group": "claude-code-sessions", "idle": false, "why": "a session may be working", "ram_min": 90},
+      {"name": "relay-boss", "label": "the boss", "group": "relay-boss", "idle": false, "why": "it runs your queued tasks", "ram_min": 90},
+      {"name": "relay-whatsapp", "label": "the WhatsApp window", "group": "relay-whatsapp", "idle": false, "why": "Relay sends and reads your messages through it", "ram_min": 90},
+      {"name": "forge-hub", "label": "The Forge hub", "group": "forge-hub", "idle": false, "why": "it is Forge itself", "ram_min": 97},
+      {"name": "forge-claude-app", "label": "The Forge Claude app", "group": "forge-claude-app", "idle": false, "why": "it holds your conversations", "ram_min": 97}
+    ]
+  },
+  "groups": [
+    {
+      "name": "jan",
+      "label": "Jan and its model servers",
+      "note": "First to go, always: the Jan app, its llama-server router on port 1337 and anything else serving Jan models.",
+      "match": [
+        {"cgroup": "app-flatpak-ai\\.jan\\.Jan-"},
+        {"comm": "llama-server"},
+        {"port": 1337},
+        {"args": "ai\\.jan\\.Jan|/Jan/data/"}
+      ],
+      "children": true
+    },
+    {
+      "name": "model-servers",
+      "label": "other local model servers",
+      "match": [
+        {"comm": "ollama|ollama_llama_se|koboldcpp|llamafile|whisper-server|sd-server|vllm"},
+        {"args": "ComfyUI/main\\.py|text-generation-webui|llama_cpp\\.server"}
+      ],
+      "children": true
+    },
+    {
+      "name": "test-browsers",
+      "label": "headless test browsers",
+      "note": "Check and screenshot browsers with a throwaway /tmp profile: cheap to run again. The browser inside a HyperFrames render is left to the renders group.",
+      "match": [
+        {"args": "--headless"},
+        {"args": "--user-data-dir=/tmp/|puppeteer_dev_chrome_profile"}
+      ],
+      "exclude": [{"args": "/hyperframes/"}],
+      "children": true,
+      "one_at_a_time": true
+    },
+    {
+      "name": "battlebot-training",
+      "label": "the battle bot training",
+      "note": "Relay 210's endless forge-v6 training (battlebot-train.service, capped at 80% by its own MemoryMax). It saves every generation, and systemd starts it again 5 minutes after the guard stops it, once forge_ram.py finds room (heavy_job rule), so it goes before anything open on screen.",
+      "match": [{"cgroup": "battlebot-train\\.service"}],
+      "children": true
+    },
+    {
+      "name": "ai-generation",
+      "label": "AI image and video generation",
+      "match": [
+        {"cwd": "/Forge/apps/ai-studio$", "args": "uvicorn"},
+        {"args": "diffusers|stable-diffusion|sd-scripts|kohya"}
+      ],
+      "children": true,
+      "one_at_a_time": true
+    },
+    {
+      "name": "browser-tabs-and-chat",
+      "label": "browser tabs and chat apps",
+      "note": "Firefox tabs one at a time, biggest first (the tab shows a reload button; Firefox itself stays). Then Discord, Steam, Chrome windows and the non-Relay WhatsApp window.",
+      "match": [
+        {"comm": "Isolated Web Co"},
+        {"cgroup": "app-flatpak-com\\.discordapp\\.Discord-"},
+        {"cgroup": "app-flatpak-com\\.valvesoftware\\.Steam-"},
+        {"comm": "steam|steamwebhelper"},
+        {"cgroup": "app-flatpak-com\\.google\\.Chrome-"},
+        {"cgroup": "app-flatpak-com\\.ktechpit\\.whatsie-"}
+      ],
+      "exclude": [{"args": "--headless|--user-data-dir=/tmp/"}],
+      "children": true,
+      "one_at_a_time": true,
+      "min_mb": 150
+    },
+    {
+      "name": "renders",
+      "label": "renders and encodes",
+      "note": "Background Blender and Godot, HyperFrames renders (with their browser), ffmpeg, render scripts and anything run through forge_ram.py run. Biggest first.",
+      "match": [
+        {"comm": "blender", "args": "(^|\\s)(-b|--background)(\\s|$)"},
+        {"comm": "godot.*", "args": "--headless"},
+        {"args": "hyperframes render|/nt-render/|render\\.sh"},
+        {"comm": "ffmpeg"},
+        {"cgroup": "forge-heavy-"}
+      ],
+      "children": true,
+      "one_at_a_time": true,
+      "min_mb": 100
+    },
+    {
+      "name": "editors",
+      "label": "Blender, Godot and other open editors",
+      "note": "Late because unsaved work is lost.",
+      "match": [{"comm": "blender|godot.*|gimp.*|krita|kdenlive|inkscape"}],
+      "exclude": [{"args": "(^|\\s)(-b|--background|--headless)(\\s|$)"}],
+      "children": true,
+      "one_at_a_time": true
+    },
+    {
+      "name": "forge-app-backends",
+      "label": "a Forge app backend",
+      "note": "Biggest first; the app's tab shows it is away until Forge starts it again. The Claude app is its own last group; AI Studio goes with ai-generation.",
+      "match": [{"cwd": "/Forge/apps/[^/]+$", "args": "uvicorn|web_app"}, {"cwd": "/forge/store/pkgs/"}],
+      "exclude": [{"cwd": "/Forge/apps/ai-studio$"}],
+      "children": true,
+      "one_at_a_time": true,
+      "min_mb": 100
+    },
+    {
+      "name": "claude-code-sessions",
+      "label": "a Claude Code session",
+      "note": "Relay work sessions and terminal sessions, biggest first. A Relay task picks up from its State file; a terminal session can be resumed.",
+      "match": [{"comm": "claude"}],
+      "children": true,
+      "one_at_a_time": true,
+      "min_mb": 100
+    },
+    {
+      "name": "relay-boss",
+      "label": "the boss",
+      "note": "Its work sessions are not taken with it (they are Claude Code sessions above).",
+      "match": [{"args": "apps/relay/.*boss\\.py"}],
+      "stop_command": ["systemctl", "--user", "stop", "relay-boss.service"],
+      "children": false
+    },
+    {
+      "name": "relay-whatsapp",
+      "label": "the WhatsApp window",
+      "note": "Kept late so the guard can still send its notes.",
+      "match": [{"args": "whatsie.*--profile relay|whatsie-relay"}],
+      "claim": ["browser-tabs-and-chat"],
+      "children": true
+    },
+    {
+      "name": "forge-hub",
+      "label": "the Forge hub",
+      "note": "SIGKILL, not SIGTERM: Forge's quit handler would stop every app backend, the Claude app too. Its window processes go with it; the backends run on.",
+      "match": [{"args": "python[0-9.]*\\s+\\S*/Forge/forge\\.py(\\s|$)"}],
+      "signal": "KILL",
+      "children": true,
+      "min_percent": 97
+    },
+    {
+      "name": "forge-claude-app",
+      "label": "the Forge Claude app",
+      "note": "The very last thing ever shut down, with its own chat sessions.",
+      "match": [{"cwd": "/Forge/apps/claude$", "args": "uvicorn|web_app"}],
+      "claim": ["claude-code-sessions", "test-browsers"],
+      "children": true,
+      "min_percent": 97
+    }
+  ]
+}

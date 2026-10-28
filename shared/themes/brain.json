@@ -1,0 +1,15 @@
+{
+  "label": "Brain Shell",
+  "order": 80,
+  "tags": [
+    "dark"
+  ],
+  "about": "A thin screen frame with rounded inner corners, the bar as a notch from the top edge and dot workspaces.",
+  "look": "brain",
+  "layout": "forge",
+  "wallpaper": "",
+  "lighter": {
+    "balanced": {},
+    "light": {}
+  }
+}

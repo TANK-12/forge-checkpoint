@@ -1,0 +1,16 @@
+{
+  "id": "cable_bowden",
+  "name": "Bowden cable drive (motor on the back)",
+  "kind": "cable",
+  "mass_kg": 0.15,
+  "remote_mass_kg": 1.0,
+  "torque_cont_nm": 20,
+  "torque_peak_nm": 40,
+  "speed_max_rad_s": 6,
+  "efficiency": 0.55,
+  "stiffness_nm_rad": 600,
+  "backdrivable": true,
+  "power_cont_w": 120,
+  "note": "The motor sits in the backpack and pulls a sheathed cable to the joint: light at the joint, lossy and springy.",
+  "source": "Typical of cable-driven exosuit drives; friction losses 30-50% (approximate)."
+}

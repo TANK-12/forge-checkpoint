@@ -1,0 +1,64 @@
+{
+  "name": "terminal",
+  "label": "Terminal",
+  "tagline": "Your shell, in tabs, inside Forge",
+  "help": {
+    "about": "Your computer's command line, in tabs inside Forge, with split panes and find in the scrollback.",
+    "features": [
+      "Tabs and split panes",
+      "Find in scrollback",
+      "Tab names",
+      "Settings"
+    ]
+  },
+  "port": 8459,
+  "module": "web_app:app",
+  "src_dir": ".",
+  "accent": "#8fd18a",
+  "icon": "⌨️",
+  "auto_close": {
+    "idle": false,
+    "why": "closing it ends your open shells"
+  },
+  "role": "terminal",
+  "order": 95,
+  "section": "system",
+  "ready_timeout": 30,
+  "manifest": {
+    "summary": "Real login shells in tabs and split panes inside Forge (xterm.js over a WebSocket to pseudo-terminals); a reload keeps every shell and its screen.",
+    "features": [
+      {
+        "name": "Tabs and split panes",
+        "description": "Each tab holds a tree of panes, each its own shell; Ctrl+Shift+D / E split, Ctrl+Shift+arrows move focus, dividers drag, the layout survives a reload."
+      },
+      {
+        "name": "Find in scrollback",
+        "description": "Ctrl+Shift+F: live match count, highlights, match case, whole word and regular expression."
+      },
+      {
+        "name": "Tab names",
+        "description": "Double-click a tab (or right-click > Rename tab) to name it; an empty name goes back to the program or folder; names survive a reload."
+      },
+      {
+        "name": "Activity and bell marks",
+        "description": "A tab behind the one in front gets an accent dot when it prints something and an amber dot when a program rings the bell (Claude Code can); opening the tab clears it."
+      },
+      {
+        "name": "Settings panel",
+        "description": "The gear: text size and scrollback lines (slider plus number box), cursor style, blinking cursor, copy on select, back to defaults; built from the PREFS list in static/app.js."
+      },
+      {
+        "name": "Safe big pastes",
+        "description": "Input the shell has not read yet waits in a queue instead of blocking the backend; Ctrl+C while a paste is still going in drops the rest and interrupts the program."
+      },
+      {
+        "name": "Calm reconnects",
+        "description": "If the backend goes away, one shared retry (1.5 s doubling to 30 s, paused while hidden) asks for a fresh token and only then reopens the lost panes."
+      }
+    ],
+    "known_gaps": [
+      "Shells end when Forge closes (no detached host process yet).",
+      "Not yet seen inside the owner's Forge window (WebKitGTK); checked in headless Chrome."
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "settings-place",
+  "label": "Settings",
+  "tagline": "How Forge looks and works, desktops and keys",
+  "icon": "⚙️",
+  "accent": "#9aa5b1",
+  "order": 99,
+  "section": "system",
+  "tabs": true,
+  "members": [
+    "settings",
+    "setups",
+    "keymap"
+  ],
+  "tab_labels": {
+    "settings": "Settings",
+    "setups": "Setups",
+    "keymap": "Keymap"
+  },
+  "note": "Relay task 383. Undo this fold with \"off\": true; the apps keep their own folders and data."
+}

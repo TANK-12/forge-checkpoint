@@ -1,0 +1,29 @@
+/* look: Tiled | Tighter gaps, sharper corners, a turning gradient border and a slim top bar */
+/* Every rule is scoped to body.look-hyprland so a stale sheet can never leak
+   into another look while the link swaps. */
+@property --hypr-angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+body.look-hyprland { --gap: 7px; --radius: 10px; --bar-h: 34px; --tile-w: 220px;
+  --glass-fill: rgba(10, 12, 16, .78); --glass-line: rgba(255, 255, 255, .07); }
+body.look-hyprland #bar { border-radius: 8px; padding: 0 4px; gap: 6px;
+  font: 600 12.5px/1 "JetBrainsMono Nerd Font", "JetBrains Mono", ui-monospace, monospace; }
+body.look-hyprland .bar-btn { height: 26px; border-radius: 6px; }
+body.look-hyprland #workspaces { border-radius: 6px; gap: 2px; padding: 3px; }
+body.look-hyprland .ws { border-radius: 4px; height: 22px; min-width: 24px; }
+body.look-hyprland .ws.active { min-width: 42px; }
+body.look-hyprland .chip { border-radius: 5px; }
+body.look-hyprland .tile { border-radius: 10px; padding: 11px 12px; border: 1px solid var(--glass-line);
+  background: var(--glass-fill); }
+body.look-hyprland .tile .icon { border-radius: 8px; width: 40px; height: 40px; font-size: 20px; }
+body.look-hyprland .tile:hover, body.look-hyprland .tile.focus { transform: translateY(-2px); }
+body.look-hyprland .section-grid, body.look-hyprland #recent { gap: 8px; }
+body.look-hyprland .section-head .s-pill, body.look-hyprland .fchip, body.look-hyprland #search { border-radius: 8px; }
+body.look-hyprland #dock { border-radius: 10px; padding: 6px; gap: 4px; }
+body.look-hyprland .dock-item { border-radius: 8px; }
+/* the active window's border turns, like Hyprland's animated gradient */
+body.look-hyprland .workspace { padding: 3px; border-radius: 10px;
+  background: conic-gradient(from var(--hypr-angle), var(--accent), var(--accent-2),
+    color-mix(in srgb, var(--accent) 20%, transparent), var(--accent));
+  animation: hypr-turn 6s linear infinite; }
+body.look-hyprland .workspace .inner { border-radius: 7px; }
+body.look-hyprland.no-anim .workspace { animation: none; }
+@keyframes hypr-turn { to { --hypr-angle: 360deg; } }

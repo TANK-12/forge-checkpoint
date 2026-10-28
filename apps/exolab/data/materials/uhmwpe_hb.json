@@ -1,0 +1,13 @@
+{
+  "id": "uhmwpe_hb",
+  "name": "UHMWPE armour laminate (Dyneema-type)",
+  "short": "UHMWPE",
+  "category": "composite",
+  "colour": "#e8e6df",
+  "note": "Floats on water; stops fragments and pistol rounds; floppy as a structure.",
+  "density_kg_m3": 970,
+  "youngs_modulus_gpa": 25,
+  "yield_strength_mpa": 300,
+  "fatigue_strength_mpa": 100,
+  "source": "Typical laminate value (manufacturer datasheets, approximate); real laminates vary with lay-up."
+}

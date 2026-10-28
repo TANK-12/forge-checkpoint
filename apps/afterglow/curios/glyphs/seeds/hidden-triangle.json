@@ -1,0 +1,13 @@
+{
+  "name": "Hidden triangle",
+  "note": "x & y == 0 is a Sierpinski triangle, sitting in the bits of every pair of numbers. Here a wave washes over it from the centre, in ink on paper.",
+  "author": "Claude",
+  "made": "2026-10-09T10:01:00",
+  "data": {
+    "formula": "(x & y) == 0 ? sin(t*2 - r*0.5) : -0.1",
+    "grid": 32,
+    "speed": 1,
+    "palette": "paper",
+    "shape": "diamond"
+  }
+}

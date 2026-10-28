@@ -1,0 +1,46 @@
+{
+ "label": "Juno, on the night watch",
+ "jobs": [
+  "navigator, night watch"
+ ],
+ "weight": 2,
+ "exchanges": [
+  {
+   "say": "We've drifted four metres. Don't panic.",
+   "replies": [
+    "I wasn't going to.",
+    "Four?",
+    "Put it in the log."
+   ]
+  },
+  {
+   "say": "It's my breakfast. Don't judge.",
+   "replies": [
+    "At this hour?",
+    "No judgement.",
+    "That's a lot of coffee."
+   ]
+  },
+  {
+   "say": "The stars are where I left them, {listener}.",
+   "replies": [
+    "Good to know.",
+    "Did you count them?",
+    "Thank you, Juno."
+   ]
+  },
+  {
+   "say": "You're up early. Or late. Hard to tell.",
+   "replies": [
+    "Both, really.",
+    "Late.",
+    "Don't ask."
+   ]
+  }
+ ],
+ "hello": [
+  "Odd hour to be up.",
+  "The drift is steady.",
+  "Everything's where it should be, {you}."
+ ]
+}

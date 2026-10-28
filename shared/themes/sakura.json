@@ -1,0 +1,40 @@
+{
+  "label": "Sakura",
+  "order": 30,
+  "tags": [
+    "anime",
+    "live",
+    "dark"
+  ],
+  "about": "Cherry blossoms drifting over a dusk sky: soft pink light, round shapes and a friendly rounded font.",
+  "look": "classic",
+  "layout": "forge",
+  "colours": {
+    "accent": "#ff8fb8",
+    "bg": "#160f18",
+    "panel": "#22172a",
+    "panel_2": "#2b1d34",
+    "border": "#3d2a47",
+    "text": "#f6e9f0",
+    "muted": "#b99bb0"
+  },
+  "font": "rubik",
+  "wallpaper": [
+    "forge:sakura.jpg",
+    ""
+  ],
+  "live": "sakura",
+  "settings": {
+    "particles": "off",
+    "radius": 20,
+    "glass_style": "frosted",
+    "border": "accent",
+    "wall_3d": false
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {
+      "live": "off"
+    }
+  }
+}

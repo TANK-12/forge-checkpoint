@@ -1,0 +1,27 @@
+{
+  "label": "Simple",
+  "order": 15,
+  "tags": [
+    "simple",
+    "dark"
+  ],
+  "about": "Easy on the eyes and easy to find things: plain grey panels, no effects, a centred clock and every app in one big grid.",
+  "look": "classic",
+  "layout": "simple",
+  "font": "inter",
+  "wallpaper": "",
+  "settings": {
+    "theme_source": "neutral",
+    "particles": "off",
+    "glass_style": "flat",
+    "glass": 0.85,
+    "border": "subtle",
+    "wall_3d": false,
+    "wall_tint": false,
+    "dim": 0.3
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {}
+  }
+}

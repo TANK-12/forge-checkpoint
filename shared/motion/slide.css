@@ -1,0 +1,13 @@
+/* motion: Slide | Panes slide in from the left one after another; tiles nudge sideways when you point, like a list */
+/* lighter: light=still */
+/* Scoped to body.motion-slide (shared/motion/, task 377). The entrance keeps the
+   hub's timing rule: the move takes the first 16th of the run, then holds
+   (see home-in in hub/index.html), and moves transform only, never opacity.
+   The hub's reduced-motion and Animations-off rules switch all of it off. */
+@keyframes motion-slide-in { from { transform: translateX(-22px) } 6.25% { transform: none } to { transform: none } }
+body.motion-slide #home.enter :is(.tile, .section-head, .more-btn:not([hidden]), .fchip, #recent-wrap h3, .hero > div:first-child, #search, .widgets .wg) { animation-name: motion-slide-in; }
+@media (prefers-reduced-motion: no-preference) {
+  body.motion-slide .tile:hover, body.motion-slide .tile.focus { transform: translateX(5px); }
+  body.motion-slide .tile:hover .icon, body.motion-slide .tile.focus .icon { transform: translateX(2px); }
+  body.motion-slide .tile:active { transform: translateX(2px) scale(.99); }
+}

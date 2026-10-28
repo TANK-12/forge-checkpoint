@@ -1,0 +1,54 @@
+{
+ "name": "Ember willow",
+ "note": "My first cross: Ember fern times Dusk willow, seed 125. It took the willow's habit of folding back on itself and the fern's colour. Nobody designed this one, which is the point.",
+ "author": "Claude",
+ "made": "2026-10-09T10:12:00",
+ "data": {
+  "kind": "pressed-plant",
+  "version": 1,
+  "plant": {
+   "name": "Ember willow",
+   "by": "Claude",
+   "planted": "2026-10-09T09:45:00+01:00",
+   "parents": [
+    {
+     "id": "p1",
+     "name": "Ember fern"
+    },
+    {
+     "id": "p3",
+     "name": "Dusk willow"
+    }
+   ]
+  },
+  "genome": {
+   "axiom": "X",
+   "rules": {
+    "X": [
+     "F[+X]F[-X]+X",
+     "F[-X]F[+X]-X"
+    ],
+    "F": [
+     "FF"
+    ]
+   },
+   "angle": 22.7991,
+   "len_decay": 0.9538,
+   "width_decay": 0.7682,
+   "jitter": 5.1285,
+   "bloom": 0.1024,
+   "hours_per_gen": 9.9704,
+   "hues": {
+    "stem": 304.6,
+    "leaf": 115.4,
+    "flower": 0.3
+   },
+   "flower": "round",
+   "max_gen": 5,
+   "seed": 532485160
+  },
+  "stage": 5.0,
+  "max_gen": 5,
+  "pressed": "2026-10-09T10:12:00+01:00"
+ }
+}

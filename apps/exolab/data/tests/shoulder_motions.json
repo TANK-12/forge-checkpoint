@@ -1,0 +1,4 @@
+{"id": "shoulder_motions", "name": "Shoulder motions", "kind": "motions", "order": 2,
+ "about": "Plays named everyday and combat motions with the exo on: joint speeds and torques against the motors, gimbal lock, misalignment and strap pressure frame by frame, power and energy.",
+ "params": {"motions": ["overhead_reach", "side_raise", "reach_across", "reach_behind", "rifle_aim", "throw"], "fps": 30},
+ "rules": {}}

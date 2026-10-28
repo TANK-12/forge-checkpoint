@@ -1,0 +1,40 @@
+/* The Business card, the locked banner and the password prompt (business.js). */
+#business-panel h4 { margin: 16px 0 8px; font-size: 13px; font-weight: 600; color: var(--muted); }
+.biz-state { font-size: 12px; padding: 2px 10px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted); }
+.biz-state.locked { color: var(--text); border-color: var(--accent); }
+.biz-companies { display: grid; gap: 6px; }
+.biz-company { display: flex; align-items: center; gap: 12px; padding: 8px 10px; border-radius: 6px;
+  border: 1px solid var(--border); background: var(--panel-2); cursor: pointer; }
+.biz-company.on { border-color: var(--accent); }
+.biz-company img { width: 72px; height: 36px; object-fit: contain; flex: none; }
+.biz-company img.empty { visibility: hidden; }
+.biz-company-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.biz-add, .biz-pass { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 10px; }
+.biz-add input[type="text"], .biz-pass input { font: inherit; color: inherit; background: var(--panel-2);
+  border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; min-width: 180px; }
+.biz-file { cursor: pointer; }
+#biz-said { margin-top: 10px; min-height: 1.2em; }
+
+/* locked: everything but the Business card is shown, not usable */
+.lock-banner { display: flex; align-items: center; gap: 14px; padding: 10px 18px; font-size: 13.5px;
+  background: color-mix(in srgb, var(--accent) 16%, var(--panel)); border-bottom: 1px solid var(--border); }
+.lock-banner[hidden] { display: none; }
+.lock-banner span { flex: 1; }
+body.forge-locked .settings section[data-section]:not([data-section="business"]),
+body.forge-locked .groups { opacity: .45; pointer-events: none; user-select: none; }
+body.forge-locked #biz-add, body.forge-locked #biz-pass, body.forge-locked .biz-companies { opacity: .45; pointer-events: none; }
+
+/* the password prompt */
+.lock-back { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; background: rgba(0, 0, 0, .55); }
+.lock-back[hidden] { display: none; }
+.lock-box { width: min(380px, 92vw); display: grid; gap: 12px; padding: 22px; border-radius: 8px;
+  background: var(--panel); border: 1px solid var(--border); box-shadow: 0 18px 48px rgba(0, 0, 0, .5); }
+.lock-box h3 { margin: 0; font-size: 16px; }
+.lock-box p { margin: 0; }
+.lock-box input { font: inherit; font-size: 16px; color: inherit; background: var(--panel-2); border: 1px solid var(--border);
+  border-radius: 6px; padding: 9px 12px; letter-spacing: .2em; }
+.lock-box input:focus { outline: none; border-color: var(--accent); }
+.lock-error { min-height: 1.2em; color: var(--bad, #f2637d); font-size: 13px; }
+.lock-row { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+.lock-row .lock-go-back { margin-right: auto; }
+.lock-row .lock-go-back[hidden] { display: none; }

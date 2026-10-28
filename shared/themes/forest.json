@@ -1,0 +1,40 @@
+{
+  "label": "Forest",
+  "order": 55,
+  "tags": [
+    "nature",
+    "live",
+    "dark",
+    "calm"
+  ],
+  "about": "Night in the woods: layers of trees and fireflies drifting between them, mossy greens.",
+  "look": "classic",
+  "layout": "forge",
+  "colours": {
+    "accent": "#8fd16a",
+    "bg": "#0b120d",
+    "panel": "#121c15",
+    "panel_2": "#18241b",
+    "border": "#26382a",
+    "text": "#e4efe2",
+    "muted": "#93a993"
+  },
+  "wallpaper": [
+    "forge:fireflies.jpg",
+    ""
+  ],
+  "live": "fireflies",
+  "settings": {
+    "particles": "off",
+    "radius": 16,
+    "glass_style": "frosted",
+    "border": "subtle",
+    "wall_3d": false
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {
+      "live": "off"
+    }
+  }
+}

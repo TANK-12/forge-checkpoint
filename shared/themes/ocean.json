@@ -1,0 +1,40 @@
+{
+  "label": "Ocean",
+  "order": 60,
+  "tags": [
+    "nature",
+    "live",
+    "dark",
+    "calm"
+  ],
+  "about": "Moonlit waves rolling in slowly, a silver path on the water, deep teal glass.",
+  "look": "classic",
+  "layout": "forge",
+  "colours": {
+    "accent": "#4fd1d9",
+    "bg": "#07121a",
+    "panel": "#0d1b26",
+    "panel_2": "#122331",
+    "border": "#1d3446",
+    "text": "#e2f0f7",
+    "muted": "#8aa8b8"
+  },
+  "wallpaper": [
+    "forge:tide.jpg",
+    ""
+  ],
+  "live": "tide",
+  "settings": {
+    "particles": "off",
+    "radius": 16,
+    "glass_style": "frosted",
+    "border": "subtle",
+    "wall_3d": false
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {
+      "live": "off"
+    }
+  }
+}

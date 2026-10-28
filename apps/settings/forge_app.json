@@ -1,0 +1,63 @@
+{
+  "name": "settings",
+  "label": "Settings",
+  "tagline": "Wallpaper, colours and how Forge looks",
+  "help": {
+    "about": "How Forge looks: the theme (light or dark), the wallpaper, the font and the text size. Reset puts any of it back the way it started.",
+    "features": [
+      "Themes",
+      "Wallpaper",
+      "Font and text size",
+      "Apps",
+      "Reset"
+    ]
+  },
+  "actions": [
+    {"label": "Change the wallpaper", "hash": "wallpaper", "words": "background picture desktop image"},
+    {"label": "Pick a theme", "hash": "themes", "words": "look style dark light colours skin"},
+    {"label": "Wi-Fi", "hash": "system", "words": "wifi wireless internet network connect"},
+    {"label": "Bluetooth", "hash": "system", "words": "headphones speaker earbuds pair"},
+    {"label": "Sound and volume", "hash": "system", "words": "speaker output microphone mute loud quiet"},
+    {"label": "Screen brightness and night light", "hash": "system", "words": "display dim bright warm"}
+  ],
+  "port": 8441,
+  "module": "web_app:app",
+  "src_dir": ".",
+  "accent": "#a9b6c8",
+  "icon": "⚙️",
+  "frame": true,
+  "role": "settings",
+  "order": 99,
+  "section": "system",
+  "ready_timeout": 30,
+  "features": [
+    {
+      "name": "Wallpaper",
+      "description": "Follow the desktop's wallpaper or pick one from ~/Pictures/Wallpapers (sub-folders too), with the Wallpapers app's favourites. The current picture's thumbnail shows even when the desktop's picture lives outside the folder."
+    },
+    {
+      "name": "Colour",
+      "description": "The accent taken from the wallpaper's own palette, or one picked by hand."
+    },
+    {
+      "name": "Every Forge setting by section",
+      "description": "One card per group of shared/forge_theme.py's table, as a sidebar, tabs or one long page; search, pinned sections, compact or comfortable, sliders paired with number fields."
+    },
+    {
+      "name": "Changed from default",
+      "description": "One view of every setting changed from its default, counted under the search box; each changed row, Forge keys included, has a back-to-default button."
+    },
+    {
+      "name": "System",
+      "description": "The laptop's own settings: auto-close rules, sound, Bluetooth, Wi-Fi, display, battery, notifications, date and time (system_settings/panels.json). Bluetooth switched off at the radio says so and has a Turn Bluetooth on button."
+    },
+    {
+      "name": "Resets in layers",
+      "description": "A reset at the foot of every page and System panel, groups of settings that belong together (visual effects, power, Wi-Fi and Bluetooth with forget steps, look, shortcuts, auto-close), and Reset all settings in About. Each asks first, keeps a copy and has Undo; the Business lock guards them."
+    },
+    {
+      "name": "Pick for my machine",
+      "description": "Reads the CPU, graphics, memory, battery and power limits and picks a visual effect level and a power choice for Forge, Forge Desktop or both."
+    }
+  ]
+}

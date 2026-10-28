@@ -1,0 +1,21 @@
+{
+  "id": "money",
+  "label": "Money",
+  "tagline": "Saving and trading tests with fake money",
+  "icon": "💰",
+  "accent": "#e5c07b",
+  "order": 14,
+  "section": "research",
+  "tabs": true,
+  "members": [
+    "mint",
+    "trader",
+    "budget"
+  ],
+  "tab_labels": {
+    "mint": "Mint",
+    "trader": "Trader",
+    "budget": "Budget"
+  },
+  "note": "Relay task 383. Undo this fold with \"off\": true; the apps keep their own folders and data."
+}

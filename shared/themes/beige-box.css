@@ -1,0 +1,10 @@
+/* Beige Box (shared/themes/beige-box.json): a nineties teal desktop under the Bevel look. */
+html[data-forge-theme="beige-box"] #wall, html[data-forge-theme="beige-box"] #wall-blur { background: var(--bg) !important; filter: none !important; }
+html[data-forge-theme="beige-box"] #wall-fg, html[data-forge-theme="beige-box"] #scrim { display: none; }
+html[data-forge-theme="beige-box"] #home .hero > div:first-child::before { display: none; }
+html[data-forge-theme="beige-box"] .hero .clock { font-weight: 700; letter-spacing: 0; }
+html[data-forge-theme="beige-box"] body.lay-tiles-icons #tiles:not(.searching) .tile .name { color: #fff; text-shadow: 1px 1px 0 #000; }
+html[data-forge-theme="beige-box"] body.lay-tiles-icons #tiles:not(.searching) .tile:hover .name,
+html[data-forge-theme="beige-box"] body.lay-tiles-icons #tiles:not(.searching) .tile.focus .name { background: var(--accent); text-shadow: none; outline: 1px dotted #fff; }
+/* the section pill is light grey here, so its words are dark (the Bevel look makes them white) */
+html[data-forge-theme="beige-box"] body.look-bevel .section-head .s-label { color: var(--text); text-shadow: none; }

@@ -1,0 +1,13 @@
+{
+  "id": "cfrp_qi",
+  "name": "Carbon fibre / epoxy (quasi-isotropic)",
+  "short": "Carbon fibre",
+  "category": "composite",
+  "colour": "#2b2f36",
+  "note": "Very stiff and strong per kilo. Back frame, links, shells.",
+  "density_kg_m3": 1600,
+  "youngs_modulus_gpa": 55,
+  "yield_strength_mpa": 600,
+  "fatigue_strength_mpa": 300,
+  "source": "Typical laminate value (manufacturer datasheets, approximate); real laminates vary with lay-up."
+}

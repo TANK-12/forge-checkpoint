@@ -1,0 +1,8 @@
+{
+  "label": "Focus",
+  "about": "Centred and uncluttered: the clock, the search box and one compact grid of every app, no widgets and no section headings.",
+  "order": 65,
+  "home": {"hero": "big", "sections": "flat", "tiles": "compact", "recent": false, "chips": false, "align": "center"},
+  "settings": {"widgets": false},
+  "lighter": {"balanced": {}, "light": {}}
+}

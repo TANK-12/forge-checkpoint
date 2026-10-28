@@ -1,0 +1,27 @@
+{
+  "id": "moon",
+  "name": "Moon",
+  "kind": "moon",
+  "parent": "earth",
+  "order": 31,
+  "radius_km": 1737.4,
+  "gm_km3_s2": 4902.8,
+  "color": "#bdb8ae",
+  "summary": "Earth's only natural satellite, probably formed from debris after a Mars-sized body hit the young Earth. Tidally locked, so one face always points at us.",
+  "elements": {
+    "model": "kepler",
+    "epoch_jd": 2461332.5,
+    "a_km": 384400,
+    "e": 0.0554,
+    "i_deg": 5.16,
+    "node_deg": 326.4339,
+    "peri_deg": 126.7572,
+    "M_deg": 208.9227,
+    "period_days": 27.322,
+    "M_rate_deg_day": 13.06493669,
+    "frame": "ecliptic",
+    "source": "JPL planetary satellite mean elements; mean anomaly and its rate refitted to JPL Horizons positions (2000-2045) on 2026-10-19 by tools/fit_moons.mjs",
+    "peri_period_yr": 5.997,
+    "node_period_yr": 18.6
+  }
+}

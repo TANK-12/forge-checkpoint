@@ -1,0 +1,46 @@
+{
+ "label": "Cobalt, the comms officer",
+ "jobs": [
+  "comms officer"
+ ],
+ "weight": 2,
+ "exchanges": [
+  {
+   "say": "There's a signal under the noise again. Faint.",
+   "replies": [
+    "What's it saying?",
+    "It's always faint.",
+    "Probably the relay."
+   ]
+  },
+  {
+   "say": "Nothing on the relay today. Not a word.",
+   "replies": [
+    "No news is good news.",
+    "Lucky you.",
+    "Give it time."
+   ]
+  },
+  {
+   "say": "Sorry, {listener}, I was miles away.",
+   "replies": [
+    "Further than that.",
+    "Anywhere nice?",
+    "No harm done."
+   ]
+  },
+  {
+   "say": "Your family sent a message. I'll print it later.",
+   "replies": [
+    "Thank you.",
+    "Good news, I hope.",
+    "Read it to me now."
+   ]
+  }
+ ],
+ "hello": [
+  "Nothing on the relay today.",
+  "Quiet on all channels.",
+  "Welcome to the static, {you}."
+ ]
+}

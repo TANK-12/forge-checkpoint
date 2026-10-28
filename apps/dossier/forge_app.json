@@ -1,0 +1,177 @@
+{
+  "name": "dossier",
+  "label": "Dossier",
+  "tagline": "Sourced portfolios on people and countries",
+  "help": {
+    "about": "Sourced portfolios on people and countries: every fact says where it was found. Building or updating a dossier needs Jan, a local AI app, and the internet.",
+    "features": [
+      "World map",
+      "Dossiers",
+      "Sources for every fact",
+      "State of the world briefing",
+      "Ask a subject",
+      "Your notes"
+    ]
+  },
+  "port": 8437,
+  "module": "web_app:app",
+  "src_dir": ".",
+  "accent": "#e0a75e",
+  "icon": "🗂️",
+  "order": 10,
+  "section": "research",
+  "ready_timeout": 45,
+  "auto_close": {
+    "idle": false,
+    "why": "its brief scheduler and news watcher run in the background"
+  },
+  "manifest": {
+    "summary": "Builds factual, sourced portfolios on public political and business figures - and on parties, countries, political systems, companies, alliances and wars. Identity is resolved against Wikidata first, so a namesake never contaminates a dossier; the dated career timeline comes from Wikidata structure and needs no model at all. News and web articles are canonicalised, clustered so syndicated reprints of one wire story count once, and scored 0-1 for how related they actually are to the subject. Claims carry the sentence they came from, and a claim whose quoted span is not found in the source text is dropped rather than believed. Corroboration counts independent voices, not URLs. Countries and political systems also carry World Bank economic, social and military indicators. Everything accumulates on an external USB drive: re-running a subject merges, never overwrites or duplicates. The user's own notes live on a separate page that nothing automatic ever writes to.",
+    "features": [
+      {
+        "name": "World map",
+        "description": "Robinson-projected SVG world map, no mapping library. Countries shade by how much is held on them; drag to pan, scroll to zoom, click for that country's subjects."
+      },
+      {
+        "name": "Seven kinds of dossier",
+        "description": "People, parties, political systems, countries, companies, alliances and conflicts. Each is one file in entities/ declaring its pages and its disambiguating context terms."
+      },
+      {
+        "name": "Relevance multiplier",
+        "description": "Every source and claim carries a 0-1 relatedness score built from title hits, mention density, whether the subject is the actor, and overlap with their Wikidata context - with a namesake penalty. A slider re-filters the whole dossier live, and every score can explain itself."
+      },
+      {
+        "name": "Economy & society",
+        "description": "World Bank indicators - GDP, GDP per person, unemployment, inflation, inequality, life expectancy, military spending, government debt - as dated entries from the body that publishes them, so they are tiered primary. Free, no key."
+      },
+      {
+        "name": "Seat share, not seat count",
+        "description": "A party's seats are shown as a proportion of its chamber, because 200 seats is a landslide in one parliament and a rump in another. The chamber is chosen as the party's own national LOWER house - size alone picks the House of Lords over the Commons and the European Parliament over the Bundestag - and the other chambers it sits in are listed underneath."
+      },
+      {
+        "name": "Duplicate collapse",
+        "description": "URL canonicalisation plus SimHash-over-shingles clustering. Forty outlets running one wire story become one story with forty carriers - which also stops it counting as forty confirmations."
+      },
+      {
+        "name": "Corroboration tiers",
+        "description": "verified (2+ independent voices, one authoritative), reported, disputed, unsourced. Independence counts story clusters and domain owners, never URLs. Conflicts are surfaced with both sides kept, never resolved automatically."
+      },
+      {
+        "name": "Quote honesty gate",
+        "description": "The model returns only the first words of a sentence; the sentence itself is read out of the article. An anchor not found in the source means the claim is discarded, so a quotation is always the source's own words."
+      },
+      {
+        "name": "Set-and-forget bulk jobs",
+        "description": "Seed a run from Wikidata - every head of government, parties holding seats, live conflicts, alliances, big companies - ranked most-covered-first so a job stopped early has still done what matters. The queue is on disk and survives restarts."
+      },
+      {
+        "name": "State of the world briefing",
+        "description": "Assembles recent dated events across the whole library by country, with a written summary whose uncited sentences are stripped before display."
+      },
+      {
+        "name": "Ask a subject",
+        "description": "Questions answered only from that subject's stored evidence, every sentence cited, uncited sentences removed. 'Not in the sources' is a real answer."
+      },
+      {
+        "name": "Your notes",
+        "description": "A per-subject page the pipeline and the models never write to. Where opinions and plans go, deliberately walled off from the sourced record."
+      },
+      {
+        "name": "World history",
+        "description": "Twelve seed recipes, five of them historical: the wars that shaped the world, historic heads of state and government, revolutions, treaties, and empires and former states. Each pulls a real ranked list from Wikidata, most-written-about first, so the present sits on top of what produced it."
+      },
+      {
+        "name": "Several saved queues",
+        "description": "Bulk work is organised into named queues, one active at a time; the four workers only ever pull from the active one. Each queue remembers across a shutdown whether it is paused and whether it may redo subjects already held. Off (the default), a job whose subject is already in the library is marked skipped when it comes up to run rather than researched again - checked at run time, not only when it was queued, because a subject can arrive between those two moments. A deep dive on a subject held only at quick depth still runs."
+      },
+      {
+        "name": "Connection graph",
+        "description": "A Connections tab with a mind map and a 'how are they linked' finder. The graph is built from every subject's stored relations, so a chain like Trump -> independent politician -> Lukashenka -> Communist Party of the Soviet Union -> Putin is four recorded facts, each naming the dossier that stated it. Targets with no dossier of their own are still nodes, which is usually what makes a link interesting: two politicians who never mention each other meet at the university they both attended. No model is involved at any point - it is arithmetic over stored data, so it runs on the CPU while the iGPU is busy."
+      },
+      {
+        "name": "Pictures",
+        "description": "Portraits, flags, coats of arms, logos and signatures, declared one line each in sources/properties.py. References arrive free in the same Wikidata payload as the facts; the files themselves are pulled down by a separate 'pictures' pass, because that is the part with a real storage cost. Capped at two per kind - Wikidata carries five portraits of Angela Merkel and they came to 900KB. A portrait shows beside the dossier's name."
+      },
+      {
+        "name": "Read aloud",
+        "description": "A tour of any dossier as an mp3, and a typed question answered and spoken. Uses the Piper install and the voice models NovelForge already has rather than a second 120MB copy. The tour is built straight from the stored timeline and the corroborated claims with no model involved, so there is nothing for one to invent; a spoken answer goes through the same citation gate as a written one, and citation markers are stripped before speaking but kept in the transcript. Rendering is a queue phase - 3 minutes 41 seconds of narration took 74 seconds of CPU."
+      },
+      {
+        "name": "A library you can read",
+        "description": "Each row in the library now says what places a subject - the office someone holds, the party they sit for, where a company is based, which country a party contests - rather than only a name and some counts. All of it was already in subject.json and simply was not carried into the index."
+      },
+      {
+        "name": "Names as links",
+        "description": "A person named inside another subject's claims becomes a link to their own dossier. One regex built from every held name, longest first so a full name wins over the surname inside it."
+      },
+      {
+        "name": "IMF World Economic Outlook",
+        "description": "The only source here that reports the future. Growth, inflation, unemployment, deficit, debt and the current account - and the IMF's own projections, stored as projections rather than measurements. The current year counts as a projection too, because the year is not over."
+      },
+      {
+        "name": "Not on the map",
+        "description": "Historical states, places too small for the map (Singapore, Bahrain) and subjects with no recorded country are listed under the map with their counts, and clicking one opens the same panel a country does, with a button that opens the library filtered to exactly the subjects counted there (including 'Unattributed', which no subject stores as text). Several Wikidata labels for one map country (Republic of North Macedonia, North Macedonia) now add up instead of the last one winning."
+      },
+      {
+        "name": "Library sort, wider search and paging",
+        "description": "Sort by name, recently refreshed, recently added, most sources or most claims. The search also matches office, party, where a company is based and country, so 'Germany' finds the people placed there. Cards come 150 at a time with a 'Show more' button that also fires on scroll, instead of all 2,450 being drawn on every keystroke."
+      },
+      {
+        "name": "Refreshes spend their budget on what is new",
+        "description": "GDELT and Google News now skip articles a subject already holds, as the web search adapter already did, so an update or news sweep fills its budget with new articles rather than re-reading old ones. GDELT has no paging, so on a refresh it asks for up to twice as many records to have replacements for the held ones. The log line says how many were already held."
+      }
+    ],
+    "data_dir": "/run/media/<user>/Forge/DossierData/ (subjects/<slug>/: subject.json, timeline.json, claims.json, quotes.json, relations.json, sources.json, notes.json, history.json, text/*.txt.gz; index.json, queue.json, briefing.json). Falls back to ~/DossierData-local/ when the drive is unplugged, and says so in the header.",
+    "services": [
+      "Jan / llama.cpp @ http://127.0.0.1:1337/v1 (optional). Models on disk: 0.8B, 2B, VibeThinker-3B, 4B (IQ4_XS) and 9B (Q4_K_M). Tiers: the small model triages on the CPU, the larger one extracts claims and writes on the iGPU. Which model serves which tier is configurable (DossierData/jan-policy.json) - nothing hardcodes a model name, so swapping models needs no code change. EXACTLY ONE MODEL MAY HOLD THE iGPU: two at once made the larger emit garbage tokens mid-string inside valid JSON. Without Jan the app still gathers, scores, dedupes and builds timelines and quotes.",
+      "Wikidata, Wikipedia, Wikiquote, DuckDuckGo Lite, Google News RSS, GDELT, SEC EDGAR full-text, World Bank indicators. All free, none needs an API key."
+    ],
+    "dependencies": {
+      "required": [
+        "fastapi",
+        "uvicorn",
+        "httpx",
+        "beautifulsoup4",
+        "lxml",
+        "feedparser"
+      ],
+      "optional": [
+        "pytest - the 120-test suite in tests/"
+      ],
+      "note": "Installed into apps/dossier/.venv rather than shared from system site-packages: a system update removed httpx, feedparser, uvicorn and pluggy and broke the app until they were installed locally."
+    },
+    "standalone_launch": "FORGE_SHARED_DIR=~/Forge/shared .venv/bin/python -m uvicorn web_app:app --host 127.0.0.1 --port 8437",
+    "api_base": "/api/  (status; library; world; subject/{slug} + notes + ask; research + research/now; queue + queue/recipe + queue/deepen + queue/{action}; briefing + briefing/rebuild)",
+    "known_gaps": [
+      "Google News RSS is headline-only. Its links resolve client-side to the publisher, so article bodies are not reachable from the feed; full text comes from DuckDuckGo Lite instead. Headlines still feed the timeline and are marked headline_only so claims are never extracted from them.",
+      "A deep dive is slow on this hardware: roughly 60-90 seconds per article on the 4B at ~12 tok/s, so a 15-article deep dive is 15-20 minutes. It is designed to run unattended from the queue.",
+      "Map country matching is by name with an alias table for the usual collisions (United States of America, Czechia, Dem. Rep. Congo and so on). A place that matches no map country is no longer silent: since 2026-10-19 it is listed in the 'Not on the map' card under the map, so a missing alias shows up there rather than as an unheld country.",
+      "Claim extraction quality is bounded by a 4B model. The span gate stops fabricated quotations, but a claim can still be a clumsy paraphrase of a real sentence.",
+      "GDELT is rate-limited and often returns 429; it backs off and is skipped rather than blocking a run.",
+      "A quick pass extracts no claims by design - it exists to fill a library fast. Claims come only from a deep dive, which is ~20 minutes a subject.",
+      "Google News RSS is headline-only: its links resolve client-side, so article bodies are not reachable from the feed. Headlines still feed the timeline and are marked so claims are never drawn from them.",
+      "Historical states (Soviet Union, Ancient Rome, Ottoman Empire) cannot be drawn on a modern map. Since 2026-10-19 they are listed under the map with their counts and open the same panel, but they still shade nothing; mapping them onto today's countries would be a judgement about borders that has not been made.",
+      "The relation graph is only as rich as the subjects that have been re-researched since the relations table was widened. Subjects researched before that carry the four original relation kinds (party, employer, educated at, ideology); subjects researched after carry up to 38. Until the library is redone, the mind map is thinner for older subjects than it should be.",
+      "Enumerating every member of a party is not possible in one global Wikidata query - it times out on the public endpoint. The 'Politicians, by party' recipe therefore filters to people with more than 60 language Wikipedias, which is the prominent tier, not the whole bench. Listing a party's full membership needs a per-party query driven off the party dossiers already held, which the recipe format (one global SPARQL string, no parameters) does not currently allow.",
+      "Historical eras (bronze age, antiquity, the middle ages) have no entity type of their own. A recipe for them was written and dropped because the only types available - conflict, country - both misfit, and Wikidata's 'historical period' class returns the world wars anyway, duplicating the wars recipe. An era type would be one file in entities/ plus a page listing what happened inside it.",
+      "Pictures, wider facts and the 38-kind relation table only apply to subjects researched after they landed. The ~869 subjects done before that have no pictures, the old four relation kinds and about 70 of the 107 properties. Redoing the library is the fix and is the first planned improvement.",
+      "A tour is the record read in order, not a written narrative. It is accurate by construction and somewhat flat to listen to - there is no connective prose between events, because writing that would mean letting a model put words into a factual account.",
+      "Speaking is CPU-only and not fast: 74 seconds of rendering for 3 minutes 41 seconds of audio. Reading a whole library aloud is an overnight job, which is why it is a queue phase rather than a button that blocks.",
+      "Relations carry no dates, so the mind map is timeless - it cannot show that two people overlapped at a university rather than merely both attending it."
+    ],
+    "docs": [
+      "README.md",
+      "WIP.md"
+    ],
+    "planned_improvements": [
+      "TIME AND MOTION ON THE MAP. A year slider and an animation that plays the library forward, so a country's shading changes as events accumulate, plus deeper zoom. The data is already there - every event carries a date - so this is frontend work.",
+      "SCENARIOS. Generate plausible futures from what is held: current leaders, parties, alliances, conflicts and economic indicators, grounded in the historical seeds so the precedents are in the library too. Must carry the same discipline as everything else - each branch cites the stored events it rests on, and anything uncited is stripped. Runs on the largest model available (the 9B) because it is low-volume, high-value work.",
+      "GRAMMAR-CONSTRAINED JSON. llama.cpp can constrain output to a GBNF grammar, which makes invalid JSON impossible rather than recoverable. Would retire the truncated-array repair in llm.py and the anchor trick in claims.py, and would have prevented the corrupted-key output seen when both models shared the iGPU.",
+      "USE BOTH PROCESSORS DURING A QUICK PASS. A quick pass calls only the triage tier, so the CPU model works while the iGPU sits idle holding a model it never calls. Splitting triage across both models would use the whole machine and roughly halve the dominant cost of a bulk run.",
+      "SETTINGS PANEL. janctl.py can already read Jan's models, push the settings this app needs and restart it, enforcing the one-model-on-GPU rule. It has no interface yet - the model pickers per tier and a 'reset Jan' button are not wired up.",
+      "REDO THE LIBRARY ONCE. This is now the most valuable thing left, and the reason has grown: subjects researched before this session carry the old four relation kinds instead of 38, about 70 properties instead of 107, and no pictures at all. Roughly 869 of the 1,080 held are in that state - which is why the graph has 1,765 edges rather than several times that, and why only 496 subjects show an office in the library list. Make a queue, tick 'redo subjects I already hold', seed the same recipes into it, then run a 'pictures each' pass over the same list. The merge accumulates, so nothing already held can be lost. Budget the storage first: pictures are capped at two per kind and ran to about 900KB for one well-photographed subject before the cap, so a full library is plausibly a few hundred megabytes against 116GB free on the drive.",
+      "TIME ON THE MIND MAP. Relations carry no dates yet, so the graph is timeless - it cannot show that two people overlapped at a university or served in the same cabinet in different decades. Wikidata qualifiers (P580/P582) are already read for the timeline and could carry onto edges.",
+      "PER-PARTY MEMBER QUERIES. Recipes are one global SPARQL string with no parameters, so 'every politician in this party' cannot be expressed - the global form times out. Give a recipe an optional parameter filled from the library (each held party's Q-number) and run it once per party. That is what makes the minor figures reachable, which is what the relevance filter was wanted for."
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+/* Daylight (shared/themes/daylight.json): cream paper, ink accents. */
+html[data-forge-theme="daylight"] { --glass-line: rgba(60, 45, 20, .12); }
+html[data-forge-theme="daylight"] .hero .clock { font-weight: 200; letter-spacing: -.05em; }
+html[data-forge-theme="daylight"] .hero .greet { font-style: italic; font-weight: 500; }
+html[data-forge-theme="daylight"] .tile { background: color-mix(in srgb, var(--panel) 88%, transparent); }
+html[data-forge-theme="daylight"] .tile:hover, html[data-forge-theme="daylight"] .tile.focus {
+  box-shadow: 0 10px 24px rgba(70, 50, 20, .12); }
+html[data-forge-theme="daylight"] .tile .icon { box-shadow: none; }

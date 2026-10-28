@@ -1,0 +1,38 @@
+{
+ "label": "The quiet hours",
+ "hours": [
+  "night"
+ ],
+ "weight": 1.5,
+ "exchanges": [
+  {
+   "say": "You're up late.",
+   "replies": [
+    "So are you.",
+    "Couldn't sleep.",
+    "Somebody has to be."
+   ]
+  },
+  {
+   "say": "Listen. You can hear the whole station breathing.",
+   "replies": [
+    "That's the scrubbers.",
+    "Don't make it strange.",
+    "It's nice, isn't it."
+   ]
+  },
+  {
+   "say": "Keep your voice down, people are sleeping.",
+   "replies": [
+    "Sorry.",
+    "I am whispering.",
+    "Juno isn't."
+   ]
+  }
+ ],
+ "hello": [
+  "Odd hour to be about, {you}.",
+  "Can't sleep either?",
+  "Quiet now, isn't it."
+ ]
+}

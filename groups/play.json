@@ -1,0 +1,25 @@
+{
+  "id": "play",
+  "label": "Play",
+  "tagline": "Every game, on one shelf",
+  "icon": "🎮",
+  "accent": "#9d7bff",
+  "order": 6,
+  "section": "play",
+  "members": [
+    "arcade",
+    "gambit",
+    "cosmos",
+    "driftpeaks",
+    "taleforge",
+    "tavern",
+    "afterglow",
+    "exolab",
+    "retro",
+    "flash",
+    "eightysix",
+    "arena"
+  ],
+  "help": "All of Forge's games on one shelf. Pixel games keeps its own tile.",
+  "note": "Relay task 383. Undo this fold with \"off\": true; the apps keep their own folders and data."
+}

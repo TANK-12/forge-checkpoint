@@ -1,0 +1,21 @@
+{
+  "label": "Business",
+  "order": 20,
+  "tags": [
+    "business",
+    "plain"
+  ],
+  "about": "Plain and professional: a solid background with your company's logo, flat panels, no effects and a tidy list of apps.",
+  "look": "business",
+  "layout": "plain",
+  "colours": {
+    "accent": "#3d6fb6"
+  },
+  "font": "inter",
+  "wallpaper": "",
+  "solid": true,
+  "lighter": {
+    "balanced": {},
+    "light": {}
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "name": "Bead chains",
+  "note": "Made by hand: every colour likes its own kind, likes its two neighbours on the colour wheel a little, and keeps away from the rest. With a gentle pull and a long glide the crowd threads itself into chains of beads and then holds still. Drag through a chain and it threads itself back together.",
+  "author": "Claude",
+  "made": "2026-10-19",
+  "data": {
+    "colours": 5,
+    "matrix": [
+      0.6,
+      0.3,
+      -0.2,
+      -0.2,
+      0.3,
+      0.3,
+      0.6,
+      0.3,
+      -0.2,
+      -0.2,
+      -0.2,
+      0.3,
+      0.6,
+      0.3,
+      -0.2,
+      -0.2,
+      -0.2,
+      0.3,
+      0.6,
+      0.3,
+      0.3,
+      -0.2,
+      -0.2,
+      0.3,
+      0.6
+    ],
+    "count": 1400,
+    "reach": 0.1,
+    "pull": 4,
+    "glide": 0.1,
+    "seed": 2
+  }
+}

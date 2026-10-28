@@ -1,0 +1,46 @@
+{
+  "_about": "What a support report (shared/forge_diag.py) holds. logs: folders whose newest lines go in; {forge} is the Forge folder, {logs} the release's log folder for this system (forge_portable.data_dirs); a folder that does not exist is skipped. Every line is scrubbed: the account's home folder first, then extra_scrub (passwords in URLs, every URL query value, any key name holding key, secret, token, password or cookie, known key shapes, emails plain and URL-encoded, other systems' home folders), then the release registry's scrub rules (release/release.json, read only), then the account's user name as a whole word, then anything a release 'forbid' pattern or a 'must_not' pattern still matches becomes <hidden>. A new pattern is one entry here.",
+  "tail_lines": 400,
+  "max_bytes_per_file": 200000,
+  "max_files": 200,
+  "logs": [
+    {"id": "source", "dir": "{forge}/outputs", "glob": "*.log"},
+    {"id": "release", "dir": "{logs}", "glob": "*.log"}
+  ],
+  "release_registry": "release/release.json",
+  "extra_scrub": [
+    ["(?i)\\b([a-z][a-z0-9+.-]*://)[^/\\s:@'\\\"]+:[^/\\s@'\\\"]+@", "\\1<hidden>@"],
+    ["([?&][A-Za-z0-9_.%\\[\\]-]+=)[^&#\\s\\\"'<>]*", "\\1<value>"],
+    ["(?i)(authorization[\\\"']?\\s*[:=]\\s*[\\\"']?)(?:[A-Za-z]+\\s+)?[^\\s\\\"',;&<]+", "\\1<hidden>"],
+    ["(?i)\\bbasic\\s+[A-Za-z0-9+/=]{8,}", "Basic <hidden>"],
+    ["(?i)\\bbearer\\s+[A-Za-z0-9._~+/=-]{8,}", "Bearer <hidden>"],
+    ["(?i)\\btoken\\s+[A-Za-z0-9._~+/=-]{8,}", "Token <hidden>"],
+    ["(?i)([A-Za-z0-9_-]*(?:api[_-]?key|access[_-]?key|private[_-]?key|secret|token|password|passwd|pwd|cookie|session[_-]?id|credential)[A-Za-z0-9_-]*[\\\"']?\\s*[:=]\\s*)([\\\"'])(?:(?!\\2).)*\\2", "\\1\\2<hidden>\\2"],
+    ["(?i)([A-Za-z0-9_-]*(?:api[_-]?key|access[_-]?key|private[_-]?key|secret|token|password|passwd|pwd|cookie|session[_-]?id|credential)[A-Za-z0-9_-]*[\\\"']?\\s*[:=]\\s*)[^\\s\\\"',;&<]+", "\\1<hidden>"],
+    ["\\bsk-[A-Za-z0-9_-]{12,}", "<hidden-key>"],
+    ["\\bgh[pousr]_[A-Za-z0-9]{20,}", "<hidden-key>"],
+    ["\\bhf_[A-Za-z0-9]{20,}", "<hidden-key>"],
+    ["\\b(?:AKIA|ASIA)[A-Z0-9]{16}\\b", "<hidden-key>"],
+    ["\\bxox[abposr]-[A-Za-z0-9-]{10,}", "<hidden-key>"],
+    ["\\bAIza[A-Za-z0-9_-]{30,}", "<hidden-key>"],
+    ["\\beyJ[A-Za-z0-9_-]{8,}\\.[A-Za-z0-9_-]{8,}\\.[A-Za-z0-9_-]+", "<hidden-key>"],
+    ["[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}", "<email>"],
+    ["[A-Za-z0-9._+-]+%(?:25)?40[A-Za-z0-9.-]+\\.[A-Za-z]{2,}", "<email>"],
+    ["(?i)[A-Z]:\\\\Users\\\\[^\\\\\\s]+", "~"],
+    ["/Users/[^/\\s]+", "~"],
+    ["/home/[a-z_][a-z0-9_-]*", "~"],
+    ["/run/media/[a-z_][a-z0-9_-]*", "/run/media/<user>"]
+  ],
+  "must_not": [
+    "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}",
+    "\\bsk-[A-Za-z0-9_-]{12,}",
+    "\\bgh[pousr]_[A-Za-z0-9]{20,}",
+    "\\beyJ[A-Za-z0-9_-]{8,}\\.[A-Za-z0-9_-]{8,}\\.",
+    "/home/[a-z_][a-z0-9_-]*",
+    "/Users/[a-z_][a-z0-9_-]*",
+    "\\bhf_[A-Za-z0-9]{20,}",
+    "\\b(?:AKIA|ASIA)[A-Z0-9]{16}\\b",
+    "\\bxox[abposr]-[A-Za-z0-9-]{10,}",
+    "[A-Za-z0-9._+-]+%(?:25)?40[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+  ]
+}

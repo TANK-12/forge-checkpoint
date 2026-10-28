@@ -1,0 +1,77 @@
+{
+ "about": "The published figures behind Mint: one entry per fact, and each names its source.",
+ "facts": [
+  {
+   "group": "Trading",
+   "figure": "68%",
+   "words": "of Australian retail CFD clients lost money in FY2023-24: 133,674 people, net losses over $458 million including $73 million in fees. 5% would have made a profit but lost because of fees.",
+   "source": "ASIC REP 828, January 2026"
+  },
+  {
+   "group": "Trading",
+   "figure": "US$3,050",
+   "words": "is roughly what Plus500 earned per active customer in FY2025 (customer income divided by active customers). That is the average customer's yearly cost of trading there.",
+   "source": "Plus500 FY2025 results; division by Mint's research"
+  },
+  {
+   "group": "Trading",
+   "figure": "66-79%",
+   "words": "of coin-flip CFD traders lost money over one year at 5-10x leverage on real ASX 200 prices with real costs in Mint, near the 68% of real clients; how near depends on the settings picked (66-100% across all of them). More trades, more leverage or more years made it worse: 97-100% lost over the whole history.",
+   "source": "Mint backtests, 2026-10-09"
+  },
+  {
+   "group": "Trading",
+   "figure": "5.5% a year",
+   "words": "of the position went on overnight funding when holding an ASX 200 CFD at 1x from 2009: about 3 points the broker's markup (assumed: Plus500's own rate could not be read) and the rest the cash rate, while the spare cash at the broker earned nothing. It made 2.6% a year against 8.1% for simply owning VAS.",
+   "source": "Mint backtests, 2026-10-09"
+  },
+  {
+   "group": "Trading",
+   "figure": "3.7% to -19.6%",
+   "words": "The best of 29 moving-average crossover settings, picked on old years, made 3.7% a year there and -19.6% a year on the test years after, which the pick never looked at. Tuning flatters.",
+   "source": "Mint backtests, 2026-10-09"
+  },
+  {
+   "group": "Investing",
+   "figure": "8.1% a year",
+   "words": "$100 then $300 a week into VAS from May 2009, held (money-weighted). Five timing rules on the same money made 1.5% to 4.4%.",
+   "source": "Mint backtests, 2026-10-09"
+  },
+  {
+   "group": "Investing",
+   "figure": "9.0% a year",
+   "words": "Australian shares over 30 years, before fees and tax. World shares 8.6%, cash 4.0%. The worst single financial year for Australian shares was -22.1%; the 2008 crash was about -54% from the top.",
+   "source": "Vanguard 2026 Index Chart"
+  },
+  {
+   "group": "Investing",
+   "figure": "about 80%",
+   "words": "of active Australian share funds trail the index over 10 years (about 60% over 5). These figures come from summaries of the report, not the full report.",
+   "source": "SPIVA Australia Year-End 2025"
+  },
+  {
+   "group": "Saving",
+   "figure": "5.00%",
+   "words": "high-interest savings with no conditions (Macquarie); about 3.4% after tax at your 32% rate. The RBA cash rate is 4.60% from 30 September 2026. Guaranteed up to $250,000 per person per bank.",
+   "source": "Macquarie, RBA table A2, APRA"
+  },
+  {
+   "group": "Saving",
+   "figure": "21.24%",
+   "words": "the average credit card interest rate (September 2026). Any card balance costs more than double what shares have returned: pay it off before investing.",
+   "source": "RBA table F5"
+  },
+  {
+   "group": "Tax",
+   "figure": "32%",
+   "words": "your tax on the next dollar on a salary between $45,001 and $135,000 (30% plus 2% Medicare). Half a gain held over a year is taxed, so 16%. Super contributions are taxed 15%, inside a $32,500 yearly cap.",
+   "source": "ATO"
+  },
+  {
+   "group": "Tax",
+   "figure": "2.8%",
+   "words": "HECS indexation for 2026. Each dollar of income over $69,528 repays 15 cents, so just over that line the repayment can be smaller than a year's indexation and the debt barely shrinks.",
+   "source": "ATO"
+  }
+ ]
+}

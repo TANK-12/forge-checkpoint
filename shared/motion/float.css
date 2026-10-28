@@ -1,0 +1,16 @@
+/* motion: Float | Slow and airy: panes drift up from further down, tiles float higher with a soft shadow and the icon bobs while you point */
+/* lighter: balanced=glide, light=still */
+/* Scoped to body.motion-float (shared/motion/, task 377). The entrance keeps the
+   hub's timing rule: the move takes the first 16th of the run, then holds
+   (see home-in in hub/index.html), and moves transform only, never opacity.
+   The hub's reduced-motion and Animations-off rules switch all of it off. */
+@keyframes motion-float-in { from { transform: translateY(26px) } 6.25% { transform: none } to { transform: none } }
+body.motion-float #home.enter :is(.tile, .section-head, .more-btn:not([hidden]), .fchip, #recent-wrap h3, .hero > div:first-child, #search, .widgets .wg) { animation-name: motion-float-in; }
+@media (prefers-reduced-motion: no-preference) {
+  body.motion-float #home.enter :is(.tile, .section-head, .more-btn:not([hidden]), .fchip, #recent-wrap h3, .hero > div:first-child, #search, .widgets .wg) { animation-timing-function: cubic-bezier(.16, 1, .3, 1); }
+  body.motion-float .tile { transition-duration: 480ms; transition-timing-function: cubic-bezier(.16, 1, .3, 1); }
+  body.motion-float .tile:hover, body.motion-float .tile.focus { transform: translateY(-7px);
+    box-shadow: 0 22px 44px rgba(0, 0, 0, .3), 0 8px 30px color-mix(in srgb, var(--tile-accent) 22%, transparent); }
+  body.motion-float:not(.no-anim) .tile:hover .icon { transform: none; animation: motion-float-bob 2.4s ease-in-out infinite; }
+  @keyframes motion-float-bob { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-4px) } }
+}

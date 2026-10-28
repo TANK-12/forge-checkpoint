@@ -1,0 +1,104 @@
+/* The System section (system.js), moved here from the Claude app's System
+   page on 2026-10-19. Everything is scoped to #system-panel so it cannot
+   change the other sections. The card is a size container: its panels fold
+   to fewer columns by the card's own width, which differs between the
+   sidebar, tabs and one-page layouts at the same window width. */
+#system-panel { container-type: inline-size; min-width: 0; }
+#system-panel .hidden { display: none !important; }
+#system-panel .grow { flex: 1; min-width: 0; }
+
+.sys-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+.sys-head h3 { margin: 0 !important; }
+.sys-head .btn { padding: 5px 12px; }
+.sys-intro { margin-bottom: 12px; }
+.s-said { font-size: 0.9rem; max-width: 50%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.s-said.bad { color: var(--bad, #e06c6c); }
+.s-chip { font-size: 0.85rem; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted); }
+.s-chip:empty { display: none; }
+.s-chip.warn { color: var(--warn, #e0b46b); border-color: var(--warn, #e0b46b); }
+.s-chip.bad { color: var(--bad, #e06c6c); border-color: var(--bad, #e06c6c); }
+
+/* the panels: one row of buttons that wraps, the open panel under it */
+.sys-nav { display: flex; flex-wrap: wrap; gap: 6px; padding-bottom: 12px; margin-bottom: 14px; border-bottom: 1px solid var(--border); }
+.sys-nav .sys-tab { display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px; border-radius: 8px;
+  border: 1px solid var(--border); background: transparent; color: var(--muted); font-size: 0.95rem; cursor: pointer;
+  transition: background-color .15s ease, color .15s ease; }
+.sys-nav .sys-tab:hover { color: var(--text); background: var(--panel-2); }
+.sys-nav .sys-tab.on { color: var(--on-accent); background: var(--accent); border-color: var(--accent); font-weight: 600; }
+.sys-nav .ic { width: 1.3em; text-align: center; }
+/* While searching only the found panels' buttons show; picking one opens it. */
+body.searching #system-panel .sys-main, body.searching #system-panel .sys-intro { display: none; }
+body.searching #system-panel .sys-nav { border-bottom: 0; margin-bottom: 0; padding-bottom: 0; }
+
+.s-panel h4 { margin: 0 0 4px; font-size: 1.2rem; }
+.s-panel > .about { margin: 0 0 14px; }
+.s-panel h3 { margin: 20px 0 8px !important; font-size: 1rem !important; color: var(--muted); font-weight: 600; }
+
+.s-card { border: 1px solid var(--border); border-radius: 10px; background: var(--panel-2); padding: 12px 14px; margin-bottom: 8px; min-width: 0; }
+.s-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.s-row + .s-row { margin-top: 10px; }
+.s-name { font-weight: 600; overflow-wrap: anywhere; }
+.s-sub { font-size: 0.9rem; color: var(--muted); overflow-wrap: anywhere; }
+.s-badge { font-size: 0.85rem; padding: 1px 8px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted); white-space: nowrap; }
+.s-badge.good { color: var(--good, #7ccf8a); border-color: var(--good, #7ccf8a); }
+.s-badge.warn { color: var(--warn, #e0b46b); border-color: var(--warn, #e0b46b); }
+.s-big { font-size: 2.2rem; font-weight: 700; }
+.s-list { display: grid; gap: 8px; }
+.s-empty { padding: 20px 0; }
+#system-panel pre.s-card { white-space: pre-wrap; overflow-wrap: anywhere; }
+#system-panel label.s-check { display: inline-flex; align-items: center; gap: 6px; margin: 0; font-size: inherit; color: var(--text); cursor: pointer; }
+
+/* a plain checkbox drawn as a switch */
+#system-panel input.s-switch { appearance: none; -webkit-appearance: none; padding: 0; min-height: 0; width: 40px; height: 22px; border-radius: 999px;
+  background: var(--panel); border: 1px solid var(--border); position: relative; cursor: pointer; flex: none; margin: 0; }
+#system-panel input.s-switch::after { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--muted); transition: left 0.15s; }
+#system-panel input.s-switch:checked { background: var(--accent-2); border-color: var(--accent-2); }
+#system-panel input.s-switch:checked::after { left: 20px; background: var(--on-accent); }
+#system-panel input.s-switch:disabled { opacity: 0.45; cursor: default; }
+/* a slider and its number box */
+#system-panel .s-range { flex: 1; min-width: 140px; max-width: 420px; padding: 0; border: 0; background: transparent; accent-color: var(--accent); }
+.s-num { display: inline-flex; align-items: center; gap: 4px; font-variant-numeric: tabular-nums; }
+#system-panel input.s-numin { width: 5.2em; padding: 4px 6px; text-align: right; }
+#system-panel select.s-sel, #system-panel input.s-in { padding: 5px 8px; border-radius: 7px; }
+#system-panel select.s-sel:disabled { opacity: 0.5; }
+#system-panel input.s-in { width: 14em; max-width: 100%; }
+#system-panel input.s-hour { width: 5em; }
+
+/* auto-close: one line per app */
+.ac-top { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 8px; margin-bottom: 14px; }
+.ac-top .s-card { margin: 0; }
+.ac-filter { margin: 4px 0 10px; }
+.ac-rows { display: grid; gap: 6px; }
+.ac-rows .s-card { margin: 0; }
+.ac-row select.s-sel { width: 100%; min-width: 0; }
+.ac-row, .ac-head { display: grid; grid-template-columns: minmax(170px, 1.4fr) auto minmax(140px, 1fr) minmax(120px, 0.9fr) minmax(110px, 1fr) 60px; gap: 10px; align-items: center; }
+.ac-row { padding: 9px 12px; }
+.ac-row.off .ac-what, .ac-row.off .ac-seen { opacity: 0.6; }
+.ac-what { min-width: 0; }
+.ac-what .s-sub { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ac-head { padding: 0 12px; font-size: 0.85rem; color: var(--muted); }
+.ac-seen { font-size: 0.88rem; color: var(--muted); }
+.ac-closed { padding-left: 1.2em; }
+.ac-closed li { margin: 3px 0; }
+#system-panel .linkish { background: none; border: none; color: var(--accent); cursor: pointer; font: inherit; padding: 0; }
+#system-panel .linkish:disabled { visibility: hidden; }
+
+.bars { display: inline-flex; gap: 2px; align-items: flex-end; height: 14px; }
+.bars i { width: 4px; background: var(--border); border-radius: 1px; }
+.bars i.on { background: var(--accent); }
+
+@container (max-width: 820px) {
+  .ac-head { display: none; }
+  .ac-row { grid-template-columns: minmax(0, 1fr) auto; }
+  .ac-row > :not(.ac-what):not(.s-switch) { grid-column: 1 / -1; }
+}
+@container (max-width: 520px) {
+  .s-said { max-width: 100%; order: 10; flex-basis: 100%; }
+  #system-panel .s-range { min-width: 0; }
+}
+
+/* Colour fades and the switch knob's slide stay still for anyone who asks
+   for less motion (2026-10-20). */
+@media (prefers-reduced-motion: reduce) {
+  .sys-nav .sys-tab, #system-panel input.s-switch::after { transition: none; }
+}

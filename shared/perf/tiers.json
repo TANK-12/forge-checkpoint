@@ -1,0 +1,42 @@
+{
+  "_about": "The performance tiers. Each tier: a label and line for Settings, settings laid over the theme (a value replaces, {\"min\": n} keeps the lower, {\"scale\": f} multiplies), css switches the hub and apps turn into html.perf-<name> classes (no-blur: no backdrop blur; calm: no theme crossfade, no wallpaper drift, no clock shimmer), and the default for a live wallpaper and a companion that do not declare their own lighter (live: \"\" as is, \"still\" one frame, \"off\" the still picture, or {fps, res} factors; companion: \"\", \"still\" or \"off\"). Themes, layouts, glass and motion styles declare their own fallback on top of this.",
+  "full": {
+    "label": "Full",
+    "order": 0,
+    "about": "Every effect as the theme and Settings set it.",
+    "settings": {},
+    "css": [],
+    "live": "",
+    "companion": ""
+  },
+  "balanced": {
+    "label": "Balanced",
+    "order": 1,
+    "about": "The live wallpaper draws at half the rate and a smaller size, half the particles, no frosted blur behind panels, no beat on the 3D wallpaper.",
+    "settings": {
+      "particle_amount": {"scale": 0.5},
+      "wall_3d_beat": false
+    },
+    "css": ["no-blur"],
+    "live": {"fps": 0.5, "res": 0.7},
+    "companion": ""
+  },
+  "light": {
+    "label": "Light",
+    "order": 2,
+    "about": "A plain version of the same theme: the live wallpaper stands still, the companion sits still, no particles, visualiser, 3D wallpaper, blur, shadows or drifting wallpaper; looping animations play once and pages draw at most 30 frames a second.",
+    "settings": {
+      "particles_shown": false,
+      "visualiser_shown": false,
+      "shadows": false,
+      "wall_3d": false,
+      "ambient_drift": false,
+      "lite_effects": "always",
+      "max_fps": {"min": 30},
+      "particle_fps": {"min": 20}
+    },
+    "css": ["no-blur", "calm"],
+    "live": "still",
+    "companion": "still"
+  }
+}

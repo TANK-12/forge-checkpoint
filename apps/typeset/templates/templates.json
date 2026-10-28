@@ -1,0 +1,6 @@
+[
+  {"id": "blank", "label": "Blank page", "about": "A4, a title and nothing else", "file": "blank.typ"},
+  {"id": "report", "label": "Report", "about": "Title, contents, numbered sections, a table", "file": "report.typ"},
+  {"id": "cv", "label": "CV", "about": "One page: profile, experience, education, skills", "file": "cv.typ"},
+  {"id": "letter", "label": "Letter", "about": "Your address and the date on the right, then the letter", "file": "letter.typ"}
+]

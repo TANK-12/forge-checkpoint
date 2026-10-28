@@ -1,0 +1,23 @@
+{
+  "id": "write",
+  "label": "Write",
+  "tagline": "Novels, podcasts and audiobooks",
+  "icon": "✍️",
+  "accent": "#e0a458",
+  "order": 1,
+  "section": "create",
+  "tabs": true,
+  "members": [
+    "novelforge",
+    "castforge",
+    "silverbullet",
+    "notebook"
+  ],
+  "tab_labels": {
+    "novelforge": "NovelForge",
+    "castforge": "CastForge",
+    "silverbullet": "Notes",
+    "notebook": "Notebook"
+  },
+  "note": "Relay task 383. Undo this fold with \"off\": true; the apps keep their own folders and data."
+}

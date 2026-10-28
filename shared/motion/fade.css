@@ -1,0 +1,14 @@
+/* motion: Fade | Quiet: panes settle in barely moving; tiles stay put and light up when you point */
+/* lighter: light=still */
+/* Scoped to body.motion-fade (shared/motion/, task 377). The entrance keeps the
+   hub's timing rule: the move takes the first 16th of the run, then holds
+   (see home-in in hub/index.html), and moves transform only, never opacity.
+   The hub's reduced-motion and Animations-off rules switch all of it off. */
+@keyframes motion-fade-in { from { transform: translateY(4px) } 6.25% { transform: none } to { transform: none } }
+body.motion-fade #home.enter :is(.tile, .section-head, .more-btn:not([hidden]), .fchip, #recent-wrap h3, .hero > div:first-child, #search, .widgets .wg) { animation-name: motion-fade-in; }
+@media (prefers-reduced-motion: no-preference) {
+  body.motion-fade .tile { transition-duration: 300ms; transition-timing-function: ease; }
+  body.motion-fade .tile:hover, body.motion-fade .tile.focus { transform: none; }
+  body.motion-fade .tile:hover .icon, body.motion-fade .tile.focus .icon { transform: none; }
+  body.motion-fade .tile:active { transform: scale(.99); }
+}

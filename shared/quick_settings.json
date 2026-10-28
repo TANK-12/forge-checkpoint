@@ -1,0 +1,130 @@
+{
+  "_about": [
+    "The tiles of the hub's quick settings panel (the switch button at the right of the top bar), read and set by shared/forge_quick.py.",
+    "A new tile is one entry here. kind: slider (0-100), toggle (on/off) or choice (pick one item).",
+    "read: the command whose output holds the state; value/on: a regex on that output (value's first group is the number, times scale; on is true when it matches, or when it does not with invert).",
+    "set: the command for a slider value ({value} is 0-100); turn_on/turn_off: the commands for a toggle, one argv or a list of them.",
+    "detail: an optional command and regex whose matches (group 1, joined) are shown under the label.",
+    "items: a named provider in forge_quick.ITEMS for tiles with a list to pick from (Wi-Fi networks, Bluetooth devices, an app's modes).",
+    "app_role: for the app_modes provider, the forge_app.json role of the app whose /api/modes it uses (Power's logic stays in Power).",
+    "min/max: slider bounds (brightness never goes to 0, so the screen cannot go black).",
+    "list_label: the heading over a tile's list (default its label).",
+    "unmute_on_set: a slider that also runs turn_on whenever it is moved (moving the volume unmutes, as in GNOME).",
+    "bar: true shows the tile's icon on the bar button itself (dimmed when off).",
+    "icon: a glyph for the panel; the hub has drawn icons for the ids it knows and uses this for any other."
+  ],
+  "tiles": [
+    {
+      "id": "brightness",
+      "label": "Brightness",
+      "icon": "☀",
+      "kind": "slider",
+      "min": 1,
+      "read": ["brightnessctl", "-m", "-c", "backlight"],
+      "value": { "match": ",(\\d+)%," },
+      "set": ["brightnessctl", "-q", "-c", "backlight", "set", "{value}%"]
+    },
+    {
+      "id": "volume",
+      "bar": true,
+      "label": "Volume",
+      "icon": "🔊",
+      "kind": "slider",
+      "read": ["wpctl", "get-volume", "@DEFAULT_AUDIO_SINK@"],
+      "value": { "match": "Volume: ([0-9.]+)", "scale": 100 },
+      "on": { "match": "MUTED", "invert": true },
+      "set": ["wpctl", "set-volume", "-l", "1.0", "@DEFAULT_AUDIO_SINK@", "{value}%"],
+      "unmute_on_set": true,
+      "turn_on": ["wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "0"],
+      "turn_off": ["wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "1"]
+    },
+    {
+      "id": "wifi",
+      "bar": true,
+      "label": "Wi-Fi",
+      "icon": "📶",
+      "kind": "toggle",
+      "read": ["nmcli", "-t", "radio", "wifi"],
+      "on": { "match": "^enabled" },
+      "turn_on": [
+        ["rfkill", "unblock", "wlan"],
+        ["nmcli", "radio", "wifi", "on"]
+      ],
+      "turn_off": ["nmcli", "radio", "wifi", "off"],
+      "detail": {
+        "read": ["nmcli", "-t", "-f", "NAME,TYPE", "connection", "show", "--active"],
+        "match": "(?m)^(.+):802-11-wireless$"
+      },
+      "items": "wifi_networks",
+      "list_label": "Networks"
+    },
+    {
+      "id": "bluetooth",
+      "bar": true,
+      "label": "Bluetooth",
+      "icon": "ᛒ",
+      "kind": "toggle",
+      "read": ["bluetoothctl", "show"],
+      "on": { "match": "Powered: yes" },
+      "turn_on": [
+        ["rfkill", "unblock", "bluetooth"],
+        ["bluetoothctl", "power", "on"]
+      ],
+      "turn_off": ["bluetoothctl", "power", "off"],
+      "detail": {
+        "read": ["bluetoothctl", "devices", "Connected"],
+        "match": "(?m)^Device \\S+ (.+)$"
+      },
+      "items": "bt_devices",
+      "list_label": "Devices"
+    },
+    {
+      "id": "power",
+      "label": "Power mode",
+      "icon": "⚡",
+      "kind": "choice",
+      "items": "app_modes",
+      "app_role": "power"
+    },
+    {
+      "id": "night_light",
+      "label": "Night light",
+      "icon": "☾",
+      "kind": "toggle",
+      "read": ["gsettings", "get", "org.gnome.settings-daemon.plugins.color", "night-light-enabled"],
+      "on": { "match": "true" },
+      "turn_on": ["gsettings", "set", "org.gnome.settings-daemon.plugins.color", "night-light-enabled", "true"],
+      "turn_off": ["gsettings", "set", "org.gnome.settings-daemon.plugins.color", "night-light-enabled", "false"]
+    },
+    {
+      "id": "dnd",
+      "label": "Do not disturb",
+      "icon": "🔕",
+      "kind": "toggle",
+      "read": ["gsettings", "get", "org.gnome.desktop.notifications", "show-banners"],
+      "on": { "match": "false" },
+      "turn_on": ["gsettings", "set", "org.gnome.desktop.notifications", "show-banners", "false"],
+      "turn_off": ["gsettings", "set", "org.gnome.desktop.notifications", "show-banners", "true"]
+    },
+    {
+      "id": "mic",
+      "label": "Microphone",
+      "icon": "🎙",
+      "kind": "toggle",
+      "read": ["wpctl", "get-volume", "@DEFAULT_AUDIO_SOURCE@"],
+      "on": { "match": "MUTED", "invert": true },
+      "turn_on": ["wpctl", "set-mute", "@DEFAULT_AUDIO_SOURCE@", "0"],
+      "turn_off": ["wpctl", "set-mute", "@DEFAULT_AUDIO_SOURCE@", "1"]
+    },
+    {
+      "id": "airplane",
+      "label": "Airplane mode",
+      "icon": "✈",
+      "kind": "toggle",
+      "read": ["rfkill", "-n", "-o", "SOFT"],
+      "on": { "match": "unblocked", "invert": true },
+      "turn_on": ["rfkill", "block", "all"],
+      "turn_off": ["rfkill", "unblock", "all"]
+    }
+  ]
+}

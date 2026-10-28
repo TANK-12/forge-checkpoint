@@ -1,0 +1,13 @@
+{
+  "id": "tpu_95a",
+  "name": "TPU 95A (flexible)",
+  "short": "TPU 95A",
+  "category": "polymer",
+  "colour": "#3a3f47",
+  "note": "Rubbery cuff pads and gaiters.",
+  "density_kg_m3": 1210,
+  "youngs_modulus_gpa": 0.026,
+  "yield_strength_mpa": 35,
+  "fatigue_strength_mpa": 10,
+  "source": "Typical handbook value (ASM Handbook / MatWeb datasheets); not a certified figure."
+}

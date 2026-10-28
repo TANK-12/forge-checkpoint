@@ -1,0 +1,19 @@
+{
+  "id": "devices",
+  "label": "Devices",
+  "tagline": "The phone and sending things to it",
+  "icon": "📱",
+  "accent": "#abb2bf",
+  "order": 24,
+  "section": "system",
+  "tabs": true,
+  "members": [
+    "phone",
+    "ntfy"
+  ],
+  "tab_labels": {
+    "phone": "Phone",
+    "ntfy": "Notifications"
+  },
+  "note": "Relay task 383. Undo this fold with \"off\": true; the apps keep their own folders and data."
+}

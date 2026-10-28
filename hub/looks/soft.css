@@ -1,0 +1,22 @@
+/* look: Soft | Rounded and cushioned: pill-shaped bar, dock and buttons, tiles like soft clay with gentle shadows and no hard edges */
+/* Every rule is scoped to body.look-soft (task 377). Colours come from the
+   theme's panel and accent, so it suits light and dark alike. */
+body.look-soft { --gap: 14px; --tile-w: 250px;
+  --glass-fill: color-mix(in srgb, var(--panel) 72%, transparent); --glass-line: transparent; }
+body.look-soft #bar { border-radius: 999px; padding: 0 10px; border: 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .08); }
+body.look-soft .bar-btn, body.look-soft .chip, body.look-soft #workspaces, body.look-soft .ws { border-radius: 999px; }
+body.look-soft #search, body.look-soft .fchip, body.look-soft .section-head .s-pill { border-radius: 999px; border-color: transparent;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .14), inset 0 1px 0 rgba(255, 255, 255, .07); }
+body.look-soft .fchip.on { background: color-mix(in srgb, var(--accent) 22%, var(--panel)); color: var(--text); }
+body.look-soft .tile { border: 0; border-radius: max(var(--radius), 20px); padding: 15px 16px;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--panel) 82%, transparent), color-mix(in srgb, var(--panel-2, var(--panel)) 70%, transparent));
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .16), 0 2px 6px rgba(0, 0, 0, .08), inset 0 1px 0 rgba(255, 255, 255, .09); }
+body.look-soft .tile:hover, body.look-soft .tile.focus {
+  box-shadow: 0 18px 38px rgba(0, 0, 0, .2), 0 0 0 3px color-mix(in srgb, var(--tile-accent) 30%, transparent), inset 0 1px 0 rgba(255, 255, 255, .12); }
+body.look-soft .tile .icon { border-radius: 50%; box-shadow: 0 6px 14px rgba(0, 0, 0, .16), inset 0 2px 0 rgba(255, 255, 255, .2); }
+body.look-soft .widgets .wg { border-radius: max(var(--radius), 22px); border: 0; }
+body.look-soft #dock { border-radius: 999px; border: 0; padding: 8px 14px;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, .2), inset 0 1px 0 rgba(255, 255, 255, .08); }
+body.look-soft .dock-item { border-radius: 50%; }
+body.look-soft .workspace, body.look-soft .workspace .inner { border-radius: max(var(--radius), 22px); }

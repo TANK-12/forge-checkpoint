@@ -1,0 +1,13 @@
+{
+  "id": "al_7075_t6",
+  "name": "Aluminium 7075-T6",
+  "short": "Al 7075",
+  "category": "metal",
+  "colour": "#c9ced6",
+  "note": "Light aerospace aluminium. Struts and links; poor fatigue limit.",
+  "density_kg_m3": 2810,
+  "youngs_modulus_gpa": 71.7,
+  "yield_strength_mpa": 503,
+  "fatigue_strength_mpa": 159,
+  "source": "Typical handbook value (ASM Handbook / MatWeb datasheets); not a certified figure."
+}

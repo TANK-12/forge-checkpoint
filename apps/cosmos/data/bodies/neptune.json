@@ -1,0 +1,43 @@
+{
+  "id": "neptune",
+  "name": "Neptune",
+  "kind": "planet",
+  "parent": "sun",
+  "order": 80,
+  "radius_km": 24622,
+  "gm_km3_s2": 6835100.0,
+  "color": "#4b74dc",
+  "pole": {
+    "ra_deg": 299.36,
+    "dec_deg": 43.46
+  },
+  "summary": "The windiest planet, with gusts over 2,000 km/h. It was found by mathematics before anyone saw it, from the way it tugged on Uranus.",
+  "elements": {
+    "model": "standish",
+    "a": [
+      30.06992276,
+      0.00026291
+    ],
+    "e": [
+      0.00859048,
+      5.105e-05
+    ],
+    "i": [
+      1.77004347,
+      0.00035372
+    ],
+    "L": [
+      -55.12002969,
+      218.45945325
+    ],
+    "varpi": [
+      44.96476227,
+      -0.32241464
+    ],
+    "node": [
+      131.78422574,
+      -0.00508664
+    ],
+    "source": "JPL approximate planetary elements (E.M. Standish), 1800-2050 table"
+  }
+}

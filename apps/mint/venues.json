@@ -1,0 +1,127 @@
+{
+ "about": "Where a trade happens and what it costs. One entry per venue; the engine reads every rule from here. Figures come from docs/library/money/2026-10-09-research-*.md; anything marked as an assumption is a placeholder because the real figure could not be read.",
+ "venues": {
+  "cfd": {
+   "label": "CFD broker (Plus500-style)",
+   "kind": "cfd",
+   "summary": "Contracts for difference: you bet on the price with borrowed exposure. You never own the asset; you pay the spread on every trade and interest every night a trade stays open.",
+   "allow_short": true,
+   "leverage_caps": {
+    "fx_major": 30,
+    "fx_minor": 20,
+    "gold": 20,
+    "index_major": 20,
+    "index_minor": 10,
+    "commodity": 10,
+    "share": 5,
+    "etf": 5,
+    "crypto": 2,
+    "default": 5
+   },
+   "spread_pct": {
+    "fx_major": 0.01,
+    "fx_minor": 0.03,
+    "gold": 0.025,
+    "index_major": 0.015,
+    "index_minor": 0.05,
+    "commodity": 0.06,
+    "share": 0.15,
+    "etf": 0.15,
+    "crypto": 0.15,
+    "default": 0.15
+   },
+   "funding_markup_pct": 3.0,
+   "benchmark_rate_pct": {
+    "AUD": 4.6,
+    "USD": 4.0,
+    "default": 4.0
+   },
+   "fx_fee_pct": 0.7,
+   "cash_interest_pct": 0.0,
+   "margin_closeout": 0.5,
+   "negative_balance_protection": true,
+   "notes": [
+    "Leverage caps are ASIC's retail limits (30:1 major currencies down to 2:1 crypto).",
+    "Overnight funding = the benchmark rate of the day + 3.0% a year on the full position value, charged every calendar night (a weekend counts three). Benchmark history: the RBA cash rate target (table A2) for AUD markets, the US 13-week T-bill rate (^IRX) for USD ones; 4.60% and 4.04% today. A currency pair pays on the gap between its two rates instead: a long AUD/USD pays the markup plus the US rate minus the Australian one, a short the markup plus the Australian rate minus the US one. The 3.0% markup is an assumption: Plus500's own rates could not be read.",
+    "Shorts receive the benchmark rate minus 3.0% (they pay when that is negative).",
+    "Spreads are from review sites and search summaries, several are assumptions (ASX 200, NASDAQ-100, AUD/USD, BHP). Real spreads widen in fast markets and outside main hours.",
+    "Profit or loss on a market priced in another currency pays a 0.7% conversion fee.",
+    "Margin close-out at 50% of the initial margin; negative balance protection floors the account at zero.",
+    "No interest on idle cash. Not modelled: the USD 10 a month inactivity fee after 3 idle months, guaranteed-stop fees, futures roll spreads."
+   ],
+   "sources": [
+    {
+     "label": "Plus500AU Financial Services Guide v21 (4 June 2026): no commission, 0.7% conversion fee, no interest on cash, funding x3 on Fridays",
+     "url": "https://cdn-main.plus500.com/Regulatory/ASIC/default/default/CFD/1780821177/3/FinancialServiceGuide.pdf"
+    },
+    {
+     "label": "ASIC 20-254MR: retail CFD leverage caps, margin close-out, negative balance protection",
+     "url": "https://asic.gov.au/about-asic/news-centre/find-a-media-release/2020-releases/20-254mr-asic-product-intervention-order-strengthens-cfd-protections/"
+    },
+    {
+     "label": "RBA table A2, every cash rate target change (4.60% from 30 Sep 2026)",
+     "url": "https://www.rba.gov.au/statistics/tables/csv/a2-data.csv"
+    },
+    {
+     "label": "Research A cost model table",
+     "url": "docs/library/money/2026-10-09-research-leveraged-trading.md"
+    }
+   ],
+   "benchmark_history": {
+    "AUD": "rba-cash",
+    "USD": "^IRX"
+   }
+  },
+  "cash": {
+   "label": "Share broker ($3 a trade)",
+   "kind": "cash",
+   "summary": "You buy and own real ETF units or shares (Stake or Moomoo style). No leverage, no shorting, a small fee per trade.",
+   "allow_short": false,
+   "spread_pct": {
+    "etf": 0.05,
+    "share": 0.05,
+    "default": 0.1
+   },
+   "brokerage_flat": 3.0,
+   "brokerage_pct": 0.03,
+   "min_trade": 500,
+   "whole_units": true,
+   "fx_fee_pct": 0.5,
+   "cash_interest_pct": 2.5,
+   "tradeable": [
+    "etf",
+    "share"
+   ],
+   "notes": [
+    "Brokerage: A$3 or 0.03% of the trade, whichever is more (Moomoo's published price; Stake is A$3 too).",
+    "Buys wait until there is A$500 to spend: about the ASX's minimum first parcel, and it keeps the A$3 fee at 0.6% of the buy or less. Assumption on the exact rule.",
+    "Bid-ask spread 0.05% on large ETFs and shares: an assumption, not researched.",
+    "Buying US shares converts AUD to USD at a 0.5% fee: an assumption, not researched.",
+    "Idle cash earns the RBA cash rate of the day, as a high-interest savings account roughly does (5.00% today against a 4.60% cash rate). With no rate history it earns the fixed 2.5% (between the 10-year and 5-year averages to June 2026, Vanguard index chart).",
+    "Fund fees (0.04% to 0.27% a year) are already inside ETF prices, so they are not charged again."
+   ],
+   "sources": [
+    {
+     "label": "Stake pricing: A$3 per ASX trade",
+     "url": "https://hellostake.com/au/pricing"
+    },
+    {
+     "label": "Moomoo AU pricing: A$3 or 0.03%",
+     "url": "https://www.moomoo.com/au/pricing"
+    },
+    {
+     "label": "2026 Vanguard Index Chart (cash 2.2% over 10 years, 3.1% over 5)",
+     "url": "https://fund-docs.vanguard.com/AU-Vanguard_Index_Chart_Brochure.pdf"
+    },
+    {
+     "label": "Research B",
+     "url": "docs/library/money/2026-10-09-research-au-investing-tax.md"
+    }
+   ],
+   "cash_interest_follows": "AUD",
+   "benchmark_history": {
+    "AUD": "rba-cash"
+   }
+  }
+ }
+}

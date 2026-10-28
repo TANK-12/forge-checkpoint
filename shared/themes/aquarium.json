@@ -1,0 +1,42 @@
+{
+  "label": "Aquarium",
+  "order": 90,
+  "tags": [
+    "nature",
+    "live",
+    "fun"
+  ],
+  "about": "Under the water: light rays, rising bubbles and swaying weed, with little fish swimming along the bottom.",
+  "look": "classic",
+  "layout": "forge",
+  "colours": {
+    "accent": "#3cc8e0",
+    "bg": "#04141c",
+    "panel": "#082029",
+    "panel_2": "#0c2933",
+    "border": "#14404e",
+    "text": "#dff6fb",
+    "muted": "#86b4c0"
+  },
+  "font": "rubik",
+  "wallpaper": [
+    "forge:bubbles.jpg",
+    ""
+  ],
+  "live": "bubbles",
+  "companion": "fish",
+  "settings": {
+    "particles": "off",
+    "dim": 0.0,
+    "glass_style": "liquid",
+    "border": "subtle",
+    "radius": 22,
+    "motion": "float"
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {
+      "live": "off"
+    }
+  }
+}

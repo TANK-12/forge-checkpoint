@@ -1,0 +1,47 @@
+{
+  "label": "Meadow",
+  "order": 66,
+  "tags": [
+    "light",
+    "nature",
+    "live"
+  ],
+  "mode": "light",
+  "about": "A sunny meadow: long grass swaying in the wind, seeds on the air, leaf-green accent and butterflies.",
+  "look": "classic",
+  "layout": "forge",
+  "colours": {
+    "accent": "#3f8f3a",
+    "bg": "#f1f6ec",
+    "panel": "#fbfdf8",
+    "panel_2": "#edf3e6",
+    "border": "#d2e0c6",
+    "text": "#1f2a1b",
+    "muted": "#5b6b52"
+  },
+  "font": "inter",
+  "wallpaper": [
+    "forge:meadow-light.jpg",
+    "forge:meadow.jpg",
+    ""
+  ],
+  "live": "meadow",
+  "companion": "butterflies",
+  "settings": {
+    "particles": "off",
+    "dim": 0.0,
+    "wall_tint": false,
+    "glass_style": "frosted",
+    "glass": 0.8,
+    "border": "subtle",
+    "radius": 18,
+    "motion": "glide",
+    "widget_look": "glass"
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {
+      "live": "off"
+    }
+  }
+}

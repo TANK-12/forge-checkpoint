@@ -1,0 +1,8 @@
+{
+  "label": "Launcher",
+  "about": "Like a phone's app drawer: no clock block, every app as a big icon with its name under it, in one centred grid.",
+  "order": 60,
+  "home": {"hero": "none", "sections": "flat", "tiles": "icons", "recent": false, "chips": false, "align": "center"},
+  "settings": {"widgets": false, "greeting": false},
+  "lighter": {"balanced": {}, "light": {}}
+}

@@ -1,0 +1,17 @@
+{
+  "id": "harmonic_m",
+  "name": "Harmonic drive joint, size 17 (50:1)",
+  "kind": "rotary",
+  "mass_kg": 1.2,
+  "torque_cont_nm": 30,
+  "torque_peak_nm": 60,
+  "speed_max_rad_s": 8.0,
+  "efficiency": 0.7,
+  "stiffness_nm_rad": 9000,
+  "backdrivable": false,
+  "power_cont_w": 180,
+  "note": "Frameless brushless motor on a 50:1 harmonic gear, like a robot-arm joint. Strong and precise, barely backdrivable. The motor's own rotor, spun 50 times faster, adds inertia the joint has to accelerate (rotor inertia x ratio squared).",
+  "source": "Typical of size-17 harmonic joint modules (e.g. CSF-17-50: rated about 21 N·m, repeated peak about 44-70 N·m, input up to 7300 rpm); top speed 8 rad/s is the motor at a 48 V bus (about 3800 rpm input), not the gear's limit; approximate.",
+  "gear_ratio": 50,
+  "rotor_inertia_kgm2": 1.5e-05
+}

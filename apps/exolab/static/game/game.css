@@ -1,0 +1,353 @@
+:root {
+  --accent: #5fd0ff;
+  --ink: #e9f4fb;
+  --dim: #9fb3c2;
+  --panel: rgba(12, 17, 22, 0.72);
+  --good: #6fe08a;
+  --warn: #ffc857;
+  --bad: #ff6b5f;
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #0b0f13;
+  color: var(--ink);
+  font: 14px/1.35 system-ui, sans-serif;
+}
+#view {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+}
+#hud {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+#bars {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  width: 340px;
+  display: grid;
+  gap: 6px;
+}
+#modes {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+}
+.mode {
+  background: var(--panel);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 4px 6px;
+  text-transform: capitalize;
+  font-size: 12px;
+  color: var(--dim);
+}
+.mode b {
+  color: var(--ink);
+  margin-right: 5px;
+}
+.mode i {
+  display: block;
+  font-style: normal;
+  font-size: 11px;
+  opacity: 0.75;
+}
+.mode.on {
+  border-color: var(--accent);
+  color: var(--ink);
+  box-shadow: 0 0 12px rgba(95, 208, 255, 0.45);
+}
+.bar {
+  position: relative;
+  height: 20px;
+  background: var(--panel);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.bar i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: linear-gradient(90deg, #2a9fd6, var(--accent));
+  transition: width 0.08s linear;
+}
+.bar i.low {
+  background: linear-gradient(90deg, #b8742a, var(--warn));
+}
+#hp i {
+  background: linear-gradient(90deg, #4c9c5c, var(--good));
+}
+.bar span,
+.bar em {
+  position: absolute;
+  top: 1px;
+  font-size: 12px;
+  text-shadow: 0 1px 2px #000;
+}
+.bar span {
+  right: 8px;
+}
+.bar em {
+  left: 8px;
+  font-style: normal;
+}
+#speed {
+  background: var(--panel);
+  border-radius: 6px;
+  padding: 4px 8px;
+  width: max-content;
+}
+#speed b {
+  font-size: 20px;
+}
+#speed small,
+#timer small {
+  color: var(--dim);
+  margin-left: 6px;
+}
+#timer {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--panel);
+  border-radius: 8px;
+  padding: 6px 14px;
+  text-align: center;
+}
+#timer b {
+  font-size: 24px;
+  font-variant-numeric: tabular-nums;
+}
+#timer small {
+  display: block;
+  margin: 0;
+}
+#stats {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 300px;
+  background: var(--panel);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 12px;
+}
+#stats h3,
+#demo h3 {
+  margin: 0 0 4px;
+  font-size: 13px;
+  color: var(--accent);
+}
+#stats div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 1px 0;
+}
+#stats span {
+  color: var(--dim);
+}
+#stats b {
+  font-weight: 500;
+  text-align: right;
+}
+#msgs {
+  position: absolute;
+  left: 18px;
+  bottom: 170px;
+  width: 460px;
+  transition: opacity 0.4s;
+}
+#msgs div {
+  background: var(--panel);
+  border-left: 3px solid var(--accent);
+  margin-top: 3px;
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+#msgs .warn {
+  border-color: var(--warn);
+}
+#msgs .bad {
+  border-color: var(--bad);
+}
+#msgs .good {
+  border-color: var(--good);
+}
+#prompt {
+  position: absolute;
+  left: 50%;
+  bottom: 90px;
+  transform: translateX(-50%);
+  text-shadow: 0 1px 3px #000;
+  font-size: 15px;
+}
+#banner {
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(120, 20, 15, 0.85);
+  border: 1px solid var(--bad);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+#crosshair {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 3px #000;
+}
+#fps {
+  position: absolute;
+  right: 14px;
+  bottom: 10px;
+  font-size: 11px;
+  color: var(--dim);
+}
+#demo {
+  position: absolute;
+  left: 18px;
+  top: 14px;
+  width: 520px;
+  background: var(--panel);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 12px;
+}
+#demo .good b {
+  color: var(--good);
+}
+#demo .bad b,
+#demo h3.bad {
+  color: var(--bad);
+}
+#demo h3.good {
+  color: var(--good);
+}
+#demo small {
+  color: var(--dim);
+}
+#loading,
+#pause {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(6, 9, 12, 0.6);
+}
+#loading {
+  background: #0b0f13;
+  align-content: center;
+  text-align: center;
+}
+#loading h1,
+#pause h1 {
+  margin: 0 0 6px;
+  font-size: 26px;
+}
+#loading p {
+  color: var(--dim);
+}
+[hidden] {
+  display: none !important;
+}
+.panel {
+  background: rgba(14, 19, 25, 0.94);
+  border: 1px solid rgba(95, 208, 255, 0.35);
+  border-radius: 12px;
+  padding: 22px 26px;
+  width: min(980px, 94vw);
+  max-height: 94vh;
+  overflow-y: auto;
+}
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 28px;
+}
+.controls h3 {
+  margin: 0 0 6px;
+  font-size: 14px;
+  color: var(--accent);
+}
+@media (max-width: 760px) {
+  .controls {
+    grid-template-columns: 1fr;
+  }
+}
+button.padfocus,
+.btn.padfocus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  background: #1b4459;
+}
+.sub {
+  color: var(--dim);
+  margin: 0 0 14px;
+}
+.buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+button,
+.btn {
+  appearance: none;
+  border: 1px solid var(--accent);
+  background: #13303f;
+  color: var(--ink);
+  padding: 8px 16px;
+  border-radius: 7px;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+button:hover,
+.btn:hover {
+  background: #1b4459;
+}
+.keys {
+  display: grid;
+  gap: 3px;
+  color: var(--dim);
+  margin-bottom: 10px;
+}
+.keys b {
+  color: var(--ink);
+}
+
+/* forge_chrome.js is loaded only to hold frames while Exo Lab is off screen;
+   its floating Full screen and Close app buttons would cover the HUD and the
+   fps readout (the game had none before), so they stay hidden here. */
+.forge-chrome-btn {
+  display: none !important;
+}
+
+/* Less motion when the system asks for it: the bars and messages change at
+   once instead of sliding or fading. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

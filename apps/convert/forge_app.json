@@ -1,0 +1,32 @@
+{
+  "name": "convert",
+  "label": "Convert",
+  "tagline": "Images, sound and documents, re-saved",
+  "help": {
+    "about": "Re-save pictures, sound and documents as another kind of file: pick the file, pick what it should become.",
+    "features": [
+      "Pictures",
+      "Sound",
+      "Documents"
+    ]
+  },
+  "actions": [
+    {"label": "Convert a file", "words": "change format resize image picture sound audio document pdf"}
+  ],
+  "port": 8490,
+  "module": "web_app:app",
+  "src_dir": ".",
+  "accent": "#d08a3c",
+  "icon": "🔀",
+  "order": 25,
+  "section": "system",
+  "ready_timeout": 30,
+  "ram_class": "light",
+  "store": {"github": "private"},
+  "manifest": {
+    "summary": "Drop a file (or give a path), pick a format, get the new file in ~/Downloads/Converted. converters/ is the registry, one file each: images with Pillow, audio with ffmpeg (also the sound of a video), documents with pandoc (fetched on first use, pinned by sha256 in convert.json through shared/forge_fetch.py). Video points to MediaForge's Video Enhancer instead of re-encoding here. Each conversion is a job (shared/forge_jobs.py) that can be stopped; nothing half-written is left behind.",
+    "data_dir": "~/.local/share/forge/convert",
+    "dependencies": {"required": ["ffmpeg", "Pillow (pip)", "shared/forge_fetch.py", "shared/forge_jobs.py"], "optional": ["pandoc (fetched)", "mediaforge"]},
+    "docs": ["README.md", "WIP.md"]
+  }
+}

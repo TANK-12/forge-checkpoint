@@ -1,0 +1,48 @@
+{
+  "id": "uranus",
+  "name": "Uranus",
+  "kind": "planet",
+  "parent": "sun",
+  "order": 70,
+  "radius_km": 25362,
+  "gm_km3_s2": 5793951.3,
+  "color": "#a3dbe3",
+  "rings": {
+    "inner_km": 41800,
+    "outer_km": 51150,
+    "color": "#6f8a90"
+  },
+  "pole": {
+    "ra_deg": 257.311,
+    "dec_deg": -15.175
+  },
+  "summary": "An ice giant tipped on its side, 98 degrees, probably by an ancient collision. Each pole gets 42 years of sunlight and then 42 years of night.",
+  "elements": {
+    "model": "standish",
+    "a": [
+      19.18916464,
+      -0.00196176
+    ],
+    "e": [
+      0.04725744,
+      -4.397e-05
+    ],
+    "i": [
+      0.77263783,
+      -0.00242939
+    ],
+    "L": [
+      313.23810451,
+      428.48202785
+    ],
+    "varpi": [
+      170.9542763,
+      0.40805281
+    ],
+    "node": [
+      74.01692503,
+      0.04240589
+    ],
+    "source": "JPL approximate planetary elements (E.M. Standish), 1800-2050 table"
+  }
+}

@@ -1,0 +1,10 @@
+/* motion: Still | Nothing moves on its own: no entrance, no lift or wiggle on tiles; a hover only lights them up */
+/* lighter: (nothing moves already; it stays as it is) */
+/* Scoped to body.motion-still (shared/motion/, task 377). Wallpapers and the
+   companion have their own switches; this is the home screen and tiles. */
+body.motion-still #home.enter * { animation: none !important; }
+body.motion-still .tile, body.motion-still .tile .icon { transition-property: border-color, box-shadow, background-color; }
+body.motion-still .tile:hover, body.motion-still .tile.focus, body.motion-still .tile:active { transform: none; }
+body.motion-still .tile:hover .icon, body.motion-still .tile.focus .icon { transform: none; }
+body.motion-still .dock-item, body.motion-still .dock-item:hover,
+body.motion-still .dock-item:has(+ .dock-item:hover), body.motion-still .dock-item:hover + .dock-item { transform: none; }

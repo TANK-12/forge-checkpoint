@@ -1,0 +1,29 @@
+{
+  "about": "Folders of downloaded things (models, assets) that several apps or tools share, which the Store may keep on an external drive on their own (shared/forge_external.py stores()). paths are relative to the Forge folder and must hold only re-downloadable or rebuildable files: never his work (voice profiles stay out) and nothing kept in git (move() refuses those). used_by lists the apps that read it; needed true makes those apps wait with the plug-in card while the drive is away, false lets them open (code reading it calls forge_external.require for a plain message). An app's own folders go in its forge_app.json \"stores\" list instead. Adding one is one entry here. The asset library (shared/assets) is not listed: some of its files are kept in git.",
+  "stores": [
+    {
+      "id": "voice-models",
+      "label": "Voice models",
+      "kind": "model",
+      "paths": ["models/voice/tts", "models/voice/stt", "models/voice/bin"],
+      "used_by": ["voice"],
+      "needed": true
+    },
+    {
+      "id": "music-models",
+      "label": "Music analysis models",
+      "kind": "model",
+      "paths": ["models/music"],
+      "used_by": [],
+      "needed": false
+    },
+    {
+      "id": "llm-models",
+      "label": "Text models (Forge Models downloads)",
+      "kind": "model",
+      "paths": ["models/llm"],
+      "used_by": ["forge-models"],
+      "needed": false
+    }
+  ]
+}

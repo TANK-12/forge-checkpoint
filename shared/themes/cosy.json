@@ -1,0 +1,42 @@
+{
+  "label": "Cosy",
+  "order": 35,
+  "tags": [
+    "cosy",
+    "live",
+    "dark",
+    "warm"
+  ],
+  "about": "Fireside warmth: embers rising in the dark, amber light, a book-like serif and soft round corners.",
+  "look": "classic",
+  "layout": "forge",
+  "colours": {
+    "accent": "#f0a35e",
+    "bg": "#17110d",
+    "panel": "#221912",
+    "panel_2": "#2b2017",
+    "border": "#3e2e21",
+    "text": "#f4e6d4",
+    "muted": "#b39a80"
+  },
+  "font": "serif",
+  "wallpaper": [
+    "forge:embers.jpg",
+    ""
+  ],
+  "live": "embers",
+  "settings": {
+    "particles": "off",
+    "radius": 18,
+    "glass_style": "frosted",
+    "dim": 0.12,
+    "border": "subtle",
+    "wall_3d": false
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {
+      "live": "off"
+    }
+  }
+}

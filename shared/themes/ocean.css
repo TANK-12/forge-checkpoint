@@ -1,0 +1,5 @@
+/* Ocean (shared/themes/ocean.json): moonlight on deep teal. */
+html[data-forge-theme="ocean"] .tile { background: linear-gradient(170deg,
+  color-mix(in srgb, var(--accent) 9%, var(--glass-fill)), color-mix(in srgb, #001018 20%, var(--glass-fill))); }
+html[data-forge-theme="ocean"] .hero .clock { font-weight: 200;
+  background-image: linear-gradient(115deg, #eef8fc 35%, color-mix(in srgb, var(--accent) 70%, #fff) 50%, #eef8fc 65%); }

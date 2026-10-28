@@ -1,0 +1,16 @@
+{
+  "_about": "Which CPU cores each kind of work may run on. Measured 2026-10-21 in docs/library/performance/2026-10-21-core-pinning.md. Off until the owner says yes: set enabled to true (new launches pick it up; nothing running is moved). A slot's cpus is \"all\", \"p-cores\" or \"e-cores\" (read from /sys/devices/cpu_core/cpus and cpu_atom/cpus, so another CPU still works) or a kernel CPU list such as \"4-11\". It is applied at launch with sched_setaffinity (taskset), which every child inherits, and it only ever narrows: a slot's cores are kept within the cores the launcher may use; systemd AllowedCPUs= does nothing in user units on this laptop (cpuset is not delegated). shared/forge_cores.py reads it.",
+  "enabled": false,
+  "slots": {
+    "relay-session": {
+      "cpus": "e-cores",
+      "used_by": "the Claude sessions started by apps/relay/runs.py (work, the owner's chat, reviews) and everything they start; the short asks in oneshot.py (contacts, the boss line) are not pinned",
+      "why": "A session's work beside a game kept the game's average frame rate (80.1 fps against 79.2 alone, 76.8 unpinned) and won back part of its 1% lows (22.8 fps against 20.4 unpinned, 26.0 alone); the session's own jobs ran about 15% slower."
+    },
+    "heavy-job": {
+      "cpus": "e-cores",
+      "used_by": "forge_ram.py run (renders, encodes, model runs) unless --cores names another slot",
+      "why": "Under the power limit the eight E-cores gave 93-99% of the whole chip's multi-threaded throughput, so a parallel job loses little and the P-cores stay free for the desktop and games. Single-threaded jobs lose about 20-25%."
+    }
+  }
+}

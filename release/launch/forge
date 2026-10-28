@@ -1,0 +1,27 @@
+#!/bin/sh
+# Forge: starts the hub with the Python bundled beside this script.
+# ./forge --help lists the options (a browser window, another port, a check);
+# ./forge --install puts Forge in your apps menu, forge --uninstall takes it
+# out again (forge_installer.py beside this script does both).
+HERE=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+# no __pycache__ folders in the program folder: it stays as it was unpacked
+export PYTHONDONTWRITEBYTECODE=1
+for arg in "$@"; do
+	case "$arg" in
+	--install | --uninstall)
+		exec "$HERE/runtime/bin/python3" "$HERE/forge_installer.py" "$@"
+		;;
+	esac
+done
+case "${1:-}" in
+-h | --help)
+	"$HERE/runtime/bin/python3" "$HERE/forge_portable.py" "$@"
+	echo
+	echo "installing (Linux):"
+	echo "  --install             copy Forge to your home folder and add it to the apps menu"
+	echo "  --uninstall           take it out again; your things stay"
+	echo "  --uninstall --remove-data   also remove Forge's folders on this computer"
+	exit 0
+	;;
+esac
+exec "$HERE/runtime/bin/python3" "$HERE/forge_portable.py" "$@"

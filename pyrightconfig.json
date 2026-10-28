@@ -1,0 +1,7 @@
+{
+  "extraPaths": [
+    "shared"
+  ],
+  "venvPath": ".",
+  "venv": ".venv"
+}

@@ -1,0 +1,13 @@
+/* high-contrast-light (shared/themes/high-contrast-light.json): the most legible Forge, solid and outlined. */
+html[data-forge-theme="high-contrast-light"] #wall, html[data-forge-theme="high-contrast-light"] #wall-blur { background: var(--bg) !important; filter: none !important; }
+html[data-forge-theme="high-contrast-light"] #wall-fg, html[data-forge-theme="high-contrast-light"] #scrim { display: none; }
+html[data-forge-theme="high-contrast-light"] { --glass-fill: var(--bg); --glass-line: var(--text); --muted: var(--text); }
+html[data-forge-theme="high-contrast-light"] .hero .clock { background-image: none; color: var(--text); -webkit-text-fill-color: var(--text); filter: none; font-weight: 600; animation: none; }
+html[data-forge-theme="high-contrast-light"] .hero .date, html[data-forge-theme="high-contrast-light"] .hero .greet { color: var(--text); text-shadow: none; font-weight: 600; }
+html[data-forge-theme="high-contrast-light"] .tile .name { font-size: 1.08em; font-weight: 700; }
+html[data-forge-theme="high-contrast-light"] .tile .tag { color: var(--text); }
+html[data-forge-theme="high-contrast-light"] .tile:hover, html[data-forge-theme="high-contrast-light"] .tile.focus, html[data-forge-theme="high-contrast-light"] #search:focus, html[data-forge-theme="high-contrast-light"] .fchip:focus-visible, html[data-forge-theme="high-contrast-light"] :focus-visible {
+  outline: 3px solid var(--accent); outline-offset: 2px; }
+html[data-forge-theme="high-contrast-light"] .tile .icon { color: var(--text); }
+html[data-forge-theme="high-contrast-light"] .section-head .s-label, html[data-forge-theme="high-contrast-light"] #recent-wrap h3 { color: var(--text); font-weight: 700; text-shadow: none; }
+html[data-forge-theme="high-contrast-light"] #home .hero > div:first-child::before { display: none; }

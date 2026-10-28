@@ -1,0 +1,19 @@
+/* look: Cards | Solid cards on a quiet backdrop: opaque panels with a fine border and layered shadows, like a tidy dashboard, no blur */
+/* Every rule is scoped to body.look-cards (task 377). Opaque panels read
+   well over any wallpaper and cost no blur. */
+body.look-cards { --glass-fill: var(--panel); --glass-line: var(--border); }
+body.look-cards .glass { -webkit-backdrop-filter: none; backdrop-filter: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .18), 0 6px 20px rgba(0, 0, 0, .16); }
+body.look-cards .tile { background: var(--panel); border: 1px solid var(--border);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .2), 0 4px 14px rgba(0, 0, 0, .14); }
+body.look-cards .tile::before { opacity: 0; }
+body.look-cards .tile:hover, body.look-cards .tile.focus { border-color: color-mix(in srgb, var(--tile-accent) 55%, var(--border));
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .2), 0 14px 30px rgba(0, 0, 0, .22); }
+body.look-cards .tile .icon { box-shadow: none; border-radius: min(var(--radius), 10px); }
+body.look-cards .tile:hover .icon, body.look-cards .tile.focus .icon { transform: none; }
+body.look-cards #search, body.look-cards .fchip, body.look-cards .section-head .s-pill, body.look-cards .widgets .wg {
+  background: var(--panel); border: 1px solid var(--border); -webkit-backdrop-filter: none; backdrop-filter: none; }
+body.look-cards .fchip.on { background: color-mix(in srgb, var(--accent) 18%, var(--panel)); border-color: var(--accent); }
+body.look-cards #bar, body.look-cards #dock { background: var(--panel); border: 1px solid var(--border);
+  -webkit-backdrop-filter: none; backdrop-filter: none; }
+body.look-cards #recent-wrap h3, body.look-cards .section-head .s-label { letter-spacing: .02em; }

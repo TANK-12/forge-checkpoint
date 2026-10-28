@@ -1,0 +1,27 @@
+{
+  "id": "ariel",
+  "name": "Ariel",
+  "kind": "moon",
+  "parent": "uranus",
+  "order": 72,
+  "radius_km": 578.9,
+  "gm_km3_s2": 83.46,
+  "color": "#c3c1bc",
+  "summary": "The brightest of Uranus's large moons, with a young surface cut by valleys.",
+  "elements": {
+    "model": "kepler",
+    "epoch_jd": 2461332.5,
+    "a_km": 190929,
+    "e": 0.001,
+    "i_deg": 180,
+    "node_deg": 0,
+    "peri_deg": 343.3884,
+    "M_deg": 163.6586,
+    "period_days": 2.520379,
+    "M_rate_deg_day": 142.8015307369,
+    "frame": "parent_equator",
+    "source": "JPL planetary satellite mean elements; mean anomaly and its rate refitted to JPL Horizons positions (2000-2045) on 2026-10-19 by tools/fit_moons.mjs",
+    "peri_period_yr": 28.901,
+    "i_note": "Measured from Uranus's IAU north pole. Uranus spins backwards, so its moons, about 0 degrees from their own orbit pole in JPL's table, sit near 180 here."
+  }
+}

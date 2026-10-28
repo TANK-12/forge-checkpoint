@@ -1,0 +1,48 @@
+{
+  "label": "Frost",
+  "order": 60,
+  "tags": [
+    "light",
+    "winter",
+    "live",
+    "calm"
+  ],
+  "mode": "light",
+  "about": "A pale winter morning: snow drifting past pines, icy blue glass and crisp dark type.",
+  "look": "classic",
+  "layout": "forge",
+  "colours": {
+    "accent": "#2f7fd1",
+    "bg": "#eef4fa",
+    "panel": "#ffffff",
+    "panel_2": "#f2f6fb",
+    "border": "#d3dfec",
+    "text": "#16222f",
+    "muted": "#566a80"
+  },
+  "font": "inter",
+  "wallpaper": [
+    "forge:snow-light.jpg",
+    "forge:snow.jpg",
+    ""
+  ],
+  "live": "snow",
+  "companion": "",
+  "settings": {
+    "particles": "off",
+    "dim": 0.0,
+    "wall_tint": false,
+    "glass_style": "frosted",
+    "glass": 0.78,
+    "border": "subtle",
+    "radius": 16,
+    "motion": "glide",
+    "widget_look": "glass"
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {
+      "live": "off"
+    }
+  }
+}

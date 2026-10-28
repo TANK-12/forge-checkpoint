@@ -1,0 +1,6 @@
+#!/bin/sh
+# Forge.app: the hub, its apps and their Python live in Contents/Resources/forge.
+HERE=$(CDPATH= cd -- "$(dirname -- "$0")/../Resources/forge" && pwd)
+# No .pyc files written inside the app (it may be read-only or signed).
+export PYTHONDONTWRITEBYTECODE=1
+exec "$HERE/runtime/bin/python3" "$HERE/forge_portable.py" "$@"

@@ -1,0 +1,46 @@
+{
+ "label": "Vessa, the station chief",
+ "jobs": [
+  "station chief"
+ ],
+ "weight": 2,
+ "exchanges": [
+  {
+   "say": "Reports by the end of the day, {listener}.",
+   "replies": [
+    "You'll have it.",
+    "Which day?",
+    "Already on your desk."
+   ]
+  },
+  {
+   "say": "I noticed the hatch on four was left open again.",
+   "replies": [
+    "Wasn't me.",
+    "I'll have a word.",
+    "Dez."
+   ]
+  },
+  {
+   "say": "Anything I should hear about before someone else tells me?",
+   "replies": [
+    "Nothing, chief.",
+    "Nothing yet.",
+    "Ask me tomorrow."
+   ]
+  },
+  {
+   "say": "We're doing well. Don't tell anyone I said so.",
+   "replies": [
+    "Your secret's safe.",
+    "Was that a compliment?",
+    "I'll frame it."
+   ]
+  }
+ ],
+ "hello": [
+  "Settling in?",
+  "Everything in order, I hope.",
+  "Welcome aboard, {you}."
+ ]
+}

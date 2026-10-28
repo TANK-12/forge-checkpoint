@@ -1,0 +1,44 @@
+{
+  "id": "lateral_gimbal",
+  "name": "Side-axis gimbal (simple)",
+  "kind": "gimbal",
+  "about": "Three motors whose axes meet at one point beside the shoulder, the first axis pointing straight out sideways. Easy to build, but when the arm points out sideways the first and last axes line up (gimbal lock), and the point stays fixed while the real shoulder joint moves.",
+  "first_axis": {
+    "plane_deg": 0,
+    "elevation_deg": 90
+  },
+  "pod_radius_m": 0.12,
+  "joints": [
+    {
+      "name": "J1 flexion",
+      "actuator": "harmonic_m",
+      "limits_deg": [
+        -175,
+        175
+      ]
+    },
+    {
+      "name": "J2 abduction",
+      "actuator": "harmonic_m",
+      "limits_deg": [
+        -175,
+        175
+      ]
+    },
+    {
+      "name": "J3 arm twist",
+      "actuator": "harmonic_s",
+      "limits_deg": [
+        -175,
+        175
+      ]
+    }
+  ],
+  "centre_offset_mm": [
+    0,
+    0,
+    0
+  ],
+  "slider": false,
+  "j2_side": 1
+}

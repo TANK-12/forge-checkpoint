@@ -1,0 +1,20 @@
+/* look: Outline | A clean wireframe: see-through panels drawn with crisp lines, the accent only on the line you point at, no blur and no shadows */
+/* Every rule is scoped to body.look-outline (task 377). Lines are mixed from
+   the theme's text colour, so high-contrast themes get bold black or white. */
+body.look-outline { --line: color-mix(in srgb, var(--text) 38%, transparent); --line-w: 1.5px;
+  --glass-fill: color-mix(in srgb, var(--bg, #000) 55%, transparent); --glass-line: var(--line); }
+body.look-outline .glass { box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+body.look-outline #bar, body.look-outline #dock, body.look-outline #search, body.look-outline .fchip,
+body.look-outline .section-head .s-pill, body.look-outline .widgets .wg {
+  border: var(--line-w) solid var(--line); box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+body.look-outline .tile { border: var(--line-w) solid var(--line); box-shadow: none; background: var(--glass-fill); }
+body.look-outline .tile::before { display: none; }
+body.look-outline .tile:hover, body.look-outline .tile.focus { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+body.look-outline .tile .icon { background: transparent; border: var(--line-w) solid color-mix(in srgb, var(--tile-accent) 70%, var(--text));
+  box-shadow: none; color: var(--text); }
+body.look-outline #search:focus { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+body.look-outline .fchip.on { border-color: var(--accent); color: var(--accent); background: transparent; box-shadow: none; }
+body.look-outline .ws.active { box-shadow: inset 0 0 0 var(--line-w) var(--accent); background: transparent; }
+body.look-outline .workspace { padding: 0; background: transparent; box-shadow: 0 0 0 var(--line-w) var(--line); }
+/* High-contrast themes: thicker lines in the full text colour */
+html[data-forge-theme^="high-contrast"] body.look-outline { --line: var(--text); --line-w: 2.5px; }

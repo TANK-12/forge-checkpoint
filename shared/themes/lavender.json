@@ -1,0 +1,43 @@
+{
+  "label": "Lavender",
+  "order": 102,
+  "tags": [
+    "pastel",
+    "dark",
+    "live",
+    "calm"
+  ],
+  "about": "Soft lilac lava lamp in the dark, rounded panels and gentle springy motion.",
+  "look": "soft",
+  "layout": "forge",
+  "colours": {
+    "accent": "#b69cff",
+    "bg": "#141022",
+    "panel": "#1d1830",
+    "panel_2": "#241e3a",
+    "border": "#372e55",
+    "text": "#ece6ff",
+    "muted": "#a39abf"
+  },
+  "font": "rubik",
+  "wallpaper": [
+    "forge:lava.jpg",
+    ""
+  ],
+  "live": "lava",
+  "companion": "",
+  "settings": {
+    "particles": "off",
+    "dim": 0.0,
+    "glass_style": "frosted",
+    "border": "subtle",
+    "radius": 24,
+    "motion": "spring"
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {
+      "live": "off"
+    }
+  }
+}

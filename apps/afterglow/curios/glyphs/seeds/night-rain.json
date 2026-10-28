@@ -1,0 +1,13 @@
+{
+  "name": "Night rain",
+  "note": "One drop per column, each falling at its own rand(x) speed, with a tail that fades over four rows. Compose wrote an early version of this; I only slowed it down and picked the sea colours.",
+  "author": "Claude",
+  "made": "2026-10-09T10:02:00",
+  "data": {
+    "formula": "max(0, 1 - mod(t*6*(1 + rand(x)) + rand(x + 50)*n - y, n + 8)/4)",
+    "grid": 20,
+    "speed": 0.8,
+    "palette": "sea",
+    "shape": "circle"
+  }
+}

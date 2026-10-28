@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Welcome to Forge</title>
+<link rel="stylesheet" href="/shared/forge.css">
+<link rel="stylesheet" href="place.css">
+</head>
+<body>
+<!-- The first thing a new Forge shows (forge_portable.py serves it until a
+     place for the user's things is chosen), the screen for a place that
+     cannot be used (a drive not plugged in, read-only, full), and the
+     welcome again from the data page (?again=1). welcome.js fills it. -->
+<div class="shell">
+  <div class="brand">FORGE<i>.</i></div>
+  <main class="card" id="card" aria-live="polite">
+    <p class="waiting"><span class="spin"></span>Getting ready&hellip;</p>
+  </main>
+</div>
+<script src="place.js"></script>
+<script src="welcome.js"></script>
+</body>
+</html>

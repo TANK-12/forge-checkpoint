@@ -1,0 +1,26 @@
+{
+  "id": "base",
+  "name": "Game rules: human baselines and game-only parts",
+  "about": "What exolab/derive.py turns the suit's physics into for the game: the unsuited human's own figures, the poses used to rate lifting, and the parts that exist only in the game (the boost pack and the energy buffer). Every number here is editable in a profile like any other item.",
+  "kit_mass_kg": 6.0,
+  "human_jump_m": 0.45,
+  "human_sprint_mps": 7.0,
+  "human_sprint_w": 900,
+  "sprint_cap_mps": 14.0,
+  "walk_mps": 1.5,
+  "leg_duty": 0.5,
+  "speed_mode_power": 2.0,
+  "push_time_s": 0.25,
+  "joint_excursion_rad": {"hip": 1.0, "knee": 1.3, "arm": 1.2, "punch": 0.8},
+  "human_throw_j": 100,
+  "human_punch_j": 80,
+  "throw_cap_mps": 30.0,
+  "poses": {
+    "carry": {"name": "Crate held in front", "plane": 90, "elev": 40, "axial": 0, "elbow": 70},
+    "hold_out": {"name": "Arms out level", "plane": 90, "elev": 90, "axial": 0, "elbow": 0}
+  },
+  "boost": {"name": "Boost pack (game only)", "impulse_ns": 400, "mass_kg": 3.0, "energy_j": 1500, "dash_s": 0.3},
+  "armour": {"body_area_m2": 1.8, "ref_mpa": 300, "base_hp": 100, "hp_per_point": 0.5, "armour_mode_damage_mult": 0.4},
+  "energy": {"buffer_j": 6000, "recharge_w": 400, "recharge_delay_s": 1.5, "idle_w": 20, "armour_w_per_m2": 300, "cloak_w_per_m2": 200},
+  "source": "Game rules tuned for feel. Human figures are rough adult norms: standing vertical jump about 0.45 m, sprint about 7 m/s, about 900 W of mechanical power while sprinting."
+}

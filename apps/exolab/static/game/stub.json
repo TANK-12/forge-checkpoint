@@ -1,0 +1,67 @@
+{
+ "model": "exo_full",
+ "name": "Exo suit, full",
+ "profile": "baseline",
+ "mass": {
+  "body_kg": 55.0,
+  "suit_kg": 20.6,
+  "kit_kg": 9.0,
+  "total_kg": 84.6
+ },
+ "move": {
+  "walk_mps": 1.5,
+  "sprint_mps": 5.84,
+  "speed_mode_mps": 7.13,
+  "jump_m": 0.38,
+  "boost_jump_m": 1.52,
+  "dash_mps": 10.57,
+  "dash_s": 0.3,
+  "slam_j": 4387.0,
+  "slam_radius_m": 2.6
+ },
+ "strength": {
+  "lift_kg": 12.5,
+  "strength_lift_kg": 25.0,
+  "hold_out_kg": 11.7,
+  "break_kg": 151.1,
+  "throw_j": 249.0,
+  "strength_throw_j": 397.0,
+  "throw_cap_mps": 30.0,
+  "arm_mass_kg": 6.5,
+  "punch_j": 130.0,
+  "strength_punch_j": 179.0
+ },
+ "armour": {
+  "hp": 188.0,
+  "coverage": 0.4,
+  "armour_mode_damage_mult": 0.4
+ },
+ "energy": {
+  "battery_wh": 360.0,
+  "bar_j": 6000.0,
+  "recharge_w": 400.0,
+  "recharge_delay_s": 1.5,
+  "boost_j": 1500.0,
+  "drain_w": {
+   "idle": 20.0,
+   "sprint": 353.0,
+   "strength": 1667.0,
+   "armour": 214.0,
+   "cloak": 360.0,
+   "speed": 706.0
+  },
+  "battery_min_idle": 1080.0
+ },
+ "how": {
+  "jump_m": "(your own jump work + leg drives' push work) / (total mass x g); push work per drive = min(peak torque x joint swing, a quarter of peak torque x top speed x push time) x efficiency",
+  "boost_jump_m": "jump + (boost impulse / total mass)^2 / 2g",
+  "sprint_mps": "your sprint x (1 + leg drive power / your sprint power) x body mass / total mass",
+  "lift_kg": "two arms, crate held in front: the heaviest load with every motor within its continuous torque, no beam or strap failing and the wearer within their maximum",
+  "strength_lift_kg": "the same with motors allowed up to their peak torque and the suit carrying the whole arm when that helps (Strength mode); without load-bearing gauntlets the arm straps' pressure usually sets the limit",
+  "break_kg": "the load at which a beam's safety factor drops below 1 (the part breaks)",
+  "throw_j": "your throw + both arms' drives (continuous torque x swing x efficiency); speed = sqrt(2 x energy / (object + arm mass))",
+  "hp": "base 100 x (1 + 0.5 x shell protection per body area); protection = area x thickness x strength / 300 MPa",
+  "drain_w": "sprint and speed from leg drive power, strength from arm drive power, armour per m2 of shell, cloak per m2 of body"
+ },
+ "note": "Game rules fed by the physics core. The tester's numbers are the physics; these are for play."
+}

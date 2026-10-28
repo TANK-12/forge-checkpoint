@@ -1,0 +1,50 @@
+/* look: Material 3 | Tonal colours worked out from the wallpaper accent, big rounded shapes, springy motion, a top app bar */
+/* Material You roles, built from --accent with color-mix so they follow the
+   wallpaper live: surface, surface containers, primary container. */
+body.look-material {
+  --md-surface: color-mix(in srgb, var(--accent) 6%, #111317);
+  --md-c-low: color-mix(in srgb, var(--accent) 9%, #16181d);
+  --md-c: color-mix(in srgb, var(--accent) 12%, #1b1d22);
+  --md-c-high: color-mix(in srgb, var(--accent) 15%, #22252b);
+  --md-primary-c: color-mix(in srgb, var(--accent) 38%, #1b1d22);
+  --md-on-primary-c: color-mix(in srgb, var(--accent) 22%, #ffffff);
+  --md-outline: color-mix(in srgb, var(--accent) 22%, #8d9199);
+  --md-spring: cubic-bezier(.34, 1.56, .64, 1);
+  --radius: 28px; --gap: 12px; --bar-h: 64px;
+  --glass-fill: color-mix(in srgb, var(--md-c) 90%, transparent); --glass-line: transparent;
+  font-family: "Roboto Flex", Roboto, "Google Sans", Rubik, system-ui, sans-serif;
+}
+/* the top app bar: full width, flush with the top, no glass edge */
+body.look-material #bar { top: 0; left: 0; right: 0; border-radius: 0 0 28px 28px; padding: 0 16px; gap: 12px;
+  background: color-mix(in srgb, var(--md-c-low) 92%, transparent); border: 0; box-shadow: none; }
+body.look-material #stage, body.look-material #home { top: calc(var(--bar-h) + 12px); }
+body.look-material .bar-btn { height: 40px; border-radius: 20px; padding: 0 16px; }
+body.look-material .brand { font-size: 18px; letter-spacing: 0; }
+/* navigation: the active destination gets the pill-shaped indicator */
+body.look-material #workspaces { background: transparent; gap: 6px; }
+body.look-material .ws { height: 32px; min-width: 40px; border-radius: 16px; transition: min-width 400ms var(--md-spring), background 200ms; }
+body.look-material .ws.active { min-width: 64px; background: var(--md-primary-c); color: var(--md-on-primary-c); }
+body.look-material .chip { height: 32px; border-radius: 8px; background: var(--md-c-high); }
+body.look-material .tile { border: 0; border-radius: 24px; padding: 16px; background: var(--md-c);
+  transition: transform 420ms var(--md-spring), background 200ms, border-radius 420ms var(--md-spring); }
+body.look-material .tile:hover, body.look-material .tile.focus { background: var(--md-c-high); border-radius: 32px;
+  transform: translateY(-3px) scale(1.015); box-shadow: 0 8px 24px rgba(0, 0, 0, .3); }
+body.look-material .tile .icon { width: 52px; height: 52px; border-radius: 16px; box-shadow: none;
+  background: var(--md-primary-c); color: var(--md-on-primary-c); transition: border-radius 420ms var(--md-spring), transform 420ms var(--md-spring); }
+body.look-material .tile:hover .icon, body.look-material .tile.focus .icon { border-radius: 26px; transform: none; }
+body.look-material #search { height: 56px; border-radius: 28px; border: 0; background: var(--md-c-high); }
+body.look-material .fchip { height: 32px; border-radius: 8px; border: 1px solid var(--md-outline); background: var(--md-c-low); color: var(--text); }
+body.look-material .fchip.on { background: var(--md-primary-c); color: var(--md-on-primary-c); border-color: transparent; }
+body.look-material .section-head .s-pill { border-radius: 20px; background: var(--md-c-low); border: 0; }
+body.look-material .section-head .s-icon { background: var(--md-primary-c); color: var(--md-on-primary-c); }
+/* the dock becomes a floating toolbar */
+body.look-material #dock { border-radius: 28px; padding: 10px 12px; background: var(--md-c-high); border: 0; }
+body.look-material .dock-item { border-radius: 16px; background: var(--md-c); transition: transform 380ms var(--md-spring), border-radius 380ms var(--md-spring); }
+body.look-material .dock-item:hover { border-radius: 24px; }
+body.look-material .dock-item.active { background: var(--md-primary-c); }
+/* no transition here: the hub's Motion moves the windows; this
+   one's visibility delay outranked .workspace.active and hid the incoming window
+   for its whole move */
+body.look-material .workspace { padding: 0; border-radius: 28px; background: var(--md-surface); box-shadow: 0 12px 40px rgba(0, 0, 0, .4); }
+body.look-material .workspace .inner { border-radius: 28px; }
+body.look-material .hero .greet { color: var(--md-on-primary-c); }

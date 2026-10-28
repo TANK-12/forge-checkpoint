@@ -1,0 +1,1568 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>PixelForge</title>
+<link rel="stylesheet" href="/shared/forge.css">
+<style>
+  /* Neutrals come from the shared theme; only the accent is PixelForge's own.
+     --line and --ink are the names this page grew up with. */
+  :root{
+    --line:var(--border); --ink:var(--text);
+    --accent:#c86fd3; --accent-2:#a854b4; --on-accent:#180a1c;
+  }
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  body{margin:0;background:var(--bg);color:var(--ink);height:100vh;overflow:hidden;
+       font:13px/1.5 ui-sans-serif,system-ui,"Segoe UI",sans-serif}
+  header{height:46px;display:flex;align-items:center;gap:12px;padding:0 14px;
+         border-bottom:1px solid var(--line);background:var(--panel)}
+  header h1{margin:0;font-size:15px;font-weight:700;color:var(--accent);letter-spacing:.3px}
+  header .where{font-size:11.5px;color:var(--muted)}
+  .spacer{flex:1}
+  header .where{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  header button, header .modes{white-space:nowrap;flex-shrink:0}
+  main{display:grid;grid-template-columns:230px 1fr 210px;height:calc(100vh - 46px);
+       padding:0;overflow:hidden}
+  main:not([hidden]){animation:pf-in .18s ease-out}
+  @keyframes pf-in{from{opacity:0}to{opacity:1}}
+  @media (max-width:900px){ main{grid-template-columns:190px 1fr 180px} }
+  @media (prefers-reduced-motion:reduce){ main:not([hidden]){animation:none} }
+  /* Thin themed scrollbars; WebKitGTK (the hub) reads only the -webkit- ones. */
+  *{scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+  ::-webkit-scrollbar{width:8px;height:8px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px;border:2px solid transparent;background-clip:padding-box}
+  ::-webkit-scrollbar-thumb:hover{background-color:var(--muted)}
+  ::-webkit-scrollbar-corner{background:transparent}
+  .card{max-width:420px;margin:40px auto;padding:18px 20px;border:1px solid var(--line);
+        border-radius:10px;background:var(--panel);text-align:center}
+  .card h3{margin-top:0}
+  .boot-title{margin:0 0 6px;font-size:14px;font-weight:600;color:var(--ink)}
+  .empty{color:var(--muted);font-size:12.5px;text-align:center;max-width:300px;margin:24px auto}
+  .col{overflow-y:auto;padding:12px}
+  .col.left{border-right:1px solid var(--line);background:var(--panel)}
+  .col.right{border-left:1px solid var(--line);background:var(--panel)}
+  .col.mid{display:flex;flex-direction:column;align-items:center;gap:12px;padding:16px;
+           background:radial-gradient(90% 70% at 50% 0%,color-mix(in srgb,var(--accent) 7%,var(--bg)),var(--bg))}
+  h3{margin:14px 0 6px;font-size:12px;font-weight:600;letter-spacing:.2px;color:var(--muted)}
+  h3:first-child{margin-top:0}
+  .item{padding:5px 8px;border-radius:6px;cursor:pointer;font-size:12.5px;
+        display:flex;align-items:center;gap:7px}
+  .item:hover{background:var(--panel-2)}
+  .item.on{background:var(--accent);color:var(--on-accent);font-weight:600}
+  .item canvas{image-rendering:pixelated;background:#0006;border-radius:3px}
+  .btn{background:var(--accent);color:var(--on-accent);border:0;border-radius:7px;
+       padding:7px 13px;font:inherit;font-weight:600;cursor:pointer;font-size:12.5px}
+  .btn:hover{background:var(--accent-2)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:400}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+  .btn:disabled{opacity:.45;cursor:default}
+  .row{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+  #paper{image-rendering:pixelated;cursor:crosshair;background:#0a080d;
+         border:1px solid var(--line);border-radius:6px;touch-action:none}
+  .swatches{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+  .sw{aspect-ratio:1;border-radius:4px;border:2px solid transparent;cursor:pointer;
+      position:relative}
+  .sw.on{border-color:#fff}
+  .sw.erase{background:
+      linear-gradient(45deg,#333 25%,transparent 25%,transparent 75%,#333 75%),
+      linear-gradient(45deg,#333 25%,#222 25%,#222 75%,#333 75%);
+      background-size:8px 8px;background-position:0 0,4px 4px}
+  .frames{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  .frame{border:2px solid var(--line);border-radius:6px;padding:2px;cursor:pointer;background:#0006}
+  .frame.on{border-color:var(--accent)}
+  .frame canvas{image-rendering:pixelated;display:block}
+  select,input[type=text],input[type=number]{background:var(--panel-2);color:var(--ink);
+      border:1px solid var(--line);border-radius:6px;padding:5px 7px;font:inherit;font-size:12px;
+      width:100%}
+  input[type=range]{width:100%;accent-color:var(--accent)}
+  .note{font-size:11px;color:var(--muted);line-height:1.5;margin-top:8px}
+  #toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#000d;
+         border:1px solid var(--line);border-radius:8px;padding:8px 16px;font-size:12.5px;
+         opacity:0;transition:opacity .2s;pointer-events:none;z-index:20}
+  #toast.on{opacity:1}
+  #toast.bad{border-color:#c05a5a;color:#ffb4b4}
+  .modes{display:flex;gap:0;border:1px solid var(--line);border-radius:7px;overflow:hidden}
+  .modes button{background:transparent;color:var(--muted);border:0;padding:6px 14px;
+                font:inherit;font-size:12.5px;cursor:pointer}
+  .modes button.on{background:var(--accent);color:var(--on-accent);font-weight:600}
+  #wave{width:100%;height:120px;background:#0a080d;border:1px solid var(--line);
+        border-radius:6px;display:block}
+  .field{margin-bottom:11px}
+  .field label{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);
+               margin-bottom:3px}
+  .field label b{color:var(--ink);font-weight:600}
+  .field .help{font-size:10.5px;color:var(--muted);margin-top:2px;line-height:1.4}
+  /* A slider and its number box side by side, for every numeric setting. */
+  .pair{display:flex;gap:6px;align-items:center}
+  .pair input[type=range]{flex:1;min-width:0}
+  .pair input[type=number]{width:76px;flex:none}
+  /* A chosen tool or a toggle that is on reads as chosen. */
+  .btn.ghost.on{border-color:var(--accent);color:var(--ink);background:#ffffff14}
+  .toolrow{justify-content:center}
+  .toolrow .sep{width:1px;align-self:stretch;background:var(--line);margin:0 4px}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>PixelForge</h1>
+  <div class="modes">
+    <button id="modeSprites" class="on">Sprites</button>
+    <button id="modeSounds">Sounds</button>
+    <button id="modeJan">Ask Jan</button>
+  </div>
+  <span class="where" id="where"></span>
+  <div class="spacer"></div>
+  <span class="where" id="dirty"></span>
+  <button class="btn" id="save" disabled>Save pack</button>
+  <button class="btn ghost" id="go-fullscreen" title="Full screen (Alt+F)">Full screen</button>
+</header>
+
+<main id="spriteMain">
+  <div class="col left">
+    <h3>Packs</h3><div id="packs"><p class="note">Loading the art library…</p></div>
+    <h3>Sprites</h3><div id="sprites"></div>
+    <div class="row" style="margin-top:10px">
+      <button class="btn ghost" id="newSprite">+ sprite</button>
+    </div>
+  </div>
+
+  <div class="col mid">
+    <div class="row">
+      <button class="btn ghost" id="zoomOut">−</button>
+      <span id="zoomLabel" style="min-width:74px;text-align:center"></span>
+      <button class="btn ghost" id="zoomIn">+</button>
+      <button class="btn ghost" id="gridBtn">grid</button>
+      <button class="btn ghost" id="undo">undo</button>
+      <button class="btn ghost" id="redo">redo</button>
+    </div>
+    <div class="row toolrow" role="toolbar" aria-label="Drawing tools">
+      <span class="row" id="tools"></span>
+      <span class="sep"></span>
+      <button class="btn ghost" id="mirrorBtn" aria-pressed="false">mirror</button>
+      <button class="btn ghost" id="onionBtn" aria-pressed="false">onion skin</button>
+    </div>
+    <canvas id="paper" hidden></canvas>
+    <p class="empty" id="paperEmpty" hidden>This pack has no sprites yet. Make one with “+ sprite”.</p>
+    <div class="frames" id="frames"></div>
+    <div class="row">
+      <button class="btn ghost" id="addFrame">+ frame</button>
+      <button class="btn ghost" id="dupFrame">duplicate</button>
+      <button class="btn ghost" id="delFrame">delete</button>
+      <span style="font-size:11.5px;color:var(--muted)">hold&nbsp;ms</span>
+      <input type="range" id="msRange" min="0" max="4000" step="20" style="width:96px" aria-label="hold ms">
+      <input type="number" id="ms" style="width:74px" min="0" step="20">
+      <button class="btn ghost" id="play">▶ play</button>
+      <canvas id="preview" style="image-rendering:pixelated;background:#0006;border-radius:4px"></canvas>
+    </div>
+  </div>
+
+  <div class="col right">
+    <h3>Palette</h3>
+    <select id="paletteSel"></select>
+    <div class="swatches" id="swatches" style="margin-top:8px"></div>
+    <h3>Selected colour</h3>
+    <div class="row">
+      <input type="text" id="hex" maxlength="7" style="flex:1">
+      <input type="color" id="picker" style="width:34px;height:30px;padding:0;border:0;background:none">
+    </div>
+    <button class="btn ghost" id="savePalette" style="margin-top:8px;width:100%">Save palette</button>
+    <p class="note" id="roleNote"></p>
+    <h3>About</h3>
+    <p class="note">Sprites are palette-indexed character rows. Colour lives in the
+      palette, not the sprite — so recolouring a whole world for a season, for night,
+      or for a different biome is one palette, not a second copy of the art.
+      Everything here is shared: any Forge app reading the same library sees your edits.</p>
+  </div>
+</main>
+
+<main id="soundMain" hidden>
+  <div class="col left">
+    <h3>Sounds</h3><div id="soundList"><p class="note">Loading sounds…</p></div>
+    <div class="row" style="margin-top:10px">
+      <button class="btn ghost" id="newSound">+ sound</button>
+    </div>
+  </div>
+
+  <div class="col mid" style="align-items:stretch">
+    <div class="row" style="justify-content:center">
+      <button class="btn" id="playSound">▶ play</button>
+      <button class="btn ghost" id="saveSound">Save sound</button>
+      <span class="where" id="soundDirty"></span>
+    </div>
+    <canvas id="wave" width="720" height="120"></canvas>
+    <p class="note" id="waveNote" style="text-align:center"></p>
+    <p class="note">The waveform is the sound rendered offline, not a picture of the
+      settings — so a recipe that comes out silent (a filter below the pitch, an attack
+      longer than the sound) shows a flat line here before you ever hear it.</p>
+  </div>
+
+  <div class="col right" style="border-left:1px solid var(--line)">
+    <h3>Recipe</h3>
+    <div id="soundForm"></div>
+    <h3>About</h3>
+    <p class="note">There are no audio files in Forge. A sound is a dozen numbers
+      describing a small Web Audio graph, built by the same shared engine the game
+      plays it with — so what you hear here is exactly what you hear in the game.
+      Sounds live in the content store beside crops and recipes; any Forge app
+      reading it hears your edits.</p>
+  </div>
+</main>
+
+<main id="janMain" hidden>
+  <div class="col left">
+    <h3>What to draw</h3>
+    <textarea id="janPrompt" rows="4" style="width:100%"
+      placeholder="a red toolbox with a handle, seen from the side"></textarea>
+    <h3>Kind</h3>
+    <div class="row">
+      <button class="btn ghost on" id="janKindSprite">Sprite</button>
+      <button class="btn ghost" id="janKindStructure">Floor plan</button>
+      <button class="btn ghost" id="janKindShip">Ship</button>
+      <button class="btn ghost" id="janKindWorld">World</button>
+    </div>
+    <div id="janSizeRow">
+      <h3>Size</h3>
+      <div class="row">
+        <select id="janW"></select><span class="note">×</span><select id="janH"></select>
+      </div>
+    </div>
+    <button class="btn" id="janDraw" style="margin-top:12px;width:100%">Draw it</button>
+    <p class="note" id="janState"></p>
+    <h3>Model</h3>
+    <div id="jan-settings"></div>
+  </div>
+
+  <div class="col mid">
+    <div class="row">
+      <span class="where" id="janCaption">Nothing drawn yet.</span>
+      <div class="spacer"></div>
+      <button class="btn ghost" id="janZoomOut">−</button>
+      <button class="btn ghost" id="janZoomIn">+</button>
+    </div>
+    <canvas id="janPaper" hidden style="image-rendering:pixelated;background:#0006;border-radius:6px"></canvas>
+    <p class="empty" id="janEmpty">Describe something on the left and press Draw it. The drawing shows here first; nothing is saved until you press Save.</p>
+    <p class="note" id="janProblems"></p>
+  </div>
+
+  <div class="col right">
+    <h3>Keep it</h3>
+    <div id="janKeepSprite">
+      <p class="note">Saves into an art pack, merging its colours into that pack's palette.</p>
+      <div class="row"><input type="text" id="janPack" placeholder="pack id" list="janPackList" style="flex:1"></div>
+      <datalist id="janPackList"></datalist>
+      <div class="row" style="margin-top:6px"><input type="text" id="janName" placeholder="sprite name" style="flex:1"></div>
+    </div>
+    <div id="janKeepStructure" hidden>
+      <p class="note">Saves as shared content in ForgeGameData, where any game can read it.</p>
+      <div class="row"><input type="text" id="janId" placeholder="structure id" style="flex:1"></div>
+      <div class="row" style="margin-top:6px"><input type="text" id="janLabel" placeholder="label" style="flex:1"></div>
+    </div>
+    <div id="janKeepWorld" hidden>
+      <p class="note">Saves as a Janhollow destination, in
+        ForgeGameData/janhollow/worlds — not pixels, a place a viewport can show.</p>
+      <div class="row"><input type="text" id="janWorldId" placeholder="world id" style="flex:1"></div>
+      <p class="note" id="janWorldSummary"></p>
+    </div>
+    <button class="btn" id="janKeep" style="margin-top:10px;width:100%" disabled>Save</button>
+    <h3>How this works</h3>
+    <p class="note">The model does not draw pixels — asked for a grid it returns
+      an empty or ragged one. It is asked for a short list of shapes instead, and
+      those are drawn here. That is why the results look like pixel art rather
+      than noise, and why a floor plan, a sprite and a ship all use the same
+      prompt shape. A world breaks that pattern on purpose: it is not pixels,
+      just the six fields Janhollow's worlds type wants.</p>
+    <p class="note">Nothing is saved until you press Save, so a bad result costs
+      a button press and nothing else.</p>
+  </div>
+</main>
+
+<style>
+  /* The kind buttons are ghosts, and a ghost with nothing to say about being
+     chosen leaves you guessing which one you picked. */
+  #janMain .btn.ghost.on { border-color: var(--accent, #d07be0); color: #fff; background: #ffffff14; }
+  #janMain textarea { background: #0006; color: inherit; border: 1px solid #ffffff22;
+                      border-radius: 6px; padding: 8px; font: inherit; }
+  #janMain canvas { max-width: 100%; }
+</style>
+<div id="toast"></div>
+
+<script src="/shared/forge_dialog.js"></script>
+<script src="/shared/forge_chrome.js"></script>
+<script src="/shared/forge_idle.js"></script>
+<script src="/shared/forge_art.js"></script>
+<script src="/shared/forge_sound.js"></script>
+<script src="/shared/forge_jan.js"></script>
+<!-- the ?v= changes with these files, so a cached older copy is never paired with a newer page -->
+<script src="/editor_state.js?v=20261019"></script>
+<script src="/tools.js?v=20261019"></script>
+<script>
+"use strict";
+const $ = (s) => document.querySelector(s);
+const E = {
+  lib: null, packId: null, spriteId: null, frame: 0,
+  key: "a", lastKey: "a", zoom: 16, grid: true, mode: "sprites",
+  playing: false,
+  // drawing: the tool in hand (tools.js), the one to go back to after a pick,
+  // the two toggles, and the press being drawn right now
+  tool: "pencil", prevTool: "pencil", mirror: false, onion: false, stroke: null,
+  // per pack: undo/redo steps, and the JSON each pack had when loaded or saved
+  hist: new PixelState.History(40), base: new PixelState.Baseline(),
+};
+
+function toast(msg, bad) {
+  const t = $("#toast");
+  t.textContent = msg; t.className = "on" + (bad ? " bad" : "");
+  clearTimeout(E.toastT); E.toastT = setTimeout(() => (t.className = ""), 2200);
+}
+
+/* One request per button: the button stays disabled while its request is in
+   flight, and a server that is down gets a calm toast instead of an uncaught
+   rejection. Returns the parsed JSON, or null when it failed (toast shown). */
+async function send(button, url, body, failText) {
+  if (button) {
+    if (button.dataset.busy) return null;
+    button.dataset.busy = "1"; button.disabled = true;
+  }
+  try {
+    const res = await fetch(url, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json().catch(() => ({ detail: res.statusText }));
+    if (!res.ok) {
+      const d = data.detail;
+      toast(typeof d === "string" ? d : failText, true);
+      return null;
+    }
+    return data;
+  } catch (err) {
+    toast("PixelForge's server is not answering, so nothing was saved", true);
+    return null;
+  } finally {
+    if (button) { delete button.dataset.busy; button.disabled = false; }
+  }
+}
+
+const pack = () => E.lib.packs[E.packId];
+const sprite = () => (pack() ? pack().sprites[E.spriteId] : undefined);
+const palette = () => E.lib.palettes[E.paletteId] || { colors: {} };
+
+/* --------------------------------------------------------------- loading */
+/* The first load retries by itself (slowing to every 30 s, only while the page
+   is in view) with a calm card instead of a blank editor. */
+const starting = { job: null };
+
+/* Take a fresh copy of the library as the saved state. A pack with unsaved
+   edits keeps them, merged with what changed on disk (such as a sprite Ask
+   Jan just kept), so a refresh never silently drops work, and the pack reads
+   unsaved only while it really differs from the disk. */
+function adoptLibrary(lib) {
+  const old = E.lib;
+  for (const id of Object.keys(lib.packs || {})) {
+    const was = old && old.packs[id];
+    const edited = was && E.base.isDirty(id, was) ? was : null;
+    const merged = PixelState.mergePack(E.base.saved(id), edited, lib.packs[id]);
+    E.base.mark(id, lib.packs[id]);
+    lib.packs[id] = merged;
+  }
+  E.lib = lib;
+  // Ask Jan may already be open (a ?mode=jan link opens it before the
+  // library arrives), so its pack suggestions follow every new library
+  fillPackList();
+}
+
+async function loadLibrary() {
+  try {
+    const res = await fetch("/api/art/library");
+    if (!res.ok) throw new Error(res.statusText);
+    adoptLibrary(await res.json());
+  } catch (err) {
+    showBootCard();
+    return false;
+  }
+  if (starting.job) { starting.job.stop(); starting.job = null; }
+  const card = $("#bootcard");
+  if (card) card.remove();
+  for (const id of ["spriteMain", "soundMain", "janMain"]) $("#" + id).style.visibility = "";
+  // Sounds that failed with the library come back with it, no click needed
+  if (SND.loaded === false) { SND.loaded = true; loadSounds(); }
+  return true;
+}
+
+function showBootCard() {
+  if (!$("#bootcard")) {
+    const card = document.createElement("div");
+    card.id = "bootcard"; card.className = "card";
+    card.innerHTML = `<p class="boot-title">The art library is not answering yet</p>
+      <p class="note">PixelForge keeps trying by itself, a little less often each time.</p>
+      <button class="btn ghost" id="bootRetry">Try now</button>`;
+    document.body.appendChild(card);
+    card.style.position = "fixed"; card.style.left = "50%"; card.style.top = "80px";
+    card.style.transform = "translateX(-50%)"; card.style.margin = "0";
+    $("#bootRetry").addEventListener("click", () => starting.job && starting.job.now());
+    for (const id of ["spriteMain", "soundMain", "janMain"]) $("#" + id).style.visibility = "hidden";
+  }
+  if (!starting.job) {
+    starting.job = ForgeIdle.poll(async () => {
+      if (await loadLibrary()) { boot(true); return true; }
+      return false;
+    }, 2000, { backoff: 2, maxMs: 30000 });
+  }
+}
+
+async function boot(loaded) {
+  if (!loaded && !(await loadLibrary())) return;
+  const packIds = Object.keys(E.lib.packs);
+  if (!packIds.length) {
+    document.querySelector("main").innerHTML =
+      `<div style="padding:40px;grid-column:1/-1">
+         <h3>No sprites yet</h3>
+         <p class="note">The starting sprites come with Emberfield and Jan Hollow, and
+         Forge writes them the first time PixelForge or either game starts. Close
+         PixelForge and open it again; if this stays, the PixelForge log in Logs says why.</p></div>`;
+    return;
+  }
+  E.packId = packIds[0];
+  E.paletteId = pack().default_palette || Object.keys(E.lib.palettes)[0];
+  E.spriteId = Object.keys(pack().sprites || {})[0];
+  drawAll(); setMode(E.mode);
+}
+
+function drawAll() { renderPacks(); renderSprites(); renderPalette(); renderTools(); renderEditor(); }
+
+/* ----------------------------------------------------------- left column */
+function thumb(spriteObj, paletteObj, size) {
+  const c = document.createElement("canvas");
+  c.width = size; c.height = size;
+  const ctx = c.getContext("2d");
+  ctx.imageSmoothingEnabled = false;
+  const rows = spriteObj.frames[0].rows;
+  const k = Math.min(size / spriteObj.w, size / spriteObj.h);
+  const ox = (size - spriteObj.w * k) / 2, oy = (size - spriteObj.h * k) / 2;
+  for (let y = 0; y < spriteObj.h; y++)
+    for (let x = 0; x < spriteObj.w; x++) {
+      const ch = rows[y][x];
+      if (ch === ".") continue;
+      ctx.fillStyle = paletteObj.colors[ch] || "#f0f";
+      ctx.fillRect(ox + x * k, oy + y * k, Math.ceil(k), Math.ceil(k));
+    }
+  return c;
+}
+
+function renderPacks() {
+  const host = $("#packs"); host.innerHTML = "";
+  for (const id of Object.keys(E.lib.packs)) {
+    const el = document.createElement("div");
+    el.className = "item" + (id === E.packId ? " on" : "");
+    el.textContent = E.lib.packs[id].label || id;
+    el.addEventListener("click", async () => {
+      if (!(await confirmDiscard())) return;
+      E.packId = id; E.spriteId = Object.keys(pack().sprites || {})[0];
+      E.paletteId = pack().default_palette || E.paletteId;
+      E.frame = 0; E.hist.clear(); drawAll(); refreshDirty();
+    });
+    host.appendChild(el);
+  }
+}
+
+function renderSprites() {
+  const host = $("#sprites"); host.innerHTML = "";
+  const p = palette();
+  for (const name of Object.keys(pack().sprites || {})) {
+    const el = document.createElement("div");
+    el.className = "item" + (name === E.spriteId ? " on" : "");
+    el.appendChild(thumb(pack().sprites[name], p, 22));
+    el.appendChild(document.createTextNode(name));
+    el.addEventListener("click", () => { E.spriteId = name; E.frame = 0; renderSprites(); renderEditor(); });
+    host.appendChild(el);
+  }
+}
+
+/* ---------------------------------------------------------- right column */
+function renderPalette() {
+  const sel = $("#paletteSel"); sel.innerHTML = "";
+  for (const id of Object.keys(E.lib.palettes)) {
+    const o = document.createElement("option");
+    o.value = id; o.textContent = E.lib.palettes[id].label || id;
+    sel.appendChild(o);
+  }
+  sel.value = E.paletteId;
+
+  const host = $("#swatches"); host.innerHTML = "";
+  const erase = document.createElement("div");
+  erase.className = "sw erase" + (E.key === "." ? " on" : "");
+  erase.title = "erase to transparent";
+  erase.addEventListener("click", () => { E.key = "."; renderPalette(); });
+  host.appendChild(erase);
+
+  for (const [key, hex] of Object.entries(palette().colors)) {
+    const el = document.createElement("div");
+    el.className = "sw" + (key === E.key ? " on" : "");
+    el.style.background = hex;
+    el.title = key + "  " + hex + roleFor(key);
+    el.addEventListener("click", () => { E.key = E.lastKey = key; renderPalette(); });
+    host.appendChild(el);
+  }
+  $("#hex").value = palette().colors[E.key] || "";
+  if (palette().colors[E.key]) $("#picker").value = palette().colors[E.key];
+  $("#roleNote").textContent = E.key === "." ? "Transparent." :
+    `Key “${E.key}”${roleFor(E.key) || ""} — every sprite using this key changes with it.`;
+}
+
+function roleFor(key) {
+  const roles = palette().roles || {};
+  for (const [name, k] of Object.entries(roles)) if (k === key) return "  · " + name;
+  return "";
+}
+
+/* ------------------------------------------------------------- the paper */
+function renderEditor() {
+  const s = sprite();
+  const c = $("#paper");
+  $("#paperEmpty").hidden = !!s;
+  c.hidden = !s;
+  if (!s) {
+    $("#zoomLabel").textContent = ""; $("#frames").innerHTML = "";
+    return;
+  }
+  E.frame = Math.min(E.frame, s.frames.length - 1);
+  c.width = s.w * E.zoom; c.height = s.h * E.zoom;
+  const ctx = c.getContext("2d");
+  ctx.imageSmoothingEnabled = false;
+  const p = palette();
+
+  /* Checkerboard under the art so transparency is visibly transparent rather
+     than "whatever colour the page background happens to be". */
+  for (let y = 0; y < s.h; y++)
+    for (let x = 0; x < s.w; x++) {
+      ctx.fillStyle = (x + y) % 2 ? "#171320" : "#1d1828";
+      ctx.fillRect(x * E.zoom, y * E.zoom, E.zoom, E.zoom);
+    }
+  /* Onion skin: the previous frame, faint, under this one, so a walk cycle
+     can be drawn against where the last step was. */
+  if (E.onion && s.frames.length > 1) {
+    const prev = s.frames[(E.frame - 1 + s.frames.length) % s.frames.length].rows;
+    ctx.globalAlpha = 0.3;
+    for (let y = 0; y < s.h; y++)
+      for (let x = 0; x < s.w; x++) {
+        const ch = prev[y][x];
+        if (ch === ".") continue;
+        ctx.fillStyle = p.colors[ch] || "#f0f";
+        ctx.fillRect(x * E.zoom, y * E.zoom, E.zoom, E.zoom);
+      }
+    ctx.globalAlpha = 1;
+  }
+  const rows = s.frames[E.frame].rows;
+  for (let y = 0; y < s.h; y++)
+    for (let x = 0; x < s.w; x++) {
+      const ch = rows[y][x];
+      if (ch === ".") continue;
+      ctx.fillStyle = p.colors[ch] || "#f0f";
+      ctx.fillRect(x * E.zoom, y * E.zoom, E.zoom, E.zoom);
+    }
+  if (E.grid && E.zoom >= 8) {
+    ctx.strokeStyle = "#ffffff14"; ctx.lineWidth = 1;
+    for (let x = 0; x <= s.w; x++) {
+      ctx.beginPath(); ctx.moveTo(x * E.zoom + .5, 0); ctx.lineTo(x * E.zoom + .5, c.height); ctx.stroke();
+    }
+    for (let y = 0; y <= s.h; y++) {
+      ctx.beginPath(); ctx.moveTo(0, y * E.zoom + .5); ctx.lineTo(c.width, y * E.zoom + .5); ctx.stroke();
+    }
+  }
+  if (E.mirror) {
+    // the line the mirror reflects across
+    ctx.strokeStyle = "#c86fd3aa"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(c.width / 2, 0); ctx.lineTo(c.width / 2, c.height); ctx.stroke();
+  }
+  $("#zoomLabel").textContent = `${s.w}×${s.h} · ${E.zoom}x`;
+  $("#ms").value = $("#msRange").value = s.frames[E.frame].ms || 0;
+  renderFrames();
+  renderPreview();
+}
+
+function renderFrames() {
+  const host = $("#frames"); host.innerHTML = "";
+  const s = sprite(), p = palette();
+  s.frames.forEach((f, i) => {
+    const el = document.createElement("div");
+    el.className = "frame" + (i === E.frame ? " on" : "");
+    el.appendChild(thumb({ ...s, frames: [f] }, p, 34));
+    el.addEventListener("click", () => { E.frame = i; renderEditor(); });
+    host.appendChild(el);
+  });
+}
+
+function renderPreview() {
+  const s = sprite(), c = $("#preview");
+  if (!s) return;
+  const k = Math.max(1, Math.floor(48 / Math.max(s.w, s.h)));
+  c.width = s.w * k; c.height = s.h * k;
+  const ctx = c.getContext("2d"); ctx.imageSmoothingEnabled = false;
+  const idx = E.playing ? E.playFrame % s.frames.length : E.frame;
+  const rows = s.frames[idx].rows, p = palette();
+  for (let y = 0; y < s.h; y++)
+    for (let x = 0; x < s.w; x++) {
+      const ch = rows[y][x];
+      if (ch === ".") continue;
+      ctx.fillStyle = p.colors[ch] || "#f0f";
+      ctx.fillRect(x * k, y * k, k, k);
+    }
+}
+
+/* -------------------------------------------------------------- painting */
+function pushUndo() {
+  E.hist.record({ spriteId: E.spriteId, frames: JSON.stringify(sprite().frames) });
+}
+
+/* Undo (dir -1) or redo (+1). A step belongs to the sprite it changed, so
+   undoing after picking another sprite goes back to that one. */
+function stepHistory(dir) {
+  if (!needSprite()) return;
+  const now = (en) => JSON.stringify(pack().sprites[en.spriteId].frames);
+  E.stroke = null; // a key pressed mid-drag ends the drag
+  const en = dir < 0 ? E.hist.undo(now) : E.hist.redo(now);
+  if (!en) return toast(dir < 0 ? "Nothing to undo" : "Nothing to redo");
+  const s = pack().sprites[en.spriteId];
+  s.frames = JSON.parse(en.frames);
+  if (E.spriteId !== en.spriteId) { E.spriteId = en.spriteId; renderSprites(); }
+  E.frame = Math.min(E.frame, s.frames.length - 1);
+  markDirty(); renderEditor();
+}
+
+/* The sprite cell under the pointer. A shape keeps following the pointer off
+   the edge (clamped); a stroke's points off the sprite are simply not drawn. */
+function cellAt(ev, s, clamp) {
+  const r = $("#paper").getBoundingClientRect();
+  let x = Math.floor((ev.clientX - r.left) / r.width * s.w);
+  let y = Math.floor((ev.clientY - r.top) / r.height * s.h);
+  if (clamp) { x = Math.max(0, Math.min(s.w - 1, x)); y = Math.max(0, Math.min(s.h - 1, y)); }
+  return { x, y, inside: x >= 0 && y >= 0 && x < s.w && y < s.h };
+}
+
+/* A press with the tool in hand (tools.js). The undo step is recorded on the
+   press's first real change, so a stroke that starts on a pixel already that
+   colour is still one undo step, and a press that changes nothing adds none. */
+function strokeStart(ev) {
+  const s = sprite();
+  if (!s) return;
+  const at = cellAt(ev, s, false);
+  if (!at.inside) return;
+  const tool = PixelTools.get(E.tool);
+  if (tool.drag === "pick") return pickColour(s.frames[E.frame].rows, at);
+  E.stroke = {
+    tool, key: ev.button === 2 ? "." : E.key, start: at, last: at,
+    before: s.frames[E.frame].rows.slice(), recorded: false,
+    spriteId: E.spriteId, frame: E.frame,
+  };
+  strokeTo(at);
+}
+
+function strokeTo(at) {
+  const st = E.stroke, s = sprite();
+  if (!st || !s || E.spriteId !== st.spriteId || !s.frames[st.frame]) return;
+  const f = s.frames[st.frame];
+  const shape = st.tool.drag === "shape";
+  const next = st.tool.apply(shape ? st.before : f.rows, shape ? st.start : st.last, at, st.key,
+    { w: s.w, h: s.h, mirror: E.mirror });
+  st.last = at;
+  if (PixelTools.sameRows(next, f.rows)) return;
+  if (!st.recorded) { pushUndo(); st.recorded = true; }
+  f.rows = next;
+  markDirty(); renderEditor();
+}
+
+function pickColour(rows, at) {
+  const key = PixelTools.pick(rows, at);
+  if (key == null) return;
+  E.key = key;
+  if (key !== ".") E.lastKey = key;
+  setTool(E.prevTool === "pick" ? "pencil" : E.prevTool);
+  renderPalette();
+}
+
+function setTool(id) {
+  const tool = PixelTools.get(id);
+  if (tool.id === "pick" && E.tool !== "pick") E.prevTool = E.tool;
+  if (tool.id === "pencil") {
+    // the pencil always draws a colour: B after the eraser goes back to it
+    if (!(E.lastKey in palette().colors)) E.lastKey = Object.keys(palette().colors)[0] || ".";
+    E.key = E.lastKey; renderPalette();
+  }
+  E.tool = tool.id; renderTools();
+}
+
+function renderTools() {
+  const host = $("#tools");
+  if (!host.childElementCount) {
+    for (const t of PixelTools.TOOLS) {
+      const b = document.createElement("button");
+      b.className = "btn ghost"; b.id = "tool-" + t.id; b.textContent = t.label;
+      b.title = `${t.help} (${t.key.toUpperCase()})`;
+      b.addEventListener("click", () => setTool(t.id));
+      host.appendChild(b);
+    }
+  }
+  for (const t of PixelTools.TOOLS) {
+    const b = $("#tool-" + t.id);
+    b.classList.toggle("on", t.id === E.tool);
+    b.setAttribute("aria-pressed", String(t.id === E.tool));
+  }
+  for (const [id, on] of [["mirrorBtn", E.mirror], ["onionBtn", E.onion]]) {
+    $("#" + id).classList.toggle("on", on);
+    $("#" + id).setAttribute("aria-pressed", String(on));
+  }
+}
+
+const packDirty = (id = E.packId) =>
+  !!(E.lib && E.lib.packs[id] && E.base.isDirty(id, E.lib.packs[id]));
+
+/* Called after every edit, undo, save and load: "unsaved changes" and the
+   Save button follow whether the pack differs from what is on disk. */
+function markDirty() { refreshDirty(); }
+
+function refreshDirty() {
+  $("#save").disabled = !packDirty();
+  const dirty = E.mode === "sprites" ? packDirty() : E.mode === "sounds" ? soundDirty() : false;
+  $("#dirty").textContent = dirty ? "unsaved changes" : "";
+}
+
+/* Discarding means it: the pack goes back to its saved state. */
+async function confirmDiscard() {
+  if (!packDirty()) return true;
+  const ok = await ForgeDialog.confirm("This pack has unsaved changes. Discard them?");
+  if (ok) { E.lib.packs[E.packId] = E.base.saved(E.packId); E.hist.clear(); }
+  return ok;
+}
+
+/* ----------------------------------------------------------------- wiring */
+$("#paper").addEventListener("pointerdown", (e) => {
+  e.preventDefault(); $("#paper").setPointerCapture(e.pointerId); strokeStart(e);
+});
+$("#paper").addEventListener("pointermove", (e) => {
+  const s = sprite();
+  if (E.stroke && e.buttons && s) strokeTo(cellAt(e, s, E.stroke.tool.drag === "shape"));
+});
+for (const end of ["pointerup", "pointercancel", "lostpointercapture"])
+  $("#paper").addEventListener(end, () => { E.stroke = null; });
+$("#mirrorBtn").addEventListener("click", () => { E.mirror = !E.mirror; renderTools(); renderEditor(); });
+$("#onionBtn").addEventListener("click", () => { E.onion = !E.onion; renderTools(); renderEditor(); });
+$("#paper").addEventListener("contextmenu", (e) => e.preventDefault());
+
+$("#zoomIn").addEventListener("click", () => { E.zoom = Math.min(40, E.zoom + 2); renderEditor(); });
+$("#zoomOut").addEventListener("click", () => { E.zoom = Math.max(2, E.zoom - 2); renderEditor(); });
+$("#gridBtn").addEventListener("click", () => { E.grid = !E.grid; renderEditor(); });
+/* Frame and undo buttons need a sprite to work on; an empty pack has none. */
+function needSprite() {
+  const s = sprite();
+  if (!s) toast("Pick or make a sprite first", true);
+  return s;
+}
+
+$("#undo").addEventListener("click", () => stepHistory(-1));
+$("#redo").addEventListener("click", () => stepHistory(1));
+
+$("#addFrame").addEventListener("click", () => {
+  const s = needSprite();
+  if (!s) return;
+  pushUndo();
+  s.frames.push({ ms: s.frames[0].ms || 160, rows: Array(s.h).fill(".".repeat(s.w)) });
+  E.frame = s.frames.length - 1; markDirty(); renderEditor();
+});
+$("#dupFrame").addEventListener("click", () => {
+  const s = needSprite();
+  if (!s) return;
+  pushUndo();
+  s.frames.splice(E.frame + 1, 0, JSON.parse(JSON.stringify(s.frames[E.frame])));
+  E.frame++; markDirty(); renderEditor();
+});
+$("#delFrame").addEventListener("click", () => {
+  const s = needSprite();
+  if (!s) return;
+  if (s.frames.length < 2) return toast("A sprite needs at least one frame", true);
+  pushUndo(); s.frames.splice(E.frame, 1); markDirty(); renderEditor();
+});
+function setHold(value) {
+  if (!needSprite()) return;
+  const ms = Math.max(0, parseInt(value, 10) || 0);
+  $("#ms").value = $("#msRange").value = ms;
+  if (sprite().frames[E.frame].ms === ms) return;
+  pushUndo();
+  sprite().frames[E.frame].ms = ms;
+  markDirty(); renderFrames();
+}
+$("#ms").addEventListener("change", (e) => setHold(e.target.value));
+// the box follows the slider while it moves; the change lands on release
+$("#msRange").addEventListener("input", (e) => { $("#ms").value = e.target.value; });
+$("#msRange").addEventListener("change", (e) => setHold(e.target.value));
+$("#play").addEventListener("click", () => {
+  if (!E.playing && !needSprite()) return;
+  E.playing = !E.playing; E.playFrame = 0;
+  $("#play").textContent = E.playing ? "■ stop" : "▶ play";
+  if (E.playT) { E.playT.stop(); E.playT = null; }
+  if (E.playing) playNext(); else renderPreview();
+});
+
+/* Each frame is shown for its own hold ms (a long blink frame, a short step).
+   ForgeIdle.poll stops the timer outright while the page is out of view
+   (hidden tab, or another app in front in Forge) and picks it up after. */
+function playNext() {
+  const s = sprite();
+  if (!E.playing || !s) return;
+  const hold = Math.max(60, s.frames[E.playFrame % s.frames.length].ms || 160);
+  const job = ForgeIdle.poll(() => {
+    job.stop();
+    if (E.playT !== job) return;
+    E.playFrame++; renderPreview(); playNext();
+  }, hold);
+  E.playT = job;
+}
+
+$("#newSprite").addEventListener("click", async () => {
+  const name = await ForgeDialog.prompt("New sprite name (lowercase, no spaces):", "new_sprite");
+  if (!name) return;
+  const id = name.trim().toLowerCase().replace(/[^a-z0-9_]+/g, "_").replace(/^_+|_+$/g, "");
+  if (!id) return toast("Use letters or digits in the name", true);
+  if (pack().sprites[id]) return toast("That name is taken", true);
+  const asked = await ForgeDialog.prompt("Size in pixels (square, 1-128):", "16");
+  if (asked == null) return;
+  const size = Math.max(1, Math.min(128, parseInt(asked, 10) || 16));
+  pack().sprites[id] = {
+    w: size, h: size, tags: [],
+    frames: [{ ms: 0, rows: Array(size).fill(".".repeat(size)) }],
+  };
+  E.spriteId = id; E.frame = 0; markDirty(); renderSprites(); renderEditor();
+});
+
+$("#paletteSel").addEventListener("change", (e) => {
+  E.paletteId = e.target.value; E.key = Object.keys(palette().colors)[0] || ".";
+  if (E.key !== ".") E.lastKey = E.key;
+  renderPalette(); renderSprites(); renderEditor();
+});
+
+function setColour(hex) {
+  if (E.key === ".") return;
+  if (!/^#[0-9a-fA-F]{6}$/.test(hex)) {
+    $("#hex").value = palette().colors[E.key] || "";
+    return toast("A colour is # and six hex digits, like #c86fd3", true);
+  }
+  palette().colors[E.key] = hex.toLowerCase();
+  renderPalette(); renderSprites(); renderEditor();
+}
+$("#hex").addEventListener("change", (e) => setColour(e.target.value.trim()));
+$("#picker").addEventListener("input", (e) => setColour(e.target.value));
+
+$("#save").addEventListener("click", async () => {
+  if (!E.lib || !pack()) return;
+  const id = E.packId, sent = JSON.stringify(pack()); // painting during the save stays unsaved
+  const out = await send($("#save"), "/api/art/packs", { pack: JSON.parse(sent) }, "Save failed");
+  refreshDirty(); // send() re-enables the button whatever the state
+  if (!out) return;
+  E.base.markJSON(id, sent); refreshDirty();
+  toast("Saved — every Forge app reading this library now sees it");
+});
+
+$("#savePalette").addEventListener("click", async () => {
+  if (!E.lib) return;
+  const out = await send($("#savePalette"), "/api/art/palettes", { palette: palette() }, "Save failed");
+  if (!out) return;
+  toast("Palette saved");
+});
+
+/* ================================================================= sounds ==
+   The second half of the workspace. A sprite and the noise it makes are the
+   same job -- tuning a hoe stroke means looking at the dirt and hearing the
+   scrape -- so they share one window rather than two apps.
+
+   Nothing here knows what fields a sound has. The form is built from
+   ForgeSound.FIELDS, and the sound is played and drawn by the same shared
+   engine the game uses, so a new field is one entry in that list plus one in
+   forge_content, and this file does not change. */
+const SND = { list: {}, id: null, ctx: null, noise: null, base: new PixelState.Baseline() };
+
+const current = () => SND.list[SND.id];
+
+const soundDirty = (id = SND.id) => !!(id && SND.list[id] && SND.base.isDirty(id, SND.list[id]));
+const anySoundDirty = () => Object.keys(SND.list).some((id) => soundDirty(id));
+
+/* The note beside Save sound speaks for the sound on screen, and mentions
+   others only when they are the ones holding unsaved edits. */
+function markSoundDirty() {
+  $("#soundDirty").textContent = soundDirty() ? "unsaved changes"
+    : anySoundDirty() ? "other sounds have unsaved changes" : "";
+  refreshDirty();
+}
+
+async function loadSounds() {
+  let data;
+  try {
+    const res = await fetch("/api/sounds");
+    if (!res.ok) throw new Error(res.statusText);
+    data = await res.json();
+  } catch (err) {
+    SND.loaded = false;
+    $("#soundList").innerHTML = `<p class="note">The sound library is not answering.
+      <button class="btn ghost" id="soundRetry" style="margin-top:6px">Try again</button></p>`;
+    $("#soundRetry").addEventListener("click", () => { SND.loaded = true; loadSounds(); });
+    return;
+  }
+  SND.list = data.sounds || {};
+  for (const [id, def] of Object.entries(SND.list)) SND.base.mark(id, def);
+  SND.defaults = data.defaults || {};
+  SND.root = data.root;
+  const ids = Object.keys(SND.list);
+  SND.id = ids.includes(SND.id) ? SND.id : ids[0] || null;
+  drawSounds();
+}
+
+function drawSounds() { renderSoundList(); renderSoundForm(); drawWave(); markSoundDirty(); }
+
+function renderSoundList() {
+  const host = $("#soundList");
+  host.innerHTML = "";
+  for (const [id, def] of Object.entries(SND.list)) {
+    const row = document.createElement("div");
+    row.className = "item" + (id === SND.id ? " on" : "");
+    row.textContent = def.label || id;
+    row.title = def.event ? `plays on: ${def.event}` : "no event";
+    row.addEventListener("click", () => { SND.id = id; drawSounds(); });
+    host.appendChild(row);
+  }
+  if (!Object.keys(SND.list).length) {
+    host.innerHTML = `<p class="note">No sounds yet. Run
+      <code>python tools/seed_content.py</code> in an app directory, or add one here.</p>`;
+  }
+}
+
+function renderSoundForm() {
+  const host = $("#soundForm");
+  host.innerHTML = "";
+  const def = current();
+  if (!def) return;
+
+  const text = (key, label) => {
+    const wrap = document.createElement("div");
+    wrap.className = "field";
+    wrap.innerHTML = `<label>${label}</label>`;
+    const input = document.createElement("input");
+    input.type = "text";
+    input.value = def[key] || "";
+    // each keystroke counts, so "unsaved changes" shows while typing
+    input.addEventListener("input", () => { def[key] = input.value.trim(); markSoundDirty(); });
+    input.addEventListener("change", () => {
+      def[key] = input.value.trim(); markSoundDirty(); renderSoundList();
+    });
+    wrap.appendChild(input);
+    host.appendChild(wrap);
+  };
+  text("label", "name");
+  text("event", "plays on event");
+
+  for (const f of ForgeSound.FIELDS) {
+    const wrap = document.createElement("div");
+    wrap.className = "field";
+    const value = def[f.key] != null ? def[f.key] : f.def;
+
+    const lab = document.createElement("label");
+    lab.innerHTML = `<span>${f.label}</span>`;
+    const shown = document.createElement("b");
+    shown.textContent = f.kind === "bool" ? (value ? "yes" : "no") : value;
+    lab.appendChild(shown);
+    wrap.appendChild(lab);
+
+    let input;
+    if (f.kind === "choice") {
+      input = document.createElement("select");
+      for (const choice of f.choices) {
+        const opt = document.createElement("option");
+        opt.value = choice; opt.textContent = choice;
+        opt.selected = choice === value;
+        input.appendChild(opt);
+      }
+      input.addEventListener("change", () => {
+        def[f.key] = input.value; shown.textContent = input.value;
+        markSoundDirty(); drawWave();
+      });
+    } else if (f.kind === "bool") {
+      input = document.createElement("input");
+      input.type = "checkbox";
+      input.checked = !!value;
+      input.style.width = "auto";
+      input.addEventListener("change", () => {
+        def[f.key] = input.checked; shown.textContent = input.checked ? "yes" : "no";
+        markSoundDirty();
+      });
+    } else {
+      /* A slider and a number box that follow each other. Redraw on release
+         or on a typed value, not on every pixel of a drag: rendering a whole
+         sound offline per input event would stutter the slider. */
+      input = document.createElement("div");
+      input.className = "pair";
+      const range = document.createElement("input");
+      const box = document.createElement("input");
+      for (const [el, type] of [[range, "range"], [box, "number"]]) {
+        el.type = type; el.min = f.min; el.max = f.max; el.step = f.step;
+        el.value = value; el.setAttribute("aria-label", f.label);
+      }
+      range.addEventListener("input", () => {
+        def[f.key] = parseFloat(range.value); box.value = range.value;
+        markSoundDirty();
+      });
+      range.addEventListener("change", drawWave);
+      box.addEventListener("input", () => {
+        const v = parseFloat(box.value);
+        if (!Number.isFinite(v)) return;
+        def[f.key] = v; range.value = v; markSoundDirty();
+      });
+      box.addEventListener("change", () => {
+        let v = parseFloat(box.value);
+        if (!Number.isFinite(v)) v = def[f.key] != null ? def[f.key] : f.def;
+        v = Math.min(f.max, Math.max(f.min, v));
+        def[f.key] = v; box.value = range.value = v;
+        markSoundDirty(); drawWave();
+      });
+      input.append(range, box);
+      shown.hidden = true; // the box shows the value
+    }
+    wrap.appendChild(input);
+    if (f.help) {
+      const help = document.createElement("p");
+      help.className = "help"; help.textContent = f.help;
+      wrap.appendChild(help);
+    }
+    host.appendChild(wrap);
+  }
+}
+
+async function drawWave() {
+  const canvas = $("#wave");
+  /* Drawn at the size it is shown, so the line stays sharp at any width
+     instead of a 720 px picture stretched across a wide window. */
+  const scale = window.devicePixelRatio || 1;
+  const want = Math.round((canvas.clientWidth || 720) * scale);
+  if (want > 0 && canvas.width !== want) {
+    canvas.width = want; canvas.height = Math.round(120 * scale);
+  }
+  const g = canvas.getContext("2d");
+  g.clearRect(0, 0, canvas.width, canvas.height);
+  const def = current();
+  if (!def) return;
+
+  let out;
+  try {
+    out = await ForgeSound.renderOffline(def);
+  } catch (err) {
+    $("#waveNote").textContent = String(err.message || err);
+    return;
+  }
+
+  const mid = canvas.height / 2;
+  g.strokeStyle = "#3b3048";
+  g.beginPath(); g.moveTo(0, mid); g.lineTo(canvas.width, mid); g.stroke();
+
+  /* One column per pixel showing that column's min and max, so a fast
+     waveform reads as a filled envelope rather than as aliasing noise. */
+  const per = out.samples.length / canvas.width;
+  g.strokeStyle = out.peak > 0.99 ? "#ff9c9c" : "#c86fd3";
+  g.beginPath();
+  for (let x = 0; x < canvas.width; x++) {
+    let lo = 0, hi = 0;
+    for (let i = Math.floor(x * per); i < Math.floor((x + 1) * per); i++) {
+      const v = out.samples[i];
+      if (v < lo) lo = v;
+      if (v > hi) hi = v;
+    }
+    g.moveTo(x + 0.5, mid - hi * mid * 0.95);
+    g.lineTo(x + 0.5, mid - lo * mid * 0.95);
+  }
+  g.stroke();
+
+  const seconds = (out.frames / out.sampleRate).toFixed(2);
+  $("#waveNote").textContent =
+    out.peak < 0.0005
+      ? `${seconds}s — silent. Check the low-pass, the attack and the level.`
+      : `${seconds}s · peak ${out.peak.toFixed(2)}${out.peak > 0.99 ? " (clipping)" : ""}` +
+        ` · rms ${out.rms.toFixed(3)}`;
+}
+
+function soundContext() {
+  if (!SND.ctx) {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return null;
+    SND.ctx = new Ctx();
+    SND.noise = ForgeSound.makeNoise(SND.ctx, 1.0);
+  }
+  if (SND.ctx.state === "suspended") SND.ctx.resume();
+  return SND.ctx;
+}
+
+/* Out of view the audio clock has nothing to play, so it is suspended; the
+   next press of play resumes it (soundContext). */
+function restAudio() {
+  if (!ForgeIdle.shown() && SND.ctx && SND.ctx.state === "running") SND.ctx.suspend();
+}
+document.addEventListener("visibilitychange", restAudio);
+document.addEventListener("forge-visible", restAudio);
+
+function setMode(mode) {
+  const name = mode === true ? "sounds" : mode === false ? "sprites" : mode;
+  $("#spriteMain").hidden = name !== "sprites";
+  $("#soundMain").hidden = name !== "sounds";
+  $("#janMain").hidden = name !== "jan";
+  $("#modeSprites").classList.toggle("on", name === "sprites");
+  $("#modeSounds").classList.toggle("on", name === "sounds");
+  $("#modeJan").classList.toggle("on", name === "jan");
+  $("#save").hidden = name !== "sprites";
+  E.mode = name;
+  const p = E.lib && pack();
+  $("#where").textContent = name === "sprites" ? (p ? p.label || E.packId : "")
+    : name === "sounds" ? "Sound library" : "";
+  $("#where").title = name === "sounds" ? SND.root || "" : E.lib ? E.lib.root : "";
+  refreshDirty();
+}
+
+$("#modeSprites").addEventListener("click", () => setMode("sprites"));
+$("#modeSounds").addEventListener("click", async () => {
+  setMode("sounds");
+  if (!Object.keys(SND.list).length && !SND.loaded) { SND.loaded = true; await loadSounds(); }
+  setMode("sounds");
+  drawWave();
+});
+$("#modeJan").addEventListener("click", () => { setMode("jan"); janBoot(); });
+
+$("#playSound").addEventListener("click", () => {
+  const ctx = soundContext();
+  const def = current();
+  if (!ctx || !def) return toast("Nothing to play", true);
+  ForgeSound.schedule(ctx, ctx.destination, SND.noise, def, ctx.currentTime, 1);
+});
+
+$("#newSound").addEventListener("click", async () => {
+  const name = await ForgeDialog.prompt("New sound id (lowercase, no spaces):", "new_sound");
+  if (!name) return;
+  const id = name.trim().toLowerCase().replace(/[^a-z0-9_]+/g, "_").replace(/^_+|_+$/g, "");
+  if (!id) return toast("Use letters or digits in the id", true);
+  if (SND.list[id]) return toast("That id is taken", true);
+  SND.list[id] = Object.assign({}, SND.defaults, { id, label: id.replace(/_/g, " ") });
+  SND.id = id; markSoundDirty(); drawSounds();
+});
+
+$("#saveSound").addEventListener("click", async () => {
+  const def = current();
+  if (!def) return;
+  const id = SND.id, sent = JSON.stringify(def);
+  const out = await send($("#saveSound"), "/api/sounds", { sound: JSON.parse(sent) }, "Save failed");
+  if (!out) return;
+  SND.base.markJSON(id, sent); markSoundDirty();
+  toast("Saved — the game plays this on its next reload");
+});
+
+/* ------------------------------------------------------------- keyboard */
+/* Keys come from PixelState.SHORTCUTS. Typing in a box, or a dialog being
+   open, leaves the key alone, except Ctrl+S, which saves from anywhere. */
+function inField(el) {
+  if (!el) return false;
+  const tag = String(el.tagName || "").toUpperCase();
+  return el.isContentEditable || tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT";
+}
+
+const KEY_ACTIONS = {
+  undo: () => stepHistory(-1),
+  redo: () => stepHistory(1),
+  save: () => {
+    const b = E.mode === "sounds" ? $("#saveSound") : $("#save");
+    if (!b.disabled) b.click();
+  },
+  eraser: () => {
+    E.key = "."; renderPalette();
+    if (E.tool === "pick") setTool(E.prevTool);
+  },
+  mirror: () => $("#mirrorBtn").click(),
+  onion: () => $("#onionBtn").click(),
+  prevFrame: () => stepFrame(-1),
+  nextFrame: () => stepFrame(1),
+  play: () => (E.mode === "sounds" ? $("#playSound") : $("#play")).click(),
+  zoomIn: () => $("#zoomIn").click(),
+  zoomOut: () => $("#zoomOut").click(),
+  grid: () => $("#gridBtn").click(),
+};
+
+/* The page's keys: the shortcut table, plus each drawing tool's own key. */
+const KEYS = PixelState.SHORTCUTS.concat(PixelTools.shortcuts());
+
+function stepFrame(dir) {
+  const s = sprite();
+  if (!s) return;
+  const n = s.frames.length;
+  E.stroke = null; // a key pressed mid-drag ends the drag, as undo does
+  E.frame = (E.frame + dir + n) % n; renderEditor();
+}
+
+addEventListener("keydown", (e) => {
+  const isSave = !e.altKey && PixelState.comboOf(e) === "mod+s";
+  if (isSave) e.preventDefault(); // the browser's own "save page" never runs here
+  if ((e.defaultPrevented && !isSave) || e.isComposing || !E.lib) return;
+  if (document.querySelector(".forge-dialog-back")) return;
+  const action = PixelState.match(e, E.mode, KEYS);
+  if (!action) return;
+  if (inField(e.target) && action !== "save") return;
+  // handled here, so a focused button is not pressed by the same Space
+  e.preventDefault();
+  // a box being typed in commits its value (its change event) before saving
+  if (action === "save" && inField(document.activeElement)) document.activeElement.blur();
+  if (action.startsWith("tool:")) setTool(action.slice(5));
+  else if (KEY_ACTIONS[action]) KEY_ACTIONS[action]();
+});
+
+for (const s of KEYS) {
+  const b = s.button && document.getElementById(s.button);
+  if (b) b.title = `${s.label} (${PixelState.hint(s.action, KEYS)})`;
+}
+
+addEventListener("beforeunload", (e) => {
+  const packs = E.lib ? Object.keys(E.lib.packs).some((id) => packDirty(id)) : false;
+  if (packs || anySoundDirty()) { e.preventDefault(); e.returnValue = ""; }
+});
+
+/* ------------------------------------------------------------- asking Jan */
+/* The model composes shapes and the backend draws them; this half only asks,
+   previews and saves. Nothing reaches the library until Save is pressed. */
+
+const J = { kind: "sprite", result: null, zoom: 12, ready: null, packOf: {}, atlases: {} };
+
+function janBoot() {
+  fillPackList();
+  // a second click while the first is still asking must not add the sizes twice
+  if (!J.booting) J.booting = janBootOnce().finally(() => { J.booting = null; });
+  return J.booting;
+}
+
+/* Draw it is only pressable while Jan is running; opening Ask Jan again asks
+   once more, so starting Jan later needs no reload. */
+function janShowReady() {
+  if (J.drawing) return;
+  const on = !!(J.ready && J.ready.running);
+  $("#janDraw").disabled = !on;
+  $("#janState").textContent = on ? `model: ${J.ready.model}`
+    : "Jan is not running, so nothing can be drawn. Start Jan, then open Ask Jan again.";
+}
+
+async function janRecheck() {
+  try {
+    const res = await fetch("/api/jan/art/ready");
+    if (res.ok) J.ready = await res.json();
+  } catch (err) {
+    /* keep the last answer; the panel already says what it knows */
+  }
+  janShowReady();
+}
+
+/* The existing packs, offered under the pack box so a sprite is not kept
+   into a typo; a new name still makes a new pack. */
+function fillPackList() {
+  const list = $("#janPackList");
+  if (!E.lib) return;
+  list.innerHTML = "";
+  for (const [id, p] of Object.entries(E.lib.packs)) {
+    const o = document.createElement("option");
+    o.value = id; o.label = p.label || id;
+    list.appendChild(o);
+  }
+}
+
+async function janBootOnce() {
+  if (J.ready) return janRecheck();
+  let ready;
+  try {
+    const res = await fetch("/api/jan/art/ready");
+    if (!res.ok) throw new Error(res.statusText);
+    ready = await res.json();
+  } catch (err) {
+    $("#janState").textContent = "PixelForge's server is not answering; open Ask Jan again to retry";
+    return;
+  }
+  J.ready = ready;
+  for (const size of J.ready.sizes) {
+    for (const sel of ["#janW", "#janH"]) {
+      const option = document.createElement("option");
+      option.value = size;
+      option.textContent = size;
+      if (size === 16) option.selected = true;
+      $(sel).appendChild(option);
+    }
+  }
+  janShowReady();
+  if (window.ForgeJan) ForgeJan.panel($("#jan-settings")).catch(() => {});
+
+  /* Whatever was drawn last, so a minute of the model's time is not thrown
+     away by switching modes or reloading. */
+  try {
+    const last = await (await fetch("/api/jan/art/last")).json();
+    const hasPixels = last && last.rows && last.rows.length;
+    const hasWorld = last && last.kind === "world" && last.entry;
+    if (hasPixels || hasWorld) {
+      const kinds = ["sprite", "structure", "ship", "world"];
+      janSetKind(kinds.includes(last.kind) ? last.kind : "sprite");
+      J.result = last;
+      if (last.prompt) $("#janPrompt").value = last.prompt;
+      if (hasPixels) {
+        /* Put the size back too, or the controls describe a different
+           drawing from the one on screen. A world has no size. */
+        for (const [sel, value] of [["#janW", last.w], ["#janH", last.h]]) {
+          if ([...$(sel).options].some((o) => Number(o.value) === value)) $(sel).value = value;
+        }
+      }
+      janDrawPreview();
+      if (hasWorld) {
+        $("#janWorldSummary").textContent =
+          `${last.entry.kind || "?"} · ${last.entry.distance || "?"} · ${last.entry.colour || "?"}`;
+        $("#janCaption").textContent = `${last.entry.label || "?"} · last drawing`;
+      } else {
+        $("#janCaption").textContent = `${last.w}×${last.h} · last drawing`;
+      }
+      $("#janProblems").textContent = (last.problems || []).join("; ");
+      $("#janKeep").disabled = (last.problems || []).length > 0;
+    }
+  } catch (err) {
+    /* Nothing drawn yet is the normal case, not a problem worth reporting. */
+  }
+}
+
+/* Which pack a tile came from, so a structure preview can bake it against
+   the palette it was drawn for rather than a single global one. Filled when
+   first needed: Ask Jan can open before the library has loaded. */
+function fillPackOf() {
+  if (!E.lib || Object.keys(J.packOf).length) return;
+  for (const packId in E.lib.packs) {
+    for (const name in E.lib.packs[packId].sprites || {}) {
+      if (!(name in J.packOf)) J.packOf[name] = packId;
+    }
+  }
+}
+
+function atlasFor(packId) {
+  if (!J.atlases[packId]) {
+    const pack = E.lib.packs[packId];
+    J.atlases[packId] = ForgeArt.atlas(E.lib, (pack && pack.default_palette) || "crewroom");
+  }
+  return J.atlases[packId];
+}
+
+function janSetKind(kind) {
+  J.kind = kind;
+  $("#janKindSprite").classList.toggle("on", kind === "sprite");
+  $("#janKindStructure").classList.toggle("on", kind === "structure");
+  $("#janKindShip").classList.toggle("on", kind === "ship");
+  $("#janKindWorld").classList.toggle("on", kind === "world");
+  $("#janKeepSprite").hidden = !(kind === "sprite" || kind === "ship");
+  $("#janKeepStructure").hidden = kind !== "structure";
+  $("#janKeepWorld").hidden = kind !== "world";
+  $("#janSizeRow").hidden = kind === "world";
+}
+
+function janDrawPreview() {
+  const result = J.result;
+  const canvas = $("#janPaper");
+  if (!result) return;
+  canvas.hidden = false; $("#janEmpty").hidden = true;
+  if (J.kind === "world") {
+    /* Not pixels -- a colour swatch is the whole picture for a destination. */
+    const entry = result.entry || {};
+    canvas.width = 96;
+    canvas.height = 96;
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, 96, 96);
+    ctx.fillStyle = entry.colour || "#333";
+    ctx.beginPath();
+    ctx.arc(48, 48, 44, 0, Math.PI * 2);
+    ctx.fill();
+    return;
+  }
+  /* A tile is a whole picture, so a floor plan needs bigger cells than a
+     sprite (or a ship, drawn the same way) does before you can see what is
+     in the room. */
+  const cell = J.kind === "structure" ? J.zoom * 2 : J.zoom;
+  fillPackOf();
+  canvas.width = result.w * cell;
+  canvas.height = result.h * cell;
+  const ctx = ForgeArt.crisp(canvas.getContext("2d"));
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  for (let y = 0; y < result.rows.length; y++) {
+    const row = result.rows[y];
+    for (let x = 0; x < row.length; x++) {
+      const key = row[x];
+      if (key === ".") continue;
+      if (J.kind === "sprite" || J.kind === "ship") {
+        ctx.fillStyle = result.palette[key] || "#f0f";
+        ctx.fillRect(x * cell, y * cell, cell, cell);
+      } else {
+        const tile = result.legend[key];
+        const packId = J.packOf[tile];
+        if (packId) {
+          const atlas = atlasFor(packId);
+          const sprite = atlas.get(packId + "/" + tile);
+          if (sprite) {
+            atlas.draw(ctx, packId + "/" + tile, x * cell, y * cell, 0, cell / sprite.w);
+            continue;
+          }
+        }
+        ctx.fillStyle = "#2b3a4d";
+        ctx.fillRect(x * cell, y * cell, cell - 1, cell - 1);
+      }
+    }
+  }
+}
+
+async function janAsk() {
+  const prompt = $("#janPrompt").value.trim();
+  if (!prompt) { toast("say what to draw", true); return; }
+  const button = $("#janDraw");
+  button.disabled = true; J.drawing = true;
+  const started = Date.now();
+  const ticking = ForgeIdle.poll(() => {
+    $("#janState").textContent = `drawing… ${Math.round((Date.now() - started) / 1000)}s`;
+  }, 1000);
+  $("#janState").textContent = "drawing…";
+  try {
+    const body = {
+      prompt,
+      w: Number($("#janW").value),
+      h: Number($("#janH").value),
+      seed: Math.floor(Math.random() * 1e9),
+    };
+    const urls = {
+      sprite: "/api/jan/art/sprite",
+      structure: "/api/jan/art/structure",
+      ship: "/api/jan/art/ship",
+      world: "/api/jan/art/world",
+    };
+    const res = await fetch(urls[J.kind], {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json().catch(() => ({ detail: res.statusText }));
+    if (!res.ok) throw new Error(data.detail || res.status);
+    J.result = data;
+    janDrawPreview();
+    const elapsed = Math.round((Date.now() - started) / 1000);
+    if (J.kind === "sprite" || J.kind === "ship") {
+      $("#janCaption").textContent = `${data.w}×${data.h} · ${Object.keys(data.palette).length} colours · ${elapsed}s`;
+    } else if (J.kind === "structure") {
+      $("#janCaption").textContent = `${data.w}×${data.h} · ${Object.keys(data.legend).length} tiles · ${elapsed}s`;
+    } else {
+      const entry = data.entry || {};
+      $("#janCaption").textContent = `${entry.label || "?"} · ${elapsed}s`;
+      $("#janWorldSummary").textContent =
+        `${entry.kind || "?"} · ${entry.distance || "?"} · ${entry.colour || "?"} — ${entry.description || ""}`;
+    }
+    $("#janProblems").textContent = data.problems.length
+      ? "the guard is unhappy: " + data.problems.join("; ")
+      : "";
+    $("#janKeep").disabled = data.problems.length > 0;
+    $("#janName").value = $("#janName").value || prompt.split(/\s+/).slice(0, 2).join("-");
+    $("#janId").value = $("#janId").value || prompt.split(/\s+/).slice(0, 2).join("-");
+    $("#janLabel").value = $("#janLabel").value || prompt;
+    $("#janWorldId").value = $("#janWorldId").value || prompt.split(/\s+/).slice(0, 2).join("-");
+  } catch (err) {
+    $("#janProblems").textContent = String(err.message || err);
+    toast("that did not come back as art", true);
+  } finally {
+    ticking.stop();
+    J.drawing = false;
+    janShowReady();
+  }
+}
+
+async function janKeep() {
+  const result = J.result;
+  const button = $("#janKeep");
+  if (!result || button.dataset.busy) return;
+  button.dataset.busy = "1"; button.disabled = true;
+  try {
+    if (J.kind === "sprite" || J.kind === "ship") {
+      const out = await fetch("/api/jan/art/keep-sprite", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          pack: $("#janPack").value.trim() || (J.kind === "ship" ? "ships" : "jan-sketches"),
+          name: $("#janName").value.trim() || "sketch",
+          rows: result.rows, palette: result.palette, w: result.w, h: result.h,
+          tags: J.kind === "ship" ? ["ship"] : [],
+        }),
+      });
+      const data = await out.json().catch(() => ({ detail: out.statusText }));
+      if (!out.ok) throw new Error(data.detail || out.status);
+      toast(`saved into ${data.pack}`);
+      // the sprite is saved; a failed refresh only means the list is stale
+      const lib = await fetch("/api/art/library").then((r) => r.json()).catch(() => null);
+      if (lib) { adoptLibrary(lib); J.atlases = {}; J.packOf = {}; drawAll(); refreshDirty(); }
+    } else if (J.kind === "structure") {
+      const out = await fetch("/api/jan/art/keep-structure", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: $("#janId").value.trim() || "plan",
+          label: $("#janLabel").value.trim() || "Plan",
+          rows: result.rows, legend: result.legend, w: result.w, h: result.h,
+          source: $("#janPrompt").value.trim(),
+        }),
+      });
+      const data = await out.json().catch(() => ({ detail: out.statusText }));
+      if (!out.ok) throw new Error(data.detail || out.status);
+      toast(`saved ${data.id}`);
+    } else {
+      const entry = result.entry || {};
+      const out = await fetch("/api/jan/art/keep-world", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: $("#janWorldId").value.trim() || "world",
+          label: entry.label || "",
+          kind: entry.kind || "",
+          distance: entry.distance || "",
+          colour: entry.colour || "",
+          description: entry.description || "",
+          tags: entry.tags || [],
+        }),
+      });
+      const data = await out.json().catch(() => ({ detail: out.statusText }));
+      if (!out.ok) throw new Error(data.detail || out.status);
+      toast(`saved ${data.id}`);
+    }
+  } catch (err) {
+    toast(err instanceof TypeError ? "PixelForge's server is not answering, so nothing was saved"
+                                   : String(err.message || err), true);
+  } finally {
+    delete button.dataset.busy;
+    button.disabled = (J.result.problems || []).length > 0;
+  }
+}
+
+$("#janKindSprite").addEventListener("click", () => janSetKind("sprite"));
+$("#janKindStructure").addEventListener("click", () => janSetKind("structure"));
+$("#janKindShip").addEventListener("click", () => janSetKind("ship"));
+$("#janKindWorld").addEventListener("click", () => janSetKind("world"));
+$("#janDraw").addEventListener("click", janAsk);
+$("#janKeep").addEventListener("click", janKeep);
+$("#janZoomIn").addEventListener("click", () => { J.zoom = Math.min(32, J.zoom + 4); janDrawPreview(); });
+$("#janZoomOut").addEventListener("click", () => { J.zoom = Math.max(4, J.zoom - 4); janDrawPreview(); });
+
+/* For the browser check: what the sound half believes it has. */
+window.ForgeEditorTest = {
+  sounds: () => Object.keys(SND.list),
+  render: (id) => ForgeSound.renderOffline(SND.list[id]),
+  fields: () => ForgeSound.FIELDS.map((f) => f.key),
+};
+
+boot();
+if (location.search.includes("mode=sounds")) $("#modeSounds").click();
+if (location.search.includes("mode=jan")) $("#modeJan").click();
+</script>
+</body>
+</html>

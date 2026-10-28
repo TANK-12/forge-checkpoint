@@ -1,0 +1,110 @@
+{
+  "about": "Which fields each of the four relative knobs scales, per kind. A plain list scales each field by the knob; an object gives each field the power the knob is raised to. Power on a joint is a bigger motor: torque (gearbox limit included) and top speed go up by the square root, so power x4 is twice the torque at twice the speed, four times the watts, and four times the drive's mass and rotor inertia (a stronger suit is a heavier one); strength is the gearbox limit alone. 'motorless' lists the actuator kinds with no motor, which take no power knob. 'part_knobs' lists the knobs each kind of suit part reads (knobs.parts[\"<model>/<part>\"]); a drive with no motor is keyed by its actuator kind, and a passive actuator type takes the same knobs: a free bearing has only its weight, a spring its weight and strength (lowered, it caps the spring's torque on an arm joint; a leg spring is only weight). Strength above x1 changes nothing on a drive whose gearbox limit (1.5 x peak) is above its peak; lowered, it caps the drive. Power on the battery is more cells, so more energy and more mass. Effective value = baseline x knob^power (a profile multiplier, default 1). 'derived' fills a missing field from another before the knobs apply: [source field, factor]. 'reference' is what the editor compares each category against.",
+  "fields": {
+    "materials": {
+      "stiffness": [
+        "youngs_modulus_gpa"
+      ],
+      "strength": [
+        "yield_strength_mpa",
+        "fatigue_strength_mpa"
+      ],
+      "weight": [
+        "density_kg_m3"
+      ]
+    },
+    "actuators": {
+      "stiffness": [
+        "stiffness_nm_rad"
+      ],
+      "strength": [
+        "torque_limit_nm"
+      ],
+      "weight": [
+        "mass_kg",
+        "remote_mass_kg"
+      ],
+      "power": {
+        "torque_cont_nm": 0.5,
+        "torque_peak_nm": 0.5,
+        "torque_limit_nm": 0.5,
+        "speed_max_rad_s": 0.5,
+        "power_cont_w": 1,
+        "mass_kg": 1,
+        "remote_mass_kg": 1,
+        "rotor_inertia_kgm2": 1
+      }
+    },
+    "parts": {
+      "stiffness": [
+        "stiffness"
+      ],
+      "strength": [
+        "strength"
+      ],
+      "weight": [
+        "weight"
+      ],
+      "power": [
+        "power"
+      ]
+    }
+  },
+  "motorless": [
+    "passive",
+    "passive_spring"
+  ],
+  "part_knobs": {
+    "drive": [
+      "stiffness",
+      "strength",
+      "weight",
+      "power"
+    ],
+    "passive": [
+      "weight"
+    ],
+    "passive_spring": [
+      "strength",
+      "weight"
+    ],
+    "link": [
+      "stiffness",
+      "strength",
+      "weight"
+    ],
+    "cuff": [
+      "stiffness",
+      "weight"
+    ],
+    "shell": [
+      "strength",
+      "weight"
+    ],
+    "battery": [
+      "weight",
+      "power"
+    ]
+  },
+  "derived": {
+    "actuators": {
+      "torque_limit_nm": [
+        "torque_peak_nm",
+        1.5
+      ]
+    }
+  },
+  "labels": {
+    "stiffness": "Stiffness",
+    "strength": "Strength",
+    "weight": "Weight",
+    "power": "Power"
+  },
+  "reference": {
+    "metal": "steel_4340",
+    "composite": "steel_4340",
+    "ceramic": "steel_4340",
+    "polymer": "pa12",
+    "actuators": "harmonic_m"
+  }
+}

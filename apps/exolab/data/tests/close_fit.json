@@ -1,0 +1,4 @@
+{"id": "close_fit", "name": "Close fit", "kind": "close_fit", "order": 5,
+ "about": "Plays the shoulder motions with the fitted suit shells on the character: the clearance between every shell and the moving skin, and between the arm's shells and the rest of the suit, frame by frame. Warns when a gap closes under 3 mm, fails when a shell goes into the skin or two shells touch.",
+ "params": {"motions": ["overhead_reach", "side_raise", "reach_across", "reach_behind", "rifle_aim", "throw"], "fps": 8, "reach_mm": 10, "skin_materials": ["_SKIN"], "warn_mm": 3.0, "fail_mm": 0.0, "shell_warn_mm": 3.0, "shell_fail_mm": 0.5},
+ "rules": {}}

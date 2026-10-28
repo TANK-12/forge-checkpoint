@@ -1,0 +1,27 @@
+{
+  "id": "ganymede",
+  "name": "Ganymede",
+  "kind": "moon",
+  "parent": "jupiter",
+  "order": 53,
+  "radius_km": 2631.2,
+  "gm_km3_s2": 9887.8,
+  "color": "#aaa194",
+  "summary": "The largest moon in the solar system, bigger than Mercury, and the only moon with its own magnetic field.",
+  "elements": {
+    "model": "kepler",
+    "epoch_jd": 2461332.5,
+    "a_km": 1070400,
+    "e": 0.001,
+    "i_deg": 0.2,
+    "node_deg": 348.5002,
+    "peri_deg": 339.5398,
+    "M_deg": 257.242,
+    "period_days": 7.155588,
+    "M_rate_deg_day": 50.3103179648,
+    "frame": "parent_equator",
+    "source": "JPL planetary satellite mean elements; mean anomaly and its rate refitted to JPL Horizons positions (2000-2045) on 2026-10-19 by tools/fit_moons.mjs",
+    "peri_period_yr": 68.301,
+    "node_period_yr": 137.812
+  }
+}

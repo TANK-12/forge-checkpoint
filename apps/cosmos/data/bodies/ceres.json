@@ -1,0 +1,24 @@
+{
+  "id": "ceres",
+  "name": "Ceres",
+  "kind": "dwarf",
+  "parent": "sun",
+  "order": 45,
+  "radius_km": 469.7,
+  "gm_km3_s2": 62.6284,
+  "color": "#9b978f",
+  "summary": "The largest object in the asteroid belt and the only dwarf planet in the inner solar system. Bright salt deposits sit in Occator crater.",
+  "elements": {
+    "model": "kepler",
+    "epoch_jd": 2461200.5,
+    "a_au": 2.765552595034094,
+    "e": 0.07969229514816586,
+    "i_deg": 10.58802780183462,
+    "node_deg": 80.24862682043221,
+    "peri_deg": 73.29421453021587,
+    "M_deg": 274.4193463761342,
+    "n_deg_day": 0.21430445064843,
+    "frame": "ecliptic",
+    "source": "JPL Small-Body Database, osculating elements at JD 2461200.5"
+  }
+}

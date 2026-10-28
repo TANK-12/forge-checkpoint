@@ -1,0 +1,43 @@
+{
+  "label": "Ink",
+  "order": 70,
+  "tags": [
+    "light",
+    "minimal"
+  ],
+  "mode": "light",
+  "solid": true,
+  "about": "Black ink on white paper: no glass, no pictures, outlined panels, a serif clock and nothing that moves unless you ask.",
+  "look": "outline",
+  "layout": "index",
+  "colours": {
+    "accent": "#111111",
+    "bg": "#fafaf8",
+    "panel": "#ffffff",
+    "panel_2": "#f4f4f1",
+    "border": "#d8d8d2",
+    "text": "#111111",
+    "muted": "#62625c"
+  },
+  "font": "serif",
+  "wallpaper": "",
+  "live": "",
+  "companion": "",
+  "settings": {
+    "particles": "off",
+    "dim": 0.0,
+    "wall_tint": false,
+    "glass_style": "flat",
+    "glass": 1.0,
+    "border": "none",
+    "shadows": false,
+    "radius": 4,
+    "wall_3d": false,
+    "motion": "fade",
+    "widget_look": "glass"
+  },
+  "lighter": {
+    "balanced": {},
+    "light": {}
+  }
+}

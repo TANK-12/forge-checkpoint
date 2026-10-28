@@ -1,0 +1,13 @@
+/* motion: Zoom | Panes grow into place from the middle; tiles swell a little when you point instead of lifting */
+/* lighter: light=still */
+/* Scoped to body.motion-zoom (shared/motion/, task 377). The entrance keeps the
+   hub's timing rule: the move takes the first 16th of the run, then holds
+   (see home-in in hub/index.html), and moves transform only, never opacity.
+   The hub's reduced-motion and Animations-off rules switch all of it off. */
+@keyframes motion-zoom-in { from { transform: scale(.9) } 6.25% { transform: none } to { transform: none } }
+body.motion-zoom #home.enter :is(.tile, .section-head, .more-btn:not([hidden]), .fchip, #recent-wrap h3, .hero > div:first-child, #search, .widgets .wg) { animation-name: motion-zoom-in; }
+@media (prefers-reduced-motion: no-preference) {
+  body.motion-zoom .tile:hover, body.motion-zoom .tile.focus { transform: scale(1.035); }
+  body.motion-zoom .tile:hover .icon, body.motion-zoom .tile.focus .icon { transform: scale(1.12); }
+  body.motion-zoom .tile:active { transform: scale(.98); }
+}

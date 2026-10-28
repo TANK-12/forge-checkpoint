@@ -1,0 +1,5 @@
+{"id": "overhead_reach", "name": "Overhead reach", "about": "Reach straight up in front, as for a high shelf, and back down.", "keys": [
+ {"t": 0.0, "plane": 90, "elev": 5, "axial": 0, "elbow": 10},
+ {"t": 1.2, "plane": 90, "elev": 170, "axial": 0, "elbow": 10},
+ {"t": 1.6, "plane": 90, "elev": 170, "axial": 0, "elbow": 10},
+ {"t": 2.8, "plane": 90, "elev": 5, "axial": 0, "elbow": 10}]}

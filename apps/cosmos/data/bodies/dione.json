@@ -1,0 +1,26 @@
+{
+  "id": "dione",
+  "name": "Dione",
+  "kind": "moon",
+  "parent": "saturn",
+  "order": 64,
+  "radius_km": 561.4,
+  "gm_km3_s2": 73.11,
+  "color": "#d0cbc3",
+  "summary": "An icy moon streaked with bright ice cliffs, and likely home to a thin subsurface ocean.",
+  "elements": {
+    "model": "kepler",
+    "epoch_jd": 2461332.5,
+    "a_km": 377700,
+    "e": 0.002,
+    "i_deg": 0,
+    "node_deg": 0,
+    "peri_deg": 220.6553,
+    "M_deg": 354.4267,
+    "period_days": 2.736916,
+    "M_rate_deg_day": 131.4507131448,
+    "frame": "parent_equator",
+    "source": "JPL planetary satellite mean elements; mean anomaly and its rate refitted to JPL Horizons positions (2000-2045) on 2026-10-19 by tools/fit_moons.mjs",
+    "peri_period_yr": 11.698
+  }
+}

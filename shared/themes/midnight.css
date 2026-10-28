@@ -1,0 +1,6 @@
+/* Midnight (shared/themes/midnight.json): blue-black, light at the edges. */
+html[data-forge-theme="midnight"] .tile { background: linear-gradient(160deg,
+  color-mix(in srgb, var(--tile-accent) 9%, var(--glass-fill)), color-mix(in srgb, var(--bg) 70%, transparent)); }
+html[data-forge-theme="midnight"] .hero .clock { font-weight: 200; }
+html[data-forge-theme="midnight"] #bar, html[data-forge-theme="midnight"] #dock {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(150, 180, 255, .08); }

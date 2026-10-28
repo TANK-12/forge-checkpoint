@@ -1,0 +1,46 @@
+{
+ "label": "Bo, the cook",
+ "jobs": [
+  "cook"
+ ],
+ "weight": 2,
+ "exchanges": [
+  {
+   "say": "Have you eaten, {listener}? You haven't. Sit down.",
+   "replies": [
+    "I've eaten, Bo.",
+    "What's on?",
+    "Five minutes, then."
+   ]
+  },
+  {
+   "say": "The bread's nearly up. Give it ten minutes.",
+   "replies": [
+    "I'll be back in nine.",
+    "You're a good man, Bo.",
+    "I can smell it from here."
+   ]
+  },
+  {
+   "say": "Somebody took the last of the tomatoes. Was it you?",
+   "replies": [
+    "Ask Ilya.",
+    "Never.",
+    "It was for a good cause."
+   ]
+  },
+  {
+   "say": "Tell me honestly. Too much pepper?",
+   "replies": [
+    "Just right.",
+    "A bit, yes.",
+    "There's no such thing."
+   ]
+  }
+ ],
+ "hello": [
+  "You look hungry, {you}. Mess hall, later.",
+  "Mind the hot pan.",
+  "There's food if you want it."
+ ]
+}

@@ -1,0 +1,15 @@
+/* motion: Glitch | A retro screen: panes jitter into place with a quick sideways skew; tiles jump with a hard shadow when you point */
+/* lighter: balanced=fade, light=still */
+/* Scoped to body.motion-glitch (shared/motion/, task 377). The entrance keeps the
+   hub's timing rule: the move takes the first 16th of the run, then holds
+   (see home-in in hub/index.html), and moves transform only, never opacity.
+   The hub's reduced-motion and Animations-off rules switch all of it off. */
+@keyframes motion-glitch-in { from { transform: translateX(-8px) skewX(10deg) } 1.5% { transform: translateX(6px) skewX(-8deg) } 3% { transform: translateX(-3px) skewX(4deg) } 4.5% { transform: translateX(1px) skewX(-1deg) } 6.25% { transform: none } to { transform: none } }
+body.motion-glitch #home.enter :is(.tile, .section-head, .more-btn:not([hidden]), .fchip, #recent-wrap h3, .hero > div:first-child, #search, .widgets .wg) { animation-name: motion-glitch-in; }
+@media (prefers-reduced-motion: no-preference) {
+
+  body.motion-glitch .tile { transition-duration: 120ms; transition-timing-function: steps(3, end); }
+  body.motion-glitch .tile:hover, body.motion-glitch .tile.focus { transform: translate(-3px, -3px);
+    box-shadow: 4px 4px 0 color-mix(in srgb, var(--tile-accent) 75%, transparent), 0 10px 26px rgba(0, 0, 0, .3); }
+  body.motion-glitch .tile:hover .icon, body.motion-glitch .tile.focus .icon { transform: none; }
+}

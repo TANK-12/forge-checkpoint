@@ -1,0 +1,5 @@
+{"id": "rifle_aim", "name": "Rifle aim (firing hand)", "about": "Bring a 3.5 kg rifle up to aim and hold it: the firing arm forward and out, elbow bent, hand on the grip; the hand carries about half the rifle.", "payload_kg": 1.75, "keys": [
+ {"t": 0.0, "plane": 60, "elev": 15, "axial": 0, "elbow": 60},
+ {"t": 0.6, "plane": 45, "elev": 75, "axial": 40, "elbow": 110},
+ {"t": 2.6, "plane": 45, "elev": 75, "axial": 40, "elbow": 110},
+ {"t": 3.2, "plane": 60, "elev": 15, "axial": 0, "elbow": 60}]}

@@ -1,0 +1,153 @@
+{
+  "name": "foresight",
+  "label": "Foresight",
+  "tagline": "Signals and plans built on Dossier's facts",
+  "help": {
+    "about": "Signals and plans built on Dossier's facts: sweeps that watch what is rising or falling, and scenarios with a record of what was expected. Answers worked out by rules need nothing else; the thinking answers need Jan, a local AI app.",
+    "features": [
+      "Signal sweeps",
+      "Plans and scenarios",
+      "Economic and political series",
+      "Findings filters",
+      "Kept answers"
+    ]
+  },
+  "port": 8438,
+  "module": "web_app:app",
+  "src_dir": ".",
+  "accent": "#7fd1a8",
+  "icon": "🔭",
+  "order": 11,
+  "section": "research",
+  "ready_timeout": 45,
+  "manifest": {
+    "summary": "The layer above Dossier. Dossier settles what is true; Foresight measures attention and argument around those subjects, finds where a subject departs from its own baseline, and answers questions about it - at a tier the user picks, including a rules tier that uses no model at all.",
+    "features": [
+      {
+        "name": "Signal sweeps",
+        "description": "Reads Wikipedia pageviews, Hacker News and Lemmy for the most consequential subjects in Dossier's library, most prominent first. Series merge by date, so re-running a sweep corrects a reading rather than doubling it."
+      },
+      {
+        "name": "Breakout detection",
+        "description": "Pure arithmetic: a median-based z-score with a Poisson noise floor finds where a subject departs from its own baseline. No model, so it runs with Jan off and on the CPU while the iGPU is busy."
+      },
+      {
+        "name": "A rules tier",
+        "description": "Questions are answered at a chosen tier - rules, chat, analyse or think. The rules tier is arithmetic and lookups only and needs no model server at all: a bare name returns everything held about it, a stored fact ('population of Australia', 'currency of Japan') is quoted from Dossier's Wikidata harvest, 'who is important' ranks the library, and 'what changed' reads the breakout arithmetic. Matching runs keywords first and the library second, so a question is answerable because of what is held rather than because someone listed its phrasing. Every answer states which tier produced it."
+      },
+      {
+        "name": "Thinking on the think tier",
+        "description": "The deliberate inversion of Dossier, which forces enable_thinking off everywhere. Here the think tier turns it on with a long budget and is allowed to run for minutes, because a worked-through plan is the product."
+      },
+      {
+        "name": "Plans and scenarios, with a ledger",
+        "description": "Branches of the future for a subject, where every branch carries dated, falsifiable indicators - a named stored series, a direction, a number and a date. The ledger marks them by arithmetic when their dates pass, with no model involved, so a scenario written by the think tier is scored exactly like one written by the rules tier and the two can be compared. The rules tier writes one with no model at all (least squares over each stored series), which is the baseline a cleverer forecast has to beat."
+      },
+      {
+        "name": "Economic, financial and political series",
+        "description": "World Bank indicators (nine, annual), the subject's currency against the dollar (ECB, daily), and GDELT news coverage and tone. Until these landed every signal measured attention only. A source may publish several named series; the level analyser reads slow series and the breakout z-score leaves them alone."
+      },
+      {
+        "name": "Scenario horizon",
+        "description": "The rules tier can write a scenario for one chosen horizon - two weeks, a month, three months, a year or two years - instead of the usual three. A two-week scenario comes due in two weeks, so the ledger gets something real to mark soon. Each claim is projected from the last reading all the way to its own date."
+      },
+      {
+        "name": "Stop a sweep",
+        "description": "A running sweep can be stopped from the Signals tab: the subject under way finishes, everything read so far is kept, and the page says how many subjects were read. The page tells a stop that was asked for, a sweep that finished and a sweep that failed apart (with the reason), even when a sweep fails at once. One subject that fails is logged and skipped rather than ending the sweep."
+      },
+      {
+        "name": "Subject panel",
+        "description": "Clicking a subject on a finding opens a side panel with everything held about it - Dossier's summary, every stored series with a small chart and its latest value, and its findings - with buttons to write a scenario or ask about it. Escape closes it and puts the focus back where it was."
+      },
+      {
+        "name": "Findings filters",
+        "description": "The findings list filters by subject, source and kind, and can hide old news; the filters are kept between visits."
+      },
+      {
+        "name": "Kept answers",
+        "description": "The last 20 answers on the Ask tab are kept on this computer and come back after a reload, with a button to clear them."
+      }
+    ],
+    "data_dir": "/run/media/<user>/Forge/ForesightData (falls back to ~/ForesightData-local when the drive is unplugged)",
+    "services": [
+      "Jan at 127.0.0.1:1337 - optional; every rules-tier answer works without it",
+      "Dossier at 127.0.0.1:8437 - optional; only needed to queue new research"
+    ],
+    "dependencies": {
+      "required": [
+        "fastapi",
+        "uvicorn",
+        "httpx",
+        "Dossier's research.fetcher, imported from ../dossier rather than copied"
+      ],
+      "optional": [
+        "beautifulsoup4 (pulled in by Dossier's fetcher)"
+      ]
+    },
+    "standalone_launch": "FORGE_SHARED_DIR=~/Forge/shared .venv/bin/python -m uvicorn web_app:app --host 127.0.0.1 --port 8438",
+    "api_base": "http://127.0.0.1:8438",
+    "known_gaps": [
+      "Reddit returns 403 without OAuth, so it is not among the sources; Hacker News and Lemmy are the forums that read without a key.",
+      "Sentiment is not computed yet: the forum sources gather volume and engagement, not feeling.",
+      "The think tier falls back to whatever Jan has. Without a large mixture-of-experts model downloaded it lands on the 9B, which is reported honestly in the header rather than hidden.",
+      "Ranking reads `prominence` from Dossier's index and no index row currently carries one, so every ranking today falls back to how much is held. The wording says so; the prominence path itself is untested against real data.",
+      "GDELT is registered but disabled: Dossier runs on this machine with four workers and uses GDELT too, saturating its per-IP rate limit. The adapter is verified against a live 200; turn it on in signals/gdelt.py when Dossier's queue is idle.",
+      "The model path for scenarios has never run against Jan - it is covered by tests against a stubbed answer, including the discard rules, but no think-tier scenario has been generated.",
+      "No indicator has been scored met or missed in anger. Every live one was dated months ahead; since 2026-10-19 a rules-tier scenario can be written two weeks out (Plans tab), but none has come due yet."
+    ],
+    "docs": [
+      "README.md",
+      "WIP.md",
+      "MANIFEST.md"
+    ],
+    "stage": "2 of 4 (signals including real economic series, breakouts, tiers, the interface, scenarios and the forecast ledger)",
+    "improvements": [
+      {
+        "rank": 1,
+        "name": "Exposure - where the user sits in the world",
+        "why": "Foresight knows the world but not where the user stands in it. Given country, citizenship, field of study, industry, currency and commitments, every signal can be filtered through 'does this change anything for me?'. Highest-value addition on this list: it is the difference between following geopolitics that will never touch you and seeing the two or three things that will."
+      },
+      {
+        "rank": 2,
+        "name": "Embedding retrieval",
+        "why": "world.context_for() is name matching. sentence-transformer-mini is already in Jan (44 MB, on disk) - reuse it. Retrieval beats a vast context window on a machine with no swap, because the KV cache is what eats memory."
+      },
+      {
+        "rank": 3,
+        "name": "The agent loop",
+        "why": "A tool registry where each tool declares `reversible`. Policy chosen by the user: reversible tools run free (queue research, fetch a signal, write notes and scenarios, re-rank priorities, schedule re-checks); irreversible ones wait for one click (delete or overwrite, shell, anything leaving the machine). Full audit log, kill switch, and an automatic DossierData snapshot before any destructive tool."
+      },
+      {
+        "rank": 4,
+        "name": "The personal half",
+        "why": "The user considers this as important as the world half, not an extra: profile (job, income, people they know, how they write and talk), named folders, browser history, schedule and tasks, university portal, then a study companion on the chat tier and job/course finding. Credentials are entered in the app and stored 0600, never in a chat transcript."
+      },
+      {
+        "rank": 5,
+        "name": "Sentiment",
+        "why": "Forum sources gather volume and engagement, not feeling. Lexicon scoring first, model only on the ambiguous band - the same shape as Dossier's triage, which calls a model only for documents scoring 0.28-0.62."
+      },
+      {
+        "rank": 6,
+        "name": "Reddit, and job-posting trends",
+        "why": "Reddit 403s without OAuth; SignalSpec.needs_credentials already excludes such a source from automatic sweeps, so it needs a free API app and a credentials field. Job-posting trends by skill would be a signal source like any other, and are the concrete way to answer 'is what I am studying still being bought'."
+      },
+      {
+        "rank": 7,
+        "name": "Fold the duplicated Jan plumbing into ~/Forge/shared/py/",
+        "why": "llm.py duplicates about 100 lines of Dossier's. The tier semantics genuinely differ but the Jan plumbing and JSON salvage do not. Worth doing deliberately as its own task rather than as a drive-by refactor of a verified app."
+      },
+      {
+        "rank": 8,
+        "name": "Let a scenario come due",
+        "why": "The ledger is written and tested but has never marked a live forecast: every stored indicator is dated months ahead. The fx series is daily, so a scenario with a two-week horizon would exercise the whole path end to end within a fortnight and is the cheapest way to find out whether the ledger is right about real data."
+      }
+    ],
+    "gotchas": [
+      "shared/forge.css supplies cards, buttons and the palette but NOT .view/.view.on, .topbar, .pill or .hint. Without them every view renders stacked on one page.",
+      "Solver keyword matching must stay whole-word: as a substring check, 'should I move to another country?' matched the coverage solver because 'country' contains 'count'.",
+      "store.slugify reproduces Dossier's exactly, including that NFKD does not decompose the letter l-with-stroke, so Lech Walesa becomes lech-wa-esa in both. Matching the quirk matters more than fixing it.",
+      "A series needs about 10 readings before any claim is made about it. Pageviews supply 91 on the first sweep; HN and Lemmy take weeks to build a baseline."
+    ]
+  }
+}

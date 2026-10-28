@@ -1,0 +1,29 @@
+{
+  "name": "loops",
+  "label": "Loops",
+  "tagline": "Beats and loops on a step grid, saved as WAV",
+  "help": {
+    "about": "Make beats and loops on a step grid and save them as WAV files in your Forge data folder.",
+    "features": [
+      "Step grid",
+      "Instruments",
+      "Save as WAV"
+    ]
+  },
+  "port": 8492,
+  "module": "web_app:app",
+  "src_dir": ".",
+  "accent": "#d0567a",
+  "icon": "🥁",
+  "order": 27,
+  "section": "create",
+  "ready_timeout": 30,
+  "ram_class": "light",
+  "store": {"github": "private"},
+  "manifest": {
+    "summary": "A step sequencer in the page (Web Audio): one row per instrument, click a step for a loud hit, again for a soft one. Tempo, swing, 8 to 32 steps, mute and volume per row. Patterns save as JSON in the data folder; Export WAV renders 1, 2, 4 or 8 repeats offline with the tail folded into the start, so the WAV loops without a gap, and writes it to ~/Music/Loops without replacing a file. instruments.json is the registry of instruments; static/voices.js holds the sound makers.",
+    "data_dir": "~/.local/share/forge/loops",
+    "dependencies": {"required": ["shared/forge_static.py (file names)", "shared/forge_guard.py"], "optional": ["gio (delete to the trash)"]},
+    "docs": ["README.md", "WIP.md"]
+  }
+}
