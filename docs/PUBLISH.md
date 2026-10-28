@@ -2,7 +2,8 @@
 
 The checkpoint has a fresh Git history. Publish this source repository;
 never push the daily development repository or a linked build worktree.
-The dated tag is `checkpoint-2026-10-28`. Downloads go in a GitHub prerelease
+The original package tag is `checkpoint-2026-10-28`; the source follow-up
+with native test evidence is `checkpoint-2026-10-28-tested`. Downloads go in a GitHub prerelease
 under that tag rather than in Git, accompanied by SHA256SUMS and the two
 optional install helpers. Keep local build reports and raw checking logs
 private: they may describe the builder's machine and its mounted files.

@@ -41,19 +41,37 @@ for this checkpoint; the shipped application code was not changed.
   third-party runtime/packages are scanned for secret patterns and known
   private values, preserving their authors' licence notices.
 
+## Native hosted installation and smoke — checked at 16:12
+
+[Run 40654815268](https://github.com/TANK-12/forge-checkpoint/actions/runs/40654815268) downloaded the fixed release assets, verified SHA256SUMS,
+installed the full Mac and Windows archives with the supplied helpers, then
+checked the installed app servers without opening a desktop window:
+
+- Apple silicon Mac: **88 passed, 0 failed**, 14 apps.
+- Intel Mac: **88 passed, 0 failed**, 14 apps.
+- Windows: **83 passed, 0 failed**, 13 apps.
+- Linux: **108 passed, 0 failed**, 18 apps (archive directly).
+
+Helper fixture tests also passed on these native systems, including actual
+Windows PowerShell, both destination forms, and the Mac platform tools.
+An earlier Windows fixture run inherited PowerShell 7 module paths through
+Python; the test child now clears PSModulePath as Microsoft's documentation
+requires. That changed the test harness, not the install helper or app code.
+The original dated package tag stays fixed. The updated source, including
+this evidence and the test-environment fix, is tagged
+`checkpoint-2026-10-28-tested` and is the attached source archive.
+
 ## What remains unverified
 
-No real Mac or Windows PC is available on the build host. Mac execution,
-Gatekeeper, native WebKit, dialogs, sound, GPU behavior and the Mac helper
-with Apple's actual ditto, tar, mktemp and shasum remain unverified. Windows Edge/WebView2,
-SmartScreen, Defender and native PowerShell helper execution remain
-unverified; Windows checks use Wine. The platform-specific helper test is
-skipped on Linux. None of these are claimed as native platform checks.
+Interactive Mac/Windows desktop windows, Gatekeeper/quarantine, SmartScreen,
+Defender policy, native dialogs, sound and GPU behavior still need a person
+to check them. Native hosted backend checks do not establish those things.
+The first installed-copy workflow failed in the Windows test environment;
+the linked second run passed on every system after fixing that environment.
 
-The GitHub workflow is manual and can run the shipped smoke checks on real
-macOS and Windows runners after publication. It has not yet run. Future
-builds resolve transitive wheel dependencies, so they are not promised to be
-byte-for-byte identical; this checkpoint's downloads and hashes are fixed.
+The separate build-from-source GitHub workflow has not run. Future builds
+resolve transitive wheel dependencies, so they are not promised to be
+byte-for-byte identical; the archived downloads and hashes are fixed.
 
 The packages are unsigned; macOS notarisation and Windows signing are still
 future work. No setup EXE is provided. The licence remains an explicit

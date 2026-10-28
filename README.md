@@ -21,8 +21,11 @@ It contains 14 apps on Mac, 13 on Windows, and 18 on Linux. Suggested offline
 starts: Arcade, Drift Peaks, Emberfield, Exo Lab and PrintForge. AI features
 need a separately installed Jan and a model; no models or personal saves ship.
 
-Mac packages are built and their structure checked on Linux, **not run on a
-real Mac**. Windows is checked under Wine, **not on a real Windows PC**.
+The saved downloads now pass on native hosted Apple silicon and Intel Macs
+(**88/88 checks each**), Windows (**83/83**) and Linux (**108/108**), after
+full Mac/Windows installation through the supplied helpers.
+[Native run evidence](https://github.com/TANK-12/forge-checkpoint/actions/runs/40654815268).
+Desktop windows, Gatekeeper and SmartScreen still need a person to test them.
 See [checkpoint evidence and limits](docs/CHECKPOINT.md),
 [publication steps](docs/PUBLISH.md), and [licence placeholder](LICENSE).
 
@@ -88,8 +91,9 @@ choose the path matching where you installed Forge:
 ```
 
 If the native window fails, run that same executable with `--window browser`
-from Terminal. Mac hardware, Gatekeeper, native dialogs, audio and the WebKit
-window still need a real-Mac shakedown. Use the matching archive, not Rosetta
+from Terminal. Gatekeeper, native dialogs, audio and the WebKit
+window still need an interactive Mac shakedown. The installed backend
+checks passed on both native Mac architectures. Use the matching archive, not Rosetta
 as a substitute for the Apple silicon build.
 
 ### Windows 10 and 11 — x64
@@ -115,7 +119,8 @@ powershell -NoProfile -File .\scripts\install-windows.ps1 -Archive "$HOME\Downlo
 ```
 
 The helper defaults to `%LOCALAPPDATA%\Programs\Forge-checkpoint`. Its
-native Windows execution is still unverified. For the downloaded attachment, substitute
+full archive installation and installed app smoke checks passed on a native
+hosted Windows runner; normal and trailing-separator destinations also passed. For the downloaded attachment, substitute
 `"$HOME\Downloads\install-windows.ps1"` for the script path.
 The helper refuses to overwrite its destination. A failed copy may leave a
 partial new folder; choose a new destination before retrying. The Mac helper
@@ -293,7 +298,7 @@ first time. The manual GitHub workflow `.github/workflows/build.yml` is designed
 when started from the Actions tab, then start every app of each download on
 its own system (not yet run). The separate **Check saved checkpoint** workflow downloads
 this dated release and runs its smoke checks on hosted Mac, Windows and
-Linux machines without rebuilding the checkpoint.
+Linux machines without rebuilding the checkpoint; its [installed-copy run](https://github.com/TANK-12/forge-checkpoint/actions/runs/40654815268) passed all four targets.
 
 ## How it fits together
 
