@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; frame-src 'none'; object-src 'none'">
+<title>Tavern</title>
+<link rel="stylesheet" href="/shared/forge.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <h1>Tavern</h1>
+  <span id="title" class="muted small">Tabletop campaigns with Jan as the game master</span>
+  <span class="spacer"></span>
+  <a id="export" class="btn" hidden download>Save the story</a>
+  <button id="trash" class="btn btn-danger" type="button" hidden>Move to trash</button>
+</header>
+<main class="room">
+  <aside class="side">
+    <button id="new" class="btn btn-primary" type="button">New campaign</button>
+    <h2>Campaigns</h2>
+    <div id="campaigns" class="campaigns"></div>
+    <details class="jan">
+      <summary>Jan models</summary>
+      <div id="jan-panel"></div>
+    </details>
+  </aside>
+
+  <section class="story" aria-label="Story">
+    <div id="empty" class="empty">
+      <p class="big">🐉</p>
+      <p>Start a campaign: pick a world, name the party, and Jan runs the game.</p>
+    </div>
+    <div id="log" class="log" aria-live="polite" hidden></div>
+    <div id="summary" class="summary" hidden>
+      <b>The story so far</b>
+      <p id="summary-text"></p>
+    </div>
+    <form id="act" class="act" hidden>
+      <div class="act-row">
+        <select id="who" aria-label="Who acts"></select>
+        <textarea id="text" rows="2" maxlength="4000" placeholder="What do you do? (Enter sends, Shift+Enter for a new line)" aria-label="What you do"></textarea>
+      </div>
+      <div class="act-row buttons">
+        <button id="send" class="btn btn-primary" type="submit">Act</button>
+        <button id="note" class="btn" type="button" title="Out of character: Jan reads it but does not answer">Note</button>
+        <button id="go-on" class="btn" type="button">GM, go on</button>
+        <button id="again" class="btn" type="button" title="Take back the game master's last reply and ask again">Ask again</button>
+        <button id="recap" class="btn" type="button">Story so far</button>
+        <span id="status" class="muted small"></span>
+      </div>
+    </form>
+  </section>
+
+  <aside class="panel" id="panel" hidden>
+    <nav class="tabs" role="tablist">
+      <button class="tab on" data-tab="party" role="tab">Party</button>
+      <button class="tab" data-tab="map" role="tab">Map</button>
+      <button class="tab" data-tab="dice" role="tab">Dice</button>
+    </nav>
+
+    <section class="pane" id="pane-party">
+      <div id="party" class="party"></div>
+      <form id="member-form" class="member-form">
+        <h2 id="member-title">Add a character</h2>
+        <input id="m-id" type="hidden">
+        <input id="m-name" placeholder="Name" aria-label="Name" maxlength="60" required>
+        <input id="m-role" placeholder="Role" aria-label="Role" maxlength="60" list="roles">
+        <div class="pair">
+          <label>HP <input id="m-hp" type="number" min="-999" max="999"></label>
+          <label>Max <input id="m-max" type="number" min="1" max="999"></label>
+        </div>
+        <textarea id="m-notes" rows="2" placeholder="Notes: gear, quirks, goals" aria-label="Notes" maxlength="1000"></textarea>
+        <div class="pair">
+          <button class="btn btn-primary" type="submit">Save</button>
+          <button id="m-cancel" class="btn" type="button" hidden>Cancel</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="pane" id="pane-map" hidden>
+      <select id="map-pick" aria-label="Map"></select>
+      <form id="map-form" class="pair">
+        <input id="map-name" placeholder="New map name" aria-label="New map name" maxlength="60">
+        <button class="btn" type="submit">New map</button>
+      </form>
+      <div id="palette" class="palette" role="toolbar" aria-label="Paint"></div>
+      <div class="map-wrap"><canvas id="map" width="360" height="240" aria-label="Map"></canvas></div>
+      <p id="map-help" class="muted small">Drag a token to move it. Pick a ground to paint squares.</p>
+      <form id="token-form" class="pair">
+        <input id="t-name" placeholder="Token name, like Goblin" aria-label="Token name" maxlength="60">
+        <input id="t-color" type="color" value="#d9675f" aria-label="Token colour">
+        <button class="btn" type="submit">Add</button>
+      </form>
+      <button id="t-remove" class="btn btn-danger" type="button" hidden>Remove token</button>
+    </section>
+
+    <section class="pane" id="pane-dice" hidden>
+      <div class="dice" id="dice"></div>
+      <form id="roll-form" class="pair">
+        <input id="expr" placeholder="1d20+3, 4d6kh3" aria-label="Dice to roll">
+        <button class="btn btn-primary" type="submit">Roll</button>
+      </form>
+      <p class="muted small">Rolls go in the story for the person picked under it, and Jan reads them on its next turn. kh3 keeps the three highest, kl1 the lowest.</p>
+      <div id="rolls" class="rolls"></div>
+    </section>
+  </aside>
+</main>
+<datalist id="roles"></datalist>
+
+<dialog id="new-dialog">
+  <form id="new-form" method="dialog">
+    <h2>New campaign</h2>
+    <label for="c-name">Name</label>
+    <input id="c-name" maxlength="60" placeholder="The Lost Lantern" required>
+    <label for="c-world">World</label>
+    <select id="c-world"></select>
+    <p id="c-blurb" class="muted small"></p>
+    <label>Party</label>
+    <div id="c-party" class="c-party"></div>
+    <button id="c-add" class="btn" type="button">Add a character</button>
+    <div class="pair end">
+      <button id="c-cancel" class="btn" type="button">Cancel</button>
+      <button class="btn btn-primary" type="submit">Create</button>
+    </div>
+  </form>
+</dialog>
+
+<div id="toast" class="toast" hidden></div>
+<script src="/shared/forge_jan.js"></script>
+<script src="app.js"></script>
+<script src="/shared/forge_chrome.js"></script>
+</body>
+</html>

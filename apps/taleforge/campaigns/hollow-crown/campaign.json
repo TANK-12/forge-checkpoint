@@ -1,0 +1,21 @@
+{
+  "id": "hollow-crown",
+  "name": "The Hollow Crown",
+  "genre": "fantasy romance",
+  "ruleset": "d20-fantasy",
+  "order": 1,
+  "tagline": "A stolen heart-stone, a creeping blight, and the people you fall for on the road.",
+  "intro": "Three months ago the Queen of Vael died in her sleep, and the heart-stone of the Ember Crown went missing from her brow the same night. Since then the Thornwake has crept south out of the frozen north: black briars that grow overnight, and the dead that walk wrapped in them. You arrive in the river town of Brightwater on a grey morning with little coin and a reason of your own to be here. The town bell is ringing, and nobody looks like they slept.",
+  "start": {"location": "brightwater_square", "quests": ["main_1"], "flags": [], "items": [], "gold": 0, "reveal": ["brightwater_inn", "brightwater_docks", "brightwater_temple"]},
+  "narrator": {
+    "voice": "Warm, grounded high fantasy with a little wit, like a well-read storyteller by a fire. Concrete senses (smell, weather, texture) over grand adjectives. Vael is a river kingdom of stone bridges, fey woods, salt ports and cold mountains; the Thornwake blight is black briar and cold silence.",
+    "romance": "Romance is earnest, slow-burn and tasteful: longing looks, banter, hands held, a first kiss. Anything more fades to black."
+  },
+  "endings": [
+    {"id": "crown_restored", "title": "The Crown Restored", "text": "The heart-stone burns again in the Ember Crown, and the Thornwake withers back into the north. Vael has a sovereign and a future, and you have a place in it."},
+    {"id": "crown_shattered", "title": "The Crown Shattered", "text": "You break the crown rather than let anyone wear it. The blight dies with it, and so does the old line. Vael will have to learn to rule itself."},
+    {"id": "thorn_throne", "title": "The Thorn Throne", "text": "You take the stone's power for yourself. The briars bow. The kingdom is safe, in its way, and very quiet."},
+    {"id": "two_hearts", "title": "Two Hearts, One Crown", "text": "You restore the crown with the one you love at your side, and the realm wakes to a spring nobody expected to see."},
+    {"id": "fallen", "title": "Into the Briars", "text": "The Thornwake takes you, as it took the Queen. Somewhere south, someone you loved keeps a candle lit."}
+  ]
+}

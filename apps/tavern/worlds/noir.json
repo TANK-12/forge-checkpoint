@@ -1,0 +1,10 @@
+{
+  "id": "noir",
+  "label": "City noir",
+  "order": 3,
+  "blurb": "A rain-soaked city in 1931: speakeasies, crooked police, newspaper men and old money with older secrets.",
+  "tone": "Hard-boiled and moody, short sentences, every favour has a price.",
+  "roles": ["Detective", "Reporter", "Bootlegger", "Doctor", "Cop", "Grifter"],
+  "hp": 8,
+  "opening": "Open the campaign: a client walks into the party's office after midnight with a case nobody else will take."
+}

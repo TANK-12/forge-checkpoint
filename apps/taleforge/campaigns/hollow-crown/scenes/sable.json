@@ -1,0 +1,60 @@
+{"scenes": [
+  {"id": "sable_recruit", "title": "The Bard on the Stage", "nodes": {
+    "start": {"speaker": "sable", "text": "Sable hops down from the stage, takes your drink out of your hand and finishes it. 'You want company on the road. I can tell, it's the way you're looking at the door.' Their tail sways. 'I'm expensive, I'm unreliable, and I know every back way out of every building in this town. Convince me.'", "choices": [
+      {"text": "'You get bored here. Come and be bored somewhere more dangerous.'", "effects": [{"join": "sable"}, {"affection": {"sable": 3}}], "next": "bored"},
+      {"text": "[Performance] Take the lute from them and play the chorus of their own song back, better.", "check": {"skill": "performance", "dc": "medium"}, "effects": [{"join": "sable"}, {"affection": {"sable": 7}}, {"flag": "sable_impressed"}], "next": "impressed", "fail_next": "laughed"},
+      {"text": "[Insight] 'You're not bored. You're lonely.'", "check": {"skill": "insight", "dc": "hard"}, "effects": [{"join": "sable"}, {"affection": {"sable": 5}}, {"flag": "sable_seen"}], "next": "seen", "fail_next": "deflect"},
+      {"text": "'Maybe later.'", "next": "end"}]},
+    "bored": {"speaker": "sable", "text": "'Dangerous and bored. My two favourite moods.' They grab their coat. 'Lead on, before I sober up and think better of it.'", "next": "end"},
+    "impressed": {"speaker": "sable", "text": "The taproom roars. Sable stares at you with frank, delighted outrage. 'That's my song. You stole my song.' They snatch the lute back and hug it. 'All right. Anyone who can do that is either worth following or worth robbing, and I'll decide which on the road.'", "next": "end"},
+    "laughed": {"speaker": "sable", "text": "A string snaps with a twang. The room laughs; Sable laughs loudest. 'Oh, you poor tuneless thing. No. Come back when you can carry a melody, or a heavier purse.'", "next": "end"},
+    "seen": {"speaker": "sable", "text": "The grin slips, just for a second, and what's under it is very young. 'Rude,' Sable says quietly. 'Accurate, but rude.' They pick up their lute. 'Fine. Don't make a thing of it.'", "next": "end"},
+    "deflect": {"speaker": "sable", "text": "'Lonely? Me? Darling, half this room is in love with me and the other half owes me money.' They twirl away to the bar. The door is not quite closed.", "next": "end"}
+  }},
+  {"id": "sable_letter_reading", "title": "A Letter in a Queen's Hand", "once": true, "nodes": {
+    "start": {"speaker": "sable", "text": "You find a quiet spot out of the wind. Sable sits with the letter on their knees and doesn't open it. 'Twenty-four years,' they say. 'You know what I always told myself? That she was a fishwife who couldn't feed another mouth. Simple. Nobody's fault.' Their thumb rests on the broken seal. 'Will you read it? Out loud. I can't.'", "choices": [
+      {"text": "Read it to them, slowly.", "next": "read"},
+      {"text": "'Read it yourself. I'll be right here.' Take their free hand.", "effects": [{"affection": {"sable": 3}}], "next": "read_together"},
+      {"text": "[History] Look at the seal before anything else.", "check": {"skill": "history", "dc": "medium"}, "effects": [{"flag": "sable_seal_known"}], "next": "seal", "fail_next": "read"}]},
+    "seal": {"text": "You know the seal. Everyone in Vael knows it from coins and proclamations: a moth over a crown. The royal signet, before the Regency melted the old dies down. Your mouth goes dry.", "next": "read"},
+    "read": {"text": "'My little one. I cannot keep you. Caul's men are at every door, and a child of mine would be a knife at your throat as long as he lives. I am leaving you with the sea, which has always been kinder than the court. Your name is Sable, for the cloak, for the colour of the night you were born. I will come back for you. I swear it on the crown. Isolde.' The page ends there. The Queen never came back.", "next": "after"},
+    "read_together": {"text": "Sable reads it under their breath, one finger moving along the lines like a child learning letters. You watch the word Isolde arrive. Their hand closes so hard on yours that the bones grind. 'I will come back for you,' they read aloud at the end. 'I swear it on the crown.' Then they fold the letter very small.", "effects": [{"affection": {"sable": 2}}], "next": "after"},
+    "after": {"speaker": "sable", "text": "Sable laughs, high and cracked. 'The Queen. The dead Queen. Of course. Of course it's not a fishwife, of course it's the most complicated possible answer.' Their eyes are wet. 'She said she'd come back. She died instead. That's a better excuse than most people get.'", "effects": [{"flag": "sable_is_heir"}, {"take": "sable_letter"}], "choices": [
+      {"text": "Hold them. Say nothing at all.", "effects": [{"affection": {"sable": 6}}], "next": "held"},
+      {"text": "'You have a claim to the throne. That changes everything about this fight.'", "effects": [{"affection": {"sable": -2}}], "next": "throne"},
+      {"text": "'She didn't leave you because she didn't want you. She left you because she did.'", "effects": [{"affection": {"sable": 5}}], "next": "wanted"}]},
+    "held": {"speaker": "sable", "text": "They fold into you like a dropped coat, horns awkward against your jaw, and shake without a sound. When it passes, they unpin the silver moth from their collar and press it into your palm. 'Keep this for me. I'll lose it, or sell it, or throw it in the sea. You won't.'", "effects": [{"give": "sable_brooch"}], "next": "end"},
+    "throne": {"speaker": "sable", "text": "Sable goes very still. 'Not now,' they say. 'Please. Five minutes of being somebody's child before I'm somebody's chess piece.' After a while they unpin the moth from their collar and put it in your hand without a word.", "effects": [{"give": "sable_brooch"}], "next": "end"},
+    "wanted": {"speaker": "sable", "text": "Sable makes a sound that might be a laugh or might not. 'That's a terrible thing to say to a person,' they whisper. 'Say it again sometime.' They unpin the silver moth from their collar and close your fingers round it. 'Hold on to this. Someone should.'", "effects": [{"give": "sable_brooch"}], "next": "end"}
+  }},
+  {"id": "sable_heart_1", "title": "The Song with Your Name in It", "once": true, "nodes": {
+    "start": {"speaker": "sable", "text": "Camp is quiet. Sable sits apart, picking out a melody you haven't heard before, slow and a little lopsided. They stop when they notice you. 'Don't. It isn't finished.' A pause. 'It's got your name in it. Well, it rhymes with your name. Everything rhymes with your name if you're desperate enough.'", "choices": [
+      {"text": "Sit beside them. 'Play me what you have.'", "effects": [{"affection": {"sable": 4}}], "next": "play"},
+      {"text": "'Is this you flirting, or you meaning it?'", "next": "meaning"},
+      {"text": "'Write one about the road instead. I'm not the song type.'", "effects": [{"flag": "sable_romance_declined"}, {"affection": {"sable": 1}}], "next": "declined"}]},
+    "play": {"speaker": "sable", "text": "It is a song about someone who walks into a bad tavern and doesn't leave the same. It is not very good yet. It is the most honest thing you have heard them say. When it ends they don't look up. 'So. That's the one I'm not making jokes about.'", "choices": [
+      {"text": "Kiss them, gently, just once.", "effects": [{"romance": {"sable": "spark"}}, {"affection": {"sable": 5}}], "next": "kiss"},
+      {"text": "'Finish it. I want to hear the ending.'", "effects": [{"romance": {"sable": "spark"}}, {"affection": {"sable": 3}}], "next": "ending"}]},
+    "meaning": {"speaker": "sable", "text": "Sable opens their mouth, and a joke is clearly queued up and ready. They close it again. 'Meaning it,' they say. 'Which is horrifying. I'd appreciate it if you were gentle about it.'", "choices": [
+      {"text": "'I can be gentle.' Take their hand.", "effects": [{"romance": {"sable": "spark"}}, {"affection": {"sable": 5}}], "next": "kiss"},
+      {"text": "'I'm flattered. But I don't feel the same.'", "effects": [{"flag": "sable_romance_declined"}], "next": "declined"}]},
+    "kiss": {"speaker": "sable", "text": "They taste like spiced wine and nerves. When you part, Sable is, for the first time since you met them, completely speechless. Then: 'Right. Good. I'll need a new verse.'", "next": "end"},
+    "ending": {"speaker": "sable", "text": "'I don't know the ending yet.' They lean, carefully, until their shoulder is against yours. 'I'm hoping it's a long song.'", "next": "end"},
+    "declined": {"speaker": "sable", "text": "'Ah. Right.' The grin snaps back on like a shutter. 'Road song it is. Something with a chorus about blisters.' They play it, and it's funny, and you both pretend the other one didn't happen.", "next": "end"}
+  }},
+  {"id": "sable_heart_2", "title": "A Name That Isn't a Crown", "once": true, "nodes": {
+    "start": {"speaker": "sable", "text": "Sable finds you away from the others, twisting a horn ring round and round. 'Everyone's going to want something from me now. The heir, the lost child, the claim. I can feel them all measuring me for a hat.' They look at you. 'What do you want from me? Be honest. I'm very good at telling when people aren't.'", "choices": [
+      {"text": "'Just you. The bard. The one who steals drinks.'", "effects": [{"romance": {"sable": "courting"}}, {"affection": {"sable": 8}}, {"flag": "sable_chosen"}], "next": "chosen"},
+      {"text": "[Persuasion] 'I want you to have the choice she never had. Crown or no crown, it's yours to pick.'", "check": {"skill": "persuasion", "dc": "medium"}, "effects": [{"romance": {"sable": "courting"}}, {"affection": {"sable": 6}}, {"flag": "sable_free_choice"}], "next": "choice", "fail_next": "speech"},
+      {"text": "'Vael needs a rightful ruler. That's bigger than either of us.'", "effects": [{"affection": {"sable": -4}}, {"flag": "sable_pushed_to_throne"}], "next": "duty"}]},
+    "chosen": {"speaker": "sable", "text": "Sable laughs, and it breaks halfway. 'Nobody has ever picked me first. You know that? Not once.' They take your face in both ink-stained hands. 'Well. Now somebody has, and I'm not giving it back.'", "next": "end"},
+    "choice": {"speaker": "sable", "text": "'My choice.' They turn the words over like a coin they suspect is fake, then decide it isn't. 'Then I choose you, first. The rest I'll get to.'", "next": "end"},
+    "speech": {"speaker": "sable", "text": "It comes out like a speech, and they hear it. 'That's lovely,' Sable says. 'You should put it on a banner.' They squeeze your hand anyway. 'Ask me again when you're not trying so hard.'", "next": "end"},
+    "duty": {"speaker": "sable", "text": "'Right.' Sable nods slowly. 'Bigger than us. Course it is.' They walk back to the fire, and that night their songs are all about other people.", "next": "end"}
+  }},
+  {"id": "sable_heart_3", "title": "The Last Verse", "once": true, "nodes": {
+    "start": {"speaker": "sable", "text": "Late, in the dark, Sable's tail is wrapped twice around your ankle as if you might be stolen in the night. 'I finished it,' they murmur. 'The song. Want to know how it ends?' You can hear them smiling. 'They don't leave. That's the ending. That's the whole thing. Nobody leaves.'", "choices": [
+      {"text": "'Nobody leaves.' Promise them.", "effects": [{"romance": {"sable": "beloved"}}, {"commit": "sable"}, {"affection": {"sable": 10}}, {"message": "Sable lets out a long breath, as if they have been holding it for twenty-four years, and falls asleep with their hand in yours."}], "next": "end"},
+      {"text": "'Sing me the rest when the war is over.'", "effects": [{"affection": {"sable": 1}}], "next": "end"}]}
+  }}
+]}

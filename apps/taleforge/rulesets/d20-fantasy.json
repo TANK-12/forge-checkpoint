@@ -1,0 +1,212 @@
+{
+  "id": "d20-fantasy",
+  "name": "d20 fantasy",
+  "about": "A small, d20-style rule set: six abilities, skills, classes with level-gated abilities, d20 checks against a DC, armour class, and levels 1 to 10.",
+  "labels": {"hp": "HP", "ac": "AC", "gold": "gold", "xp": "XP", "level": "Level", "rest_short": "Short rest", "rest_long": "Sleep"},
+  "abilities": [
+    {"id": "str", "name": "Strength"},
+    {"id": "dex", "name": "Dexterity"},
+    {"id": "con", "name": "Constitution"},
+    {"id": "int", "name": "Intelligence"},
+    {"id": "wis", "name": "Wisdom"},
+    {"id": "cha", "name": "Charisma"}
+  ],
+  "ability_scores": {
+    "standard_array": [15, 14, 13, 12, 10, 8],
+    "point_buy": {"budget": 27, "min": 8, "max": 15, "cost": {"8": 0, "9": 1, "10": 2, "11": 3, "12": 4, "13": 5, "14": 7, "15": 9}},
+    "roll": "4d6kh3",
+    "max": 20
+  },
+  "skills": [
+    {"id": "athletics", "name": "Athletics", "ability": "str", "verbs": ["climb", "jump", "swim", "push", "lift", "break", "force", "wrestle", "shove", "carry", "pull"], "risk": "1d4"},
+    {"id": "acrobatics", "name": "Acrobatics", "ability": "dex", "verbs": ["balance", "tumble", "flip", "dodge", "leap", "vault", "squeeze"], "risk": "1d4"},
+    {"id": "stealth", "name": "Stealth", "ability": "dex", "verbs": ["sneak", "hide", "creep", "slip", "tiptoe", "shadow", "tail"]},
+    {"id": "sleight", "name": "Sleight of Hand", "ability": "dex", "verbs": ["pickpocket", "steal", "pick", "palm", "lift", "swipe", "lockpick", "unlock"]},
+    {"id": "arcana", "name": "Arcana", "ability": "int", "verbs": ["magic", "rune", "runes", "spell", "enchantment", "glyph", "ward", "decipher"]},
+    {"id": "history", "name": "History", "ability": "int", "verbs": ["recall", "remember", "history", "lore", "legend", "heraldry"]},
+    {"id": "investigation", "name": "Investigation", "ability": "int", "verbs": ["search", "investigate", "study", "inspect", "deduce", "examine", "clue", "clues"]},
+    {"id": "nature", "name": "Nature", "ability": "int", "verbs": ["plant", "herb", "herbs", "forage", "weather", "animal tracks"]},
+    {"id": "insight", "name": "Insight", "ability": "wis", "verbs": ["read", "sense", "lying", "lie", "motive", "trust", "suspect", "gauge"]},
+    {"id": "medicine", "name": "Medicine", "ability": "wis", "verbs": ["heal", "bandage", "treat", "tend", "wound", "stitch", "poison", "diagnose"]},
+    {"id": "perception", "name": "Perception", "ability": "wis", "verbs": ["listen", "watch", "spot", "notice", "look around", "scan", "peer", "keep watch"]},
+    {"id": "survival", "name": "Survival", "ability": "wis", "verbs": ["track", "hunt", "trail", "camp", "navigate", "fish", "follow tracks"]},
+    {"id": "animal", "name": "Animal Handling", "ability": "wis", "verbs": ["calm", "tame", "ride", "pet", "soothe", "horse", "dog"]},
+    {"id": "deception", "name": "Deception", "ability": "cha", "verbs": ["bluff", "lie to", "trick", "disguise", "pretend", "con", "fool", "feint"]},
+    {"id": "intimidation", "name": "Intimidation", "ability": "cha", "verbs": ["threaten", "intimidate", "scare", "menace", "glare", "demand", "frighten"]},
+    {"id": "performance", "name": "Performance", "ability": "cha", "verbs": ["sing", "dance", "play", "perform", "tell a story", "recite", "juggle", "toast"]},
+    {"id": "persuasion", "name": "Persuasion", "ability": "cha", "verbs": ["persuade", "convince", "charm", "negotiate", "haggle", "plead", "bargain", "reason with", "flatter"]}
+  ],
+  "difficulty": {"trivial": 5, "easy": 10, "medium": 13, "hard": 16, "very_hard": 19, "heroic": 22},
+  "check_rules": {"crit_success": 20, "crit_fail": 1, "freeform_dc": "medium", "freeform_xp": 10},
+  "levels": [
+    {"level": 1, "xp": 0, "proficiency": 2},
+    {"level": 2, "xp": 300, "proficiency": 2},
+    {"level": 3, "xp": 900, "proficiency": 2},
+    {"level": 4, "xp": 2000, "proficiency": 2, "ability_points": 2},
+    {"level": 5, "xp": 3800, "proficiency": 3},
+    {"level": 6, "xp": 6500, "proficiency": 3},
+    {"level": 7, "xp": 10000, "proficiency": 3},
+    {"level": 8, "xp": 14500, "proficiency": 3, "ability_points": 2},
+    {"level": 9, "xp": 20000, "proficiency": 4},
+    {"level": 10, "xp": 27000, "proficiency": 4}
+  ],
+  "classes": [
+    {
+      "id": "fighter", "name": "Fighter", "hit_die": 10, "primary": "str",
+      "about": "Trained in every weapon and armour. Hard to kill, steady in a fight.",
+      "skill_options": ["athletics", "acrobatics", "intimidation", "perception", "survival", "history", "insight"], "skill_count": 2,
+      "start_items": ["longsword", "chain_mail", "shield", "healing_draught", "healing_draught"], "start_gold": 15,
+      "abilities": [
+        {"id": "second_wind", "name": "Second Wind", "level": 1, "kind": "heal", "amount": "1d10+level", "uses": 1, "per": "short", "text": "You catch your breath and steel yourself."},
+        {"id": "action_surge", "name": "Action Surge", "level": 2, "kind": "extra_attack", "uses": 1, "per": "short", "text": "You push past your limits and strike twice."},
+        {"id": "extra_attack", "name": "Extra Attack", "level": 5, "kind": "passive", "attacks": 2, "text": "You attack twice with each Attack."},
+        {"id": "indomitable", "name": "Indomitable", "level": 9, "kind": "guard", "ac": 4, "rounds": 2, "uses": 1, "per": "long", "text": "Nothing gets through."}
+      ]
+    },
+    {
+      "id": "rogue", "name": "Rogue", "hit_die": 8, "primary": "dex",
+      "about": "Quick hands, quiet feet and a knife where it hurts. Expert at skills.",
+      "skill_options": ["acrobatics", "athletics", "deception", "insight", "intimidation", "investigation", "perception", "performance", "persuasion", "sleight", "stealth"], "skill_count": 4,
+      "expertise": 2,
+      "start_items": ["rapier", "shortbow", "leather_armor", "thieves_tools", "healing_draught"], "start_gold": 25,
+      "abilities": [
+        {"id": "sneak_attack", "name": "Sneak Attack", "level": 1, "kind": "passive", "bonus_damage": "1d6", "scale": {"3": "2d6", "5": "3d6", "7": "4d6", "9": "5d6"}, "once_per_round": true, "text": "Your first hit each round deals extra damage."},
+        {"id": "cunning_action", "name": "Cunning Action", "level": 2, "kind": "advantage", "uses": 2, "per": "short", "text": "You slip into a better angle; your next attack or check has advantage."},
+        {"id": "evasion", "name": "Uncanny Dodge", "level": 5, "kind": "guard", "ac": 3, "rounds": 1, "uses": 2, "per": "short", "text": "You twist away from the blow."}
+      ]
+    },
+    {
+      "id": "wizard", "name": "Wizard", "hit_die": 6, "primary": "int",
+      "about": "Fragile, clever and dangerous. Spells that hit from afar and change a fight.",
+      "skill_options": ["arcana", "history", "insight", "investigation", "medicine", "nature"], "skill_count": 2,
+      "start_items": ["quarterstaff", "spellbook", "healing_draught", "healing_draught"], "start_gold": 15,
+      "spell_attack": "int",
+      "abilities": [
+        {"id": "fire_bolt", "name": "Fire Bolt", "level": 1, "kind": "attack", "ability": "int", "damage": "1d10", "scale": {"5": "2d10", "9": "3d10"}, "text": "A mote of fire streaks from your hand."},
+        {"id": "magic_missile", "name": "Magic Missile", "level": 1, "kind": "damage", "damage": "3d4+3", "uses": 2, "per": "long", "text": "Three darts of force, and they never miss."},
+        {"id": "shield_spell", "name": "Shield", "level": 1, "kind": "guard", "ac": 5, "rounds": 1, "uses": 2, "per": "long", "text": "An unseen barrier of force."},
+        {"id": "burning_hands", "name": "Burning Hands", "level": 2, "kind": "area", "damage": "3d6", "save": "dex", "uses": 2, "per": "long", "text": "A fan of flame from your fingertips."},
+        {"id": "fireball", "name": "Fireball", "level": 5, "kind": "area", "damage": "8d6", "save": "dex", "uses": 1, "per": "long", "text": "A bead of light that blooms into a roaring blast."},
+        {"id": "arcane_recovery", "name": "Arcane Recovery", "level": 3, "kind": "restore", "restores": ["magic_missile", "burning_hands"], "uses": 1, "per": "long", "text": "You recover some of your spent power."}
+      ]
+    },
+    {
+      "id": "cleric", "name": "Cleric", "hit_die": 8, "primary": "wis",
+      "about": "A healer with a mace and a god's ear. Keeps the party alive.",
+      "skill_options": ["history", "insight", "medicine", "persuasion", "arcana"], "skill_count": 2,
+      "start_items": ["mace", "scale_mail", "shield", "holy_symbol", "healing_draught"], "start_gold": 15,
+      "spell_attack": "wis",
+      "abilities": [
+        {"id": "sacred_flame", "name": "Sacred Flame", "level": 1, "kind": "attack", "ability": "wis", "damage": "1d8", "scale": {"5": "2d8", "9": "3d8"}, "text": "Radiant fire falls on your foe."},
+        {"id": "cure_wounds", "name": "Cure Wounds", "level": 1, "kind": "heal", "amount": "1d8+wis", "target": "ally", "uses": 3, "per": "long", "text": "Warm light knits the wound closed."},
+        {"id": "bless", "name": "Bless", "level": 1, "kind": "advantage", "uses": 2, "per": "long", "text": "A blessing steadies your hand."},
+        {"id": "spirit_guardians", "name": "Spirit Guardians", "level": 5, "kind": "area", "damage": "3d8", "save": "wis", "uses": 1, "per": "long", "text": "Spectral guardians whirl around you."},
+        {"id": "mass_heal", "name": "Mass Healing Word", "level": 3, "kind": "heal", "amount": "2d4+wis", "target": "party", "uses": 1, "per": "long", "text": "One word of power and everyone stands a little taller."}
+      ]
+    },
+    {
+      "id": "ranger", "name": "Ranger", "hit_die": 10, "primary": "dex",
+      "about": "A hunter and tracker, deadly with a bow and at home in the wild.",
+      "skill_options": ["animal", "athletics", "insight", "investigation", "nature", "perception", "stealth", "survival"], "skill_count": 3,
+      "start_items": ["longbow", "shortsword", "leather_armor", "healing_draught", "rations"], "start_gold": 15,
+      "abilities": [
+        {"id": "hunters_mark", "name": "Hunter's Mark", "level": 1, "kind": "advantage", "uses": 2, "per": "short", "text": "You mark your quarry; nothing hides from you."},
+        {"id": "volley", "name": "Volley", "level": 3, "kind": "area", "damage": "2d8", "save": "dex", "uses": 1, "per": "short", "text": "Arrows rain over every foe."},
+        {"id": "extra_attack_r", "name": "Extra Attack", "level": 5, "kind": "passive", "attacks": 2, "text": "You attack twice with each Attack."},
+        {"id": "healing_herbs", "name": "Wild Remedy", "level": 2, "kind": "heal", "amount": "1d8+wis", "target": "ally", "uses": 1, "per": "short", "text": "A poultice of herbs you gathered on the road."}
+      ]
+    },
+    {
+      "id": "bard", "name": "Bard", "hit_die": 8, "primary": "cha",
+      "about": "A silver tongue and a song with teeth. Talks the way through most doors.",
+      "skill_options": ["acrobatics", "deception", "history", "insight", "intimidation", "performance", "persuasion", "sleight", "stealth"], "skill_count": 3,
+      "expertise": 2,
+      "start_items": ["rapier", "lute", "leather_armor", "healing_draught"], "start_gold": 20,
+      "spell_attack": "cha",
+      "abilities": [
+        {"id": "vicious_mockery", "name": "Vicious Mockery", "level": 1, "kind": "attack", "ability": "cha", "damage": "1d6", "scale": {"5": "2d6", "9": "3d6"}, "text": "An insult so sharp it draws blood."},
+        {"id": "inspiration", "name": "Bardic Inspiration", "level": 1, "kind": "advantage", "uses": 3, "per": "long", "text": "A rousing verse; the next attempt has advantage."},
+        {"id": "healing_word", "name": "Healing Word", "level": 1, "kind": "heal", "amount": "1d4+cha", "target": "ally", "uses": 2, "per": "long", "text": "A word of comfort, and the pain fades."},
+        {"id": "thunderwave", "name": "Thunderwave", "level": 2, "kind": "area", "damage": "2d8", "save": "con", "uses": 2, "per": "long", "text": "A wave of thunder rolls out from you."}
+      ]
+    }
+  ],
+  "backgrounds": [
+    {"id": "noble", "name": "Exiled noble", "skills": ["history", "persuasion"], "items": ["signet_ring"], "gold": 25, "about": "Born to a house that fell. You still know which fork to use."},
+    {"id": "soldier", "name": "Old soldier", "skills": ["athletics", "intimidation"], "items": ["rations"], "gold": 10, "about": "You marched in the last war and came home to find home gone."},
+    {"id": "acolyte", "name": "Wandering acolyte", "skills": ["insight", "medicine"], "items": ["holy_symbol"], "gold": 10, "about": "Your temple burned; your faith did not."},
+    {"id": "urchin", "name": "Street urchin", "skills": ["sleight", "stealth"], "items": ["lucky_coin"], "gold": 5, "about": "You grew up on rooftops and in gutters, quick or hungry."},
+    {"id": "scholar", "name": "Runaway scholar", "skills": ["arcana", "investigation"], "items": ["journal"], "gold": 12, "about": "You left the college with a stolen book and a dangerous question."},
+    {"id": "outlander", "name": "Outlander", "skills": ["survival", "nature"], "items": ["rations", "hunting_trap"], "gold": 8, "about": "The wild raised you. Towns are loud and smell wrong."}
+  ],
+  "combat": {
+    "unarmed_damage": "1d4", "unarmed_ability": "str",
+    "defend_ac": 2,
+    "flee_skill": "acrobatics", "flee_dc": "medium",
+    "base_ac": 10,
+    "defeat": {"gold_loss": 0.25, "hp": 1, "text": "Everything goes dark. You wake later, sore and lighter of coin, somewhere safer."}
+  },
+  "rest": {
+    "short": {"hours": 1, "heal": "hit_die", "restores": "short"},
+    "short_per_long": 2, "long": {"hours": 8, "heal": "all", "restores": "all", "needs_safe": true}
+  },
+  "relationships": {
+    "min": -100, "max": 100,
+    "stages": [
+      {"id": "hostile", "name": "Hostile", "min": -100},
+      {"id": "wary", "name": "Wary", "min": -30},
+      {"id": "acquainted", "name": "Acquainted", "min": 0},
+      {"id": "friendly", "name": "Friendly", "min": 15},
+      {"id": "close", "name": "Close", "min": 35},
+      {"id": "devoted", "name": "Devoted", "min": 65}
+    ],
+    "romance_stages": [
+      {"id": "none", "name": "No romance"},
+      {"id": "spark", "name": "A spark"},
+      {"id": "courting", "name": "Courting"},
+      {"id": "beloved", "name": "Beloved"}
+    ],
+    "tone_cooldown_turns": 4, "arc_retry_days": 2, "arc_offers": 2,
+    "gift_cooldown_turns": 6
+  },
+  "tones": {
+    "flirt": ["beautiful", "handsome", "gorgeous", "pretty", "cute", "kiss", "darling", "love you", "your eyes", "your smile", "flirt", "wink", "date", "attractive", "sweetheart", "dance with me", "hold your hand", "adore", "lovely", "her eyes", "his eyes", "their eyes", "charming", "compliment", "flatter", "blush", "you look nice", "handsome"],
+    "kind": ["thank", "thanks", "sorry", "are you okay", "are you alright", "i'm here", "i am here", "proud of you", "care about", "glad", "you did well", "well done", "trust you", "with you", "help you", "safe"],
+    "rude": ["shut up", "idiot", "stupid", "useless", "pathetic", "hate you", "go away", "fool", "coward", "whatever", "don't care", "do not care", "annoying", "leave me alone", "ugly"],
+    "joke": ["haha", "joke", "funny", "laugh", "tease", "lol", "jest", "silly", "pun"],
+    "curious": ["tell me about", "who are you", "your past", "your family", "where are you from", "what happened", "why did you", "what do you think", "how do you feel", "your story", "your home"],
+    "brave": ["let's fight", "charge", "attack them", "no fear", "we can take them", "stand and fight", "i'll protect", "i will protect"],
+    "cautious": ["careful", "wait", "plan", "think first", "slowly", "scout", "be wary", "trap"]
+  },
+  "intents": {
+    "go": ["go", "walk", "head", "travel", "enter", "leave for", "run to", "return to", "move to", "follow the", "take the"],
+    "look": ["look", "where am i", "describe", "surroundings", "look around"],
+    "examine": ["examine", "inspect", "check", "study", "read", "investigate", "search"],
+    "talk": ["talk to", "speak to", "speak with", "talk with", "chat with", "greet", "approach", "ask"],
+    "say": ["say", "tell", "reply", "answer", "whisper"],
+    "attack": ["attack", "fight", "strike", "hit", "kill", "stab", "shoot", "slash"],
+    "take": ["take", "grab", "pick up", "loot", "collect"],
+    "use": ["use", "drink", "eat", "apply", "quaff", "read"],
+    "equip": ["equip", "wield", "wear", "put on", "don"],
+    "give": ["give", "offer", "hand", "gift", "present"],
+    "rest": ["rest", "sleep", "camp", "nap", "take a break", "wait"],
+    "explore": ["explore", "wander", "scout", "roam", "venture out", "look for trouble", "search the area"],
+    "inventory": ["inventory", "bag", "pack", "what do i have", "items"],
+    "recruit": ["recruit", "join me", "come with me", "travel with me", "join the party"],
+    "dismiss": ["dismiss", "part ways", "leave the party", "stay here"],
+    "work": ["work", "job", "rumour", "rumor", "bounty", "notice board", "any work", "quest"],
+    "buy": ["buy", "purchase", "shop", "trade", "wares"],
+    "sell": ["sell"],
+    "help": ["help", "what can i do", "commands", "how do i"]
+  },
+  "time": {"hours_per_action": 0.25, "periods": [
+    {"id": "night", "from": 0}, {"id": "dawn", "from": 5}, {"id": "morning", "from": 7},
+    {"id": "afternoon", "from": 12}, {"id": "evening", "from": 17}, {"id": "night", "from": 21}
+  ]},
+  "narration": {
+    "person": "second",
+    "rules": "You are the narrator of a tabletop role-playing game. The game engine has already decided what happened, including every dice roll, damage number, item and reward. Narrate only what the facts say happened, vividly and briefly, in second person, present tense. Never invent new items, rewards, injuries, numbers, characters joining, or outcomes. Never ask the player what they do next. Never speak for the player. No lists, no headings, no game terms like DC or HP."
+  },
+  "freeform_success": ["It works.", "You manage it, cleanly.", "Luck and skill line up.", "It goes better than you hoped."],
+  "freeform_fail": ["It does not work.", "You fumble it.", "Not this time.", "It goes wrong, though not badly."]
+}

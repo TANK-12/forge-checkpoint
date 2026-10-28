@@ -5,9 +5,12 @@ on:
     inputs:
       tag:
         description: Release tag to download and check
-        default: checkpoint-2026-10-28-updated
+        default: checkpoint-2026-10-28-allapps
+# Write only so the download step can read a draft release, checked here
+# before it is made public. Checkout keeps no token, and only that one
+# step is given it; nothing here uploads, tags or pushes.
 permissions:
-  contents: read
+  contents: write
 jobs:
   smoke:
     timeout-minutes: 20
@@ -22,13 +25,19 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@v6
         with:
           python-version: '3.14'
-      - name: Test install helpers with fixture archives
+      - name: Add pyobjc on Macs (the release's Mac Python carries it; the trash helper uses it)
+        if: runner.os == 'macOS'
+        run: python -m pip install pyobjc-framework-Cocoa
+      - name: Test install helpers, smart search and the trash helper
+        timeout-minutes: 10
         run: |
           python -m pip install pytest
-          python -m pytest -q tests/test_checkpoint.py tests/test_forge_ask.py
+          python -m pytest -q tests/test_checkpoint.py tests/test_forge_ask.py tests/test_forge_trash.py
       - name: Download saved checkpoint
         shell: bash
         env:

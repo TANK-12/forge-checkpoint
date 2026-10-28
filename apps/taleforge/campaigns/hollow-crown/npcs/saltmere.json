@@ -1,0 +1,483 @@
+{
+ "npcs": [
+  {
+   "id": "saltmere_marrow",
+   "name": "Ines Marrow",
+   "pronouns": "she/her",
+   "location": "saltmere_counting_house",
+   "faction": "saltmere_syndicate",
+   "description": "A composed woman of fifty in grey silk, with silver in her hair and a pen that never stops moving. Her smile is warm and exact, like a surgeon's.",
+   "personality": "Patient, courteous, utterly ruthless in a way she considers fair. Honours debts in both directions. Fond of children, clever people and expensive tea.",
+   "speech": "Soft, measured, with long pauses. Never raises her voice; the room lowers its own.",
+   "greeting": "Do sit. The tea is real, and so is everything else I tell you.",
+   "rumours": true,
+   "topics": [
+    {
+     "id": "syndicate",
+     "prompt": "Ask about the Syndicate",
+     "text": "'A guild. A family. A reasonable arrangement between people the law neglects.' She sips her tea. 'We take a fair share of what passes through Saltmere, and we keep the harbour quiet. In return, nobody starves in winter. You will find the Regency does not offer as much.'"
+    },
+    {
+     "id": "osk",
+     "prompt": "Ask about Osk Dray",
+     "when": {
+      "flag": "saltmere_marrow_met"
+     },
+     "text": "'Osk is useful and disloyal, which is the usual combination.' Her pen stops. 'He sold something that was not his to sell. I would like it back, and I would like to know who he sold it to. I do not particularly care how.'"
+    },
+    {
+     "id": "foundling",
+     "prompt": "Ask about a foundling left on the quay, long ago",
+     "when": {
+      "quest_stage": {
+       "sable_quest": "marrow"
+      },
+      "reputation": {
+       "saltmere_syndicate": 15
+      },
+      "not_item": "sable_letter"
+     },
+     "text": "She looks at you for a long time. Then, slowly, she opens a drawer and takes out a letter, creased and yellow. 'I have been waiting twenty-four years for someone to ask politely. Here. It was never mine to read twice.' She presses it into your hand. 'Tell the child I always meant them well.'",
+     "effects": [
+      {
+       "give": "sable_letter"
+      },
+      {
+       "flag": "sable_marrow_told"
+      }
+     ]
+    },
+    {
+     "id": "foundling_hard",
+     "prompt": "Press her about the foundling and the letter she kept",
+     "when": {
+      "quest_stage": {
+       "sable_quest": "marrow"
+      },
+      "not_item": "sable_letter"
+     },
+     "check": {
+      "skill": "persuasion",
+      "dc": "hard"
+     },
+     "text": "Marrow sighs, closes her pen, and takes a creased yellow letter from a drawer. 'Persistence. I find I respect it more than I resent it.' She hands it over. 'I would have given it to them, you know. Had they asked.'",
+     "fail_text": "'No.' Her smile does not shift. 'A debt is a debt, and a promise is a promise. If you cannot offer a reason I respect, you may offer a favour. Come back with one.'",
+     "effects": [
+      {
+       "give": "sable_letter"
+      },
+      {
+       "flag": "sable_marrow_told"
+      }
+     ]
+    },
+    {
+     "id": "regent",
+     "prompt": "Ask what she knows about Lord Caul",
+     "when": {
+      "flag": "knows_regent_has_heart"
+     },
+     "text": "'Everything, and nothing I would say aloud.' She folds her hands. 'He pays well. That is my whole opinion of him, and also, in this town, my whole advice.' A pause. 'Be careful what you threaten him with. He answers in kind.'"
+    }
+   ]
+  },
+  {
+   "id": "saltmere_voss",
+   "name": "Dagny Voss",
+   "pronouns": "she/her",
+   "location": "saltmere_quay",
+   "faction": "crown_regency",
+   "description": "A rangy woman in the Regency's grey coat, with a harbourmaster's chain around her neck and the look of someone who has not slept in a week. Her left hand hovers near a short sword she plainly does not expect to win with.",
+   "personality": "Honest, outgunned and furious about it. Loyal to the realm rather than the Regency. Wants the port cleaned up before the Thornwake arrives.",
+   "speech": "Clipped, military, blunt. Swears under her breath.",
+   "greeting": "If you're here to smuggle, go to the back of the queue. If you're here to help, go to the front.",
+   "quests": [
+    "saltmere_deserters_road"
+   ],
+   "rumours": true,
+   "topics": [
+    {
+     "id": "port",
+     "prompt": "Ask about the port",
+     "text": "'Saltmere belongs to the Syndicate. I hold the quay, and not all of that. The Regency sends orders and no soldiers. I send reports and no hope.' Her grin is humourless. 'Welcome to civilisation.'",
+     "effects": [
+      {
+       "flag": "saltmere_syndicate_lead"
+      }
+     ]
+    },
+    {
+     "id": "writ",
+     "prompt": "Ask for a writ to search the Syndicate's warehouses",
+     "when": {
+      "quest_active": "main_3",
+      "not_flag": "syndicate_ally",
+      "not_item": "saltmere_harbour_writ"
+     },
+     "text": "She narrows her eyes, then dips a pen. 'Searching a warehouse is a crime in Saltmere if the owner objects. This makes it only a risk.' She slides a folded warrant across the desk. 'If you find something that hangs a Syndicate man, bring it to me. If you find something that hangs a Regency man, bring it to me twice.'",
+     "effects": [
+      {
+       "give": "saltmere_harbour_writ"
+      },
+      {
+       "reputation": {
+        "crown_regency": 5
+       }
+      },
+      {
+       "reputation": {
+        "saltmere_syndicate": -3
+       }
+      }
+     ]
+    },
+    {
+     "id": "ship",
+     "prompt": "Ask about the half-built ship on the slip",
+     "when": {
+      "flag": "saltmere_saw_regency_ship"
+     },
+     "text": "Voss's face goes carefully blank. 'I did not authorise that. I do not know who did. And if you ever tell anyone I said so...' She does not finish. She does not have to."
+    },
+    {
+     "id": "caul",
+     "prompt": "Ask about the Regent",
+     "when": {
+      "flag": "knows_regent_has_heart"
+     },
+     "text": "She checks over both shoulders before she speaks. 'If you are right, it explains the Highspire couriers. Four this month, all riding north to the Marches and none riding back.' She crosses her arms. 'I will not say more. Not in this town.'"
+    },
+    {
+     "id": "road_done",
+     "prompt": "Report that the salt road is safe",
+     "when": {
+      "quest_stage": {
+       "saltmere_deserters_road": "report"
+      }
+     },
+     "text": "Voss exhales for what seems like the first time in a week. 'Quiet roads. A real thing. I'd forgotten.' She takes a coin purse out of her desk and shoves it across without looking at you. 'The Regency would call it a bribe. I call it a thank-you.'",
+     "effects": [
+      {
+       "flag": "voss_road_thanks"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "saltmere_osk",
+   "name": "Osk Dray",
+   "pronouns": "he/him",
+   "location": "saltmere_strongroom",
+   "faction": "saltmere_syndicate",
+   "description": "A soft, tidy man in a velvet waistcoat with watch-chains looped across it. His fingers are ringed, his smile is shy, and his eyes are the least shy thing in the room.",
+   "personality": "A genial coward with a genuinely excellent memory. Trades in other people's secrets and has convinced himself it is just a living.",
+   "speech": "Apologetic, sing-song, full of 'if you'll forgive me' and 'one could say'. Counts as he speaks.",
+   "greeting": "Ah! A visitor. How delightful. One does so enjoy a customer who knows the way in.",
+   "topics": [
+    {
+     "id": "shard",
+     "prompt": "Ask about the red-gold shard he sold",
+     "text": "'I sold the stone, my friend, not the shard. A piece broke in transit. A piece! One could say, a trifle.' He waves a pudgy hand. 'It is here, as it happens. In that third box. For the right price, or the right friend, or...' He glances at the bell-pull. 'Or the right argument.'"
+    },
+    {
+     "id": "buy",
+     "prompt": "Pay 150 gold for the shard",
+     "when": {
+      "gold": 150,
+      "not_item": "salt_shard",
+      "not_flag": [
+       "syndicate_ally",
+       "syndicate_enemy"
+      ]
+     },
+     "text": "He weighs your purse with his eyes. 'A fair price, and a pleasure.' The shard comes out of a lacquered box and drops, gleaming, into your palm. 'You are Madam's friend, now, I should think. She likes people who pay.'",
+     "effects": [
+      {
+       "gold": -150
+      },
+      {
+       "give": "salt_shard"
+      },
+      {
+       "flag": "syndicate_ally"
+      },
+      {
+       "reputation": {
+        "saltmere_syndicate": 8
+       }
+      }
+     ]
+    },
+    {
+     "id": "hand",
+     "prompt": "Say that Madam Marrow sent you",
+     "when": {
+      "flag": "syndicate_ally",
+      "not_item": "salt_shard"
+     },
+     "text": "Osk sags with relief. 'Oh, thank the tides.' He pulls the shard out of the waistcoat pocket and presses it into your hand without a flicker of reluctance. 'Take it, please. Tell Madam I was always, always, going to give it back.'",
+     "effects": [
+      {
+       "give": "salt_shard"
+      }
+     ]
+    },
+    {
+     "id": "persuade",
+     "prompt": "Convince him that giving it up is in his interest",
+     "when": {
+      "not_item": "salt_shard",
+      "not_flag": "syndicate_ally"
+     },
+     "check": {
+      "skill": "persuasion",
+      "dc": "very_hard"
+     },
+     "text": "You paint the picture: Madam Marrow's patience, Voss's warrant, the Thornwake at the gate, and a fence with no friends. Osk's smile falters, then collapses. 'Fine, fine, fine. Take it. Take it before I come to my senses.' The shard rolls across the desk to you.",
+     "fail_text": "'Charming,' says Osk. 'Truly. But no.' He takes a sip of wine, calmly, and the hand under the desk does not leave the bell-pull.",
+     "effects": [
+      {
+       "give": "salt_shard"
+      },
+      {
+       "flag": "syndicate_enemy"
+      },
+      {
+       "reputation": {
+        "saltmere_syndicate": -4
+       }
+      }
+     ]
+    },
+    {
+     "id": "scare",
+     "prompt": "Make him understand what you will do to him",
+     "when": {
+      "not_item": "salt_shard",
+      "not_flag": "syndicate_ally"
+     },
+     "check": {
+      "skill": "intimidation",
+      "dc": "hard"
+     },
+     "text": "You do not raise your voice. You describe, in precise and pleasant detail, the next hour of Osk's life. He is pale before you finish. 'There's no need. There's no need.' The shard comes out of the box so fast he almost drops it.",
+     "fail_text": "'Oh, my dear,' says Osk, with real sympathy. 'You are not as frightening as you think.' He rings the bell.",
+     "effects": [
+      {
+       "give": "salt_shard"
+      },
+      {
+       "flag": "syndicate_enemy"
+      },
+      {
+       "reputation": {
+        "saltmere_syndicate": -8
+       }
+      }
+     ]
+    },
+    {
+     "id": "fight",
+     "prompt": "Take it from him by force",
+     "when": {
+      "not_item": "salt_shard"
+     },
+     "text": "'Oh,' says Osk, rising. 'Well.' He slips a pair of long knives from his sleeves. 'I did hope we would be civilised.'",
+     "effects": [
+      {
+       "combat": [
+        "saltmere_osk_dray"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "who",
+     "prompt": "Ask who he sold the heart-stone to",
+     "when": {
+      "has_item": "salt_shard"
+     },
+     "text": "Osk glances at the ledger, then away. 'A gentleman in a grey coat, very polite, very fast. Highspire's own seal. I dealt through a middle-man, naturally. I would not ask the Lord Regent his business directly.' He catches himself too late. 'Oh. Oh dear. I did not say that.'",
+     "effects": [
+      {
+       "flag": "knows_regent_has_heart"
+      },
+      {
+       "xp": 100
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "saltmere_teodora",
+   "name": "Teodora Quist",
+   "pronouns": "she/her",
+   "location": "saltmere_market",
+   "faction": "saltmere_syndicate",
+   "description": "A short, broad woman with forearms like hams, a canvas apron and a great many keys. Her chandlery smells of tar, candle wax and lemon.",
+   "personality": "Gruff, fair, secretly sentimental. Everyone in Saltmere owes her something and nobody minds.",
+   "speech": "Blunt and nautical. Calls everyone 'lad' or 'lass' regardless of age.",
+   "greeting": "Tar, rope and honest prices. Don't haggle on the second two.",
+   "quests": [
+    "saltmere_pearl_errand"
+   ],
+   "rumours": true,
+   "topics": [
+    {
+     "id": "goods",
+     "prompt": "Ask what she recommends",
+     "text": "'Sailcloth coat for the rain, buckler for the knives, rum for the rest. And a charm for the tide if you're daft enough to sail.' She winks. 'The charm works, by the way. I've never had a customer drown who bought one.'"
+    },
+    {
+     "id": "syndicate",
+     "prompt": "Ask who really runs Saltmere",
+     "text": "She lowers her voice and glances at the street. 'Marrow and Daughters, by the cooper's. Red-headed nail on a herring crate, and ask the clerk for an appointment. Say Teodora sent you. They'll be polite.'",
+     "effects": [
+      {
+       "flag": "saltmere_syndicate_lead"
+      },
+      {
+       "reveal": "saltmere_counting_house"
+      }
+     ]
+    },
+    {
+     "id": "sable",
+     "prompt": "Ask about the tiefling singing at the Gilded Gull",
+     "text": "'Sable? Quick fingers, quicker tongue, and a heart like a lit candle in a draught.' She smiles. 'Been here since they were old enough to climb a wall. Marrow's people raised them, in a way. Nobody knows who their mother was.'"
+    },
+    {
+     "id": "pearl",
+     "prompt": "Hand over a brine pearl",
+     "when": {
+      "quest_active": "saltmere_pearl_errand",
+      "has_item": "saltmere_brine_pearl"
+     },
+     "text": "Teodora holds the pearl to the light and whistles. 'Perfect colour. My sister will weep.' She takes it with something like reverence. 'That's a weight off. Here, lad. Good wage for an honest errand.'",
+     "effects": [
+      {
+       "take": "saltmere_brine_pearl"
+      },
+      {
+       "flag": "teodora_pearl_given"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "saltmere_mab",
+   "name": "Old Mab",
+   "pronouns": "she/her",
+   "location": "saltmere_lighthouse",
+   "faction": "saltmere_syndicate",
+   "description": "A thin, brown old woman with a pipe and an eye patch, wrapped in four jumpers and a fisherman's oilskin. Her voice is a rasp, and she is always, always sitting next to a kettle.",
+   "personality": "Wry, stubborn, kinder than she lets on. Has watched the quay for fifty years and remembers everything, including things she would rather forget.",
+   "speech": "Rough waterfront drawl, full of nautical idiom. Calls the sea 'she' and the Regency 'those clerks'.",
+   "greeting": "Kettle's on. Sit or leave, but don't loom.",
+   "quests": [
+    "saltmere_lighthouse_light"
+   ],
+   "rumours": true,
+   "topics": [
+    {
+     "id": "light",
+     "prompt": "Ask about the dead light",
+     "text": "'Cracked lens, and something big in the cellar. Crabs the size of cartwheels. They come up at the neap tide and eat the oil.' She taps her pipe on the sill. 'I'm too old for crab-wrestling, lad. Light's dark, and ships die in the dark.'"
+    },
+    {
+     "id": "years",
+     "prompt": "Ask what she's seen from this window",
+     "text": "'Fifty years of ships, ten of smugglers, two of the Thornwake. The first of the cold came in on the back of a coastal trader, not by land. Briar in the cargo. I told the harbourmaster. She told her bosses. Nobody listened.'",
+     "effects": [
+      {
+       "flag": "saltmere_thornwake_by_sea"
+      }
+     ]
+    },
+    {
+     "id": "foundling",
+     "prompt": "Ask about a foundling found on the quay, twenty-odd years ago",
+     "when": {
+      "quest_stage": {
+       "sable_quest": "start"
+      }
+     },
+     "text": "Her pipe stops halfway to her mouth. 'Sable.' She sets the pipe down. 'I found them, you know. Dawn, in a herring crate, wrapped in a grey wool cloak with a silver moth pinned to it. A tiny thing, not crying, just watching the gulls.' She looks out of the window. 'There was a woman on the quay, wearing a moth-grey cloak, who'd been crying. She paid Marrow's clerk for a place and left on a north-bound barge. I never saw her face. But Marrow's clerk wrote the amount in the ledger, and the ledger is in her counting house.'",
+     "effects": [
+      {
+       "flag": "sable_mab_told"
+      },
+      {
+       "xp": 50
+      }
+     ]
+    },
+    {
+     "id": "light_done",
+     "prompt": "Tell her the cellar is clear",
+     "when": {
+      "quest_stage": {
+       "saltmere_lighthouse_light": "report"
+      }
+     },
+     "text": "Mab hobbles up the stair with a lamp in one hand and a pipe in her mouth. By dusk the great lens glows, and a long clean beam sweeps over the estuary. 'There she is,' Mab murmurs. 'Every ship that comes in tonight is a ship I didn't lose.' She tucks something into your hand: a charm made of silver wire and a grey pebble.",
+     "effects": [
+      {
+       "flag": "mab_light_thanks"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "saltmere_brenna",
+   "name": "Brenna Tallow",
+   "pronouns": "she/her",
+   "location": "saltmere_inn",
+   "faction": "saltmere_syndicate",
+   "description": "A tall, sunburnt innkeeper with her sleeves rolled to the elbow and a barrel of a laugh. Her bar is the cleanest place in Saltmere, and she keeps a cudgel named Sweetheart behind it.",
+   "personality": "Warm, loud, impossible to lie to. Protective of her regulars. Takes no sides publicly and several in private.",
+   "speech": "Hearty, booming, peppered with sailors' endearments. 'Duck', 'love', 'my lamb'.",
+   "greeting": "Come in, duck! Sit anywhere that isn't wet.",
+   "rumours": true,
+   "topics": [
+    {
+     "id": "rooms",
+     "prompt": "Ask about a room",
+     "text": "'Eight coin and the bed's clean. The bugs are friendly. Don't let the dice-men teach you games.'"
+    },
+    {
+     "id": "sable",
+     "prompt": "Ask about the tiefling on the stage",
+     "text": "'Sable! Love 'em like my own. Sings for supper and rings the roof down, but there's something about 'em, duck, like a lock that nobody's ever picked.' She leans in. 'If you can charm 'em into travelling, take 'em. They're wasted on a taproom, and they know it.'",
+     "effects": [
+      {
+       "flag": "saltmere_sable_hint"
+      }
+     ]
+    },
+    {
+     "id": "syndicate",
+     "prompt": "Ask who to talk to if you need something done quietly",
+     "text": "'Third crate on the quay with a red nail in it. Talk to the clerk at Marrow's and ask for an appointment. Don't tell them I sent you; do tell them I said hello.' She winks. 'It'll go better than you think.'",
+     "effects": [
+      {
+       "flag": "saltmere_syndicate_lead"
+      },
+      {
+       "reveal": "saltmere_counting_house"
+      }
+     ]
+    },
+    {
+     "id": "news",
+     "prompt": "Any news?",
+     "text": "'Deserters on the salt road, taking what they can. Dagny's going spare. And Osk Dray's been spending a lot of money. Our Osk, who counts coppers. Funny, that.'"
+    }
+   ]
+  }
+ ]
+}

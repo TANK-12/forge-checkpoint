@@ -1,0 +1,14 @@
+{"items": [
+  {"id": "moth_shard", "name": "Moth shard", "kind": "key", "value": 0, "unsellable": true, "text": "A second sliver of the Queen's heart-stone, pale gold where the first was red. It is cool until you hold it, and then it hums like a moth against a window."},
+  {"id": "moth_lamp", "name": "The Court's mothlamp", "kind": "key", "value": 0, "unsellable": true, "text": "A lantern of grey spider-silk and dew-glass. The flame inside is a tiny, patient moth made of light."},
+  {"id": "whisperwood_dew_tonic", "name": "Dewcap tonic", "kind": "consumable", "value": 35, "use": [{"heal": "2d6+2"}], "text": "Morning dew steeped with mushroom caps. It tastes of cold stone and mint and knits a scrape closed in a breath."},
+  {"id": "whisperwood_glimmer_honey", "name": "Glimmer honey", "kind": "gift", "value": 14, "text": "Thick amber honey that glows faintly in the jar. The bees that made it do not belong to any beekeeper."},
+  {"id": "whisperwood_moonpetal", "name": "Moonpetal", "kind": "gift", "value": 6, "text": "A white flower that only opens after dark. It smells like a cold, clean night."},
+  {"id": "whisperwood_reed_flute", "name": "Hollow-reed flute", "kind": "gift", "value": 18, "text": "A tiny flute cut by someone who cared. It plays one tune, and the tune is sad in a way you cannot name."},
+  {"id": "whisperwood_mothsilk_vest", "name": "Mothsilk vest", "kind": "armor", "value": 70, "ac": 12, "dex_cap": null, "text": "Light as breath, grey and shot with silver. Arrows seem to forget where they were going."},
+  {"id": "whisperwood_thistle_sting", "name": "Thistle-sting", "kind": "weapon", "value": 60, "damage": "1d8", "ability": "finesse", "bonus": 1, "text": "A slim blade of black glass with a violet edge, light as a reed and just as quick."},
+  {"id": "whisperwood_antler_bow", "name": "Antler bow", "kind": "weapon", "value": 55, "damage": "1d8", "ability": "dex", "text": "A bow grown, not made, from a shed stag antler. It sings softly when drawn."},
+  {"id": "whisperwood_stag_cloak", "name": "Dusk-stag hide", "kind": "trinket", "value": 30, "text": "A heavy, dark pelt that smells of leaf mould. Wardens pay well for it."},
+  {"id": "whisperwood_mirror_shard", "name": "Mirror-pool glass", "kind": "trinket", "value": 40, "text": "A palm-sized sliver of water that has forgotten how to flow. It shows you a face that is almost yours."},
+  {"id": "whisperwood_wardens_token", "name": "Warden's oak-leaf token", "kind": "key", "value": 0, "unsellable": true, "text": "A pressed bronze oak leaf. Wardens of the Whisperwood carry them; Tamsin gave you hers."}
+]}

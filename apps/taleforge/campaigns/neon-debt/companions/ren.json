@@ -1,0 +1,214 @@
+{
+ "id": "ren",
+ "name": "Ren Okoye",
+ "pronouns": "she/her",
+ "age": 26,
+ "location": "lowtide_club",
+ "class": "netrunner",
+ "level": 1,
+ "faction": "lowtide_folk",
+ "description": "A slim woman with a half-shaved head dyed storm teal, one amber cybernetic eye that glints in dim light, a battered jacket stitched with tiny working LEDs, and a cyberdeck strapped to her forearm like a bracer.",
+ "appearance": "Dark brown skin, teal hair, a soft gap in her front teeth, an amber lens in her left eye, a stud in her eyebrow, ink-stained fingers.",
+ "personality": "Wry, quick, quietly fierce. Performs for strangers and is shy when it counts. Hides a thick ledger of guilt behind jokes. Soft for old music, rain on tin roofs and anyone who is kind to Tomas.",
+ "speech": "Fast and dry, fond of metaphors drawn from circuits. Sings half-sentences under her breath. Says the true thing last, and plainly.",
+ "backstory": "Ren was an Aurelian data courier before she was a singer. She carried sealed cases through the Spire and never asked what was in them. Three years ago her brother Tomas fell from a gantry and Aurelian leased him a respirator at a cost no courier could pay, so she took more jobs. One of them was escorting a stranger's memory shard down to Platform Nine. She didn't look at the stranger's face. She has been trying to forget the weight of that case ever since.",
+ "greeting": "Late show's about to start. Stay, if you like. Try not to be the reason I lose my place in the song.",
+ "combat": {
+  "hp": 10,
+  "ac": 12,
+  "attack": 5,
+  "damage": "1d10+2",
+  "name": "cyberdeck pulse"
+ },
+ "recruit": {
+  "when": {
+   "any": [
+    {
+     "quest_active": "ren_quest"
+    },
+    {
+     "quest_done": "ren_quest"
+    },
+    {
+     "flag": "ren_trusts"
+    }
+   ]
+  },
+  "scene": "ren_recruit",
+  "text": "Ren hooks her deck to her forearm and grins. 'Fine. I'm in. Someone has to hum the chase music.'"
+ },
+ "romanceable": true,
+ "attracted_to": [
+  "any"
+ ],
+ "tones": {
+  "flirt": {
+   "amount": 3,
+   "min_affection": 20,
+   "below": -2
+  },
+  "kind": 3,
+  "rude": -5,
+  "joke": 2,
+  "curious": 2,
+  "brave": 1,
+  "cautious": 1
+ },
+ "gifts": {
+  "jasmine_tea": 7,
+  "cassette_tape": 7,
+  "vinyl_record": 8,
+  "paper_lantern": 4,
+  "synth_flower": 4,
+  "cheap_whisky": -1,
+  "default": 1
+ },
+ "likes": [
+  "honesty",
+  "old music",
+  "rain on tin roofs",
+  "kindness to Tomas",
+  "competence"
+ ],
+ "dislikes": [
+  "corpo talk",
+  "pity",
+  "being owned",
+  "bragging",
+  "cheap whisky"
+ ],
+ "reactions": [
+  {
+   "flag": "tomas_freed",
+   "amount": 10,
+   "text": "Ren puts her hand over her mouth. 'He's free. He's actually free.' She laughs, and it breaks halfway. 'Thank you. I don't have a better word.'"
+  },
+  {
+   "flag": "shard_to_ren",
+   "amount": 6,
+   "text": "Ren's fingers close around the shard. 'You gave this to me. I... thank you for trusting me with it.'"
+  },
+  {
+   "flag": "shard_sold",
+   "amount": -8,
+   "text": "'You sold it.' Ren says it very flatly. 'To them. After everything.' She does not look at you for a while."
+  },
+  {
+   "flag": "shard_destroyed",
+   "amount": -2,
+   "text": "'You smashed it,' Ren says. A beat. 'I get it. I'd probably have done the same. I'd just have wanted to read it first.'"
+  },
+  {
+   "flag": "shard_played",
+   "amount": 3,
+   "text": "Ren studies your face carefully. 'You look different. Like a man who learned the punchline.'"
+  },
+  {
+   "flag": "fed_kid",
+   "amount": 4,
+   "text": "'You fed her,' Ren says, quiet. 'The little one under the awning. She's been hungry for weeks. That matters here.'"
+  },
+  {
+   "flag": "door_hacked",
+   "amount": 2,
+   "text": "Ren smirks at the maglock panel. 'Pretty. Almost as pretty as my own work.'"
+  },
+  {
+   "flag": "vane_down",
+   "amount": 4,
+   "text": "'Vane's down,' Ren says. 'That's one less collar in Lowtide.' She almost smiles."
+  }
+ ],
+ "arc": [
+  {
+   "stage": "spark",
+   "requires": {
+    "affection": 25,
+    "in_party": "ren",
+    "not_flag": "ren_romance_declined"
+   },
+   "scene": "ren_heart_1",
+   "trigger": "rest"
+  },
+  {
+   "stage": "courting",
+   "requires": {
+    "affection": 45,
+    "romance": {
+     "ren": "spark"
+    },
+    "quest_done": "ren_quest",
+    "not_flag": "ren_romance_declined"
+   },
+   "scene": "ren_heart_2",
+   "trigger": "talk"
+  },
+  {
+   "stage": "beloved",
+   "requires": {
+    "affection": 70,
+    "romance": {
+     "ren": "courting"
+    },
+    "not_flag": "ren_romance_declined"
+   },
+   "scene": "ren_heart_3",
+   "trigger": "rest"
+  }
+ ],
+ "lines": {
+  "greet": [
+   "Ren glances up from her deck. 'Hey, you. I was just about to do something clever.'",
+   "She hums three bars of something and stops when she notices you listening.",
+   "'Rain's coming down. That's my favourite kind of weather, in case you wondered.'"
+  ],
+  "flirt_yes": [
+   "Ren ducks her head, grinning. 'Careful. I'm a professional at taking compliments and a disaster at believing them.'",
+   "'Oh, you're smooth.' Her amber eye flickers. 'Say it again. I'm recording this.'",
+   "She leans her shoulder into yours. 'Stay close tonight, okay?'"
+  ],
+  "flirt_no": [
+   "'Easy, chief. I like you. I don't know you yet.'",
+   "Ren tilts her head. 'That line has a lot of mileage. Where did you steal it from?'",
+   "'Cute. Try me again when the number on your wrist is smaller.'"
+  ],
+  "kind": [
+   "'...Thanks.' She means it more than she lets on.",
+   "Ren goes quiet. 'You say that like it's easy. It isn't, down here.'",
+   "'You're one of the good ones, aren't you.' A pause. 'That's going to get you hurt.'"
+  ],
+  "rude": [
+   "'Wow.' The warmth goes out of her voice like a pulled plug.",
+   "Ren turns back to her deck. 'Let me know when you're done being an idiot.'",
+   "'I've been talked down to by experts. You're an amateur.'"
+  ],
+  "joke": [
+   "A surprised laugh. 'That was terrible. Tell me another.'",
+   "'I'll put that in my next song,' Ren says, 'if you promise not to sue.'",
+   "She snorts into her sleeve. 'Okay, that was good.'"
+  ],
+  "curious": [
+   "'My story? Short version: courier, singer, bad decisions.' A wink. 'The long version costs a drink.'",
+   "She thinks about it. 'Tomas used to sing harmony. Badly. I miss it.'",
+   "'Ask me again after a few songs. I'm braver after a few songs.'"
+  ],
+  "neutral": [
+   "Ren nods.",
+   "'Mm. Fair.'",
+   "Her fingers drum a rhythm on the deck while she listens.",
+   "'Right.'"
+  ],
+  "join": "Ren swings her deck onto her forearm and falls into step. 'Okay. Let's see how loud we can be.'",
+  "leave": "'Fine. You know where to find me. Third table, second set.'",
+  "banter": [
+   "'Hear that? Rain on tin. That's the best drum solo in the district.'",
+   "Ren hums a line from an old ballad and stops when you glance over.",
+   "'The Spire's lights are pretty from down here. That's the whole trick.'",
+   "She pings a camera, and it politely closes its eye."
+  ]
+ },
+ "personal_quest": "ren_quest",
+ "quests": [
+  "ren_quest"
+ ]
+}

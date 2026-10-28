@@ -117,7 +117,7 @@
       "enabled": false,
       "idle_minutes": 60,
       "sleep": {
-        "_about": "Forge's own gentler close (forge_sleep.py, Relay task 272): an app backend idle this long is stopped while Forge keeps listening on its port, and the page's next request, or the app coming to the front, starts it again on that socket. The page never reloads and no request fails; the first one after a sleep waits about a second. Idle = not in front, no open TCP connection, no child process, under cpu_percent of one core, and the manifest's busy path (if any) not busy. Skipped for always_on apps, auto_close false or idle false in the manifest, and apps whose rule in Settings is off.",
+        "_about": "Forge's own gentler close (forge_sleep.py, Relay task 272): an app backend idle this long is stopped while Forge keeps listening on its port, and the page's next request, or the app coming to the front, starts it again on that socket. The page never reloads and no request fails; the first one after a sleep waits about a second. Idle = not in front, no open TCP connection, no child process, under cpu_percent of one core, and the manifest's busy path (if any) not busy. Skipped for always_on apps, auto_close false or idle false in the manifest, and apps whose rule in Settings is off. idle_minutes here is only the default for code that passes no settings: forge.py uses Settings > Home screen > Stop unused apps after (app_sleep_minutes, Relay task 451).",
         "enabled": true,
         "idle_minutes": 20,
         "check_seconds": 30,

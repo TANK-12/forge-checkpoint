@@ -527,12 +527,25 @@ def test_setup_script_installs_for_the_user_and_keeps_data_unless_asked():
     assert "MB_YESNO or MB_DEFBUTTON2" in iss
     assert "(CurUninstallStep <> usPostUninstall) or UninstallSilent" in iss
     # old program files are cleared only from a folder that holds Forge
-    for line in iss.splitlines():
-        if line.startswith("Type: filesandordirs") and "[InstallDelete]" in iss:
-            if "{app}\\__pycache__" not in line:
-                assert "Check: IsForgeFolder" in line, line
-    # shortcuts start Forge.cmd, which turns bytecode files off
-    assert iss.count('Filename: "{app}\\Forge.cmd"') == 3
+    clearing = iss.split("\n[InstallDelete]\n", 1)[1].split("\n[", 1)[0]
+    lines = [line for line in clearing.splitlines() if line.startswith("Type:")]
+    assert len(lines) == 8
+    for line in lines:
+        assert line.endswith("; Check: IsForgeFolder"), line
+    # the shortcuts and the finish page start the bundled pythonw.exe with -B
+    # (no console, no bytecode files); the shortcuts carry the AppUserModelID
+    # forge_portable.py takes, and Forge's mutex stops setup and uninstall
+    start = (
+        r'Filename: "{app}\runtime\pythonw.exe"; '
+        r'Parameters: "-B ""{app}\forge_portable.py"""'
+    )
+    assert iss.count(start) == 3
+    assert iss.count('AppUserModelID: "local.forge.Forge"') == 2
+    assert 'Filename: "{app}\\Forge.cmd"' not in iss
+    assert "AppMutex=local.forge.Forge" in iss
+    import forge_portable
+
+    assert forge_portable.APP_ID == "local.forge.Forge"
 
 
 def readmes():
@@ -770,3 +783,398 @@ def test_launcher_finds_install_anywhere_on_the_line(tmp_path):
     out = run_launcher(top, "--no-start", "--install")
     assert out[1] == f"arg={top / 'forge_installer.py'}"
     assert out[2:] == ["arg=--no-start", "arg=--install"]
+
+
+def test_setup_script_brace_comments_hold_no_constant():
+    """A brace comment in [Code] ends at its first closing brace, so one
+    that names a constant such as {app} ends early and the compile fails
+    (the first real compile, Inno Setup 6.7.3 on 28 Oct)."""
+    code = (LAUNCH / "forge.iss").read_text().split("\n[Code]\n", 1)[1]
+    comments, at = [], 0
+    while at < len(code):  # left to right, as the Pascal scanner reads it
+        if code[at] == "'":
+            at = code.index("'", at + 1) + 1  # '' inside is two strings in a row
+        elif code.startswith("//", at):
+            at = code.index("\n", at)
+        elif code[at] == "{":
+            end = code.index("}", at)
+            comments.append(code[at : end + 1])
+            at = end + 1
+        else:
+            at += 1
+    assert comments
+    for comment in comments:
+        assert "{" not in comment[1:], comment
+
+
+def test_setup_tick_page_button_says_install():
+    iss = (LAUNCH / "forge.iss").read_text()
+    # no Ready page, so the tick box page's button starts the install
+    assert "DisableReadyPage=yes" in iss
+    assert "WizardForm.NextButton.Caption := SetupMessage(msgButtonInstall)" in iss
+    assert "then click Install." in iss
+
+
+def test_inno_setup_is_found_in_the_builds_own_prefix(tmp_path, monkeypatch):
+    prefix = tmp_path / "wine-inno"
+    programs = prefix / "drive_c" / "users" / "me" / "AppData" / "Local" / "Programs"
+    iscc = programs / "Inno Setup 6" / "ISCC.exe"
+    monkeypatch.setattr(build.shutil, "which", lambda _name: "/usr/bin/wine")
+    monkeypatch.setattr(build, "INNO_PREFIX", prefix)
+    monkeypatch.delenv("FORGE_ISCC", raising=False)
+    monkeypatch.setenv("WINEPREFIX", str(tmp_path / "other"))
+    assert build.inno_compiler() is None
+    iscc.parent.mkdir(parents=True)
+    iscc.write_bytes(b"MZ")
+    assert build.inno_compiler() == (["/usr/bin/wine", str(iscc)], prefix)
+    # FORGE_ISCC wins, and it runs in the prefix it sits in
+    other = tmp_path / "other" / "drive_c" / "Program Files" / "Inno Setup 6"
+    other.mkdir(parents=True)
+    (other / "ISCC.exe").write_bytes(b"MZ")
+    monkeypatch.setenv("FORGE_ISCC", str(other / "ISCC.exe"))
+    assert build.inno_compiler() == (
+        ["/usr/bin/wine", str(other / "ISCC.exe")],
+        tmp_path / "other",
+    )
+    monkeypatch.delenv("FORGE_ISCC")
+    monkeypatch.setattr(build.shutil, "which", lambda _name: None)
+    assert build.inno_compiler() is None
+
+
+def setup_bundle(where: Path) -> Path:
+    """A bundle folder with the folders the real windows-x64 one has."""
+    top = where / "Forge"
+    for name in ("apps", "assets", "groups", "hub", "release", "runtime"):
+        (top / name).mkdir(parents=True)
+    for name in ("sections", "shared"):
+        (top / name).mkdir()
+    (top / "forge_portable.py").write_text("")
+    return top
+
+
+def test_setup_program_is_made_off_screen_in_its_prefix(tmp_path, monkeypatch):
+    prefix = tmp_path / "wine-inno"
+    monkeypatch.setattr(build, "inno_compiler", lambda: (["wine", "ISCC.exe"], prefix))
+    monkeypatch.setenv("DISPLAY", ":0")
+    monkeypatch.setenv("WAYLAND_DISPLAY", "wayland-0")
+    registry = build.load_registry()
+    registry["version"] = "0.2.0-rc1"
+    name = "Forge-Setup-0.2.0-rc1.exe"
+    out = tmp_path / "out"
+    out.mkdir()
+    top = setup_bundle(tmp_path)
+    calls = []
+
+    def run(command, env=None):
+        calls.append((command, env))
+        if "ISCC.exe" in command:
+            (out / name).write_bytes(b"MZ setup")
+        return ""  # reg query: the prefix had no ShowDotFiles value
+
+    monkeypatch.setattr(build, "run", run)
+    target = registry["targets"]["windows-x64"]
+    result = build.windows_setup(registry, target, top, out)
+    assert result["setup"] == name and result["setup_bytes"] == 8
+    (query, _), (show, _), (iscc, _), (restore, _) = calls
+    # dot-files are shown while Inno runs (Wine marks them hidden and Inno
+    # leaves those out), then the prefix's own value comes back: none here
+    assert query[:3] == ["wine", "reg", "query"] and "ShowDotFiles" in query
+    assert show[:3] == ["wine", "reg", "add"] and show[-3:] == ["/d", "Y", "/f"]
+    assert restore[:3] == ["wine", "reg", "delete"] and "ShowDotFiles" in restore
+    assert iscc[:2] == ["wine", "ISCC.exe"]
+    assert "/DAppVersion=0.2.0-rc1" in iscc
+    assert "/DNumericVersion=0.2.0" in iscc  # Windows' file version: numbers only
+    for _command, env in calls:
+        assert env["WINEPREFIX"] == str(prefix)
+        assert "DISPLAY" not in env and "WAYLAND_DISPLAY" not in env
+        assert "winemenubuilder.exe=d" in env["WINEDLLOVERRIDES"]
+    with pytest.raises(build.BuildError, match="already exists"):
+        build.windows_setup(registry, target, top, out)
+
+
+def test_setup_puts_back_the_prefixs_own_dot_file_choice(tmp_path, monkeypatch):
+    monkeypatch.setattr(build, "inno_compiler", lambda: (["wine", "ISCC.exe"], None))
+    registry = build.load_registry()
+    out = tmp_path / "out"
+    out.mkdir()
+    calls = []
+
+    def run(command, env=None):
+        calls.append(command)
+        if command[1:3] == ["reg", "query"]:
+            return (
+                "HKEY_CURRENT_USER\\Software\\Wine\n    ShowDotFiles    REG_SZ    N\n"
+            )
+        if "ISCC.exe" in command:
+            raise build.BuildError("ISCC failed")
+        return ""
+
+    monkeypatch.setattr(build, "run", run)
+    target = registry["targets"]["windows-x64"]
+    with pytest.raises(build.BuildError, match="Inno Setup could not make"):
+        build.windows_setup(registry, target, setup_bundle(tmp_path), out)
+    # put back even when the compile failed
+    key = r"HKCU\Software\Wine"
+    assert calls[-1] == [
+        "wine",
+        "reg",
+        "add",
+        key,
+        "/v",
+        "ShowDotFiles",
+        "/d",
+        "N",
+        "/f",
+    ]
+
+
+def test_a_bundle_folder_the_setup_script_does_not_name_stops_the_build(tmp_path):
+    script = LAUNCH / "forge.iss"
+    top = setup_bundle(tmp_path)
+    assert build.setup_folder_problems(top, script) == []
+    (top / "newthing").mkdir()
+    (top / "loose.txt").write_text("files are listed by [Files], not here")
+    assert build.setup_folder_problems(top, script) == [
+        "forge.iss [InstallDelete] does not name newthing",
+        "forge.iss [UninstallDelete] does not name newthing",
+    ]
+
+
+def test_every_folder_the_registry_ships_is_named_in_the_setup_script(tmp_path):
+    # the windows-x64 bundle's folders: each shipped path's first part, the
+    # apps and the bundled Python
+    registry = build.load_registry()
+    tops = {p.split("/")[0] for p in registry["ship"] if "/" in p}
+    for name in tops | {"apps", "runtime"}:
+        (tmp_path / name).mkdir()
+    assert build.setup_folder_problems(tmp_path, LAUNCH / "forge.iss") == []
+
+
+def test_numeric_version_keeps_numbers_and_dots_only():
+    assert build.numeric_version("0.2.0") == "0.2.0"
+    assert build.numeric_version("0.2.0-rc1") == "0.2.0"
+    assert build.numeric_version("1.2.3.4.5") == "1.2.3.4"
+    assert build.numeric_version("test") == "0.0.0"
+
+
+def test_a_forge_iscc_that_is_not_there_stops_the_build(tmp_path, monkeypatch):
+    monkeypatch.setattr(build.shutil, "which", lambda _name: "/usr/bin/wine")
+    monkeypatch.setenv("FORGE_ISCC", str(tmp_path / "ISCC.exe"))
+    with pytest.raises(build.BuildError, match="FORGE_ISCC names"):
+        build.inno_compiler()
+
+
+def test_a_window_that_never_showed_hands_over_to_a_browser():
+    import threading
+    from types import SimpleNamespace
+    from typing import Any
+
+    import forge_portable
+
+    logged = []
+    launcher: Any = SimpleNamespace(log=logged.append)
+    shown = threading.Event()
+    window = SimpleNamespace(events=SimpleNamespace(shown=shown))
+    # Windows without Edge WebView2, or Wine: the loop ends with no window
+    assert forge_portable.window_was_shown(launcher, window) is False
+    assert "did not show" in logged[0]
+    shown.set()
+    assert forge_portable.window_was_shown(launcher, window) is True
+    # a pywebview without a shown event: trust it, as before
+    assert forge_portable.window_was_shown(launcher, SimpleNamespace()) is True
+    assert len(logged) == 1
+
+
+def test_windows_identity_is_windows_only():
+    import forge_portable
+
+    assert forge_portable.windows_identity("linux") is None
+    assert forge_portable.windows_identity("macos") is None
+
+
+def test_pywebview_that_cannot_start_hands_over_to_a_browser(monkeypatch, tmp_path):
+    """Under Wine pywebview's start() raises (no .NET for it); Forge then
+    tries the next opener instead of ending (walk 5, 28 Oct)."""
+    import threading
+    from types import ModuleType, SimpleNamespace
+    from typing import Any
+
+    import forge_portable
+
+    shown = threading.Event()
+    window = SimpleNamespace(events=SimpleNamespace(shown=shown), destroy=lambda: None)
+    fake: Any = ModuleType("webview")
+    fake.create_window = lambda *a, **k: window
+
+    def start(**_k):
+        raise RuntimeError("Failed to create a .NET runtime")
+
+    fake.start = start
+    monkeypatch.setitem(sys.modules, "webview", fake)
+    logged = []
+    profile = SimpleNamespace(system="windows")
+    launcher: Any = SimpleNamespace(
+        profile=profile,
+        log=logged.append,
+        on_quit=[],
+        dirs={"state": str(tmp_path)},
+        window_kind="",
+    )
+    assert forge_portable.open_native(launcher, "http://x/", False) is False
+    assert launcher.on_quit == []  # no window left to close at quit
+    assert launcher.window_kind == ""  # the browser after it is no pywebview
+    assert any("stopped with an error" in line for line in logged)
+    assert any("did not show" in line for line in logged)
+    # a window that showed and then failed counts as closed: no browser after it
+    shown.set()
+    assert forge_portable.open_native(launcher, "http://x/", False) is True
+    # create_window itself failing: the next opener
+    fake.create_window = start
+    assert forge_portable.open_native(launcher, "http://x/", False) is False
+    assert launcher.window_kind == ""
+
+
+def fake_pywebview(monkeypatch, shown):
+    """A pywebview whose start() returns at once, its window shown or not."""
+    from types import ModuleType, SimpleNamespace
+    from typing import Any
+
+    window = SimpleNamespace(events=SimpleNamespace(shown=shown), destroy=lambda: None)
+    fake: Any = ModuleType("webview")
+    fake.create_window = lambda *a, **k: window
+    fake.start = lambda **_k: None
+    monkeypatch.setitem(sys.modules, "webview", fake)
+    return window
+
+
+def native_launcher(tmp_path):
+    from types import SimpleNamespace
+    from typing import Any
+
+    launcher: Any = SimpleNamespace(
+        profile=SimpleNamespace(system="windows"),
+        log=[].append,
+        on_quit=[],
+        dirs={"state": str(tmp_path)},
+        window_kind="",
+    )
+    return launcher
+
+
+def test_a_window_that_never_showed_leaves_nothing_behind(monkeypatch, tmp_path):
+    """Critic round 6: after a pywebview window that never showed, the next
+    window must not get pywebview pop-outs, and quitting must not wait 20 s
+    on that window's destroy."""
+    import threading
+
+    import forge_portable
+
+    shown = threading.Event()
+    window = fake_pywebview(monkeypatch, shown)
+    launcher = native_launcher(tmp_path)
+    assert forge_portable.open_native(launcher, "http://x/", False) is False
+    assert launcher.window_kind == ""
+    assert window.destroy not in launcher.on_quit
+    # a window that showed and was closed: pywebview's, closed at quit
+    shown.set()
+    assert forge_portable.open_native(launcher, "http://x/", False) is True
+    assert launcher.window_kind == "pywebview"
+    assert window.destroy in launcher.on_quit
+
+
+def test_no_webview2_goes_to_the_next_window_without_pywebview(monkeypatch, tmp_path):
+    """pywebview would draw Forge with Internet Explorer's engine (a blank
+    page): the next opener takes over before pywebview is even loaded."""
+    import threading
+
+    import forge_portable
+
+    fake_pywebview(monkeypatch, threading.Event())
+    monkeypatch.setattr(sys.modules["webview"], "create_window", None)
+    monkeypatch.setattr(forge_portable, "webview2_present", lambda: False)
+    launcher = native_launcher(tmp_path)
+    assert forge_portable.open_native(launcher, "http://x/", False) is False
+    assert launcher.window_kind == "" and launcher.on_quit == []
+
+
+class FakeRegistry:
+    """winreg with only the values given: {(root, path, name): value}."""
+
+    HKEY_CURRENT_USER = "HKCU"
+    HKEY_LOCAL_MACHINE = "HKLM"
+
+    def __init__(self, values: dict):
+        self.values = values
+
+    def OpenKey(self, root, path):  # noqa: N802  (winreg's name)
+        import contextlib
+
+        if not any(r == root and p == path for r, p, _n in self.values):
+            raise OSError("no such key")
+        return contextlib.nullcontext((root, path))
+
+    def QueryValueEx(self, key, name):  # noqa: N802  (winreg's name)
+        try:
+            return self.values[(key[0], key[1], name)], 1
+        except KeyError:
+            raise OSError("no such value") from None
+
+
+NET = ("HKLM", r"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full", "Release")
+RUNTIME = "{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}"
+
+
+def test_webview2_is_found_where_pywebview_looks():
+    import forge_portable
+
+    present = forge_portable.webview2_present
+    clients = r"SOFTWARE\WOW6432Node\Microsoft\EdgeUpdate\Clients"
+    machine = ("HKLM", clients + "\\" + RUNTIME, "pv")
+    user = ("HKCU", r"SOFTWARE\Microsoft\EdgeUpdate\Clients" + "\\" + RUNTIME, "pv")
+    assert present(FakeRegistry({NET: 528372, machine: "130.0.2849.80"}))
+    assert present(FakeRegistry({NET: 528372, user: "86.0.622.0"}))
+    # an uninstalled runtime leaves 0.0.0.0 behind
+    assert not present(FakeRegistry({NET: 528372, machine: "0.0.0.0"}))
+    assert not present(FakeRegistry({NET: 528372}))
+    # .NET older than 4.6.2, or none (Wine): pywebview cannot use WebView2
+    assert not present(FakeRegistry({NET: 394000, machine: "130.0.2849.80"}))
+    assert not present(FakeRegistry({machine: "130.0.2849.80"}))
+
+
+def test_webview2_is_not_asked_for_off_windows():
+    import forge_portable
+
+    if sys.platform != "win32":
+        assert forge_portable.webview2_present() is True
+
+
+def test_wine_registry_values_are_read_with_empty_ones_kept(monkeypatch):
+    replies = {
+        "Y": "HKEY_CURRENT_USER\\Software\\Wine\n    ShowDotFiles    REG_SZ    Y\n",
+        "": "HKEY_CURRENT_USER\\Software\\Wine\n    ShowDotFiles    REG_SZ    \n",
+    }
+    for want, reply in replies.items():
+        monkeypatch.setattr(build, "run", lambda *_a, reply=reply, **_k: reply)
+        assert build.wine_value("wine", {}, "HKCU", "ShowDotFiles") == want
+
+    def missing(*_a, **_k):
+        raise build.BuildError("reg: unable to find the value")
+
+    monkeypatch.setattr(build, "run", missing)
+    assert build.wine_value("wine", {}, "HKCU", "ShowDotFiles") is None
+
+
+def test_forge_iscc_without_wine_says_so(monkeypatch, tmp_path):
+    monkeypatch.setattr(build.shutil, "which", lambda _name: None)
+    monkeypatch.setenv("FORGE_ISCC", str(tmp_path / "ISCC.exe"))
+    with pytest.raises(build.BuildError, match="Wine"):
+        build.inno_compiler()
+    monkeypatch.delenv("FORGE_ISCC")
+    assert build.inno_compiler() is None
+
+
+def test_setup_running_check_reads_the_folder_literally():
+    """A [ or ] in the install folder (a /DIR= choice) is no wildcard."""
+    text = (LAUNCH / "forge.iss").read_text(encoding="utf-8")
+    assert "StartsWith(" in text and "OrdinalIgnoreCase" in text
+    assert "$_.Path -like" not in text

@@ -1,0 +1,115 @@
+{"locations": [
+  {"id": "saltmere_gate", "name": "The Salt Gate", "region": "saltmere", "tags": ["town"],
+   "short": "A weathered gatehouse at the end of the south road.",
+   "description": "A squat gatehouse of salt-white stone, its arch hung with fishing floats and the green-and-white banner of the Regency. Beyond it, the road becomes cobbles, then planks, then the grey sprawl of a port: masts, gull-cries, tar smoke. A bored guard with a pike watches the south road and the sea equally.",
+   "features": [
+     {"id": "toll_board", "name": "the toll board", "text": "A chalkboard lists the day's tolls. Some entries have been scratched out and rewritten, in a different hand, for a smaller number.", "check": {"skill": "investigation", "dc": "easy"}, "success": [{"message": "Two entries are written in the same chalk, and the guards' hands are dusted white. The Syndicate sets the real tolls; the Regency just prints them."}, {"flag": "saltmere_syndicate_lead"}, {"xp": 15}], "fail": [], "once": true},
+     {"id": "wanted", "name": "the wanted notices", "text": "Several notices flutter on a nail: deserters, a forger, a woman called 'the Magpie'. One is old enough to have gone brown.", "check": {"skill": "perception", "dc": "medium"}, "success": [{"message": "The oldest notice has been pasted over so many times it is nearly a block of paper. At its edge, a name you almost know: Sable. No surname, no charge, only a drawing of a bird and a small moth."}, {"flag": "saltmere_saw_sable_notice"}, {"xp": 20}], "fail": []}
+   ],
+   "exits": [
+     {"to": "brightwater_crossroads", "label": "North road to the Weeping Crossroads", "hours": 8},
+     {"to": "saltmere_market", "label": "Into the Brine Market", "hours": 0.25},
+     {"to": "saltmere_saltpans", "label": "Out across the salt flats", "hours": 1},
+     {"to": "highspire_gate", "label": "The long coast road north to Highspire", "hours": 10, "when": {"any": [{"quest_active": "main_5"}, {"quest_done": "main_5"}]}, "locked": "The coast road north to Highspire has a Regency toll-post on it that is not letting anyone through. You will need a reason to be in the royal city first."}
+   ]},
+  {"id": "saltmere_market", "name": "The Brine Market", "region": "saltmere", "tags": ["town", "board"],
+   "short": "A crowded market of fish, rope and second-hand secrets.",
+   "description": "A market in a salt-white square, awnings snapping in the wind, stalls heaped with fish on ice, coiled rope and unmarked bottles. Everything smells of brine and fried onion. Every stallholder keeps one eye on the stalls on either side, and nobody is as unobtrusive as they look.",
+   "shop": {"name": "Teodora's Chandlery", "items": ["saltmere_cutlass", "saltmere_boarding_axe", "saltmere_sailcloth_coat", "saltmere_buckler", "saltmere_rum", "saltmere_taffy", "saltmere_tide_charm", "saltmere_spiced_wine", "healing_draught", "rope", "torch", "thieves_tools", "sable_silver_strings"], "buys": true},
+   "features": [
+     {"id": "red_nail", "name": "the crate with the red nail", "text": "An ordinary herring crate stacked with others, except for one red-headed nail in the corner.", "check": {"skill": "perception", "dc": "medium"}, "success": [{"message": "You tap the crate in the pattern you saw on the quay. A hatch opens beneath it and a thin hand points you to the Counting House. 'Madam sees people on appointment. You are, I suppose, an appointment.'"}, {"flag": "saltmere_syndicate_lead"}, {"reveal": "saltmere_counting_house"}], "fail": [], "once": true},
+     {"id": "pickpocket", "name": "a distracted gentleman", "text": "A gentleman in a good coat is arguing about the price of cod, and his purse is hanging off his belt by a thread.", "check": {"skill": "sleight", "dc": "hard"}, "success": [{"message": "The purse changes hands as smoothly as a handshake. He never notices."}, {"gold": 28}, {"reputation": {"saltmere_syndicate": 2}}], "fail": [{"message": "He catches your wrist. 'I wouldn't, friend,' he says gently, and a grey-coated woman steps out of the crowd to stand behind you."}, {"reputation": {"saltmere_syndicate": -4}}], "once": true}
+   ],
+   "npcs": ["saltmere_teodora"],
+   "exits": [
+     {"to": "saltmere_gate", "label": "Back to the Salt Gate", "hours": 0.25},
+     {"to": "saltmere_quay", "label": "Down to the quay", "hours": 0.25},
+     {"to": "saltmere_inn", "label": "To the Gilded Gull inn", "hours": 0.1},
+     {"to": "saltmere_counting_house", "label": "Past the red-nail crate to the Counting House", "hours": 0.25, "when": {"any": [{"flag": "saltmere_syndicate_lead"}, {"has_item": "saltmere_harbour_writ"}]}, "locked": "The Counting House is shut to people nobody has vouched for. Ask around; someone in this town will say who does."}
+   ]},
+  {"id": "saltmere_quay", "name": "The Long Quay", "region": "saltmere", "tags": ["town", "board"],
+   "short": "A long stone quay, busy with barges and bad smells.",
+   "description": "A long stone quay lined with warehouses, cranes and the black ribs of a half-built ship. Gangs of dockers unload barrels under the eye of a woman in the Regency's grey. Under the third crane, a gap in the stone wall lets the tide in and out, and a handful of men go through it who are not carrying fish.",
+   "features": [
+     {"id": "tide_grate", "name": "the tide grate", "text": "An iron grate at the waterline, rust-streaked and set in a gap in the quay wall. It has been oiled.", "check": {"skill": "perception", "dc": "medium"}, "success": [{"message": "Fresh wax on the hinge and a wet bootprint on the sill. The Syndicate's tunnels open here, below the tide line."}, {"flag": "saltmere_found_grate"}, {"xp": 20}], "fail": [], "once": true},
+     {"id": "ship", "name": "the half-built ship", "text": "The ribs of a three-masted trader rise from the slip, its keel carved with a name that has been planed off.", "check": {"skill": "investigation", "dc": "hard"}, "success": [{"message": "Under the planed hull plank, a stamped brass tag: property of the Crown, out of Highspire. The Regency has been building ships in a smuggler's port. Interesting."}, {"flag": "saltmere_saw_regency_ship"}, {"xp": 30}], "fail": []}
+   ],
+   "npcs": ["saltmere_voss"],
+   "exits": [
+     {"to": "saltmere_market", "label": "Up to the Brine Market", "hours": 0.25},
+     {"to": "saltmere_lighthouse", "label": "Along the causeway to the lighthouse", "hours": 0.75},
+     {"to": "saltmere_undercroft", "label": "Through the tide grate", "hours": 0.25, "when": {"any": [{"flag": "saltmere_found_grate"}, {"has_item": "saltmere_vault_key"}, {"has_item": "saltmere_harbour_writ"}]}, "locked": "A rusted grate at the waterline. You see no reason to climb into it."}
+   ]},
+  {"id": "saltmere_inn", "name": "The Gilded Gull", "region": "saltmere", "tags": ["town", "inn", "safe"], "rest_cost": 8,
+   "short": "A noisy, salt-stained inn with a fiddle in the corner.",
+   "description": "A low taproom of black beams and brass, thick with pipe smoke and the smell of fried fish. A fiddle plays in the corner, and every few bars a tiefling with silver rings in one horn dances a verse into the song, to the delight of a crowd who should know better than to bet against them. The ceiling is hung with ship's lanterns, all lit, none quite level.",
+   "shop": {"name": "Brenna's bar", "items": ["saltmere_rum", "saltmere_spiced_wine", "rations", "saltmere_taffy"], "buys": false},
+   "features": [
+     {"id": "dice_table", "name": "the dice table", "text": "A table of weathered sailors playing a game with a lot of shouting and no obvious rules.", "check": {"skill": "deception", "dc": "medium"}, "success": [{"message": "You bluff a pair of sixes into a pot of coin and a rueful round of drinks."}, {"gold": 14}], "fail": [{"message": "Nobody is fooled. You lose most of what you bet, with a good grace."}, {"gold": -6}], "once": true},
+     {"id": "singer", "name": "the stage in the corner", "text": "A small round stage, scarred with boot-marks. The fiddler waves you up with an open, hopeful grin.", "check": {"skill": "performance", "dc": "medium"}, "success": [{"message": "You steal two verses and a roar of applause. The tiefling, laughing, raises a glass your way."}, {"gold": 10}, {"xp": 25}, {"flag": "saltmere_sable_noticed_you"}], "fail": [{"message": "A good-natured groan, a thrown peanut, and no hard feelings. The tiefling toasts your bravery."}], "once": true}
+   ],
+   "npcs": ["saltmere_brenna"],
+   "exits": [{"to": "saltmere_market", "label": "Out to the Brine Market", "hours": 0.1}]},
+  {"id": "saltmere_counting_house", "name": "Marrow & Daughters", "region": "saltmere", "tags": ["town"],
+   "short": "A respectable counting house hiding a not-so-respectable trade.",
+   "description": "A narrow, ink-black building squeezed between a sail loft and a cooper's. Inside it is hushed and polished, with a long ledger-desk, brass scales and a clerk with an alarming smile. Through an open door behind him, a woman in grey silk sits at a larger desk, writing, and does not look up.",
+   "features": [
+     {"id": "bureau", "name": "the locked bureau", "text": "A walnut bureau with a brass lock, left carelessly in view of the clerk's desk. A lesser burglar might think it a trap, and a greater one might know it is.", "when": {"quest_active": "sable_quest", "not_item": "sable_letter"}, "check": {"skill": "sleight", "dc": "very_hard"}, "success": [{"message": "Inside, in a bundle tied with grey ribbon: a letter in a queen's hand, addressed to no one, and a purse of old silver."}, {"give": "sable_letter"}, {"reputation": {"saltmere_syndicate": -10}}, {"flag": "syndicate_enemy"}], "fail": [{"message": "A bell rings in the walls. The clerk, smiling, bolts the front door. Two Syndicate enforcers step out of the back room."}, {"combat": ["saltmere_enforcer", "saltmere_syndicate_thug"]}, {"flag": "syndicate_enemy"}], "once": true},
+     {"id": "scales", "name": "the brass scales", "text": "Scales of gleaming brass, used for weighing coin, and apparently debts. Both pans are empty and perfectly level.", "check": {"skill": "insight", "dc": "medium"}, "success": [{"message": "A small lever on the underside tips them without anyone noticing. Everything in this room has a trick to it, and the clerk is watching to see if you notice."}, {"reputation": {"saltmere_syndicate": 1}}, {"xp": 20}], "fail": []}
+   ],
+   "npcs": ["saltmere_marrow"],
+   "on_enter": [{"when": {"quest_active": "main_3", "not_flag": "saltmere_marrow_met"}, "scene": "saltmere_marrow_audience", "once": true}],
+   "exits": [
+     {"to": "saltmere_market", "label": "Back out to the market", "hours": 0.25},
+     {"to": "saltmere_undercroft", "label": "Through the clerk's back stair to the undercroft", "hours": 0.25, "when": {"has_item": "saltmere_vault_key"}, "locked": "The back stair is bolted. The clerk smiles at you and does not unbolt it."}
+   ]},
+  {"id": "saltmere_saltpans", "name": "The Salt Flats", "region": "saltmere", "tags": ["wild"],
+   "short": "Acres of grey salt pans under a huge pale sky.",
+   "description": "A vast chequerboard of shallow pans, each a different shade of grey, shining like cracked glass under the sky. Rake-men with hooded faces drag the crystals into white heaps, and the wind carries their slow singing across the flats. Far out, a thin line of black briar has crept along an old dyke.",
+   "features": [
+     {"id": "deserter_camp", "name": "a camp behind a dyke", "text": "A thin plume of smoke rises from behind the dyke. Five or six men in dirty Regency grey crouch around it, quiet as hunted things.", "check": {"skill": "persuasion", "dc": "hard"}, "success": [{"message": "You talk quietly, with your hands open. They put down their weapons one at a time and go home along the coast road. The oldest of them thanks you with tears in his eyes."}, {"flag": "saltmere_deserters_sent_home"}, {"xp": 80}, {"reputation": {"crown_regency": -2}}], "fail": [{"message": "They scatter, then come back with their blades out. 'We're not going back to the capital!'"}, {"combat": ["saltmere_deserter", "saltmere_deserter", "saltmere_deserter"]}], "once": true},
+     {"id": "pearl_bed", "name": "the cloudy pan", "text": "One pan runs a milky green instead of grey. A rake-man says, without looking up, that the pearl-oysters bed there, but the tide will take you if you dawdle.", "check": {"skill": "survival", "dc": "medium"}, "success": [{"message": "You time the tide on the third ripple and slip across to pry up a grey-green pearl."}, {"give": "saltmere_brine_pearl"}, {"xp": 25}], "fail": [{"message": "Your boots sink to the shin in cold silt. You come out sixty yards farther down the pan, empty-handed."}]},
+     {"id": "briar_dyke", "name": "the black briar", "text": "A thin black line of thorn runs along the old dyke, frosted despite the sun. The nearest rake-man crosses himself and moves his heap.", "check": {"skill": "arcana", "dc": "hard"}, "success": [{"message": "It is following the salt-roads, you realise: the Thornwake travelling along the highways of trade. In a month it will be at the capital."}, {"flag": "knows_thornwake_follows_roads"}, {"xp": 40}], "fail": [], "once": true}
+   ],
+   "encounter": {"chance": 0.15, "monsters": [["saltmere_gull_swarm"], ["saltmere_brine_crawler"]]},
+   "exits": [
+     {"to": "saltmere_gate", "label": "Back to the Salt Gate", "hours": 1},
+     {"to": "saltmere_lighthouse", "label": "Along the dyke to the lighthouse", "hours": 1.5}
+   ]},
+  {"id": "saltmere_lighthouse", "name": "The Drowned Lighthouse", "region": "saltmere", "tags": ["wild", "safe"], "rest_cost": 2,
+   "short": "A tall lighthouse on a causeway, half-swallowed by the tide.",
+   "description": "A tall white lighthouse stands at the end of a causeway that the tide covers twice a day. Its lamp is dark, and gulls nest in the gallery. The door at the base is propped with a barrel, and the smell of boiled tea drifts out, as does the scrape of a spoon in a tin.",
+   "features": [
+     {"id": "lamp_room", "name": "the dead lamp", "text": "The great lens is cracked, and the lamp unlit. Dried salt rimes the brass, and a crab-claw as long as your forearm lies on the floor.", "check": {"skill": "investigation", "dc": "easy"}, "success": [{"message": "Claw marks on the casement, and a sticky trail of brine from the lens to the stairs. Something with a lot of legs lives in the cellar."}, {"flag": "saltmere_found_crawler_nest"}, {"xp": 15}], "fail": []},
+     {"id": "cellar_nest", "name": "the cellar stairs", "text": "A spiral stair leads down into the rock. The sound of a very big crab sleeping carries up it.", "when": {"quest_active": "saltmere_lighthouse_light"}, "success": [{"message": "You descend into the damp. Two enormous shapes unfold from the dark."}, {"combat": ["saltmere_brine_crawler", "saltmere_brine_crawler"]}], "once": true}
+   ],
+   "npcs": ["saltmere_mab"],
+   "encounter": {"chance": 0.1, "monsters": [["saltmere_gull_swarm"]]},
+   "exits": [
+     {"to": "saltmere_quay", "label": "Along the causeway to the Long Quay", "hours": 0.75},
+     {"to": "saltmere_saltpans", "label": "Along the dyke to the Salt Flats", "hours": 1.5}
+   ]},
+  {"id": "saltmere_undercroft", "name": "The Syndicate Undercroft", "region": "saltmere", "tags": ["wild"],
+   "short": "Smugglers' tunnels beneath the quays, cold, wet and bright with lanterns.",
+   "description": "A long, low brick tunnel beneath the quays, running with a thin film of seawater. Lanterns hang every twenty paces, and stacked along the walls are barrels, bales and crates that have never been near a customs man. Water drips from the roof. From deeper in, a heavy door of black oak squats behind a gate of salt-rusted iron.",
+   "features": [
+     {"id": "contraband", "name": "the stacked contraband", "text": "Barrels of Highspire wine, bales of silk, a crate of crossbow bolts stamped with the Regency tower. All of it is going somewhere it should not.", "check": {"skill": "investigation", "dc": "medium"}, "success": [{"message": "The crossbow bolts are Regency issue, and the crate is addressed to a merchant in Ashen Marches. Someone in the capital is arming someone in the Marches. It does not fit any story you know."}, {"flag": "saltmere_saw_regency_bolts"}, {"xp": 40}], "fail": [], "once": true},
+     {"id": "door_force", "name": "the strongroom door", "text": "A black oak door, iron-banded, with a lock like a clenched fist. The Syndicate's own key opens it. Others have to work.", "when": {"not_item": "saltmere_vault_key", "not_flag": "saltmere_door_forced"}, "check": {"skill": "sleight", "dc": "hard"}, "success": [{"message": "Pins fall one by one. The door groans open. Somewhere above, a bell rings very softly."}, {"flag": "saltmere_door_forced"}, {"flag": "syndicate_enemy"}, {"reputation": {"saltmere_syndicate": -8}}, {"xp": 100}], "fail": [{"message": "The lock bites your pick, and the alarm string pulls. Two enforcers round the corner at a trot."}, {"combat": ["saltmere_enforcer", "saltmere_syndicate_thug"]}]},
+     {"id": "door_writ", "name": "the harbourmaster's writ", "text": "You unfold Voss's warrant and hold it up to the grille. The guards on the other side squint at it, then at each other. Then one of them draws a knife.", "when": {"has_item": "saltmere_harbour_writ", "not_flag": "saltmere_door_forced"}, "success": [{"message": "The Regency's seal means nothing to them down here. You have to take the door the hard way."}, {"combat": ["saltmere_enforcer", "saltmere_syndicate_thug", "saltmere_syndicate_thug"]}, {"flag": "saltmere_door_forced"}, {"flag": "syndicate_enemy"}, {"reputation": {"saltmere_syndicate": -10}}], "once": true}
+   ],
+   "encounter": {"chance": 0.25, "monsters": [["saltmere_syndicate_thug", "saltmere_syndicate_thug"], ["saltmere_brine_crawler"], ["saltmere_drowned"]]},
+   "exits": [
+     {"to": "saltmere_quay", "label": "Back through the tide grate", "hours": 0.25},
+     {"to": "saltmere_counting_house", "label": "Up the clerk's back stair", "hours": 0.25, "when": {"has_item": "saltmere_vault_key"}, "locked": "The stair is bolted from above."},
+     {"to": "saltmere_strongroom", "label": "Through the black oak door", "hours": 0.1, "when": {"any": [{"has_item": "saltmere_vault_key"}, {"flag": "saltmere_door_forced"}]}, "locked": "The black oak door is locked. A key or a lockpick would do it."}
+   ]},
+  {"id": "saltmere_strongroom", "name": "Osk's Strongroom", "region": "saltmere", "tags": ["town"],
+   "short": "A comfortable vault, lined with other people's valuables.",
+   "description": "A low vault with a bright lamp and a surprising amount of comfort: a rug, a decanter, an armchair. Shelves of lacquered boxes cover three walls, each labelled in a tiny neat hand. In the middle of it all sits Osk Dray, who sells other people's property, and who does not look the least bit surprised to see you.",
+   "features": [
+     {"id": "ledger", "name": "Osk's ledger", "text": "A black ledger lies open on the desk, ruled in red, every entry in a fastidious copperplate. One line near the bottom has been underlined twice.", "check": {"skill": "investigation", "dc": "easy"}, "success": [{"message": "Delivered, six days after the Queen's death: one Ember heart-stone, uncut, to the Lord Regent Varric Caul, via courier on the Ember Road, payment 4,000 crowns and a pardon for three of Madam's cousins. Osk has underlined the sum. Not the stone."}, {"flag": "knows_regent_has_heart"}, {"xp": 150}], "fail": [{"message": "The ledger is a cipher of marks and small ticks. You cannot read it fast enough, and Osk is watching."}]},
+     {"id": "boxes", "name": "the lacquered boxes", "text": "A dozen boxes, each labelled with an owner's name and a date. Several of the names you know, and several you do not want to.", "check": {"skill": "sleight", "dc": "hard"}, "success": [{"message": "You lift a small coin purse, which Osk will not miss, because Osk has far too many."}, {"gold": 40}, {"reputation": {"saltmere_syndicate": -3}}], "fail": [{"message": "'Please don't,' says Osk mildly. His hand is already on a bell-pull."}, {"reputation": {"saltmere_syndicate": -4}}], "once": true}
+   ],
+   "npcs": ["saltmere_osk"],
+   "exits": [{"to": "saltmere_undercroft", "label": "Back out to the undercroft", "hours": 0.1}]}
+]}

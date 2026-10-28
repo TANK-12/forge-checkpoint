@@ -36,13 +36,22 @@ tabs, otherwise in your browser.
 @windows-setup@
 The easy way, with Forge-Setup-@VERSION@.exe:
 
-  1. Double-click Forge-Setup-@VERSION@.exe.
-  2. Windows says "Windows protected your PC", because this test release
-     is not signed: click "More info", then "Run anyway".
-  3. Click Next, then Install, then Finish. Forge starts, and it is in
-     your Start menu from then on.
+  1. Your browser may warn while it downloads, because this test release
+     is not signed. In Edge: click the three dots beside the download,
+     then "Keep", then "Show more", then "Keep anyway". In Chrome: click
+     "Keep".
+  2. Double-click Forge-Setup-@VERSION@.exe (in Downloads).
+  3. Windows says "Windows protected your PC": click "More info", then
+     "Run anyway".
+  4. Click Next, then Install, then Finish. Forge starts, and it is in
+     your Start menu from then on. To keep it on the taskbar, right-click
+     Forge in the Start menu and pick "Pin to taskbar" (a pin made from
+     the open window does not start Forge).
 
-It installs for you only, in %LOCALAPPDATA%\Programs\Forge.
+It installs for you only, in %LOCALAPPDATA%\Programs\Forge, and needs no
+administrator rights. If Windows 11 says Smart App Control blocked it,
+there is no way past that for an unsigned program: this test release
+cannot run on that computer.
 
 @end@
 @windows@
@@ -115,9 +124,10 @@ before it removes anything, and it never touches a place you chose
 yourself. If you never installed Forge, delete the unpacked Forge folder.
 @end@
 @windows-setup@
-If you used the setup program: Settings, Apps, Installed apps, find Forge,
-choose Uninstall. It keeps your things unless you say yes when it asks
-about them (a place you chose yourself is never touched).
+If you used the setup program: open the Start menu, type Add or remove
+programs, open it, find Forge and choose Uninstall. It keeps your things
+unless you say yes when it asks about them (a place you chose yourself is
+never touched).
 
 @end@
 @windows@

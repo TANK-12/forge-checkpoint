@@ -1,0 +1,20 @@
+{"scenes": [
+  {"id": "docks_attack", "title": "Walkers in the River", "once": true, "nodes": {
+    "start": {"text": "As you reach the piers the river goes quiet, the way a room goes quiet when someone draws a knife. Then the water by the ferry bulges, and two figures climb out onto the planks: drowned men, grey as river clay, black briar growing through their ribs. Old Tam shoves his grandson behind a barrel.", "choices": [
+      {"text": "Draw your weapon and put yourself between them and the boy.", "effects": [{"flag": "docks_attack_done"}, {"flag": "protected_tam_boy"}, {"reputation": {"river_guild": 5}}, {"combat": ["blight_husk", "blight_husk"]}], "next": "end"},
+      {"text": "[Arcana] Shout for fire. These things fear warmth.", "check": {"skill": "arcana", "dc": "easy"}, "effects": [{"flag": "docks_attack_done"}, {"flag": "knows_briars_feed_on_warmth"}, {"message": "Tam flings a lit lamp. One husk goes up like dry kindling and topples into the river. The other keeps coming."}, {"combat": ["blight_husk"]}], "fail_next": "fail_arcana", "next": "end"},
+      {"text": "Grab the boy and run.", "effects": [{"flag": "docks_attack_done"}, {"flag": "fled_docks"}, {"message": "You get the boy clear. Behind you, bargehands with boathooks pin the husks to the planks, and someone sets them alight."}, {"reputation": {"river_guild": -2}}], "next": "end"}]},
+    "fail_arcana": {"text": "Nobody understands what you mean in time. The husks lurch forward.", "effects": [{"flag": "docks_attack_done"}, {"combat": ["blight_husk", "blight_husk"]}], "next": "end"}
+  }},
+  {"id": "grey_hunter_den", "title": "The Grey Hunter", "once": true, "nodes": {
+    "start": {"text": "The wolf rises out of the dark under the oak, and keeps rising. It is the size of a pony, grey fur matted with frost, black briar threaded through its shoulders like a harness. It makes no sound at all.", "choices": [
+      {"text": "Look to Lyra.", "when": {"in_party": "lyra"}, "next": "lyra"},
+      {"text": "Attack before it moves.", "effects": [{"combat": ["grey_hunter"]}], "next": "end"},
+      {"text": "[Animal Handling] Try to reach the wolf it used to be.", "check": {"skill": "animal", "dc": "hard"}, "next": "calm", "fail_next": "furious"}]},
+    "lyra": {"speaker": "lyra", "text": "Lyra has a blue-fletched arrow on the string. Her hands are perfectly steady and her face is wet. 'This one's Fen's,' she says, very quietly. 'Stay with me.'", "choices": [
+      {"text": "'I'm right here. Take the shot.'", "effects": [{"affection": {"lyra": 5}}, {"flag": "lyra_fen_arrow"}, {"message": "The kingfisher arrow takes the Hunter in the shoulder. It screams, the first sound it has made, and charges."}, {"combat": ["grey_hunter"]}], "next": "end"},
+      {"text": "'Let me go first. Shoot when it's on me.'", "effects": [{"affection": {"lyra": 3}}, {"combat": ["grey_hunter"]}], "next": "end"}]},
+    "calm": {"text": "For a heartbeat the yellow eyes clear, and something old and tired looks out at you. The wolf lowers its head, almost like an apology. Then the briars tighten, and it is gone again. But it is slower now. Hurting.", "effects": [{"flag": "hunter_pitied"}, {"combat": ["grey_hunter"]}], "next": "end"},
+    "furious": {"text": "Your voice only seems to enrage the briars. The Hunter lunges.", "effects": [{"damage": "1d6"}, {"combat": ["grey_hunter"]}], "next": "end"}
+  }}
+]}

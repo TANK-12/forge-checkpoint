@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; frame-src 'none'; object-src 'none'">
+<title>Taleforge</title>
+<link rel="stylesheet" href="/shared/forge.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <h1 class="brand">Taleforge</h1>
+  <span id="where" class="muted"></span>
+  <span class="spacer"></span>
+  <span id="clock" class="pill" hidden></span>
+  <span id="gold" class="pill" hidden></span>
+  <span id="hp" class="pill" hidden></span>
+  <button id="smaller" class="btn" type="button" title="Smaller text">A&minus;</button>
+  <button id="bigger" class="btn" type="button" title="Bigger text">A+</button>
+  <button id="menu" class="btn" type="button">Games</button>
+  <button id="go-fullscreen" class="btn" type="button" title="Full screen (F)">Full screen</button>
+</header>
+
+<main id="home" class="screen">
+  <section class="hero">
+    <h2>Choose a story</h2>
+    <p class="muted">Every rule and roll is the game's. Jan tells it.</p>
+    <div id="campaigns" class="cards"></div>
+  </section>
+  <section>
+    <h2>Continue</h2>
+    <div id="saves" class="saves"></div>
+  </section>
+  <section class="settings">
+    <h2>Settings</h2>
+    <label class="row"><input id="narrate" type="checkbox"> Let Jan narrate and voice characters</label>
+    <p id="jan-error" class="muted small"></p>
+    <details class="jan" open>
+      <summary>Jan models</summary>
+      <div id="jan-panel"></div>
+    </details>
+  </section>
+</main>
+
+<main id="create" class="screen" hidden>
+  <form id="create-form" class="create">
+    <h2 id="create-title">New character</h2>
+    <p id="create-tagline" class="muted"></p>
+    <div class="grid2">
+      <label>Name <input id="c-name" maxlength="40" required placeholder="Your name"></label>
+      <label>Pronouns <input id="c-pronouns" maxlength="20" value="they/them"></label>
+    </div>
+    <label>Look (optional, Jan reads it) <input id="c-look" maxlength="300" placeholder="Tall, scarred, a red scarf"></label>
+    <h3>Class</h3>
+    <div id="c-classes" class="pick"></div>
+    <h3>Background</h3>
+    <div id="c-backgrounds" class="pick"></div>
+    <h3>Ability scores</h3>
+    <div class="row">
+      <label><input type="radio" name="method" value="array" checked> Standard array</label>
+      <label><input type="radio" name="method" value="roll"> Roll 4d6, keep 3</label>
+      <label><input type="radio" name="method" value="point_buy"> Point buy</label>
+      <button id="c-reroll" class="btn" type="button" hidden>Roll</button>
+      <span id="c-budget" class="muted"></span>
+    </div>
+    <div id="c-scores" class="scores"></div>
+    <h3>Skills <span id="c-skillnote" class="muted small"></span></h3>
+    <div id="c-skills" class="skills"></div>
+    <p id="c-error" class="error" role="alert"></p>
+    <div class="row end">
+      <button id="c-back" class="btn" type="button">Back</button>
+      <button class="btn btn-primary big" type="submit">Begin the story</button>
+    </div>
+  </form>
+</main>
+
+<main id="play" class="screen play" hidden>
+  <section class="story-col">
+    <div id="log" class="log" aria-live="polite"></div>
+    <div id="combat" class="combat" hidden></div>
+    <div id="choices" class="choices" hidden></div>
+    <form id="say" class="say">
+      <input id="input" autocomplete="off" maxlength="500" placeholder="What do you do? (try: talk to Hollis, go to the docks, &quot;Hello&quot;)">
+      <button class="btn btn-primary" type="submit">Go</button>
+    </form>
+  </section>
+  <aside class="side">
+    <nav class="tabs" role="tablist">
+      <button data-tab="here" class="tab on" type="button">Here</button>
+      <button data-tab="char" class="tab" type="button">Character</button>
+      <button data-tab="party" class="tab" type="button">Party</button>
+      <button data-tab="quests" class="tab" type="button">Quests</button>
+      <button data-tab="bag" class="tab" type="button">Bag</button>
+    </nav>
+    <div id="tab-here" class="tabpane"></div>
+    <div id="tab-char" class="tabpane" hidden></div>
+    <div id="tab-party" class="tabpane" hidden></div>
+    <div id="tab-quests" class="tabpane" hidden></div>
+    <div id="tab-bag" class="tabpane" hidden></div>
+  </aside>
+</main>
+
+<div id="toast" class="toast" hidden></div>
+<script src="/shared/forge_jan.js"></script>
+<script src="/shared/forge_chrome.js"></script>
+<script src="logic.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

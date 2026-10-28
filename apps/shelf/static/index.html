@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; frame-src 'none'; object-src 'none'">
+<title>Shelf</title>
+<link rel="stylesheet" href="/shared/forge.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <h1 data-forge-frame-hide>Shelf</h1>
+  <form id="save-form" class="save">
+    <input id="url" type="url" placeholder="Paste an article's address to keep it" autocomplete="off" required>
+    <button class="btn btn-primary" id="save" type="submit">Save</button>
+  </form>
+</header>
+<div class="layout">
+  <nav class="side">
+    <input id="search" type="search" placeholder="Search everything saved" autocomplete="off">
+    <div class="views" id="views">
+      <button type="button" data-view="unread" class="view-btn active">Unread <span class="n"></span></button>
+      <button type="button" data-view="all" class="view-btn">All <span class="n"></span></button>
+      <button type="button" data-view="archived" class="view-btn">Archived <span class="n"></span></button>
+    </div>
+    <div id="list" class="list"><div class="muted small">reading...</div></div>
+    <details class="howto small">
+      <summary>Save from Firefox in one click</summary>
+      <p>Drag this to the bookmarks bar: <a id="bookmarklet" class="bm" href="#">Save to Shelf</a>. Clicking it on any article opens Shelf with the address filled in.</p>
+    </details>
+  </nav>
+  <main id="reader" class="reader">
+    <div class="placeholder" id="empty">
+      <p>Articles you keep here are saved whole: the text and its pictures, readable with no internet.</p>
+      <p class="muted small">Paste an address above, or search what is already on the shelf.</p>
+    </div>
+    <article id="article" class="hidden">
+      <div class="tools">
+        <button class="btn" id="smaller" type="button" title="Smaller text">A−</button>
+        <button class="btn" id="bigger" type="button" title="Bigger text">A+</button>
+        <span class="grow"></span>
+        <button class="btn" id="toggle-read" type="button">Mark read</button>
+        <button class="btn" id="toggle-archive" type="button">Archive</button>
+        <span id="send-buttons"></span>
+        <button class="btn btn-danger" id="remove" type="button">Move to bin</button>
+      </div>
+      <h1 id="a-title"></h1>
+      <div class="byline muted small" id="a-byline"></div>
+      <div id="a-body" class="body"></div>
+    </article>
+  </main>
+</div>
+<div class="ask hidden" id="ask">
+  <form class="card" id="ask-form">
+    <label id="ask-label" for="ask-name"></label>
+    <input id="ask-name" type="text" autocomplete="off" required>
+    <div class="row">
+      <button class="btn" type="button" id="ask-cancel">Cancel</button>
+      <button class="btn btn-primary" type="submit">Send</button>
+    </div>
+  </form>
+</div>
+<div id="toast" class="toast hidden"></div>
+<script src="/shared/forge.js"></script>
+<script src="app.js"></script>
+<script src="/shared/forge_chrome.js"></script>
+</body>
+</html>

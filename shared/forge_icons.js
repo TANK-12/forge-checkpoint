@@ -332,6 +332,397 @@
       '<rect class="d" x="3" y="12" width="18" height="9" rx="1.5"/>' +
       '<rect x="3" y="12" width="18" height="9" rx="1.5"/><path d="M3 15.5h18M10.5 15.5v2.5h3v-2.5"/>' +
       '<path d="M12 2.5l4.2 2.1v4.3L12 11 7.8 8.9V4.6zM7.8 4.6L12 6.7l4.2-2.1M12 6.7V11"/>',
+    // --- Forge apps added since the glyphs (2026-10-28)
+    // a podcast mark: a dot on a stand with broadcast rings round it
+    castforge:
+      '<rect class="d" x="10.4" y="14.5" width="3.2" height="7" rx="1.6"/>' +
+      '<rect x="10.4" y="14.5" width="3.2" height="7" rx="1.6"/>' +
+      '<circle class="s" cx="12" cy="10.5" r="2.1"/>' +
+      '<path d="M8.75 13.75A4.6 4.6 0 1 1 15.25 13.75M6.34 16.16A8 8 0 1 1 17.66 16.16"/>',
+    // a test tube half full, with a spark of AI beside it
+    modellab:
+      '<path class="d" d="M6 11h5v6.5a2.5 2.5 0 0 1-5 0z"/>' +
+      '<path d="M4.5 2.5h8M6 2.5v15a2.5 2.5 0 0 0 5 0v-15M6 11h5"/>' +
+      '<path class="s" d="M16.5 7l1.2 3 3 1.2-3 1.2-1.2 3-1.2-3-3-1.2 3-1.2z"/>' +
+      '<circle class="s" cx="18.8" cy="3.8" r="1"/>',
+    // a chip: the model, with its pins
+    "forge-models":
+      '<rect class="d" x="6" y="6" width="12" height="12" rx="2"/>' +
+      '<rect x="6" y="6" width="12" height="12" rx="2"/>' +
+      '<path d="M9.5 2.5V6M14.5 2.5V6M9.5 18v3.5M14.5 18v3.5M2.5 9.5H6M2.5 14.5H6M18 9.5h3.5M18 14.5h3.5"/>' +
+      '<rect class="s" x="9.5" y="9.5" width="5" height="5" rx="1"/>',
+    // a magnifying glass over lines of writing
+    librarian:
+      '<circle class="d" cx="10" cy="10" r="6.8"/><circle cx="10" cy="10" r="6.8"/>' +
+      '<path d="M15 15l6 6" stroke-width="2.4"/>' +
+      '<path d="M6.8 8h6.4M6.8 10.7h6.4M6.8 13.4h3.6" stroke-width="1.4"/>',
+    // scissors cutting
+    cutroom:
+      '<circle class="d" cx="6" cy="6" r="3"/><circle class="d" cx="6" cy="18" r="3"/>' +
+      '<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/>' +
+      '<path d="M20.5 4L8.2 15.8M14.5 14.5L20.5 20M8.2 8.2L12 12"/>',
+    // a monitor showing a padlock (lock screen and login)
+    setups:
+      '<rect class="d" x="2.5" y="3.5" width="19" height="13" rx="2"/>' +
+      '<rect x="2.5" y="3.5" width="19" height="13" rx="2"/><path d="M12 16.5v4M8 20.5h8"/>' +
+      '<rect class="s" x="9.3" y="9.3" width="5.4" height="4.4" rx="1"/>' +
+      '<path d="M10.4 9.3V8a1.6 1.6 0 0 1 3.2 0v1.3" stroke-width="1.5"/>',
+    // two beamed music notes and an AI spark
+    suno:
+      '<circle class="s" cx="7" cy="17.5" r="2.6"/><circle class="s" cx="17" cy="15.5" r="2.6"/>' +
+      '<path d="M9.6 17.5V7l10-2v10.5M9.6 10l10-2"/>' +
+      '<path class="s" d="M4.5 2.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/>',
+    // a shopping bag with a download arrow
+    store:
+      '<path class="d" d="M4.5 8h15l-1 12.5a1.5 1.5 0 0 1-1.5 1.4H7a1.5 1.5 0 0 1-1.5-1.4z"/>' +
+      '<path d="M4.5 8h15l-1 12.5a1.5 1.5 0 0 1-1.5 1.4H7a1.5 1.5 0 0 1-1.5-1.4zM8.8 8V6.2a3.2 3.2 0 0 1 6.4 0V8"/>' +
+      '<path d="M12 11v6.5M9.5 15l2.5 2.5 2.5-2.5"/>',
+    // two crossed swords
+    arena:
+      '<path d="M20.5 3.5L8 16M3.5 3.5L16 16" stroke-width="2.2"/>' +
+      '<path d="M5.3 13.3l5.4 5.4M18.7 13.3l-5.4 5.4M8 16l-3 3M16 16l3 3"/>' +
+      '<circle class="s" cx="4.2" cy="19.8" r="1.5"/><circle class="s" cx="19.8" cy="19.8" r="1.5"/>',
+    // a dial gauge, the needle well up
+    gauge:
+      '<path class="d" d="M4.2 17.5A9 9 0 1 1 19.8 17.5z"/>' +
+      '<path d="M4.2 17.5A9 9 0 1 1 19.8 17.5M7 21h10"/>' +
+      '<path d="M5.5 13h1.8M7.4 8.4l1.3 1.3M12 6v1.8" stroke-width="1.5"/>' +
+      '<path d="M12 13l4.6-4.6"/><circle class="s" cx="12" cy="13" r="1.9"/>',
+    // a word card with a kanji on it (bun, writing)
+    kotoba:
+      '<rect class="d" x="3.5" y="2.5" width="17" height="19" rx="2.5"/>' +
+      '<rect x="3.5" y="2.5" width="17" height="19" rx="2.5"/>' +
+      '<path d="M12 5v1.7M7.2 8.7h9.6M15 8.7C13.9 13.6 11.3 16.9 7.5 18.5M9 8.7c1.1 4.9 3.7 8.2 7.5 9.8" stroke-width="1.7"/>',
+    // a round chat bubble with a plug in it
+    switchboard:
+      '<path class="d" d="M5.14 15.75A8.5 8.5 0 1 1 8.91 19.2L3.5 21z"/>' +
+      '<path d="M5.14 15.75A8.5 8.5 0 1 1 8.91 19.2L3.5 21z"/>' +
+      '<path d="M10.8 6.8v2.4M14.2 6.8v2.4M12.5 15v2.5"/>' +
+      '<path class="s" d="M9 9.2h7v2.3a3.5 3.5 0 0 1-7 0z"/>',
+    // a clock with an arrow winding it back (restore a snapshot)
+    backup:
+      '<circle class="d" cx="12" cy="12" r="9"/>' +
+      '<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8M3 3v5h5M12 7.5V12l3.5 2"/>',
+    // a story scroll with a heart on it
+    taleforge:
+      '<path class="d" d="M4 3h13a2 2 0 0 1 2 2v12h-8a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 0 0-2-2z"/>' +
+      '<path d="M19 17V5a2 2 0 0 0-2-2H4M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/>' +
+      '<path class="s" d="M12.5 14c-2.8-1.9-4-3.3-4-4.8a2 2 0 0 1 4-.4 2 2 0 0 1 4 .4c0 1.5-1.2 2.9-4 4.8z"/>',
+    // a briefcase
+    office:
+      '<rect class="d" x="2.5" y="7" width="19" height="13.5" rx="2.5"/>' +
+      '<rect x="2.5" y="7" width="19" height="13.5" rx="2.5"/>' +
+      '<path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M2.5 12.5h19"/>' +
+      '<rect class="s" x="10.3" y="11" width="3.4" height="3.4" rx=".8"/>',
+    // a teacher beside a board
+    tutor:
+      '<rect class="d" x="2.5" y="3" width="12.5" height="10" rx="1.5"/>' +
+      '<rect x="2.5" y="3" width="12.5" height="10" rx="1.5"/>' +
+      '<path d="M5.5 9.8l2-2.2 2 1.5 2.7-3" stroke-width="1.5"/>' +
+      '<circle cx="18" cy="13.2" r="2.3"/><path d="M14 21.5a4 4 0 0 1 8 0"/>',
+    // a closed book with a cross on its cover
+    bible:
+      '<path class="d" d="M4.5 19V5A2.5 2.5 0 0 1 7 2.5h12.5v14H7A2.5 2.5 0 0 0 4.5 19z"/>' +
+      '<path d="M4.5 19V5A2.5 2.5 0 0 1 7 2.5h12.5v19H7a2.5 2.5 0 0 1 0-5h12.5"/>' +
+      '<path d="M12 5.2v8.3M9 8.3h6" stroke-width="2"/>',
+    // a lit candle giving off light
+    devotion:
+      '<rect class="d" x="9" y="11" width="6" height="10.5" rx="1"/>' +
+      '<rect x="9" y="11" width="6" height="10.5" rx="1"/><path d="M12 11V9.4"/>' +
+      '<path class="s" d="M12 2.5c1.4 1.6 2.2 2.8 2.2 4a2.2 2.2 0 0 1-4.4 0c0-1.2.8-2.4 2.2-4z"/>' +
+      '<path d="M5.5 4.5l1.6 1.2M18.5 4.5l-1.6 1.2M4.5 9.5h2M19.5 9.5h-2" stroke-width="1.5"/>',
+    // a worker's hard hat
+    workers:
+      '<path class="d" d="M4.5 15v-1a7.5 7.5 0 0 1 15 0v1z"/>' +
+      '<path d="M4.5 15v-1a7.5 7.5 0 0 1 15 0v1M10 7v5M14 7v5"/>' +
+      '<rect x="2" y="15" width="20" height="3.5" rx="1.75"/>',
+    // a microphone on its stand
+    voice:
+      '<rect class="d" x="8.5" y="2.5" width="7" height="11.5" rx="3.5"/>' +
+      '<rect x="8.5" y="2.5" width="7" height="11.5" rx="3.5"/>' +
+      '<path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5v4M8.5 21.5h7"/>',
+    // an envelope with a coin going in
+    budget:
+      '<path class="s" d="M7.5 8.5a4.5 4.5 0 0 1 9 0z"/>' +
+      '<rect class="d" x="3" y="8.5" width="18" height="12" rx="2"/>' +
+      '<rect x="3" y="8.5" width="18" height="12" rx="2"/><path d="M3.5 9.5L12 15l8.5-5.5"/>',
+    // a cooking pot with steam rising
+    recipes:
+      '<path class="d" d="M4 12h16v4.5a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/>' +
+      '<path d="M4 12h16v4.5a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4zM2 12h20M2.5 14.5H4M20 14.5h1.5"/>' +
+      '<path d="M8.5 9c-.8-1 .8-2 0-3.2M12 9c-.8-1 .8-2 0-3.2M15.5 9c-.8-1 .8-2 0-3.2" stroke-width="1.5"/>',
+    // a house with a packed box inside
+    homebox:
+      '<path class="d" d="M3.5 10.5L12 3.5l8.5 7V20a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 20z"/>' +
+      '<path d="M3.5 10.5L12 3.5l8.5 7V20a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 20z"/>' +
+      '<rect x="8" y="12" width="8" height="6.5" rx="1"/><path d="M8 14.5h8M12 12v2.5"/>',
+    // an iPod: screen above the click wheel
+    ipod:
+      '<rect class="d" x="5.5" y="2" width="13" height="20" rx="2.5"/>' +
+      '<rect x="5.5" y="2" width="13" height="20" rx="2.5"/>' +
+      '<rect x="8" y="4.5" width="8" height="6" rx="1"/>' +
+      '<circle cx="12" cy="16" r="3.6"/><circle class="s" cx="12" cy="16" r="1.2"/>',
+    // --- apps the Store installs (apps/store/catalog/<id>.json)
+    // a page cut along a dashed line, its lower piece pulled aside
+    bentopdf:
+      '<path class="d" d="M3 10.5V4.5a2 2 0 0 1 2-2h7L16.5 7v3.5z"/>' +
+      '<path d="M3 10.5V4.5a2 2 0 0 1 2-2h7L16.5 7v3.5M12 2.5V7h4.5M7.5 15.5v4a2 2 0 0 0 2 2H19a2 2 0 0 0 2-2v-4"/>' +
+      '<path d="M3 13h18" stroke-width="1.4" stroke-dasharray="1.6 2.2"/>',
+    // a rough hand-drawn box, a wobbly arrow, a rough circle
+    excalidraw:
+      '<path class="d" d="M4 4.2c3-.5 6.2-.4 9 0 .3 2.6.3 5 0 7.6-3 .4-6 .4-9 0-.3-2.5-.3-5 0-7.6z"/>' +
+      '<path d="M2.8 4.3c3.4-.6 7-.5 10.6 0M4 3c-.5 3.1-.4 6.2.2 9.2M2.8 11.7c3.4.4 7 .3 10.6-.2M12.9 3.2c.5 3 .5 6 .1 9.3"/>' +
+      '<path d="M7.5 14c-.2 3 1.2 4.6 4.2 4.6M9.6 16.4l2.2 2.2-2.3 2M17.2 13.2c2.6-.1 4.4 1.4 4.3 3.9-.1 2.6-2.2 4.3-4.6 4.2-2.3-.1-3.8-1.9-3.6-4.2.2-2.3 1.8-3.7 4.4-3.9.6 0 1.1.1 1.6.3"/>',
+    // a closed reference book with a globe on its cover
+    kiwix:
+      '<path class="d" d="M5 19.5V4.5a2 2 0 0 1 2-2h12v15H7a2 2 0 0 0-2 2z"/>' +
+      '<path d="M5 19.5V4.5a2 2 0 0 1 2-2h12v15H7a2 2 0 0 0-2 2 2 2 0 0 0 2 2h12v-4"/>' +
+      '<circle cx="12" cy="10" r="4.2" stroke-width="1.5"/><path d="M7.8 10h8.4M12 5.8c-1.9 2.5-1.9 5.9 0 8.4 1.9-2.5 1.9-5.9 0-8.4z" stroke-width="1.3"/>',
+    // a game cartridge with its label and grip lines
+    retro:
+      '<path class="d" d="M7.5 5h9v7.5h-9z"/>' +
+      '<path d="M4.5 4A1.5 1.5 0 0 1 6 2.5h12A1.5 1.5 0 0 1 19.5 4v14.5l-2 1.5v1.5h-11V20l-2-1.5z"/>' +
+      '<rect x="7.5" y="5" width="9" height="7.5" rx="1"/><path d="M9 16v2.2M12 16v2.2M15 16v2.2" stroke-width="1.5"/>',
+    // the feed symbol: a dot and two widening waves
+    yarr:
+      '<rect class="d" x="3" y="3" width="18" height="18" rx="4"/>' +
+      '<rect x="3" y="3" width="18" height="18" rx="4"/>' +
+      '<path d="M7.5 11.5a5 5 0 0 1 5 5M7.5 7a9.5 9.5 0 0 1 9.5 9.5"/><circle class="s" cx="8" cy="16" r="1.6"/>',
+    // a magnifying glass over three linked sources
+    searxng:
+      '<circle class="d" cx="10" cy="10" r="7"/><circle cx="10" cy="10" r="7"/>' +
+      '<path d="M15.2 15.2l5.8 5.8" stroke-width="2.4"/>' +
+      '<path d="M10 7l-2.8 4.6h5.6z" stroke-width="1"/>' +
+      '<circle class="s" cx="10" cy="7" r="1.5"/><circle class="s" cx="7.2" cy="11.6" r="1.5"/><circle class="s" cx="12.8" cy="11.6" r="1.5"/>',
+    // a web page with an eye keeping watch on it
+    watch:
+      '<path class="d" d="M5 3.5h14A2.5 2.5 0 0 1 21.5 6v2h-19V6A2.5 2.5 0 0 1 5 3.5z"/>' +
+      '<rect x="2.5" y="3.5" width="19" height="17" rx="2.5"/><path d="M2.5 8h19"/>' +
+      '<path d="M5.8 14.4c3.4-4.4 9-4.4 12.4 0-3.4 4.4-9 4.4-12.4 0z"/><circle class="s" cx="12" cy="14.4" r="1.7"/>',
+    // a bookmark ribbon with a tag hung on it
+    linkding:
+      '<path class="d" d="M4 2.5h9v17.5l-4.5-3.6L4 20z"/>' +
+      '<path d="M4 2.5h9v10M4 2.5V20l4.5-3.6 3.5 2.8"/>' +
+      '<path d="M13 12.5h5l3.5 3.8-3.5 3.7h-5a1 1 0 0 1-1-1v-5.5a1 1 0 0 1 1-1z"/><circle class="s" cx="14.8" cy="16.3" r="1.2"/>',
+    // a page, picture above the scan line, text lines below
+    ocr:
+      '<path class="d" d="M6 2.5h12a2 2 0 0 1 2 2v7.5H4V4.5a2 2 0 0 1 2-2z"/>' +
+      '<rect x="4" y="2.5" width="16" height="19" rx="2"/>' +
+      '<path d="M6.5 10l3-3 2.2 2.2 1.6-1.6 2.2 2.4M1.8 12.8h20.4M8 16.3h8M8 19h5"/><circle class="s" cx="15.6" cy="6" r="1.1"/>',
+    // two code cells, each with its run arrow
+    notebook:
+      '<rect class="d" x="8" y="3" width="13.5" height="7.5" rx="1.8"/>' +
+      '<rect x="8" y="3" width="13.5" height="7.5" rx="1.8"/><rect x="8" y="13.5" width="13.5" height="7.5" rx="1.8"/>' +
+      '<path class="s" d="M2.5 4.8v3.9l3.3-1.95zM2.5 15.3v3.9l3.3-1.95z"/><path d="M11 17.25h7.5" stroke-width="1.5"/>',
+    // a folder with sync arrows going round
+    syncthing:
+      '<path class="d" d="M2.5 8h19v10a2.5 2.5 0 0 1-2.5 2.5H5A2.5 2.5 0 0 1 2.5 18z"/>' +
+      '<path d="M2.5 18V6A2.5 2.5 0 0 1 5 3.5h4l2.2 2.5H19A2.5 2.5 0 0 1 21.5 8.5V18a2.5 2.5 0 0 1-2.5 2.5H5A2.5 2.5 0 0 1 2.5 18z"/>' +
+      '<path d="M8 13.4a4 4 0 0 1 6.6-2.3M16 15.6a4 4 0 0 1-6.6 2.3" stroke-width="1.6"/>' +
+      '<path class="s" d="M16.4 9.4l.2 3.6-3.5-.7zM7.6 19.6l-.2-3.6 3.5.7z"/>',
+    // a calendar with a two-way arrow across it
+    radicale:
+      '<path class="d" d="M6 5h12a2.5 2.5 0 0 1 2.5 2.5V10h-17V7.5A2.5 2.5 0 0 1 6 5z"/>' +
+      '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/>' +
+      '<path d="M3.5 10h17M8 3v4M16 3v4M7 13.5h9M8 17.5h9"/>' +
+      '<path class="s" d="M15.6 11.3l2.6 2.2-2.6 2.2zM8.4 15.3l-2.6 2.2 2.6 2.2z"/>',
+    // a panel of live readings: a pulse line over three bars
+    glances:
+      '<rect class="d" x="2.5" y="3.5" width="19" height="17" rx="2.5"/>' +
+      '<rect x="2.5" y="3.5" width="19" height="17" rx="2.5"/>' +
+      '<path d="M5.5 10h3l1.5-3 2 5 1.5-2h5"/>' +
+      '<path class="s" d="M6 14.5h2.4v3.5H6zM10.8 13.5h2.4V18h-2.4zM15.6 15.5H18V18h-2.4z"/>',
+    // a note page with a chain link on its corner
+    silverbullet:
+      '<path class="d" d="M5 2.5h11a2 2 0 0 1 2 2V11h-6.5v8H5a2 2 0 0 1-2-2V4.5a2 2 0 0 1 2-2z"/>' +
+      '<path d="M11 19H5a2 2 0 0 1-2-2V4.5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2V10M6.5 7h8M6.5 10.5h5M6.5 14h3"/>' +
+      '<path d="M15.8 13.6l1.4-1.4a2.6 2.6 0 0 1 3.7 3.7l-1.4 1.4M17.2 20.2l-1.4 1.4a2.6 2.6 0 0 1-3.7-3.7l1.4-1.4M15.3 18.5l3-3"/>',
+    // a bell with a small arrow coming in
+    ntfy:
+      '<path class="d" d="M5 17v-5.5a6 6 0 0 1 12 0V17l1.6 1.8H3.4z"/>' +
+      '<path d="M5 17v-5.5a6 6 0 0 1 12 0V17l1.6 1.8H3.4zM9 21.5h4"/>' +
+      '<path d="M21.5 2.5l-4.2 4.2M17.3 3.5v3.2h3.2"/>',
+    // a wrench crossed with a screwdriver
+    "it-tools":
+      '<path class="d" d="M15 3.2a4.6 4.6 0 0 0-4.4 6.1l-7 7a2 2 0 0 0 2.8 2.8l7-7a4.6 4.6 0 0 0 6.1-4.4l-2.8 2.8-2.6-.6-.6-2.6z"/>' +
+      '<path d="M15 3.2a4.6 4.6 0 0 0-4.4 6.1l-7 7a2 2 0 0 0 2.8 2.8l7-7a4.6 4.6 0 0 0 6.1-4.4l-2.8 2.8-2.6-.6-.6-2.6z"/>' +
+      '<path d="M3 3l1.5 1 6.2 6.2M14.6 14.6l5.4 5.4a1.6 1.6 0 0 1-2.3 2.3l-5.4-5.4z"/>',
+    // a flowchart: a box branching to a box and a decision diamond
+    drawio:
+      '<rect class="d" x="8" y="2.5" width="8" height="5.5" rx="1.2"/>' +
+      '<rect x="8" y="2.5" width="8" height="5.5" rx="1.2"/>' +
+      '<path d="M12 8v3M6 11h12M6 11v3.5M18 11v2.5M2.5 14.5h7v6h-7zM18 13.5l3.5 3.5-3.5 3.5-3.5-3.5z"/>',
+    // a cube with its corner points marked, ready to model
+    blockbench:
+      '<path class="d" d="M12 3l8 4.5-8 4.5-8-4.5z"/>' +
+      '<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9zM4 7.5l8 4.5 8-4.5M12 12v9"/>' +
+      '<g class="s"><circle cx="12" cy="3" r="1.5"/><circle cx="4" cy="7.5" r="1.5"/><circle cx="20" cy="7.5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="4" cy="16.5" r="1.5"/><circle cx="20" cy="16.5" r="1.5"/><circle cx="12" cy="21" r="1.5"/></g>',
+    // a painter's palette with dabs of paint
+    paint:
+      '<path class="d" d="M12 3a9 9 0 0 0 0 18c1.4 0 2-.9 2-1.9 0-1.4-1.2-1.8-1.2-3 0-1 .8-1.6 1.8-1.6H17a4 4 0 0 0 4-4C21 6.4 17 3 12 3z"/>' +
+      '<path d="M12 3a9 9 0 0 0 0 18c1.4 0 2-.9 2-1.9 0-1.4-1.2-1.8-1.2-3 0-1 .8-1.6 1.8-1.6H17a4 4 0 0 0 4-4C21 6.4 17 3 12 3z"/>' +
+      '<g class="s"><circle cx="7.5" cy="12.5" r="1.5"/><circle cx="8.5" cy="8" r="1.5"/><circle cx="12.8" cy="6.8" r="1.5"/><circle cx="16.8" cy="9.2" r="1.5"/></g>',
+    // a model cut into stacked layers
+    slicer:
+      '<path class="d" d="M12 3l9 4.5-9 4.5-9-4.5z"/>' +
+      '<path d="M12 3l9 4.5-9 4.5-9-4.5zM3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5"/>',
+    // a chef's hat
+    cyberchef:
+      '<path class="d" d="M7 14.5a4 4 0 0 1-.7-7.9A5.8 5.8 0 0 1 12 3a5.8 5.8 0 0 1 5.7 3.6 4 4 0 0 1-.7 7.9V20.5H7z"/>' +
+      '<path d="M7 14.5a4 4 0 0 1-.7-7.9A5.8 5.8 0 0 1 12 3a5.8 5.8 0 0 1 5.7 3.6 4 4 0 0 1-.7 7.9V20.5H7zM7 17.2h10M10 11.5v2.5M14 11.5v2.5"/>',
+    // a record sliding out of its sleeve
+    beets:
+      '<path d="M13 6a6.5 6.5 0 1 1 0 12M13 9.55a3.5 3.5 0 1 1 0 4.9" />' +
+      '<circle class="s" cx="15.5" cy="12" r="1.3"/>' +
+      '<rect class="d" x="2.5" y="4" width="10.5" height="16" rx="1.5"/><rect x="2.5" y="4" width="10.5" height="16" rx="1.5"/>',
+    // an ebook reader showing a page of text
+    "calibre-web":
+      '<rect x="4" y="2.5" width="16" height="19" rx="2.5"/>' +
+      '<rect class="d" x="6.8" y="5.2" width="10.4" height="11.8" rx=".8"/>' +
+      '<path d="M9 8.5h6M9 11h6M9 13.5h3.5M10.5 19h3" stroke-width="1.4"/>',
+    // a lightning bolt with a spark beside it
+    flash:
+      '<path class="d" d="M13.5 2.5L5 13.5h6l-1.5 8 8.5-11h-6z"/>' +
+      '<path d="M13.5 2.5L5 13.5h6l-1.5 8 8.5-11h-6z"/>' +
+      '<path class="s" d="M19.5 15l.6 1.6 1.6.6-1.6.6-.6 1.6-.6-1.6-1.6-.6 1.6-.6z"/>',
+    // --- groups (places): groups/<id>.json, or its "glyph" field
+    // two little robot heads, one working in front of the other
+    agents:
+      '<rect class="d" x="9" y="9" width="12" height="11" rx="2.5"/>' +
+      '<rect x="9" y="9" width="12" height="11" rx="2.5"/>' +
+      '<path d="M15 9V6.5M9 12.5H5.5A2.5 2.5 0 0 1 3 10V6A2.5 2.5 0 0 1 5.5 3.5h4A2.5 2.5 0 0 1 12 6v3M13.5 17h3"/>' +
+      '<circle class="s" cx="15" cy="5" r="1.3"/><circle class="s" cx="12.8" cy="13.6" r="1.3"/><circle class="s" cx="17.2" cy="13.6" r="1.3"/>' +
+      '<circle class="s" cx="5.8" cy="7.6" r="1"/><circle class="s" cx="9" cy="7.6" r="1"/>',
+    // a service bell on the desk, ready when called
+    assistant:
+      '<path class="d" d="M4 16.5a8 8 0 0 1 16 0z"/>' +
+      '<path d="M4 16.5a8 8 0 0 1 16 0M12 8.5V6M10 5.5h4"/>' +
+      '<rect x="2.5" y="16.5" width="19" height="3.5" rx="1.2"/>' +
+      '<path d="M7.8 13.6a4.6 4.6 0 0 1 2.4-2.4" stroke-width="1.4"/>',
+    // a drive inside two arrows going round (snapshots and sync)
+    "backup-sync":
+      '<path d="M20.5 12A8.5 8.5 0 0 1 6 18M9 18H6v3M3.5 12A8.5 8.5 0 0 1 18 6M15 6h3V3"/>' +
+      '<path class="d" d="M8.5 9.5v5c0 .8 1.6 1.4 3.5 1.4s3.5-.6 3.5-1.4v-5z"/>' +
+      '<ellipse cx="12" cy="9.5" rx="3.5" ry="1.4"/>' +
+      '<path d="M8.5 9.5v5c0 .8 1.6 1.4 3.5 1.4s3.5-.6 3.5-1.4v-5"/>',
+    // a lit oil lamp (a lamp unto my feet)
+    "bible-today":
+      '<path class="d" d="M3.5 14h12.5l4.5-2c-.3 1.8-1.8 3.4-3.6 4.1-1.4 2.2-4 3.4-7 3.4-3.6 0-5.9-2-6.4-5.5z"/>' +
+      '<path d="M3.5 14h12.5l4.5-2c-.3 1.8-1.8 3.4-3.6 4.1-1.4 2.2-4 3.4-7 3.4-3.6 0-5.9-2-6.4-5.5zM8 21.5h6M3.8 15.5c-1.9-.2-2-2.8-.1-3"/>' +
+      '<path class="s" d="M19.5 10.3c-1.4-1-2-2.3-1.6-3.6.4-1.3 1.4-2.2 1.6-4.2 1.2 1.4 2.4 3 2.1 4.6-.2 1.3-1 2.3-2.1 3.2z"/>',
+    // a canvas on an easel with a brush stroke on it
+    "create-art":
+      '<rect class="d" x="3.5" y="5.5" width="17" height="10" rx="1.5"/>' +
+      '<rect x="3.5" y="5.5" width="17" height="10" rx="1.5"/>' +
+      '<path d="M12 2.5v3M8 15.5l-2.5 6M16 15.5l2.5 6M12 15.5v6"/>' +
+      '<path d="M7 12.5c1.4-2.6 2.9-2.8 4.3-1s2.9 1.8 5.2-1.8" stroke-width="2"/>',
+    // a phone with signal waves going out to it
+    "devices-place":
+      '<rect class="d" x="4" y="3" width="9" height="18" rx="2"/>' +
+      '<rect x="4" y="3" width="9" height="18" rx="2"/><path d="M7.5 18h2"/>' +
+      '<path d="M16 9.5a3.5 3.5 0 0 1 0 5M18.5 7a7 7 0 0 1 0 10"/>',
+    // a filing cabinet, three drawers
+    "files-place":
+      '<rect class="d" x="4.5" y="2.5" width="15" height="19" rx="2"/>' +
+      '<rect x="4.5" y="2.5" width="15" height="19" rx="2"/>' +
+      '<path d="M4.5 9h15M4.5 15h15M10.5 5.8h3M10.5 11.8h3M10.5 17.8h3"/>',
+    // an apple for the teacher
+    learn:
+      '<path class="d" d="M12 8c-1.3-.9-3.2-1.3-4.8-.6C4.6 8.4 4 11.2 4.5 13.8c.7 3.7 3.1 7.2 5.4 7.2.9 0 1.4-.5 2.1-.5s1.2.5 2.1.5c2.3 0 4.7-3.5 5.4-7.2.5-2.6-.1-5.4-2.7-6.4-1.6-.7-3.5-.3-4.8.6z"/>' +
+      '<path d="M12 8c-1.3-.9-3.2-1.3-4.8-.6C4.6 8.4 4 11.2 4.5 13.8c.7 3.7 3.1 7.2 5.4 7.2.9 0 1.4-.5 2.1-.5s1.2.5 2.1.5c2.3 0 4.7-3.5 5.4-7.2.5-2.6-.1-5.4-2.7-6.4-1.6-.7-3.5-.3-4.8.6zM12 8c0-1.8.4-3.4 1.6-4.8"/>' +
+      '<path class="s" d="M14.2 5.6c.7-1.9 2.4-3 5-2.9-.6 2.4-2.4 3.4-5 2.9z"/>' +
+      '<path d="M7.2 12a3.4 3.4 0 0 1 1.8-2" stroke-width="1.4"/>',
+    // a library building: pediment, columns and steps
+    library:
+      '<path class="d" d="M2.5 8L12 3l9.5 5z"/>' +
+      '<path d="M2.5 8L12 3l9.5 5zM5 8v10M9.7 8v10M14.3 8v10M19 8v10M3.5 18h17M2.5 21h19"/>',
+    // a sprout with two leaves
+    life:
+      '<path class="d" d="M12 14c-4.5 0-7.5-2.5-7.5-6.5 4.5 0 7.5 2.5 7.5 6.5zM12 11.5c0-4 2.6-7 7.5-7 0 4-2.8 7-7.5 7z"/>' +
+      '<path d="M12 14c-4.5 0-7.5-2.5-7.5-6.5 4.5 0 7.5 2.5 7.5 6.5zM12 11.5c0-4 2.6-7 7.5-7 0 4-2.8 7-7.5 7zM12 21.5V11.5M6 21.5h12"/>',
+    // a cube with an orbit arrow turning it round
+    "make-3d":
+      '<path class="d" d="M12 8l6 3.2-6 3.2-6-3.2z"/>' +
+      '<path d="M12 8l6 3.2v7L12 21.4l-6-3.2v-7zM6 11.2l6 3.2 6-3.2M12 14.4v7"/>' +
+      '<path d="M3.5 7.9A9 9 0 0 1 20.5 7.9M21.6 5.4l-1.1 2.5-2.6-1.2"/>',
+    // piano keys
+    "make-music":
+      '<rect class="d" x="2.5" y="4" width="19" height="16" rx="2"/>' +
+      '<rect x="2.5" y="4" width="19" height="16" rx="2"/><path d="M7.25 13.5V20M12 13.5V20M16.75 13.5V20"/>' +
+      '<path class="s" d="M6 4h2.5v9.5H6zM10.75 4h2.5v9.5h-2.5zM15.5 4H18v9.5h-2.5z"/>',
+    // a memory stick: chips on a board with pins
+    "memory-disk":
+      '<rect class="d" x="2" y="6.5" width="20" height="10" rx="1.5"/>' +
+      '<rect x="2" y="6.5" width="20" height="10" rx="1.5"/>' +
+      '<g class="s"><rect x="4.5" y="9" width="3.6" height="4.5" rx=".7"/><rect x="10.2" y="9" width="3.6" height="4.5" rx=".7"/><rect x="15.9" y="9" width="3.6" height="4.5" rx=".7"/></g>' +
+      '<path d="M4.5 16.5v3M7 16.5v3M9.5 16.5v3M14.5 16.5v3M17 16.5v3M19.5 16.5v3"/>',
+    // a small neural net: three layers of nodes
+    models:
+      '<path d="M4.5 7.5l7.5-3M4.5 7.5L12 12M4.5 16.5L12 12M4.5 16.5l7.5 3M12 4.5l7.5 3M12 12l7.5-4.5M12 12l7.5 4.5M12 19.5l7.5-3" stroke-width="1.4" stroke-opacity=".6"/>' +
+      '<g class="s"><circle cx="4.5" cy="7.5" r="2.2"/><circle cx="4.5" cy="16.5" r="2.2"/><circle cx="12" cy="4.5" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="12" cy="19.5" r="2.2"/><circle cx="19.5" cy="7.5" r="2.2"/><circle cx="19.5" cy="16.5" r="2.2"/></g>',
+    // two stacks of coins and one more coin coming
+    money:
+      '<ellipse class="d" cx="6.8" cy="7.2" rx="4.3" ry="1.8"/><ellipse class="d" cx="17.2" cy="13.2" rx="4.3" ry="1.8"/>' +
+      '<ellipse cx="6.8" cy="7.2" rx="4.3" ry="1.8"/><ellipse cx="17.2" cy="13.2" rx="4.3" ry="1.8"/>' +
+      '<path d="M2.5 7.2v12c0 1 1.9 1.8 4.3 1.8s4.3-.8 4.3-1.8v-12M2.5 10.2c0 1 1.9 1.8 4.3 1.8s4.3-.8 4.3-1.8M2.5 13.2c0 1 1.9 1.8 4.3 1.8s4.3-.8 4.3-1.8M2.5 16.2c0 1 1.9 1.8 4.3 1.8s4.3-.8 4.3-1.8"/>' +
+      '<path d="M12.9 13.2v6c0 1 1.9 1.8 4.3 1.8s4.3-.8 4.3-1.8v-6M12.9 16.2c0 1 1.9 1.8 4.3 1.8s4.3-.8 4.3-1.8"/>' +
+      '<circle class="s" cx="17.2" cy="6.5" r="2.2"/>',
+    // a play button with a music note beside it
+    "music-video":
+      '<circle class="d" cx="10" cy="13.5" r="7.8"/><circle cx="10" cy="13.5" r="7.8"/>' +
+      '<path class="s" d="M8 10v7l5.8-3.5z"/>' +
+      '<ellipse class="s" cx="19" cy="7.5" rx="1.9" ry="1.5"/><path d="M20.6 7V2.5l1.4 1.2"/>',
+    // an office building, rows of windows and a door
+    "office-place":
+      '<path class="d" d="M5 21V5a1.5 1.5 0 0 1 1.5-1.5h11A1.5 1.5 0 0 1 19 5v16z"/>' +
+      '<path d="M5 21V5a1.5 1.5 0 0 1 1.5-1.5h11A1.5 1.5 0 0 1 19 5v16M3 21h18M10.5 21v-3.5h3V21"/>' +
+      '<path class="s" d="M8 7h2v2H8zM14 7h2v2h-2zM8 11.5h2v2H8zM14 11.5h2v2h-2z"/>',
+    // a picture in a deep frame
+    pictures:
+      '<path class="d" fill-rule="evenodd" d="M4.5 3h15A2.5 2.5 0 0 1 22 5.5v13a2.5 2.5 0 0 1-2.5 2.5h-15A2.5 2.5 0 0 1 2 18.5v-13A2.5 2.5 0 0 1 4.5 3zM6 7v10h12V7z"/>' +
+      '<rect x="2" y="3" width="20" height="18" rx="2.5"/><rect x="6" y="7" width="12" height="10" rx=".8"/>' +
+      '<path d="M6.5 16.5l3.5-3.8 2.5 2.5 1.6-1.6 3.4 2.9" stroke-width="1.6"/><circle class="s" cx="14.8" cy="9.8" r="1.2"/>',
+    // a tilted die showing five
+    play:
+      '<g transform="rotate(-12 12 12)"><rect class="d" x="4" y="4" width="16" height="16" rx="3.5"/>' +
+      '<rect x="4" y="4" width="16" height="16" rx="3.5"/>' +
+      '<g class="s"><circle cx="8.3" cy="8.3" r="1.5"/><circle cx="15.7" cy="8.3" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="8.3" cy="15.7" r="1.5"/><circle cx="15.7" cy="15.7" r="1.5"/></g></g>',
+    // a magnifier over a little bar chart
+    "research-place":
+      '<circle class="d" cx="10" cy="10" r="6.8"/><circle cx="10" cy="10" r="6.8"/>' +
+      '<path d="M15 15l5.5 5.5" stroke-width="2.4"/>' +
+      '<path d="M7.3 12.6v-1.8M10 12.6V7.4M12.7 12.6V9.6" stroke-width="1.6"/>',
+    // two switches, one on and one off
+    "settings-place":
+      '<rect class="d" x="2.5" y="3.5" width="19" height="7.5" rx="3.75"/>' +
+      '<rect x="2.5" y="3.5" width="19" height="7.5" rx="3.75"/><rect x="2.5" y="13" width="19" height="7.5" rx="3.75"/>' +
+      '<circle class="s" cx="17.75" cy="7.25" r="2.1"/><circle class="s" cx="6.25" cy="16.75" r="2.1"/>',
+    // a window with a title bar, a prompt and a closing tag
+    "terminal-code":
+      '<rect class="d" x="2" y="3.5" width="20" height="17" rx="2.5"/>' +
+      '<rect x="2" y="3.5" width="20" height="17" rx="2.5"/><path d="M2 8h20M6 11.5l3 2.5-3 2.5M11.5 17l2-6M15.5 11.5l3 2.5-3 2.5"/>' +
+      '<g class="s"><circle cx="5" cy="5.75" r=".9"/><circle cx="7.6" cy="5.75" r=".9"/><circle cx="10.2" cy="5.75" r=".9"/></g>',
+    // a quill standing in an ink pot
+    write:
+      '<path class="d" d="M9 14c1.2-5.2 5.6-10 12-11.5-.9 6-5.7 10.4-12 11.5z"/>' +
+      '<path d="M9 14c1.2-5.2 5.6-10 12-11.5-.9 6-5.7 10.4-12 11.5zM8 15.5L17 6.5"/>' +
+      '<path class="d" d="M4 21.5h9a1 1 0 0 0 1-1V18a2.5 2.5 0 0 0-2.5-2.5h-6A2.5 2.5 0 0 0 3 18v2.5a1 1 0 0 0 1 1z"/>' +
+      '<path d="M4 21.5h9a1 1 0 0 0 1-1V18a2.5 2.5 0 0 0-2.5-2.5h-6A2.5 2.5 0 0 0 3 18v2.5a1 1 0 0 0 1 1z"/>',
+    // --- more Forge apps
+    // a project board: task cards in three columns, fewer as they move along
+    enjoy:
+      '<path class="d" d="M3 4h5v4H3zM3 10h5v4H3zM3 16h5v4H3zM9.5 4h5v4h-5zM9.5 10h5v4h-5z"/>' +
+      '<rect x="3" y="4" width="5" height="4" rx="1"/><rect x="3" y="10" width="5" height="4" rx="1"/>' +
+      '<rect x="3" y="16" width="5" height="4" rx="1"/><rect x="9.5" y="4" width="5" height="4" rx="1"/>' +
+      '<rect x="9.5" y="10" width="5" height="4" rx="1"/><rect x="16" y="4" width="5" height="4" rx="1"/>' +
+      '<path d="M17.3 6l.9.9 1.6-1.7"/>',
+    // a laptop and a phone paired: one line joins them over the top
+    devices:
+      '<rect class="d" x="2.5" y="9" width="11" height="7.5" rx="1.5"/>' +
+      '<rect x="2.5" y="9" width="11" height="7.5" rx="1.5"/><path d="M1.5 19.5h13"/>' +
+      '<rect class="d" x="16" y="10" width="6" height="10.5" rx="1.5"/>' +
+      '<rect x="16" y="10" width="6" height="10.5" rx="1.5"/>' +
+      '<path d="M8 9V6.5a3 3 0 0 1 3-3h5a3 3 0 0 1 3 3V10"/><circle class="s" cx="19" cy="18" r=".8"/>',
   };
 
   // The classic emoji. Before the glyphs Jan Tune and Power were both ⚡,
@@ -401,6 +792,80 @@
     reps: "💪",
     focus: "⏳",
     wallpapers: "🖼️",
+    // added 2026-10-28 with their glyphs (apps, Store apps, groups)
+    castforge: "📻",
+    modellab: "🧫",
+    "forge-models": "🦙",
+    librarian: "📇",
+    cutroom: "✂️",
+    setups: "🔐",
+    suno: "🎤",
+    store: "🛍️",
+    arena: "🏟️",
+    gauge: "🌡️",
+    kotoba: "🗾",
+    switchboard: "🔌",
+    backup: "💾",
+    taleforge: "🧙",
+    office: "💼",
+    tutor: "🏫",
+    bible: "✝️",
+    workers: "🖥️",
+    devotion: "🕯️",
+    voice: "🎙️",
+    ipod: "📀",
+    budget: "🧾",
+    recipes: "🍲",
+    homebox: "📦",
+    bentopdf: "📑",
+    excalidraw: "✏️",
+    kiwix: "🌍",
+    retro: "📼",
+    yarr: "📰",
+    searxng: "🧭",
+    watch: "👀",
+    linkding: "🔗",
+    ocr: "📠",
+    notebook: "📓",
+    syncthing: "🔄",
+    radicale: "🗒️",
+    glances: "🩺",
+    silverbullet: "📝",
+    ntfy: "🔔",
+    "it-tools": "🧰",
+    drawio: "📐",
+    blockbench: "🧊",
+    paint: "🖌️",
+    slicer: "🍰",
+    cyberchef: "🍳",
+    beets: "🏷️",
+    "calibre-web": "📘",
+    flash: "💥",
+    agents: "🐝",
+    assistant: "💬",
+    "backup-sync": "🛟",
+    "bible-today": "⛪",
+    "create-art": "🖍️",
+    "devices-place": "📡",
+    "files-place": "🗄️",
+    learn: "🎒",
+    library: "🏛️",
+    life: "🌱",
+    "make-3d": "🧱",
+    "make-music": "🎹",
+    "memory-disk": "📊",
+    models: "🤖",
+    money: "💰",
+    "music-video": "🍿",
+    "office-place": "🏢",
+    pictures: "🏞️",
+    play: "🎲",
+    "research-place": "🔎",
+    "settings-place": "🔧",
+    "terminal-code": "🐚",
+    write: "✍️",
+    enjoy: "🎯",
+    devices: "🤝",
   };
 
   const STYLES = ["new", "classic"];

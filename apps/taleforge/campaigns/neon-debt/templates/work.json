@@ -1,0 +1,5 @@
+{"templates": [
+  {"id": "neon_clearout", "kind": "slay", "weight": 3, "title": "Clear-out near {place}", "hook": "{giver} pings you a gig: the {monster_plural} around {place} are bad for business. Make them somebody else's problem.", "count": [2, 4], "reward": {"xp_per_level": 60, "gold_per_level": 14}},
+  {"id": "neon_acquisition", "kind": "fetch", "weight": 2, "title": "Acquisition: {item}", "hook": "{giver} needs {item}, no questions asked, and the only place it turns up is somewhere in {region}.", "count": [1, 1], "reward": {"xp_per_level": 50, "gold_per_level": 12}},
+  {"id": "neon_courier", "kind": "deliver", "weight": 2, "title": "Hot drop to {place}", "hook": "{giver} hands you a sealed case and half the fee. The other half is waiting at {place}, if the case gets there unopened.", "count": [1, 1], "reward": {"xp_per_level": 40, "gold_per_level": 12}}
+]}

@@ -1,0 +1,22 @@
+{
+  "name": "taleforge",
+  "label": "Taleforge",
+  "tagline": "Text adventures with real rules, romance and Jan as narrator",
+  "port": 8502,
+  "module": "web_app:app",
+  "src_dir": ".",
+  "accent": "#c9a227",
+  "icon": "📜",
+  "order": 23,
+  "section": "play",
+  "ready_timeout": 30,
+  "ram_class": "light",
+  "store": {"github": "private"},
+  "help": {"about": "Text adventures with real rules: dice, a character sheet, a party and quests. A local Jan model narrates each turn.", "features": ["Here", "Character", "Party", "Quests", "Bag"]},
+  "manifest": {
+    "summary": "A data-driven text RPG engine: d20 rules, character creation, skill checks shown as rolls, turn-based combat, levels, quests, shops, companions with affection meters and branching romance arcs, and saved games. Every rule set and world is JSON (rulesets/, campaigns/), so a new genre or campaign is new files only. The engine owns every number; Jan only retells what happened (narration and dialogue are separate per-app model settings, loaded on demand; a missing model file falls back to an installed one). Ships with The Hollow Crown (fantasy romance) and Neon Debt (cyberpunk). Free-text input plus buttons; works with Jan off.",
+    "data_dir": "~/.local/share/forge/taleforge",
+    "dependencies": {"required": ["shared/forge_guard.py", "shared/forge_jan.py"], "optional": ["Jan (for narration and voices)"]},
+    "docs": ["README.md", "WIP.md", "docs/CONTENT.md", "docs/STORY.md"]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "about": "Where Recall finds cards. Each source is read when its Import button is pressed; adding a source is one entry here, adding a kind of source is one function in recall_core.IMPORTERS. Root paths may start with ~ (the home folder) or {forge} (the Forge folder); a source with an \"app\" is offered only when that app is installed.",
+  "new_per_day": 20,
+  "sources": [
+    {
+      "id": "study",
+      "label": "Study Companion question banks",
+      "kind": "study_bank",
+      "app": "study-companion",
+      "root": "{forge}/apps/study-companion/data",
+      "about": "Every question in each course's questions/*.jsonl: the question on the front, the answer and its worked steps on the back. One deck per course."
+    },
+    {
+      "id": "study-notes",
+      "label": "Cards written in Study Companion notes",
+      "kind": "note_lines",
+      "app": "study-companion",
+      "root": "{forge}/apps/study-companion/data",
+      "include": ["*.txt", "*.md"],
+      "about": "Any line in a course's notes written as front :: back. One deck per course."
+    }
+  ]
+}

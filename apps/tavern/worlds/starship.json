@@ -1,0 +1,10 @@
+{
+  "id": "starship",
+  "label": "Starship crew",
+  "order": 2,
+  "blurb": "A battered freighter working the edge of settled space: cheap jobs, corporate patrols, derelicts worth salvaging and things in the dark between stars.",
+  "tone": "Lived-in science fiction, tense but warm; the crew bicker like family.",
+  "roles": ["Pilot", "Engineer", "Medic", "Gunner", "Captain", "Hacker"],
+  "hp": 10,
+  "opening": "Open the campaign: the crew's ship docks at a run-down station with an empty fuel tank and an offer of work that pays too well."
+}

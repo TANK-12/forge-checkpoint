@@ -191,10 +191,14 @@
     "shared/forge_ed25519.py",
     "shared/forge_edition.py",
     "shared/forge_fetch.py",
+    "shared/forge_fsrs.py",
     "shared/forge_guard.py",
     "shared/forge_editions.json",
     "shared/forge_external.py",
     "shared/forge_framecap.js",
+    "shared/forge_fx_preview.js",
+    "shared/forge_websearch.py",
+    "shared/forge_assets.py",
     "shared/forge_fuzzy.js",
     "shared/forge_glass.js",
     "shared/forge_gpuload.py",
@@ -228,6 +232,8 @@
     "shared/forge_sound.js",
     "shared/forge_stores.json",
     "shared/forge_static.py",
+    "shared/forge_storage.py",
+    "shared/forge_trash.py",
     "shared/forge_sysinfo.py",
     "shared/forge_textsize.js",
     "shared/forge_theme.py",
@@ -252,9 +258,7 @@
     "shared/pad/",
     "shared/perf/",
     "shared/themes/",
-    "shared/vendor/",
-    "shared/forge_fx_preview.js",
-    "shared/forge_websearch.py"
+    "shared/vendor/"
   ],
   "leave_out": [
     "*/tests/*",
@@ -308,7 +312,6 @@
     "shared/forge_panels.js",
     "shared/forge_html.js",
     "shared/forge_webcap.js",
-    "shared/forge_assets.py",
     "shared/forge_secrets.py",
     "shared/forge_google.py",
     "*/__pycache__/*",
@@ -717,6 +720,24 @@
       "include": true,
       "windows": "cut: needs a Unix pseudo-terminal (pty), which Windows does not have"
     },
+    "shelf": {
+      "include": true,
+      "packages": [
+        "trafilatura==2.3.1"
+      ],
+      "env": {
+        "SHELF_DATA": "{data}/ShelfData"
+      }
+    },
+    "recall": {
+      "include": true,
+      "packages": [
+        "fsrs==6.3.2"
+      ],
+      "env": {
+        "RECALL_DATA_DIR": "{data}/RecallData"
+      }
+    },
     "convert": {
       "include": true,
       "windows": "cut: documents fetch a Linux build of pandoc (Linux only in this test build)",
@@ -730,11 +751,15 @@
     },
     "loops": {
       "include": true,
-      "windows": "cut: deleting a pattern uses gio trash (Linux only in this test build)",
-      "macos": "cut: deleting a pattern uses gio trash (Linux only in this test build)",
       "env": {
         "LOOPS_DATA_DIR": "{data}/LoopsData",
         "LOOPS_OUT_DIR": "{data}/Loops"
+      }
+    },
+    "prompts": {
+      "include": true,
+      "env": {
+        "PROMPTS_DATA_DIR": "{data}/PromptsData"
       }
     },
     "typeset": {
@@ -746,12 +771,43 @@
         "TYPESET_DOCS_DIR": "{data}/Typeset"
       }
     },
+    "vault": {
+      "include": true,
+      "packages": [
+        "pillow==13.0.0"
+      ],
+      "env": {
+        "VAULT_DATA_DIR": "{data}/VaultData",
+        "VAULT_GODOT_ROOT": "{data}/GodotProjects",
+        "FORGE_ASSETS_DIR": "{data}/Assets"
+      }
+    },
+    "tavern": {
+      "include": true,
+      "needs": "Jan for the game master",
+      "env": {
+        "TAVERN_DATA_DIR": "{data}/TavernData"
+      }
+    },
+    "reps": {
+      "include": true,
+      "env": {
+        "REPS_DATA_DIR": "{data}/RepsData"
+      }
+    },
     "files": {
       "include": true,
       "windows": "cut: trash, restore and open use gio and xdg-open from the Linux desktop (Linux only in this test build)",
       "macos": "cut: trash, restore and open use gio and xdg-open from the Linux desktop (Linux only in this test build)",
       "env": {
         "FILES_THUMBS_DIR": "{cache}/files/thumbs"
+      }
+    },
+    "taleforge": {
+      "include": true,
+      "needs": "Jan for narration",
+      "env": {
+        "TALEFORGE_DATA": "{data}/TaleforgeData"
       }
     }
   },
@@ -779,7 +835,20 @@
       "tagline": "Beats and loops on a step grid"
     },
     "make-3d": {
-      "tagline": "Look over 3D-print files before you slice them"
+      "tagline": "3D models, assets, and 3D-print files before you slice them"
+    },
+    "life": {
+      "tagline": "Workouts and habits, and the streak"
+    },
+    "learn": {
+      "tagline": "Flashcards that come back when due"
+    },
+    "library": {
+      "tagline": "Articles kept to read later, offline"
+    },
+    "agents": {
+      "label": "Prompts",
+      "tagline": "Prompts you keep for AI tools"
     },
     "office-place": {
       "tagline": "Documents, CVs and letters, and converting files"
@@ -1141,13 +1210,8 @@
       "release/licence_policy.json",
       "tests/test_release.py",
       "tests/test_release_install.py",
-      "scripts/",
-      "docs/",
-      "LICENSE",
-      "tests/test_checkpoint.py",
-      "pyrightconfig.json",
-      ".github/workflows/check-checkpoint.yml",
-      "tests/test_forge_ask.py"
+      "tests/test_forge_ask.py",
+      "tests/test_forge_trash.py"
     ],
     "top": {
       "release/source/README.md": "README.md",

@@ -1,0 +1,31 @@
+{"quests": [
+  {"id": "main_1", "name": "Ashes on the River", "kind": "main", "level": 1, "giver": "hollis", "region": "brightwater",
+   "summary": "Something is coming down the river into Brightwater, and the Queen's stolen heart-stone may be tied to it.",
+   "stages": [
+     {"id": "start", "text": "The town bell is ringing over Brightwater. Warden Hollis says dead men were seen walking in the river at dawn.", "objective": "Go down to the docks", "complete_when": {"flag": "docks_attack_done"}, "next": "mill"},
+     {"id": "mill", "text": "The briars came down the river from the west, from the millrace of the old mill. The miller has not been seen in a fortnight.", "objective": "Search the old mill west of town", "complete_when": {"flag": "found_cellar"}, "on_complete": [{"reveal": "brightwater_old_mill"}], "next": "cellar"},
+     {"id": "cellar", "text": "There is a trapdoor under the mill floor, and something cold is breathing below it.", "objective": "Clear the mill cellar", "complete_when": {"has_item": "ember_shard"}, "next": "report"},
+     {"id": "report", "text": "In the miller's strongbox: a chip of the Queen's heart-stone, and a letter sealed with a moth.", "objective": "Show Warden Hollis what you found", "complete_when": {"flag": "reported_hollis"}, "next": "done"}
+   ],
+   "rewards": {"xp": 300, "gold": 40, "reputation": {"river_guild": 5}}},
+  {"id": "rats_in_cellar", "name": "Rats in the Cellar", "kind": "side", "level": 1, "giver": "pell", "region": "brightwater",
+   "summary": "Pell the innkeeper has a scratching in his cellar he swears is rats.",
+   "stages": [
+     {"id": "start", "text": "Something is scratching in the Drowned Lantern's cellar.", "objective": "Look in the inn's cellar", "complete_when": {"kills": {"giant_rat": 3}}, "next": "report"},
+     {"id": "report", "text": "Rats. Big ones. Enough of them. Pell will want to know.", "objective": "Tell Pell the cellar is clear", "complete_when": {"flag": "pell_grateful"}, "next": "done"}
+   ],
+   "rewards": {"xp": 100, "gold": 15, "items": ["fine_wine"]}},
+  {"id": "witch_bargain", "name": "The Bog Witch's Bargain", "kind": "side", "level": 2, "giver": "mother_sedge", "region": "brightwater",
+   "summary": "Mother Sedge of Sallowfen wants a cold thorn from the thing in the mill.",
+   "stages": [
+     {"id": "start", "text": "Mother Sedge wants a blackbriar thorn, still cold, from the brute in the mill.", "objective": "Bring Mother Sedge a blackbriar thorn", "complete_when": {"flag": "gave_witch_thorn"}, "next": "done"}
+   ],
+   "rewards": {"xp": 150, "items": ["witch_charm"]}},
+  {"id": "lyra_quest", "name": "The Grey Hunter", "kind": "companion", "level": 2, "giver": "lyra", "region": "brightwater",
+   "summary": "Lyra is hunting the briar-wolf that killed her brother.",
+   "stages": [
+     {"id": "start", "text": "The Grey Hunter dens somewhere in Sallowfen, east of the docks along the towpath.", "objective": "Find the Grey Hunter's tracks in Sallowfen", "complete_when": {"flag": "found_hunter_lair"}, "next": "den"},
+     {"id": "den", "text": "Frost-crusted tracks lead to a hollow under a dead oak.", "objective": "Face the Grey Hunter", "complete_when": {"flag": "hunter_dead"}, "next": "done"}
+   ],
+   "rewards": {"xp": 400, "affection": {"lyra": 8}, "items": ["grey_hunter_fang"]}}
+]}

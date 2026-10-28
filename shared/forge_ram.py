@@ -11,15 +11,17 @@ heavy. Stdlib only, so any venv (or plain python3) can import or run it.
             [--gpu]
     python3 ~/Forge/shared/forge_ram.py run [--purpose heavy_job] [--need-mb N]
             [--gpu] [--wait SECONDS] [--mem-max 50%] [--swap-max 1G]
-            [--name NAME] [--cores SLOT] -- CMD...
+            [--name NAME] [--cores SLOT|CORES] -- CMD...
 
 `check` exits 0 when there is room and 3 (with the reason) when there is
 not. `run` waits for room (queues instead of piling on), then runs CMD in a
 systemd --user scope with MemoryMax, so a runaway job is killed inside its
-own box before the desktop runs out of memory. When the core plan
-(shared/core_plan.json, forge_cores.py) is on, `run` also pins CMD to the
-cores of its slot (--cores, default heavy-job); while it is off, nothing is
-pinned.
+own box before the desktop runs out of memory. --cores e-cores:3 (or
+p-cores, e-cores, all, 4-7) pins CMD and its children to those cores; without
+--cores, a preset saved for the job's --name (forge_cores.py preset) is used.
+Otherwise, when the core plan (shared/core_plan.json) is on, `run` pins CMD to
+the cores of its slot (--cores SLOT, default heavy-job); while it is off,
+nothing is pinned.
 
 Room means (each only when the purpose's rule in "headroom" sets it): RAM
 and swap under their limits, enough MB available, min_free_gb on the home
@@ -453,8 +455,11 @@ def tmpfs_use(paths: list[str]) -> list[tuple[str, int]]:
     return out
 
 
-def pin_cores(slot: str) -> None:
-    """Pin this process to a core plan slot; CMD inherits it through the exec.
+def pin_cores(cores: str | None, name: str = "") -> None:
+    """Pin this process before the exec, so CMD and its children inherit it.
+    cores is a core plan slot (used only while the plan is on) or a spec such
+    as e-cores:3 or p-cores (always used). Without --cores, a preset saved for
+    the job's --name wins over the plan's heavy-job slot (forge_cores.py).
     Imported here so that importing forge_ram changes nothing for its users."""
     shared = str(Path(__file__).resolve().parent)
     if shared not in sys.path:
@@ -462,7 +467,19 @@ def pin_cores(slot: str) -> None:
     import forge_cores
 
     plan = forge_cores.load_plan()
-    if plan.get("enabled") is True and slot not in (plan.get("slots") or {}):
+    slots = plan.get("slots") or {}
+    if cores is None and name:
+        preset = forge_cores.preset_for(forge_cores.load_state(), name)
+        if preset is not None:
+            cores = preset.get("spec")
+    if cores is not None and cores not in slots and forge_cores.is_spec(cores):
+        try:
+            os.sched_setaffinity(0, forge_cores.resolve(cores))
+        except (ValueError, OSError) as exc:
+            print(f"{exc}, so the job is not pinned", file=sys.stderr)
+        return
+    slot = cores or "heavy-job"
+    if plan.get("enabled") is True and slot not in slots:
         print(
             f"the core plan has no slot {slot!r}, so the job is not pinned",
             file=sys.stderr,
@@ -564,7 +581,11 @@ def main(argv: list[str] | None = None) -> int:
             p.add_argument("--mem-max", default=None)
             p.add_argument("--swap-max", default=None)
             p.add_argument("--name", default="")
-            p.add_argument("--cores", default="heavy-job", help="core plan slot")
+            p.add_argument(
+                "--cores",
+                default=None,
+                help="a core plan slot, or cores: all, p-cores, e-cores, e-cores:3, 4-7",
+            )
             p.add_argument("command", nargs=argparse.REMAINDER)
     args = parser.parse_args(argv)
     registry = load_registry()
@@ -603,7 +624,7 @@ def main(argv: list[str] | None = None) -> int:
     if step:
         print(f"{step['why']}: nice {nice}, CPU quota {quota or 'none'}")
     line = scope_command(cmd, mem_max, swap_max, args.name, nice, quota)
-    pin_cores(args.cores)
+    pin_cores(args.cores, args.name)
     sys.stdout.flush()
     # the GPU lock's fd is inheritable, so CMD holds it until it ends
     if _gpu_fd is not None:

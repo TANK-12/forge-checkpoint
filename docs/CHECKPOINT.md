@@ -78,6 +78,25 @@ command installed and otherwise shows the raw "No such file" error; the
 local choice needs Jan and a model, and falls back to the web without them.
 
 
+## All-apps checkpoint
+
+`checkpoint-2026-10-28-allapps` is a third prerelease, built the same way,
+that carries every app safe to publish: 25 apps on Linux, 22 on Mac and 21
+on Windows (the updated checkpoint had 18, 14 and 13). Added on every
+system: Prompts, Recall, Reps, Shelf, Taleforge, Tavern and Vault; Loops now
+also runs on Mac and Windows, moving deleted loops to the system's bin.
+Taleforge and Tavern need Jan with a model for their narrator, and Arcade,
+Dossier and Foresight use it too; the others need no AI. Its attached source archive is that tag. The packages were
+scanned with the same privacy checks and checked with the same
+installed-copy smoke: Linux 143/143 and Windows under Wine 123/123 locally,
+and again on native hosted runners through the saved-checkpoint workflow.
+
+Still left out: apps holding the owner's own data, accounts, chats or
+secrets; apps that only drive one Linux desktop or its security checks; apps
+that need large AI models or programs that cannot ship; a chess app whose
+library is GPL-3.0; a map app whose built-in places name the owner's region;
+and a focus timer that needs a file route only the full desktop hub has.
+
 ## What remains unverified
 
 Interactive Mac/Windows desktop windows, Gatekeeper/quarantine, SmartScreen,
@@ -103,8 +122,9 @@ The source repository has newly created history, not the daily repository's
 history. Binary downloads include their own clean Python runtime/packages.
 
 Hyprland/end4, systemd, Linux device and power control, mounts, desktop
-widgets and daily launchers are not Mac/Windows features. Files, Convert,
-Loops and Typeset are omitted on Mac/Windows; Terminal is omitted on Windows.
+widgets and daily launchers are not Mac/Windows features. In the first two
+checkpoints Files, Convert, Loops and Typeset were omitted on Mac/Windows and
+Terminal on Windows; the all-apps checkpoint brings Loops to both.
 AI features need Jan and separately downloaded models. Research apps may
 fetch public information only when requested. No heavy AI evaluation was run.
 

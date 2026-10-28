@@ -1,0 +1,23 @@
+{
+  "name": "vault",
+  "label": "Vault",
+  "tagline": "3D models, skies, textures and sounds",
+  "frame": {"tabs": [{"id": "disk", "label": "On disk"}, {"id": "ph", "label": "Poly Haven"}]},
+  "port": 8494,
+  "module": "web_app:app",
+  "src_dir": ".",
+  "accent": "#5f9e8f",
+  "icon": "🗃️",
+  "order": 29,
+  "section": "create",
+  "ready_timeout": 30,
+  "ram_class": "light",
+  "store": {"github": "private"},
+  "help": {"about": "Browse your 3D models, skies, textures and sounds in one place, and fetch free ones from Poly Haven.", "features": ["On disk", "Poly Haven"]},
+  "manifest": {
+    "summary": "One browser for the assets already on disk: 3D models, HDRI skies, material textures (a folder of colour, normal and roughness maps is one item), images and sprites, and sounds, from the folders in sources.json (Forge assets, Downloads, Loops) plus any folder added in the page. Models and skies turn in a three.js preview, pictures show as thumbnails, sounds play. A Poly Haven tab searches the free CC0 library and downloads an asset once into Forge assets. Send to Blender (into the open Blender through the Forge bridge), Godot (copied into a project's assets/vault folder) or PixelForge (a new sprite pack and palette). Source folders are never changed and a copy never lands on an existing name.",
+    "data_dir": "~/.local/share/forge/vault",
+    "dependencies": {"required": ["shared/forge_guard.py", "shared/forge_assets.py", "shared/forge_art.py", "shared/vendor/three"], "optional": ["shared/bridges/blender/forge_bridge.py"]},
+    "docs": ["README.md", "WIP.md"]
+  }
+}

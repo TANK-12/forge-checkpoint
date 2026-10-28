@@ -2,6 +2,7 @@
   "name": "convert",
   "label": "Convert",
   "tagline": "Images, sound and documents, re-saved",
+  "frame": true,
   "help": {
     "about": "Re-save pictures, sound and documents as another kind of file: pick the file, pick what it should become.",
     "features": [

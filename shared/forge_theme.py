@@ -444,8 +444,9 @@ POWER_PAIRS: dict[str, tuple[str, str]] = {
 # "members" list, and no group opens as tabs (hub/index.html Layout).
 FORGE_LAYOUTS: dict[str, dict] = {
     "new": {"label": "New (places with tabs)", "places": True, "forces": {}},
+    # also the home screen's Show all apps button: every section opens too
     "classic": {
-        "label": "Classic (every app its own tile)",
+        "label": "Show all apps (Classic: every app its own tile)",
         "places": False,
         "forces": {
             "show_dev_apps": True,
@@ -835,8 +836,11 @@ SETTINGS: dict[str, dict] = {
         label="Start apps",
         help="On demand makes Forge open lighter; an app's first open waits under a second.",
     ),
+    # Off by default since 2026-10-28: the owner found some
+    # thirty apps running that he had not opened. Start ahead and the hover
+    # start below had started them; now only opening an app starts it.
     "prestart_apps": {
-        "default": 4,
+        "default": 0,
         "kind": "int",
         "min": 0,
         "max": 10,
@@ -844,6 +848,27 @@ SETTINGS: dict[str, dict] = {
         "label": "Start ahead",
         "help": "When Forge opens, this many of the apps you used last start in the background, "
         "so they open at once. Left unused they sleep again like any app. 0 turns it off.",
+    },
+    "start_on_hover": {
+        "default": False,
+        "kind": "bool",
+        "group": HOME_SCREEN,
+        "label": "Start an app when the pointer rests on it",
+        "help": "Starts an app's backend while the pointer or the keyboard rests on its tile, "
+        "or as it is pressed, so it opens a little faster. Off: an app starts only when you "
+        "open it.",
+    },
+    "app_sleep_minutes": {
+        "default": 20,
+        "kind": "int",
+        "min": 0,
+        "max": 240,
+        "group": HOME_SCREEN,
+        "label": "Stop unused apps after (minutes)",
+        "help": "An app left unused this long stops its backend; opening it again starts it in "
+        "about a second, with its page as you left it. Apps that must keep running (Relay, "
+        "Power, Calendar and the like) are never stopped. 0 turns this off (an app's own rule "
+        "in Settings > System still counts), and then nothing starts ahead either.",
     },
     "live_wallpaper": _choice(
         "",
@@ -1709,7 +1734,7 @@ SETTINGS: dict[str, dict] = {
         {k: v["label"] for k, v in FORGE_LAYOUTS.items()},
         group=APPS,
         label="Forge layout",
-        help="New folds related apps into places with tabs, opens apps in Simple and reads at 15 px. Classic is Forge from before that: every app its own tile, developer apps shown, each app's own text size and the mode you left it in. Your own choices below are kept for when you switch back.",
+        help="New folds related apps into places with tabs, opens apps in Simple and reads at 15 px. Show all apps is Forge from before that: every app its own tile, every home section open, developer apps shown, each app's own text size and the mode you left it in. The Show all apps button under the home screen's search box switches it too. Your own choices below are kept for when you switch back.",
     ),
     # Every app opens in Simple, with Advanced one click away in the app
     # (the owner, 2026-10-27). Apps hear it through shared/forge_chrome.js.
@@ -2044,6 +2069,36 @@ def load(path: Path | None = None) -> dict:
     return out
 
 
+def hand_wallpaper(changes: dict, before: dict) -> dict:
+    """What else changes when a wallpaper is picked by hand (Settings, the
+    Wallpapers app, following the desktop): the picture is what Forge shows.
+
+    Any live scene (a theme's or one picked by itself) is drawn over the
+    still picture, so it goes off, or the picked picture never shows on the
+    home screen; and the theme's
+    accent gives way to the picture's colours (an accent picked by hand
+    stays). A save that sets the theme or the live scene too (a theme pick)
+    is left alone. The owner, 2026-10-28: the Wallpapers app and the themes
+    fought over the background and the accent."""
+    if "wallpaper" not in changes or "theme" in changes or "live_wallpaper" in changes:
+        return {}
+    if changes["wallpaper"] == before.get("wallpaper"):
+        return {}
+    out: dict = {}
+    if before.get("live_wallpaper"):
+        out["live_wallpaper"] = ""
+    picked = forge_themes.active_theme(before)
+    accent = before.get("accent")
+    if (
+        "accent" not in changes
+        and picked
+        and accent
+        and accent == (picked.get("colours") or {}).get("accent")
+    ):
+        out["accent"] = ""
+    return out
+
+
 def save(changes: dict, path: Path | None = None) -> dict:
     """Merge `changes` into the stored settings and return them all, cleaned.
     Unknown keys in `changes` are ignored.
@@ -2063,6 +2118,7 @@ def save(changes: dict, path: Path | None = None) -> dict:
     # A locked look (Business) refuses every real change, leaving it included,
     # until the password opens the window; a save that changes nothing passes.
     before = load(path)
+    cleaned.update(hand_wallpaper(cleaned, before))
     if any(before[k] != v for k, v in cleaned.items()):
         forge_lock.check(look_rules(before["look"])["locked"])
     # Picking a locked look from an open one remembers the open one, so

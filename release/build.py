@@ -89,6 +89,12 @@ CLEAN_DIR = ROOT / "apps" / "backup"
 CACHE = Path(
     os.environ.get("FORGE_RELEASE_CACHE") or Path.home() / ".cache" / "forge-build"
 )
+# Inno Setup 6 lives in a Wine prefix of its own, kept apart from any other
+# Wine use (installed there once with its /VERYSILENT /CURRENTUSER setup).
+INNO_PREFIX = Path(
+    os.environ.get("FORGE_INNO_PREFIX")
+    or Path.home() / ".local" / "share" / "forge-build" / "wine-inno"
+)
 TOP = "Forge"  # the folder every archive unpacks to
 SNIFF = 8192  # a NUL byte in this many first bytes marks a binary file
 MANYLINUX_OLD = {
@@ -644,11 +650,39 @@ UNIX_ONLY = {
 WINDOWS_ONLY = {"_overlapped", "_winapi", "_wmi", "msvcrt", "nt", "winreg", "winsound"}
 
 
+def normal_dist(name: str) -> str:
+    return re.sub(r"[-_.]+", "-", name).lower()
+
+
+def pinned_by_app(files: list[File]) -> dict[str, set[str]]:
+    """{app folder: distributions its shipped venv.lock.json pins}."""
+    pinned = {}
+    for f in files:
+        parts = f.rel.split("/")
+        if len(parts) == 3 and parts[0] == "apps" and parts[2] == "venv.lock.json":
+            try:
+                pins = json.loads(f.data).get("packages") or []
+            except (ValueError, AttributeError):
+                continue
+            pinned[f"apps/{parts[1]}"] = {
+                normal_dist(str(p).split("==")[0]) for p in pins if isinstance(p, str)
+            }
+    return pinned
+
+
 class ImportScan:
     """Follows imports from entry files through the shipped files."""
 
-    def __init__(self, files: list[File], installed: set[str], system: str = "linux"):
+    def __init__(
+        self,
+        files: list[File],
+        installed: set[str],
+        system: str = "linux",
+        import_names: dict[str, str] | None = None,
+    ):
         self.py = {f.rel: f for f in files if f.rel.endswith(".py")}
+        self.pinned = pinned_by_app(files)
+        self.import_names = import_names or {}
         self.dirs = {posixpath.dirname(rel) for rel in self.py}
         self.installed = installed
         self.system = system
@@ -749,6 +783,12 @@ class ImportScan:
         if len(parts) > 1 and self.find(parts[0], search):
             return  # `from pkg import name`: a name inside a shipped package
         message = f"{rel}:{line}: {top} is not shipped or installed"
+        dist = normal_dist(self.import_names.get(top, top))
+        if dist in self.pinned.get(app_dir, set()):
+            # The app's own lock pins it, so it is a real dependency, not
+            # an optional extra: a function that imports it would fail.
+            hard = True
+            message += f" (its {app_dir}/venv.lock.json pins it)"
         found_in = self.errors if hard else self.warnings
         if message not in found_in:
             found_in.append(message)
@@ -777,7 +817,7 @@ def scan_imports(
     skip: set[str],
     system: str = "linux",
 ) -> ImportScan:
-    scan = ImportScan(files, installed, system)
+    scan = ImportScan(files, installed, system, registry.get("imports"))
     scan.visit("forge_portable.py", ["", "shared"], "")
     for entry, path, app_dir in app_entries(files, registry, skip):
         if entry not in scan.py:
@@ -1287,6 +1327,17 @@ def build_target(
     package = out / f"forge-{registry['version']}-{name}.{kind}"
     if package.exists():
         raise BuildError(f"{package} already exists: pick another --out")
+    if target.get("setup") and setup_path(registry, out).exists():
+        raise BuildError(
+            f"{setup_path(registry, out)} already exists: pick another --out"
+        )
+    if target.get("setup"):
+        # before packing, so a failed build leaves no download in --out
+        problems = setup_folder_problems(top, LAUNCH / target["setup"])
+        if problems:
+            raise BuildError(
+                "the setup script misses bundle folders:\n  " + "\n  ".join(problems)
+            )
     print(f"[build] {name}: packing {package.name}", flush=True)
     archive(top, package, kind)
     count, size = folder_size(top)
@@ -1367,26 +1418,41 @@ def launch_problems(registry: dict) -> list[str]:
     return problems
 
 
-def inno_compiler() -> list[str] | None:
-    """Inno Setup 6's compiler run through Wine: FORGE_ISCC names ISCC.exe,
-    else it is looked for in the Wine prefix (WINEPREFIX, else ~/.wine).
-    None when there is no Wine or no Inno Setup."""
+def inno_compiler() -> tuple[list[str], Path | None] | None:
+    """Inno Setup 6's compiler run through Wine, and the Wine prefix it runs
+    in. FORGE_ISCC names ISCC.exe; else it is looked for in the build's own
+    prefix (INNO_PREFIX), then in WINEPREFIX (else ~/.wine). It runs in the
+    prefix it was found in. None when there is no Wine or no Inno Setup."""
     wine = shutil.which("wine")
     if not wine:
+        if os.environ.get("FORGE_ISCC"):
+            raise BuildError("FORGE_ISCC is set, but Wine (which runs it) is not")
         return None
     if os.environ.get("FORGE_ISCC"):
         spots = [Path(os.environ["FORGE_ISCC"])]
+        if not spots[0].is_file():
+            raise BuildError(f"FORGE_ISCC names {spots[0]}, which is not there")
     else:
-        drive = Path(os.environ.get("WINEPREFIX") or Path.home() / ".wine") / "drive_c"
-        spots = [
-            drive / folder / "Inno Setup 6" / "ISCC.exe"
-            for folder in ("Program Files (x86)", "Program Files")
-        ]
-        spots += sorted(
-            drive.glob("users/*/AppData/Local/Programs/Inno Setup 6/ISCC.exe")
-        )
+        spots = []
+        for prefix in (
+            INNO_PREFIX,
+            Path(os.environ.get("WINEPREFIX") or Path.home() / ".wine"),
+        ):
+            drive = prefix / "drive_c"
+            spots += [
+                drive / folder / "Inno Setup 6" / "ISCC.exe"
+                for folder in ("Program Files (x86)", "Program Files")
+            ]
+            spots += sorted(
+                drive.glob("users/*/AppData/Local/Programs/Inno Setup 6/ISCC.exe")
+            )
     found = next((spot for spot in spots if spot.is_file()), None)
-    return [wine, str(found)] if found else None
+    if found is None:
+        return None
+    prefix = next(
+        (folder.parent for folder in found.parents if folder.name == "drive_c"), None
+    )
+    return [wine, str(found)], prefix
 
 
 def wine_path(path: Path) -> str:
@@ -1394,33 +1460,96 @@ def wine_path(path: Path) -> str:
     return "Z:" + str(path.resolve()).replace("/", "\\")
 
 
+def setup_path(registry: dict, out: Path) -> Path:
+    return out / f"Forge-Setup-{registry['version']}.exe"
+
+
+def numeric_version(version: str) -> str:
+    """The version as Windows' file version wants it: numbers and dots
+    only (0.2.0-rc1 -> 0.2.0)."""
+    match = re.match(r"\d+(\.\d+){0,3}", version)
+    return match.group(0) if match else "0.0.0"
+
+
+def setup_folder_problems(top: Path, script: Path) -> list[str]:
+    """Every folder at the top of the bundle must be named in the setup
+    script's [InstallDelete] (an upgrade clears it first) and
+    [UninstallDelete] (the uninstaller takes what Forge wrote there)."""
+    sections: dict[str, set[str]] = {}
+    section = ""
+    for line in script.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if line.startswith("[") and line.endswith("]"):
+            section = line[1:-1]
+            continue
+        found = re.match(r'Type: filesandordirs; Name: "\{app\}\\([^"\\]+)"', line)
+        if found:
+            sections.setdefault(section, set()).add(found.group(1).lower())
+    problems = []
+    for folder in sorted(p.name for p in top.iterdir() if p.is_dir()):
+        for section in ("InstallDelete", "UninstallDelete"):
+            if folder.lower() not in sections.get(section, set()):
+                problems.append(f"{script.name} [{section}] does not name {folder}")
+    return problems
+
+
+def wine_value(wine: str, env: dict, key: str, name: str) -> str | None:
+    """A Wine registry value ("" when it is set but empty), or None when it
+    is not set."""
+    try:
+        text = run([wine, "reg", "query", key, "/v", name], env=env)
+    except BuildError:
+        return None
+    for line in text.splitlines():
+        parts = line.split()
+        if len(parts) >= 2 and parts[0] == name and parts[1].startswith("REG_"):
+            return " ".join(parts[2:])
+    return None
+
+
 def windows_setup(registry: dict, target: dict, top: Path, out: Path) -> dict:
     """Forge-Setup-<version>.exe from the bundle folder, made by Inno Setup
     under Wine from the target's "setup" script in release/launch/. Without
     Inno Setup the zip is the whole download, and the report says why."""
-    compiler = inno_compiler()
-    if compiler is None:
+    found = inno_compiler()
+    if found is None:
         print(
             "[build] no Inno Setup under Wine: the Windows download is the zip"
             " alone (release/README.md says how to add the setup program)",
             flush=True,
         )
         return {"setup": None, "setup_why": "Inno Setup was not found under Wine"}
-    stem = f"Forge-Setup-{registry['version']}"
-    dest = out / f"{stem}.exe"
+    dest = setup_path(registry, out)
+    stem = dest.stem
     if dest.exists():
         raise BuildError(f"{dest} already exists: pick another --out")
     print(f"[build] {target['label']}: making {dest.name} with Inno Setup", flush=True)
-    # no window on the screen: no display, and no Mono or Gecko install prompt
-    env = dict(os.environ, WINEDEBUG="-all", WINEDLLOVERRIDES="mscoree,mshtml=")
+    compiler, prefix = found
+    # no window on the screen: no display, no Mono or Gecko install prompt,
+    # and nothing added to the Linux menus
+    env = dict(
+        os.environ,
+        WINEDEBUG="-all",
+        WINEDLLOVERRIDES="mscoree,mshtml=;winemenubuilder.exe=d",
+    )
     for key in ("DISPLAY", "WAYLAND_DISPLAY"):
         env.pop(key, None)
+    if prefix is not None:
+        env["WINEPREFIX"] = str(prefix)
+    # Wine marks a file whose name starts with a dot as hidden, and Inno
+    # Setup leaves hidden files out: show them while it runs, so the setup
+    # program installs every file the zip holds, then put the prefix's own
+    # value back.
+    wine, key = compiler[0], r"HKCU\Software\Wine"
+    before = wine_value(wine, env, key, "ShowDotFiles")
     try:
+        run([wine, "reg", "add", key, "/v", "ShowDotFiles", "/d", "Y", "/f"], env=env)
         run(
             compiler
             + [
                 "/Q",
                 f"/DAppVersion={registry['version']}",
+                f"/DNumericVersion={numeric_version(registry['version'])}",
                 f"/DBundle={wine_path(top)}",
                 f"/DOutputDir={wine_path(out)}",
                 f"/DOutputName={stem}",
@@ -1430,6 +1559,16 @@ def windows_setup(registry: dict, target: dict, top: Path, out: Path) -> dict:
         )
     except BuildError as e:
         raise BuildError(f"Inno Setup could not make {dest.name}: {e}")
+    finally:
+        if before is None:
+            restore = [wine, "reg", "delete", key, "/v", "ShowDotFiles", "/f"]
+        else:
+            restore = [wine, "reg", "add", key, "/v", "ShowDotFiles"]
+            restore += ["/d", before, "/f"]
+        try:
+            run(restore, env=env)
+        except BuildError:
+            pass  # the setup program is made; a shown dot-file is harmless
     if not dest.is_file():
         raise BuildError(f"Inno Setup ran but {dest.name} is not in {out}")
     return {

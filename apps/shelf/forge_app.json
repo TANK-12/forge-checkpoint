@@ -1,0 +1,27 @@
+{
+  "name": "shelf",
+  "label": "Shelf",
+  "frame": true,
+  "tagline": "Keep articles to read later, offline",
+  "port": 8486,
+  "module": "web_app:app",
+  "src_dir": ".",
+  "accent": "#d9a86c",
+  "icon": "🔖",
+  "order": 16,
+  "section": "research",
+  "ready_timeout": 30,
+  "ram_class": "light",
+  "store": {"github": "private"},
+  "help": {"about": "Paste an article's address and Shelf keeps its text and pictures to read later, offline, with full-text search.", "features": ["Unread", "All", "Archived"]},
+  "manifest": {
+    "summary": "Read-later over trafilatura: paste an address (or use the bookmarklet) and Shelf keeps the article's text and pictures in its own folder, readable offline. Full-text search (SQLite FTS5), unread/all/archived, a bin that uses the desktop trash, and 'Research in Dossier' (send_to in shelf.json is the registry). Fetches only public addresses.",
+    "data_dir": "~/.local/share/forge/shelf",
+    "dependencies": {"required": ["gio"], "optional": ["dossier"]},
+    "docs": ["README.md", "WIP.md"]
+  },
+  "export": [
+    {"id": "articles", "label": "Saved articles", "kind": "sqlite", "path": "~/.local/share/forge/shelf/shelf.db", "tables": ["articles"]},
+    {"id": "pages", "label": "Article pages and pictures", "kind": "folder", "path": "~/.local/share/forge/shelf/articles"}
+  ]
+}

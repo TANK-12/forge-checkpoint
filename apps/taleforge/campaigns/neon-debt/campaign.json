@@ -1,0 +1,20 @@
+{
+  "id": "neon-debt",
+  "name": "Neon Debt",
+  "genre": "cyberpunk noir romance",
+  "ruleset": "d20-neon",
+  "order": 2,
+  "tagline": "A debt you never signed for, a memory someone bought, and the people worth staying alive for.",
+  "intro": "Halcyon Reach never stops raining. You wake in a capsule hotel in Lowtide, the flooded bottom of the city, with a headache like a dropped server rack and a number glowing red on your wrist: 48,000 credits owed to Aurelian Dynamics, and climbing. You do not remember borrowing it. You do not remember the last six weeks at all. Somewhere above the clouds the Aurelian Spire hums with your name in its books, and down here, in the noodle steam and the neon, somebody knows why.",
+  "start": {"location": "lowtide_capsule", "quests": ["main_1"], "flags": [], "items": [], "gold": 0, "reveal": ["lowtide_market", "lowtide_noodle", "lowtide_clinic", "lowtide_club"]},
+  "narrator": {
+    "voice": "Neon-noir cyberpunk with a wry, tired heart, like a detective's voice-over with rain on the window. Concrete senses over grand adjectives: wet concrete, frying oil, ozone, holo-ads flickering through steam. Halcyon Reach is a drowned coastal megacity: Lowtide below, flooded streets, night markets and gangs; the Aurelian Spire above, glass, clean air and money. Aurelian Dynamics owns most of the city's debt and collects it in chrome, memories and years. Keep tech plausible and gritty, never cartoonish; no real-world brands.",
+    "romance": "Romance is earnest, slow-burn and tasteful: stolen looks under neon, banter, a hand held on a rooftop in the rain, a first kiss. Anything more fades to black."
+  },
+  "endings": [
+    {"id": "zero_balance", "title": "Zero Balance", "text": "You burn the Ledger. Across Halcyon Reach, every red number on every wrist flickers and goes to zero, and for one night the whole city forgets what it owes. Tomorrow will be chaos. Tonight, Lowtide dances in the rain."},
+    {"id": "paid_in_full", "title": "Paid in Full", "text": "You sell the Ledger back to Aurelian. Your number goes to zero and a new one appears beside it, with a lot of zeroes in the right direction. You get a view from the Spire now. On clear nights you can almost see Lowtide, if you look."},
+    {"id": "new_ledger", "title": "The New Ledger", "text": "You keep the Ledger. Every debt in the city answers to you now, and you are kinder than Aurelian ever was, mostly. People in Lowtide stop saying your name out loud. Power is just debt with a nicer office."},
+    {"id": "last_train", "title": "The Last Train Out", "text": "The Ledger burns behind you, and the person you love is holding your hand on the last maglev out of Halcyon Reach. The rain stops somewhere past the sea wall. Neither of you owes anyone anything, except, maybe, each other."}
+  ]
+}

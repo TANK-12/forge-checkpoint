@@ -1,0 +1,45 @@
+{"id": "lyra", "name": "Lyra Vance", "pronouns": "she/her", "age": 27, "location": "brightwater_inn", "class": "ranger", "level": 1,
+ "description": "A lean half-elf in a weathered green cloak, a longbow propped beside her and a quiver of kingfisher-blue arrows she never uses.",
+ "appearance": "Dark auburn hair in a messy braid, freckles, pointed ears she hides under the hood, a scar through one eyebrow, grey-green eyes.",
+ "personality": "Guarded, dry, observant, fiercely loyal once won. Hides grief under competence. Secretly soft about animals, music and stars. Hates being pitied or managed.",
+ "speech": "Short, wry sentences. Understatement. Deflects feelings with a joke, then sometimes says the true thing very plainly. Never gushes.",
+ "backstory": "Lyra and her younger brother Fen grew up as wardens of the Whisperwood's southern edge. Two months ago a great wolf grown through with black briar, the Grey Hunter, took Fen while she was away. She found only his bow. She has tracked the beast south to Sallowfen and will not leave until it is dead. She blames herself for being away that night.",
+ "faction": "river_guild",
+ "greeting": "If you're here to tell me the wolf is a myth, the door's behind you.",
+ "combat": {"hp": 14, "ac": 14, "attack": 5, "damage": "1d8+3", "name": "longbow"},
+ "recruit": {"when": {"any": [{"quest_active": "lyra_quest"}, {"quest_done": "main_1"}, {"flag": "lyra_trusts"}]}, "scene": "lyra_recruit", "text": "Lyra shoulders her bow. 'Fine. I'll come. Don't make me regret it.'"},
+ "romanceable": true, "attracted_to": ["any"],
+ "tones": {"flirt": {"amount": 3, "min_affection": 20, "below": -2}, "kind": 2, "rude": -5, "joke": 2, "curious": 1, "brave": 2, "cautious": 1},
+ "gifts": {"wildflowers": 4, "honey_cakes": 3, "old_ballad_book": 6, "silver_locket": 2, "fine_wine": -1, "default": 1},
+ "likes": ["honesty", "competence", "animals", "stars", "quiet"], "dislikes": ["pity", "cruelty", "showing off", "wine"],
+ "reactions": [
+   {"flag": "spared_raider", "amount": 4, "text": "Lyra glances at you. 'Mercy. Didn't expect that. I don't hate it.'"},
+   {"flag": "killed_surrendered", "amount": -6, "text": "Lyra looks away. 'He'd dropped his blade.'"},
+   {"flag": "hunter_dead", "amount": 10, "text": "Lyra stands over the Hunter for a long time. Then she puts her hand on your shoulder, once."},
+   {"flag": "gave_witch_thorn", "amount": 1, "text": "'You made a deal with the witch.' Lyra almost smiles. 'Brave or stupid.'"}
+ ],
+ "arc": [
+   {"stage": "spark", "requires": {"affection": 25, "in_party": "lyra", "not_flag": "lyra_romance_declined"}, "scene": "lyra_heart_1", "trigger": "rest"},
+   {"stage": "courting", "requires": {"affection": 45, "romance": {"lyra": "spark"}, "quest_done": "lyra_quest"}, "scene": "lyra_heart_2", "trigger": "talk"},
+   {"stage": "beloved", "requires": {"affection": 70, "romance": {"lyra": "courting"}}, "scene": "lyra_heart_3", "trigger": "rest"}
+ ],
+ "personal_quest": "lyra_quest",
+ "topics": [
+   {"id": "wolf", "prompt": "Ask about the wolf she's hunting", "text": "'The Grey Hunter. Wolf the size of a pony, briar growing out of it. It took my brother. It's in that fen somewhere, and I'm going to put an arrow through its eye.'", "effects": [{"flag": "lyra_told_wolf"}]},
+   {"id": "help", "prompt": "Offer to help her hunt it", "when": {"flag": "lyra_told_wolf", "quest_not_started": "lyra_quest"}, "text": "She studies you for a long moment. 'You'd do that. For a stranger.' A breath. 'All right. The tracks are in Sallowfen, past the docks. Don't slow me down.'", "effects": [{"start_quest": "lyra_quest"}, {"affection": {"lyra": 5}}, {"flag": "lyra_trusts"}]},
+   {"id": "arrows", "prompt": "Ask about the blue-fletched arrows", "when": {"affection": {"lyra": 10}}, "text": "'Fen fletched them. Kingfisher feathers; he said they'd fly true because kingfishers never miss.' She runs a thumb over one. 'I haven't shot one yet. I'm saving one.'"},
+   {"id": "stars", "prompt": "Ask what she does on watch at night", "when": {"affection": {"lyra": 20}}, "text": "'Count stars. Name the ones nobody's named. Fen used to make up stories for them.' She looks at you sideways. 'Don't tell anyone that.'", "effects": [{"flag": "lyra_stars"}]}
+ ],
+ "lines": {
+   "greet": ["'You again.' It doesn't sound unwelcome.", "Lyra lifts two fingers from her bowstring in greeting.", "'Something on your mind?'"],
+   "flirt_yes": ["Lyra's ears go pink. 'You're ridiculous.' She doesn't look away.", "'Careful,' she says, a smile caught at the corner of her mouth. 'I might start believing you.'", "She snorts, then bumps her shoulder against yours."],
+   "flirt_no": ["'Save it for someone who'll fall for it.'", "Lyra raises an eyebrow and says nothing at all, which is somehow worse.", "'We've known each other a day. Try again in a month.'"],
+   "kind": ["'...Thanks.' She means it.", "She looks at you a moment too long. 'You're a decent sort. Don't let it get you killed.'", "'I'm fine.' A pause. 'Better, for asking.'"],
+   "rude": ["'Charming.' Her face closes like a door.", "Lyra turns back to fletching an arrow and pointedly does not answer.", "'Say that again and you'll walk alone.'"],
+   "joke": ["A short laugh escapes her before she can stop it.", "'That was terrible.' She is trying not to smile.", "'Fen would have liked that one.'"],
+   "curious": ["'Not much to tell. I hunt. I track. I miss my brother.'", "'Ask me again when I've had more sleep.'", "She considers the question honestly. 'The forest raised us. Towns make me itch.'"],
+   "neutral": ["Lyra nods.", "'Mm.'", "She checks her bowstring while she listens.", "'Fair enough.'"],
+   "join": "Lyra slings her quiver and falls in beside you.",
+   "leave": "'Fine. You know where I'll be.'",
+   "banter": ["'Wind's changing. Rain by dusk.'", "Lyra points out a hawk circling, then a fox in the hedge, as if making introductions.", "'You walk loud. We'll work on it.'", "She hums something tuneless and stops the moment she notices."]
+ }}

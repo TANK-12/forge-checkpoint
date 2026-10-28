@@ -1,0 +1,199 @@
+{
+  "id": "d20-neon",
+  "name": "d20 neon",
+  "about": "The d20 rule set re-skinned for a rain-soaked cyberpunk city: six abilities, street skills, chromed-up classes with level-gated abilities, d20 checks against a DC, armour class, and levels 1 to 10.",
+  "labels": {"hp": "HP", "ac": "Armor", "gold": "credits", "xp": "Street cred", "level": "Level", "rest_short": "Stim up", "rest_long": "Crash"},
+  "abilities": [
+    {"id": "str", "name": "Body"},
+    {"id": "dex", "name": "Reflexes"},
+    {"id": "con", "name": "Grit"},
+    {"id": "int", "name": "Tech"},
+    {"id": "wis", "name": "Instinct"},
+    {"id": "cha", "name": "Cool"}
+  ],
+  "ability_scores": {
+    "standard_array": [15, 14, 13, 12, 10, 8],
+    "point_buy": {"budget": 27, "min": 8, "max": 15, "cost": {"8": 0, "9": 1, "10": 2, "11": 3, "12": 4, "13": 5, "14": 7, "15": 9}},
+    "roll": "4d6kh3",
+    "max": 20
+  },
+  "skills": [
+    {"id": "athletics", "name": "Athletics", "ability": "str", "verbs": ["climb", "jump", "swim", "push", "lift", "break", "force", "kick in", "shove", "carry", "pry", "wrestle"], "risk": "1d4"},
+    {"id": "parkour", "name": "Parkour", "ability": "dex", "verbs": ["vault", "wall run", "roll", "dodge", "leap", "balance", "squeeze", "swing", "drop down", "scramble"], "risk": "1d4"},
+    {"id": "stealth", "name": "Stealth", "ability": "dex", "verbs": ["sneak", "hide", "creep", "slip past", "ghost", "shadow", "tail", "stay dark", "blend in"]},
+    {"id": "sleight", "name": "Sleight of Hand", "ability": "dex", "verbs": ["pickpocket", "steal", "palm", "lift", "swipe", "plant", "skim", "pocket"]},
+    {"id": "drive", "name": "Drive", "ability": "dex", "verbs": ["drive", "steer", "ride", "bike", "car", "swerve", "floor it", "pilot", "chase", "outrun"]},
+    {"id": "hacking", "name": "Hacking", "ability": "int", "verbs": ["hack", "jack in", "crack", "decrypt", "breach", "ice", "firewall", "override", "spoof", "brute force", "upload"]},
+    {"id": "tech", "name": "Tech", "ability": "int", "verbs": ["repair", "rewire", "wire", "splice", "jury-rig", "fix", "bypass", "cyberware", "circuit", "lockpick", "disarm"]},
+    {"id": "investigation", "name": "Investigation", "ability": "int", "verbs": ["search", "investigate", "inspect", "deduce", "examine", "clue", "clues", "trace", "piece together"]},
+    {"id": "insight", "name": "Insight", "ability": "wis", "verbs": ["read", "sense", "lying", "lie", "motive", "trust", "suspect", "gauge", "size up"]},
+    {"id": "medicine", "name": "Medicine", "ability": "wis", "verbs": ["heal", "patch", "bandage", "treat", "stitch", "stabilise", "stabilize", "diagnose", "tox", "overdose"]},
+    {"id": "perception", "name": "Perception", "ability": "wis", "verbs": ["listen", "watch", "spot", "notice", "look around", "scan", "peer", "keep watch", "clock"]},
+    {"id": "streetwise", "name": "Streetwise", "ability": "wis", "verbs": ["word on the street", "rumour", "rumor", "fence", "contact", "gang", "turf", "ask around", "find a fixer", "black market"]},
+    {"id": "deception", "name": "Deception", "ability": "cha", "verbs": ["bluff", "lie to", "trick", "disguise", "pretend", "con", "fool", "feint", "fake"]},
+    {"id": "intimidation", "name": "Intimidation", "ability": "cha", "verbs": ["threaten", "intimidate", "scare", "menace", "glare", "demand", "lean on", "shake down"]},
+    {"id": "performance", "name": "Performance", "ability": "cha", "verbs": ["sing", "dance", "play", "perform", "tell a story", "work the crowd", "toast", "busk"]},
+    {"id": "persuasion", "name": "Persuasion", "ability": "cha", "verbs": ["persuade", "convince", "charm", "negotiate", "haggle", "plead", "bargain", "reason with", "flatter", "cut a deal"]}
+  ],
+  "difficulty": {"trivial": 5, "easy": 10, "medium": 13, "hard": 16, "very_hard": 19, "heroic": 22},
+  "check_rules": {"crit_success": 20, "crit_fail": 1, "freeform_dc": "medium", "freeform_xp": 10},
+  "levels": [
+    {"level": 1, "xp": 0, "proficiency": 2},
+    {"level": 2, "xp": 300, "proficiency": 2},
+    {"level": 3, "xp": 900, "proficiency": 2},
+    {"level": 4, "xp": 2000, "proficiency": 2, "ability_points": 2},
+    {"level": 5, "xp": 3800, "proficiency": 3},
+    {"level": 6, "xp": 6500, "proficiency": 3},
+    {"level": 7, "xp": 10000, "proficiency": 3},
+    {"level": 8, "xp": 14500, "proficiency": 3, "ability_points": 2},
+    {"level": 9, "xp": 20000, "proficiency": 4},
+    {"level": 10, "xp": 27000, "proficiency": 4}
+  ],
+  "classes": [
+    {
+      "id": "street_samurai", "name": "Street Samurai", "hit_die": 10, "primary": "str",
+      "about": "More chrome than meat, a blade on the hip and reflexes bought on credit. Hard to kill, steady in a fight.",
+      "skill_options": ["athletics", "parkour", "intimidation", "perception", "drive", "streetwise", "insight"], "skill_count": 2,
+      "start_items": ["mono_katana", "kevlar_vest", "stim_shot", "stim_shot"], "start_gold": 15,
+      "abilities": [
+        {"id": "adrenal_booster", "name": "Adrenal Booster", "level": 1, "kind": "heal", "amount": "1d10+level", "uses": 1, "per": "short", "text": "A pump in your chest kicks, and the pain goes somewhere far away."},
+        {"id": "kerenzikov_burst", "name": "Reflex Burst", "level": 2, "kind": "extra_attack", "uses": 1, "per": "short", "text": "The world slows to syrup and you cut twice before it catches up."},
+        {"id": "wired_reflexes", "name": "Wired Reflexes", "level": 5, "kind": "passive", "attacks": 2, "text": "Your boosted nerves let you attack twice with each Attack."},
+        {"id": "subdermal_lock", "name": "Subdermal Lockdown", "level": 9, "kind": "guard", "ac": 4, "rounds": 2, "uses": 1, "per": "long", "text": "Armour plates slide shut under your skin. Nothing gets through."}
+      ]
+    },
+    {
+      "id": "ghost", "name": "Ghost", "hit_die": 8, "primary": "dex",
+      "about": "An infiltrator who was never there: quiet shoes, a suppressed pistol and a knife for the first strike. Expert at skills.",
+      "skill_options": ["parkour", "athletics", "deception", "insight", "intimidation", "investigation", "perception", "performance", "persuasion", "sleight", "stealth", "streetwise"], "skill_count": 4,
+      "expertise": 2,
+      "start_items": ["combat_knife", "silenced_pistol", "armored_jacket", "lockbreaker", "stim_shot"], "start_gold": 25,
+      "abilities": [
+        {"id": "blindside", "name": "Blindside", "level": 1, "kind": "passive", "bonus_damage": "1d6", "scale": {"3": "2d6", "5": "3d6", "7": "4d6", "9": "5d6"}, "once_per_round": true, "text": "Your first hit each round lands where they never saw it coming."},
+        {"id": "optical_camo", "name": "Optical Camo", "level": 2, "kind": "advantage", "uses": 2, "per": "short", "text": "Your outline smears into the rain; your next attack or check has advantage."},
+        {"id": "monowire_lash", "name": "Monowire Lash", "level": 3, "kind": "damage", "damage": "2d6+2", "uses": 1, "per": "short", "text": "A wire too thin to see whips out of your wrist and through them."},
+        {"id": "ghost_step", "name": "Ghost Step", "level": 5, "kind": "guard", "ac": 3, "rounds": 1, "uses": 2, "per": "short", "text": "You are simply not where the shot goes."}
+      ]
+    },
+    {
+      "id": "netrunner", "name": "Netrunner", "hit_die": 6, "primary": "int",
+      "about": "Fragile, clever and dangerous. A cyberdeck, a head full of daemons, and every camera in the block on your side.",
+      "skill_options": ["hacking", "tech", "investigation", "insight", "medicine", "streetwise"], "skill_count": 2,
+      "start_items": ["heavy_pistol", "cyberdeck", "armored_jacket", "stim_shot"], "start_gold": 15,
+      "spell_attack": "int",
+      "abilities": [
+        {"id": "short_circuit", "name": "Short Circuit", "level": 1, "kind": "attack", "ability": "int", "damage": "1d10", "scale": {"5": "2d10", "9": "3d10"}, "text": "You ping their chrome and it bites back."},
+        {"id": "synapse_burn", "name": "Synapse Burn", "level": 1, "kind": "damage", "damage": "3d4+3", "uses": 2, "per": "long", "text": "A quickhack straight into the nervous system. It never misses."},
+        {"id": "firewall_shell", "name": "Firewall Shell", "level": 1, "kind": "guard", "ac": 5, "rounds": 1, "uses": 2, "per": "long", "text": "Every smart round in the room suddenly forgets where you are."},
+        {"id": "daemon_cascade", "name": "Daemon Cascade", "level": 2, "kind": "area", "damage": "3d6", "save": "int", "uses": 2, "per": "long", "text": "You drop a daemon into the local net and every implant in range seizes."},
+        {"id": "system_reset", "name": "System Reset", "level": 3, "kind": "restore", "restores": ["synapse_burn", "daemon_cascade"], "uses": 1, "per": "long", "text": "You flush your buffers and reload your best scripts."},
+        {"id": "blackout", "name": "Blackout", "level": 5, "kind": "area", "damage": "8d6", "save": "dex", "uses": 1, "per": "long", "text": "You overload the block's grid. Every light dies, and so do the things wired to them."}
+      ]
+    },
+    {
+      "id": "medic", "name": "Street Medic", "hit_die": 8, "primary": "wis",
+      "about": "Trauma kits, a dart gun and steady hands in the rain. Keeps the crew breathing.",
+      "skill_options": ["medicine", "insight", "tech", "persuasion", "perception", "streetwise"], "skill_count": 2,
+      "start_items": ["shock_baton", "kevlar_vest", "medkit", "stim_shot", "stim_shot"], "start_gold": 15,
+      "spell_attack": "wis",
+      "abilities": [
+        {"id": "neurotoxin_dart", "name": "Neurotoxin Dart", "level": 1, "kind": "attack", "ability": "wis", "damage": "1d8", "scale": {"5": "2d8", "9": "3d8"}, "text": "A dart in the neck, and their nerves light up."},
+        {"id": "trauma_team", "name": "Trauma Team", "level": 1, "kind": "heal", "amount": "1d8+wis", "target": "ally", "uses": 3, "per": "long", "text": "Clotting foam, a staple gun and a calm voice. The bleeding stops."},
+        {"id": "combat_stims", "name": "Combat Stims", "level": 1, "kind": "advantage", "uses": 2, "per": "long", "text": "A shot of focus; the next attempt has advantage."},
+        {"id": "nanite_mist", "name": "Nanite Mist", "level": 3, "kind": "heal", "amount": "2d4+wis", "target": "party", "uses": 1, "per": "long", "text": "You crack a canister and silver mist settles into every wound in the crew."},
+        {"id": "tox_cloud", "name": "Tox Cloud", "level": 5, "kind": "area", "damage": "3d8", "save": "con", "uses": 1, "per": "long", "text": "A grenade of something you mixed yourself. Everyone else coughs."}
+      ]
+    },
+    {
+      "id": "fixer", "name": "Fixer", "hit_die": 8, "primary": "cha",
+      "about": "A silver tongue, a phone full of favours and a pistol for when the favours run out. Talks the way through most doors.",
+      "skill_options": ["parkour", "deception", "insight", "intimidation", "performance", "persuasion", "sleight", "stealth", "streetwise", "drive"], "skill_count": 3,
+      "expertise": 2,
+      "start_items": ["heavy_pistol", "armored_jacket", "stim_shot"], "start_gold": 40,
+      "spell_attack": "cha",
+      "abilities": [
+        {"id": "hired_gun", "name": "Hired Gun", "level": 1, "kind": "attack", "ability": "cha", "damage": "1d6", "scale": {"5": "2d6", "9": "3d6"}, "text": "You make a call. Somewhere across the street, a friend with a rifle pays off a debt."},
+        {"id": "read_the_room", "name": "Read the Room", "level": 1, "kind": "advantage", "uses": 3, "per": "long", "text": "You see the angle before anyone else; the next attempt has advantage."},
+        {"id": "patch_job", "name": "Back-alley Patch", "level": 1, "kind": "heal", "amount": "1d4+cha", "target": "ally", "uses": 2, "per": "long", "text": "Somebody owes you a favour and a med-spray. You call in both."},
+        {"id": "flashbang", "name": "Flashbang", "level": 2, "kind": "area", "damage": "2d8", "save": "con", "uses": 2, "per": "long", "text": "White light and a sound like the sky breaking."}
+      ]
+    }
+  ],
+  "backgrounds": [
+    {"id": "corpo_exile", "name": "Corpo exile", "skills": ["persuasion", "insight"], "items": ["corp_badge"], "gold": 30, "about": "You had a corner office and a pension plan until somebody upstairs needed a scapegoat. You still know which fork to use."},
+    {"id": "street_kid", "name": "Street kid", "skills": ["sleight", "streetwise"], "items": ["lucky_chip"], "gold": 5, "about": "Lowtide raised you on rooftops and noodle steam. You are quick, or you are hungry."},
+    {"id": "ex_cop", "name": "Ex-cop", "skills": ["intimidation", "investigation"], "items": ["stim_shot"], "gold": 15, "about": "You carried a badge until the department was bought by the people you were investigating."},
+    {"id": "nomad", "name": "Nomad", "skills": ["drive", "tech"], "items": ["synth_noodles"], "gold": 10, "about": "You grew up in a convoy on the dead highways. Cities are loud and smell of money."},
+    {"id": "burned_runner", "name": "Burned runner", "skills": ["hacking", "stealth"], "items": ["real_coffee"], "gold": 10, "about": "You were a legend in the net for one glorious year. Then the ICE caught you, and now your hands shake when you jack in."}
+  ],
+  "combat": {
+    "unarmed_damage": "1d4", "unarmed_ability": "str",
+    "defend_ac": 2,
+    "flee_skill": "parkour", "flee_dc": "medium",
+    "base_ac": 10,
+    "defeat": {"gold_loss": 0.25, "hp": 1, "text": "The neon goes out. You wake on a back-alley clinic table, sore, stitched, and lighter by a quarter of your credits."}
+  },
+  "rest": {
+    "short": {"hours": 1, "heal": "hit_die", "restores": "short"},
+    "short_per_long": 2, "long": {"hours": 8, "heal": "all", "restores": "all", "needs_safe": true}
+  },
+  "relationships": {
+    "min": -100, "max": 100,
+    "stages": [
+      {"id": "hostile", "name": "Burned", "min": -100},
+      {"id": "wary", "name": "Cagey", "min": -30},
+      {"id": "acquainted", "name": "Known", "min": 0},
+      {"id": "friendly", "name": "Friendly", "min": 15},
+      {"id": "close", "name": "Tight", "min": 35},
+      {"id": "devoted", "name": "Ride or die", "min": 65}
+    ],
+    "romance_stages": [
+      {"id": "none", "name": "No romance"},
+      {"id": "spark", "name": "A spark"},
+      {"id": "courting", "name": "Seeing each other"},
+      {"id": "beloved", "name": "Beloved"}
+    ],
+    "tone_cooldown_turns": 4, "arc_retry_days": 2, "arc_offers": 2,
+    "gift_cooldown_turns": 6
+  },
+  "tones": {
+    "flirt": ["beautiful", "handsome", "gorgeous", "pretty", "cute", "kiss", "darling", "love you", "your eyes", "your smile", "flirt", "wink", "date", "hot", "babe", "sweetheart", "dance with me", "hold your hand", "adore", "good in neon"],
+    "kind": ["thank", "thanks", "sorry", "are you okay", "are you alright", "i got you", "got your back", "proud of you", "care about", "glad", "you did good", "well done", "trust you", "with you", "help you", "safe"],
+    "rude": ["shut up", "gonk", "idiot", "stupid", "useless", "pathetic", "hate you", "get lost", "flatline yourself", "coward", "whatever", "don't care", "do not care", "annoying", "leave me alone", "ugly"],
+    "joke": ["haha", "joke", "funny", "laugh", "tease", "lol", "kidding", "silly", "pun"],
+    "curious": ["tell me about", "who are you", "your past", "your family", "where are you from", "what happened", "why did you", "what do you think", "how do you feel", "your story", "your chrome", "before the city"],
+    "brave": ["let's go loud", "go loud", "light them up", "attack them", "no fear", "we can take them", "stand and fight", "i'll protect", "i will protect"],
+    "cautious": ["careful", "wait", "plan", "think first", "slowly", "recon", "scout", "be wary", "trap", "stay dark", "keep quiet"]
+  },
+  "intents": {
+    "go": ["go", "walk", "head", "travel", "enter", "leave for", "run to", "return to", "move to", "follow the", "take the", "ride to", "drive to"],
+    "look": ["look", "where am i", "describe", "surroundings", "look around"],
+    "examine": ["examine", "inspect", "check", "study", "read", "investigate", "search", "scan"],
+    "talk": ["talk to", "speak to", "speak with", "talk with", "chat with", "greet", "approach", "ask", "ping"],
+    "say": ["say", "tell", "reply", "answer", "whisper"],
+    "attack": ["attack", "fight", "strike", "hit", "kill", "stab", "shoot", "slash", "flatline", "blast"],
+    "take": ["take", "grab", "pick up", "loot", "collect", "swipe"],
+    "use": ["use", "drink", "eat", "apply", "inject", "pop", "jack", "read"],
+    "equip": ["equip", "wield", "wear", "put on", "holster", "slot"],
+    "give": ["give", "offer", "hand", "gift", "present"],
+    "rest": ["rest", "sleep", "crash", "nap", "take a break", "wait", "stim up"],
+    "explore": ["explore", "wander", "prowl", "roam", "hit the streets", "look for trouble", "search the area", "cruise"],
+    "inventory": ["inventory", "bag", "pack", "what do i have", "items", "gear", "kit"],
+    "recruit": ["recruit", "join me", "come with me", "ride with me", "join the crew", "crew up"],
+    "dismiss": ["dismiss", "part ways", "leave the crew", "stay here", "cut loose"],
+    "work": ["work", "job", "gig", "gigs", "rumour", "rumor", "bounty", "contract", "any work", "quest"],
+    "buy": ["buy", "purchase", "shop", "trade", "wares", "vendor"],
+    "sell": ["sell", "fence"],
+    "help": ["help", "what can i do", "commands", "how do i"]
+  },
+  "time": {"hours_per_action": 0.25, "periods": [
+    {"id": "night", "from": 0}, {"id": "dawn", "from": 5}, {"id": "morning", "from": 7},
+    {"id": "afternoon", "from": 12}, {"id": "evening", "from": 17}, {"id": "night", "from": 21}
+  ]},
+  "narration": {
+    "person": "second",
+    "rules": "You are the narrator of a neon-noir tabletop role-playing game set in a rain-drowned cyberpunk city. The game engine has already decided what happened, including every dice roll, damage number, item, credit and reward. Narrate only what the facts say happened, vividly and briefly, in second person, present tense, like a hard-boiled voice-over with rain on the window. Never invent new items, credits, injuries, numbers, characters joining, or outcomes. Never ask the player what they do next. Never speak for the player. No lists, no headings, no game terms like DC or HP."
+  },
+  "freeform_success": ["It works.", "Clean. Nobody even blinks.", "The city gives you one, for once.", "Smoother than chrome."],
+  "freeform_fail": ["It does not work.", "You fumble it, and the rain does not care.", "Not tonight.", "It glitches, though not badly."]
+}

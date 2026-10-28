@@ -38,6 +38,7 @@ from __future__ import annotations
 import base64
 import binascii
 import hashlib
+import importlib.util
 import json
 import os
 import re
@@ -48,7 +49,12 @@ from pathlib import Path
 from urllib.parse import quote
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Request
-from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
+from fastapi.responses import (
+    FileResponse,
+    HTMLResponse,
+    JSONResponse,
+    RedirectResponse,
+)
 from fastapi.staticfiles import StaticFiles
 
 ROOT = Path(__file__).resolve().parent
@@ -70,6 +76,28 @@ import resets  # noqa: E402
 import system_settings  # noqa: E402  (its autoclose panel imports shared/)
 
 
+def load_wallpapers_app(path: Path = ROOT.parent / "wallpapers" / "web_app.py"):
+    """The Wallpapers app's own backend module, which Settings serves at
+    /wallpapers/ so Settings > Wallpaper holds the whole browser (Relay task
+    423; its manifest's "inside" sends anyone opening it here). None when the
+    app is not installed beside this one (a release has none)."""
+    if not path.is_file():
+        return None
+    spec = importlib.util.spec_from_file_location("wallpapers_web_app", path)
+    if spec is None or spec.loader is None:
+        return None
+    module = importlib.util.module_from_spec(spec)
+    try:
+        spec.loader.exec_module(module)
+    except Exception as exc:  # a broken Wallpapers app must not stop Settings
+        print(f"settings: wallpapers browser not loaded: {exc!r}", file=sys.stderr)
+        return None
+    return module
+
+
+wallpapers_app = load_wallpapers_app()
+
+
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
     # Thumbnails are made ahead of time, niced, so the wallpaper picker is
@@ -82,6 +110,9 @@ async def lifespan(_app: FastAPI):
         daemon=True,
         name="thumbnails",
     ).start()
+    # the browser's index (sizes and hidden copies), as its own backend did
+    if wallpapers_app is not None:
+        wallpapers_app.start_index()
     yield
 
 
@@ -107,6 +138,7 @@ def get_settings():
         "desktop_wallpaper": desktop.name if desktop else "",
         "desktop_follow": forge_theme.desktop_follow_supported(),
         "roles": app_roles(),
+        "wall_browser": wallpapers_app is not None,
         "current": current_wallpaper(settings),
     }
 
@@ -696,6 +728,14 @@ def system_action(panel: str, action: str, payload: dict):
 
 if SHARED_DIR.is_dir():
     app.mount("/shared", StaticFiles(directory=str(SHARED_DIR)), name="shared")
+
+if wallpapers_app is not None:
+
+    @app.get("/wallpapers", include_in_schema=False)
+    def wallpapers_page():
+        return RedirectResponse("/wallpapers/")
+
+    app.mount("/wallpapers", wallpapers_app.app, name="wallpapers")
 
 
 @app.get("/")

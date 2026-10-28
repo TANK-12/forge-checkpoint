@@ -1,0 +1,24 @@
+{
+  "_readme": "Where a prompt is meant to go, one entry each. 'fields' are the boxes a prompt for that target has (Suno takes a style and lyrics, an image model a prompt and a negative prompt). Adding a target is one entry here; nothing else changes. Field ids are kept in saved versions, so rename a label freely but not an id.",
+  "targets": [
+    {"id": "suno", "label": "Suno", "hint": "songs", "fields": [
+      {"id": "style", "label": "Style", "rows": 3},
+      {"id": "lyrics", "label": "Lyrics", "rows": 14}
+    ]},
+    {"id": "ai-studio", "label": "AI Studio", "hint": "pictures", "fields": [
+      {"id": "prompt", "label": "Prompt", "rows": 6},
+      {"id": "negative", "label": "Negative prompt", "rows": 3}
+    ]},
+    {"id": "claude", "label": "Claude", "hint": "chat and code", "fields": [
+      {"id": "system", "label": "System prompt", "rows": 5},
+      {"id": "prompt", "label": "Prompt", "rows": 10}
+    ]},
+    {"id": "jan", "label": "Jan", "hint": "local models", "fields": [
+      {"id": "system", "label": "System prompt", "rows": 5},
+      {"id": "prompt", "label": "Prompt", "rows": 10}
+    ]},
+    {"id": "other", "label": "Other", "hint": "anything else", "fields": [
+      {"id": "prompt", "label": "Prompt", "rows": 12}
+    ]}
+  ]
+}

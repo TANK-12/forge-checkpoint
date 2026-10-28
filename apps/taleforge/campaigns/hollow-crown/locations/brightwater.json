@@ -1,0 +1,762 @@
+{
+ "locations": [
+  {
+   "id": "brightwater_square",
+   "name": "Brightwater market square",
+   "region": "brightwater",
+   "tags": [
+    "town",
+    "board"
+   ],
+   "short": "Cobbles, a market, a bell tower and a notice board.",
+   "description": "Cobbles slick with river mist, stalls half-opened under striped awnings, and the bell tower still swinging its rope. A crowd is gathered at the notice board, where Warden Hollis is trying to sound calm.",
+   "npcs": [
+    "hollis",
+    "gella"
+   ],
+   "shop": {
+    "name": "Gella's stall",
+    "items": [
+     "healing_draught",
+     "rations",
+     "torch",
+     "rope",
+     "dagger",
+     "wildflowers",
+     "honey_cakes",
+     "fine_wine",
+     "silver_locket",
+     "old_ballad_book",
+     "shortbow",
+     "leather_armor"
+    ],
+    "buys": true
+   },
+   "features": [
+    {
+     "id": "notice_board",
+     "name": "the notice board",
+     "text": "Missing: one miller and family, last seen at the old mill. Wanted: bargehands, brave or otherwise. Warning: do not touch the black briars."
+    },
+    {
+     "id": "bell_tower",
+     "name": "the bell tower",
+     "text": "The bell rang at dawn because the ferryman's boy saw something walking in the river.",
+     "check": {
+      "skill": "athletics",
+      "dc": "medium"
+     },
+     "success": [
+      {
+       "message": "From the top you can see the whole vale: the old mill to the west under a smudge of black, and the fen beyond."
+      },
+      {
+       "reveal": "brightwater_old_mill"
+      },
+      {
+       "reveal": "brightwater_fen"
+      },
+      {
+       "xp": 20
+      }
+     ],
+     "fail": [
+      {
+       "message": "Halfway up, a rung gives. You come down faster than you went up."
+      },
+      {
+       "damage": "1d4"
+      }
+     ],
+     "once": true
+    }
+   ],
+   "exits": [
+    {
+     "to": "brightwater_inn",
+     "label": "The Drowned Lantern inn",
+     "hours": 0.1
+    },
+    {
+     "to": "brightwater_docks",
+     "label": "Down to the docks",
+     "hours": 0.1
+    },
+    {
+     "to": "brightwater_temple",
+     "label": "Up the hill to the Dawn shrine",
+     "hours": 0.2
+    },
+    {
+     "to": "brightwater_old_mill",
+     "label": "West road to the old mill",
+     "hours": 1
+    },
+    {
+     "to": "brightwater_crossroads",
+     "label": "South gate to the crossroads",
+     "hours": 1
+    }
+   ]
+  },
+  {
+   "id": "brightwater_inn",
+   "name": "The Drowned Lantern",
+   "region": "brightwater",
+   "tags": [
+    "town",
+    "inn",
+    "safe"
+   ],
+   "rest_cost": 5,
+   "short": "A low, warm inn with a lantern hung over the river.",
+   "description": "Low beams, a fire that never quite goes out, and the smell of eel pie. A green lantern hangs from the back window over the water, the way it has since the flood that named the place. In the corner, a woman with a longbow is very carefully not looking at anyone.",
+   "npcs": [
+    "pell",
+    "lyra"
+   ],
+   "shop": {
+    "name": "Pell's bar",
+    "items": [
+     "fine_wine",
+     "honey_cakes",
+     "rations"
+    ],
+    "buys": false
+   },
+   "features": [
+    {
+     "id": "cellar_door",
+     "name": "the cellar door",
+     "text": "Something scratches behind the cellar door. Pell says it is just the rats. He says it too quickly.",
+     "when": {
+      "quest_active": "rats_in_cellar"
+     },
+     "once": true,
+     "success": [
+      {
+       "message": "You open the door and the rats come boiling up the steps."
+      },
+      {
+       "combat": [
+        "giant_rat",
+        "giant_rat",
+        "giant_rat"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "lantern",
+     "name": "the green lantern",
+     "text": "The lantern is old fey glass. The flame inside burns without oil.",
+     "check": {
+      "skill": "arcana",
+      "dc": "hard"
+     },
+     "success": [
+      {
+       "message": "Fey work. Whoever made it came from the Whisperwood, and it is warding the inn against something."
+      },
+      {
+       "flag": "knows_fey_lantern"
+      },
+      {
+       "xp": 30
+      }
+     ],
+     "once": true
+    }
+   ],
+   "exits": [
+    {
+     "to": "brightwater_square",
+     "label": "Out to the square",
+     "hours": 0.1
+    }
+   ]
+  },
+  {
+   "id": "brightwater_docks",
+   "name": "The river docks",
+   "region": "brightwater",
+   "tags": [
+    "town"
+   ],
+   "short": "Barges, nets, and the cold grey river.",
+   "description": "Barges knock against tarred piers. Nets hang drying, and the river runs fast and pewter-grey under the mist. The ferry is tied up and nobody is taking it out.",
+   "npcs": [
+    "old_tam"
+   ],
+   "on_enter": [
+    {
+     "when": {
+      "quest_stage": {
+       "main_1": "start"
+      },
+      "not_flag": "docks_attack_done"
+     },
+     "scene": "docks_attack",
+     "once": true
+    }
+   ],
+   "features": [
+    {
+     "id": "river_edge",
+     "name": "the river's edge",
+     "text": "Black thorns are snagged on the pilings, trailing downstream. They came from upriver, from the west.",
+     "check": {
+      "skill": "survival",
+      "dc": "easy"
+     },
+     "success": [
+      {
+       "message": "The briars broke off something big upstream. The mill race joins the river half a mile west."
+      },
+      {
+       "flag": "briars_from_mill"
+      },
+      {
+       "xp": 20
+      }
+     ],
+     "once": true
+    },
+    {
+     "id": "ferry",
+     "name": "the ferry",
+     "text": "A flat ferry on a rope across the river. Old Tam will not take it out until the river is safe."
+    }
+   ],
+   "exits": [
+    {
+     "to": "brightwater_square",
+     "label": "Up to the square",
+     "hours": 0.1
+    },
+    {
+     "to": "brightwater_fen",
+     "label": "The towpath east to Sallowfen",
+     "hours": 1
+    }
+   ]
+  },
+  {
+   "id": "brightwater_temple",
+   "name": "Shrine of the Dawn Mother",
+   "region": "brightwater",
+   "tags": [
+    "town",
+    "safe"
+   ],
+   "rest_cost": 0,
+   "short": "A whitewashed shrine on the hill, and a healer.",
+   "description": "A small whitewashed shrine on the hill above the town, with a sun-disc of beaten copper over the door. Inside it smells of beeswax and bitter herbs. Cots line the back wall, and most of them are full.",
+   "npcs": [
+    "sister_ama"
+   ],
+   "shop": {
+    "name": "Sister Ama's remedies",
+    "items": [
+     "healing_draught",
+     "greater_healing",
+     "holy_symbol"
+    ],
+    "buys": false
+   },
+   "features": [
+    {
+     "id": "sick_cots",
+     "name": "the sick cots",
+     "text": "The patients have black lines under their skin, like roots. They were all touched by the briars.",
+     "check": {
+      "skill": "medicine",
+      "dc": "medium"
+     },
+     "success": [
+      {
+       "message": "The rot is cold, not foul. Heat slows it; Sister Ama has been keeping them by the braziers."
+      },
+      {
+       "flag": "knows_briars_feed_on_warmth"
+      },
+      {
+       "xp": 25
+      }
+     ],
+     "once": true
+    },
+    {
+     "id": "sun_disc",
+     "name": "the copper sun-disc",
+     "text": "Engraved around the rim: The crown is a promise kept by fire."
+    }
+   ],
+   "exits": [
+    {
+     "to": "brightwater_square",
+     "label": "Down to the square",
+     "hours": 0.2
+    }
+   ]
+  },
+  {
+   "id": "brightwater_old_mill",
+   "name": "The old mill",
+   "region": "brightwater",
+   "tags": [
+    "wild"
+   ],
+   "short": "A burned watermill strangled in black briar.",
+   "description": "The mill wheel has stopped. Black briar has grown up through the millrace and over the roof, thick as a man's arm, and the air around it is cold enough to fog your breath in summer. The door hangs open.",
+   "encounter": {
+    "chance": 0.35,
+    "monsters": [
+     [
+      "blight_husk"
+     ],
+     [
+      "blight_husk",
+      "blight_husk"
+     ]
+    ]
+   },
+   "on_enter": [
+    {
+     "when": {
+      "quest_active": "main_1",
+      "not_flag": "mill_first_seen"
+     },
+     "effects": [
+      {
+       "flag": "mill_first_seen"
+      },
+      {
+       "message": "Something moves inside the mill, and the briars creak as if they heard you."
+      }
+     ],
+     "once": true
+    }
+   ],
+   "features": [
+    {
+     "id": "mill_floor",
+     "name": "the mill floor",
+     "text": "Flour and frost. Footprints, bare and dragging, lead to a trapdoor half hidden under a fallen beam.",
+     "check": {
+      "skill": "investigation",
+      "dc": "easy"
+     },
+     "success": [
+      {
+       "message": "Under the beam is a trapdoor to the cellar. Cold breath rises through the cracks."
+      },
+      {
+       "flag": "found_cellar"
+      }
+     ],
+     "fail": [
+      {
+       "message": "You find nothing but frost and flour, though the cold seems to come from below."
+      },
+      {
+       "flag": "mill_searched_once"
+      }
+     ]
+    },
+    {
+     "id": "cellar",
+     "name": "the cellar trapdoor",
+     "when": {
+      "flag": "found_cellar",
+      "not": {
+       "kills": {
+        "blight_brute": 1
+       }
+      }
+     },
+     "text": "You haul up the trapdoor. Below, something big unfolds itself from the dark.",
+     "check": {
+      "skill": "stealth",
+      "dc": "medium"
+     },
+     "success": [
+      {
+       "message": "You slip down unseen. The miller's husk has its back to you; only it stirs."
+      },
+      {
+       "combat": [
+        "blight_brute"
+       ]
+      }
+     ],
+     "fail": [
+      {
+       "message": "A step creaks. Two shapes turn toward you."
+      },
+      {
+       "combat": [
+        "blight_brute",
+        "blight_husk"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "shard_box",
+     "name": "the miller's strongbox",
+     "when": {
+      "kills": {
+       "blight_brute": 1
+      }
+     },
+     "text": "Inside the miller's strongbox, wrapped in oilcloth: a sliver of red crystal, warm as a hand, and a letter signed only with a moth.",
+     "once": true,
+     "success": [
+      {
+       "give": "ember_shard"
+      },
+      {
+       "give": "moth_letter"
+      },
+      {
+       "flag": "cellar_cleared"
+      },
+      {
+       "xp": 50
+      }
+     ]
+    }
+   ],
+   "exits": [
+    {
+     "to": "brightwater_square",
+     "label": "East road back to town",
+     "hours": 1
+    }
+   ]
+  },
+  {
+   "id": "brightwater_crossroads",
+   "name": "The Weeping Crossroads",
+   "region": "brightwater",
+   "tags": [
+    "wild"
+   ],
+   "short": "Where four roads meet under a willow and a gibbet.",
+   "description": "Four roads meet under a great weeping willow, beside an empty gibbet that creaks in the wind. A milestone points south to Saltmere, east to the Ashen Marches, and north into the dark of the Whisperwood.",
+   "features": [
+    {
+     "id": "milestone",
+     "name": "the milestone",
+     "text": "Someone has scratched a moth into the stone over the Whisperwood arrow, recently."
+    },
+    {
+     "id": "gibbet",
+     "name": "the gibbet",
+     "text": "Empty. A crow sits on it and watches you with professional interest.",
+     "check": {
+      "skill": "investigation",
+      "dc": "medium"
+     },
+     "success": [
+      {
+       "message": "Wedged in the iron: a pouch someone forgot. Or hid."
+      },
+      {
+       "gold": 12
+      }
+     ],
+     "once": true
+    }
+   ],
+   "exits": [
+    {
+     "to": "brightwater_square",
+     "label": "North gate back to Brightwater",
+     "hours": 1
+    },
+    {
+     "to": "brightwater_barrow",
+     "label": "The barrow path over the downs",
+     "hours": 1.5
+    },
+    {
+     "to": "whisperwood_edge",
+     "label": "North into the Whisperwood",
+     "hours": 4
+    },
+    {
+     "to": "saltmere_gate",
+     "label": "South road to Saltmere",
+     "hours": 8,
+     "when": {
+      "any": [
+       {
+        "quest_done": "main_2"
+       },
+       {
+        "level": 3
+       }
+      ]
+     },
+     "locked": "The south road is crawling with deserters. Better to go once you are stronger, or have business there."
+    },
+    {
+     "to": "marches_road",
+     "label": "East road into the Ashen Marches",
+     "hours": 8,
+     "when": {
+      "any": [
+       {
+        "quest_done": "main_3"
+       },
+       {
+        "level": 4
+       }
+      ]
+     },
+     "locked": "Refugees coming west say the Marches eat the unprepared. Not yet."
+    }
+   ]
+  },
+  {
+   "id": "brightwater_fen",
+   "name": "Sallowfen",
+   "region": "brightwater",
+   "tags": [
+    "wild"
+   ],
+   "short": "Reed beds, will-o'-wisps, and the bog witch's hut.",
+   "description": "Reeds taller than you, black water between hummocks, and a mist that moves against the wind. A crooked hut on stilts sits out in the middle, smoke rising from its chimney. Lights bob in the reeds that are not lanterns.",
+   "npcs": [
+    "mother_sedge"
+   ],
+   "encounter": {
+    "chance": 0.3,
+    "monsters": [
+     [
+      "bog_lurker"
+     ],
+     [
+      "giant_rat",
+      "giant_rat"
+     ],
+     [
+      "blight_husk"
+     ]
+    ]
+   },
+   "features": [
+    {
+     "id": "wisps",
+     "name": "the lights in the reeds",
+     "text": "Will-o'-wisps. Follow them and you drown; everyone knows that.",
+     "check": {
+      "skill": "perception",
+      "dc": "hard"
+     },
+     "success": [
+      {
+       "message": "Under the wisps' dance, half sunk in the mud, a drowned traveller's satchel."
+      },
+      {
+       "give": "greater_healing"
+      },
+      {
+       "gold": 18
+      }
+     ],
+     "fail": [
+      {
+       "message": "You follow a light two steps too far and go in up to the waist."
+      },
+      {
+       "damage": "1d4"
+      }
+     ],
+     "once": true
+    },
+    {
+     "id": "great_tracks",
+     "name": "huge pawprints",
+     "when": {
+      "quest_active": "lyra_quest"
+     },
+     "text": "Pawprints the size of plates, crusted with frost, heading for the hollow at the fen's north end.",
+     "check": {
+      "skill": "survival",
+      "dc": "medium"
+     },
+     "success": [
+      {
+       "message": "You follow them to a hollow under a dead oak. It is in there. It knows you are here."
+      },
+      {
+       "flag": "found_hunter_lair"
+      }
+     ],
+     "fail": [
+      {
+       "message": "The tracks vanish into black water."
+      }
+     ]
+    }
+   ],
+   "exits": [
+    {
+     "to": "brightwater_docks",
+     "label": "The towpath west to the docks",
+     "hours": 1
+    },
+    {
+     "to": "hunter_hollow",
+     "label": "The hollow under the dead oak",
+     "hours": 0.5,
+     "when": {
+      "flag": "found_hunter_lair"
+     }
+    }
+   ]
+  },
+  {
+   "id": "hunter_hollow",
+   "name": "The dead oak hollow",
+   "region": "brightwater",
+   "tags": [
+    "wild"
+   ],
+   "short": "A frozen hollow where the Grey Hunter dens.",
+   "description": "Frost on everything, in a hollow where no frost should be. Bones under the dead oak, and black briar woven into a den. Two eyes open in the dark.",
+   "on_enter": [
+    {
+     "when": {
+      "not_flag": "hunter_dead"
+     },
+     "scene": "grey_hunter_den",
+     "once": true
+    }
+   ],
+   "exits": [
+    {
+     "to": "brightwater_fen",
+     "label": "Back into the fen",
+     "hours": 0.5
+    }
+   ],
+   "features": [
+    {
+     "id": "the_hunter",
+     "name": "the Grey Hunter",
+     "when": {
+      "not_flag": "hunter_dead"
+     },
+     "text": "The wolf waits under the oak, silent.",
+     "success": [
+      {
+       "combat": [
+        "grey_hunter"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "brightwater_barrow",
+   "name": "The King's Barrow",
+   "region": "brightwater",
+   "tags": [
+    "wild"
+   ],
+   "short": "A grassy burial mound with a stone door, ajar.",
+   "description": "A long green mound on the downs, older than the kingdom. Its stone door stands a hand's width open, and from inside comes a smell of cold earth and something like old coins.",
+   "encounter": {
+    "chance": 0.5,
+    "monsters": [
+     [
+      "skeleton",
+      "skeleton"
+     ],
+     [
+      "skeleton"
+     ]
+    ]
+   },
+   "features": [
+    {
+     "id": "barrow_door",
+     "name": "the stone door",
+     "text": "Carved with a crowned figure holding a burning stone. The same stone, you realise, as the Ember Crown's.",
+     "check": {
+      "skill": "history",
+      "dc": "medium"
+     },
+     "success": [
+      {
+       "message": "This is the barrow of Aldric, first king of Vael. The legend says the heart-stone was found here, not made."
+      },
+      {
+       "flag": "knows_stone_origin"
+      },
+      {
+       "xp": 40
+      }
+     ],
+     "once": true
+    },
+    {
+     "id": "burial_chamber",
+     "name": "the burial chamber",
+     "when": {
+      "not_flag": "wight_dead"
+     },
+     "text": "On a stone bier lies a crowned skeleton. As you step close, it sits up.",
+     "success": [
+      {
+       "combat": [
+        "barrow_wight",
+        "skeleton"
+       ]
+      },
+      {
+       "flag": "wight_fought"
+      }
+     ]
+    },
+    {
+     "id": "kings_hoard",
+     "name": "the king's grave goods",
+     "when": {
+      "kills": {
+       "barrow_wight": 1
+      }
+     },
+     "text": "Among the grave goods: a ring with a red stone like an ember's ghost, and coins of a kingdom that no longer exists.",
+     "once": true,
+     "success": [
+      {
+       "give": "aldric_ring"
+      },
+      {
+       "gold": 60
+      },
+      {
+       "flag": "wight_dead"
+      },
+      {
+       "xp": 50
+      }
+     ]
+    }
+   ],
+   "exits": [
+    {
+     "to": "brightwater_crossroads",
+     "label": "Back down to the crossroads",
+     "hours": 1.5
+    }
+   ]
+  }
+ ]
+}

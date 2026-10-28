@@ -1,0 +1,26 @@
+{
+  "name": "prompts",
+  "label": "Prompts",
+  "tagline": "Prompts for Suno, AI Studio, Claude and Jan",
+  "frame": true,
+  "port": 8493,
+  "module": "web_app:app",
+  "src_dir": ".",
+  "accent": "#c79a3a",
+  "icon": "✒️",
+  "order": 28,
+  "section": "create",
+  "ready_timeout": 30,
+  "ram_class": "light",
+  "store": {"github": "private"},
+  "help": {"about": "A library for the prompts you write for music, picture and chat tools: titles, tags, every version, and what each one made.", "features": ["New prompt", "Versions", "What came out", "Archive"]},
+  "manifest": {
+    "summary": "A library of prompts. Each prompt is for one target from targets.json (Suno style and lyrics, AI Studio prompt and negative, a system prompt and prompt for Claude or Jan) with that target's boxes. Every save that changes the text is a new version, kept with a note; the history shows each version's line diff and can load an old one back. {{name}} in the text gets a box to fill in, and Copy copies the text with the values put in. Results (what came out, a 0 to 5 rating, a link or file path) are kept against a version. Search covers titles, tags and the newest text; archive hides without deleting; Export all downloads everything as JSON.",
+    "data_dir": "~/.local/share/forge/prompts",
+    "dependencies": {"required": ["shared/forge_guard.py"], "optional": []},
+    "docs": ["README.md", "WIP.md"]
+  },
+  "export": [
+    {"id": "prompts", "label": "Prompts, versions and results", "kind": "sqlite", "path": "~/.local/share/forge/prompts/prompts.sqlite3", "sync": true}
+  ]
+}

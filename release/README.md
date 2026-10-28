@@ -176,17 +176,38 @@ elsewhere. Tests: `tests/test_release_install.py`.
 **Windows.** `release/launch/forge.iss` is an Inno Setup 6 script for
 `Forge-Setup-<version>.exe`: per-user (no administrator prompt) into
 `%LOCALAPPDATA%\Programs\Forge`, Start menu entry, optional desktop icon,
-"Start Forge now" at the end; the uninstaller keeps `%APPDATA%\Forge` and
-`%LOCALAPPDATA%\Forge` unless the user says yes (default no). The build
-makes it when Inno Setup's `ISCC.exe` is found under Wine (`FORGE_ISCC`,
-else the Wine prefix's Program Files or the user's Programs folder), and the
-Windows README then gains the setup steps; without it the zip is the whole
-Windows download and its README says so. **Inno Setup is not installed on
-this laptop** (it needs the owner's yes), so the script has never been
-compiled or run. To add it: install Inno Setup 6 from jrsoftware.org into a
-Wine prefix of its own, then build with `WINEPREFIX=<that prefix>`.
-`launch_problems()` already checks that the script and every icon and
-picture it names are in `release/launch/`.
+"Start Forge now" at the end. Shortcuts and the finish page start
+`runtime\pythonw.exe -B forge_portable.py` with the AppUserModelID
+`local.forge.Forge`. An upgrade clears the old program folders first (all
+eight bundle folders, only in a folder that holds `forge_portable.py`; the
+build stops when the bundle has a folder the script's `[InstallDelete]` or
+`[UninstallDelete]` does not name). While Forge runs, `forge_portable.py`
+holds the mutex `local.forge.Forge` (`AppMutex`): the setup and the
+uninstaller say "Forge is open. Close its window, then click OK", and a
+silent run stops with exit code 1. The uninstaller keeps the user's things
+unless they say yes (default no; a silent uninstall never asks), and a yes
+removes only Forge's own items: `%APPDATA%\Forge\where.json`, the default
+place `%APPDATA%\Forge\Forge data` (only when it holds `forge-data.json`),
+and what is in `%LOCALAPPDATA%\Forge` except a folder holding a data place;
+anything else in `%APPDATA%\Forge` (an older Forge's files) and a place the
+user chose stay. The build makes it when Inno Setup's
+`ISCC.exe` is found under Wine: `FORGE_ISCC`, else the build's own prefix
+`~/.local/share/forge-build/wine-inno` (`FORGE_INNO_PREFIX`), else
+`WINEPREFIX` or `~/.wine`. ISCC runs in the prefix it was found in, with no
+display, `winemenubuilder` off (nothing reaches the Linux menus) and Wine's
+`ShowDotFiles` on (Wine marks dot-files hidden and Inno leaves hidden files
+out). The Windows README then gains the setup steps; without Inno Setup the
+zip is the whole Windows download and its README says so.
+Installed here on 2026-10-28 (the owner's yes): Inno Setup 6.7.3 from
+jrsoftware.org (`innosetup-6.7.3.exe`, sha256 `9c73c3ba...`, the GitHub
+release digest, signed by Pyrsys B.V.) into that prefix with
+`WINEDLLOVERRIDES=winemenubuilder.exe=d` (its first try without that added
+Inno's menu entries to the real home; they were moved to the Trash). To set
+it up again: `WINEPREFIX=~/.local/share/forge-build/wine-inno
+WINEDLLOVERRIDES="mscoree,mshtml=;winemenubuilder.exe=d" wine
+innosetup-6.7.3.exe /VERYSILENT /CURRENTUSER`.
+`launch_problems()` checks that the script and every icon and picture it
+names are in `release/launch/`.
 
 ## What keeps personal data out
 
@@ -220,7 +241,56 @@ picture it names are in `release/launch/`.
   (pictures in `docs/library/release/pictures/2026-10-28-*`).
 - Windows x64 zip under Wine 11, started through `forge-console.cmd`:
   `--smoke` 83 passed, 0 failed (13 apps), nothing written into the
-  program folder. The setup program: not built (no Inno Setup).
+  program folder.
+- Windows setup program (build from HEAD d82cc266, `Forge-Setup-0.2.0.exe`
+  63 MB), under Wine 11 in a private off-screen GNOME session and a test
+  prefix: the wizard (welcome, the desktop-icon tick box with Install,
+  progress, Finished with "Start Forge now") and the uninstaller's three
+  dialogs, pictured in `docs/library/release/pictures/2026-10-28-win-*`;
+  a silent install holds exactly the zip's files plus `forge.ico` and
+  `unins000.*` (dot-files included); an upgrade removed a planted stale
+  app; the installed copy's `--smoke` 83 passed, 0 failed (13 apps), nothing
+  written into the program folder; the uninstaller with Yes removed the
+  program, Start menu entry, uninstall entry and both Forge folders and
+  kept a data folder moved to Documents; with No, and silently, it kept
+  them. Not seen: SmartScreen (Wine has none) and the Forge window itself
+  (pywebview needs Edge WebView2, which Wine lacks).
+- After the round 5 critic's fixes (builds from HEAD 5d0eb4cf and 191f7d27,
+  28 Oct, session 7, scripts and logs `/tmp/r401/s7/walk5.sh` to
+  `walk7.sh`): installed files equal the zip plus `forge.ico` and
+  `unins000.*` (3756, dot-files included); the Start menu shortcut runs
+  `pythonw.exe -B "...\forge_portable.py"`; an upgrade removed a planted
+  stale app; with Forge running the setup and the uninstaller showed "Forge
+  is open" (pictures `2026-10-28-win-setup-5-forge-open.png`,
+  `-win-unins-0-forge-open.png`), Cancel left Forge installed and running,
+  closing Forge then OK uninstalled, and silent runs stopped with exit code
+  1; the installed copy's `--smoke` 83 passed, 0 failed, nothing written into
+  the program folder; the shortcut's command with no way to draw a window
+  (Wine) fell through to "no window could be opened" with the hub still up
+  (before 191f7d27 it crashed). Uninstall Yes with an older Forge's file in
+  `%APPDATA%\Forge`, a chosen place inside `%LOCALAPPDATA%\Forge` and one in
+  Documents: the default place, `where.json`, cache and logs went, the three
+  others stayed (picture `-win-unins-2b-data-question-own-items.png`); with
+  only Forge's own things both folders went. Not seen under Wine: the
+  AppUserModelID in the shortcut (Wine does not store it; Inno writes it on
+  Windows) and the PowerShell running check (Wine's PowerShell is a stub; it
+  ran and answered "not running", so only real Windows can show it). Walk 6's
+  silent uninstall that stopped with exit code 1 is most likely the walk's
+  own earlier uninstaller still open (it left no `_unins-done.tmp`); walk 5
+  step 8 covers the silent uninstall on the same `forge.iss`.
+- After the round 6 critic's fixes (build from HEAD 0cb3b057, 28 Oct,
+  session 8, script and log `/tmp/r401/s8/walk8.sh`, `walk8.log`): the
+  wizard walked by its buttons, installed files equal the zip plus
+  `forge.ico` and `unins000.*` (3756); the shortcut's command now logs
+  "Microsoft Edge WebView2 is missing: trying a browser window" and never
+  loads pywebview (Wine has no WebView2); with Forge running the
+  uninstaller said "Forge is open" and Cancel kept it; the data question
+  names "Cache, logs and window data (game scores, view choices)" (pictures
+  `2026-10-28-win-setup-4-finished-v2.png`,
+  `-win-unins-2-data-question-v2.png`; the older `-win-setup-4-finished.png`
+  still shows the Windows 11-only "Settings, Apps" words); No kept the data
+  place, `where.json` and the logs; Yes removed them and kept a chosen place
+  inside `%LOCALAPPDATA%\Forge`.
 
 ## Checked earlier (2026-10-09; smoke counts from the build of 44cb4c7)
 

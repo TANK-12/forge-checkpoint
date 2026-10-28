@@ -112,6 +112,9 @@ HUB_DIR = os.path.join(ROOT, "hub")
 SHARED_DIR = os.path.join(ROOT, "shared")
 REGISTRY = os.path.join(ROOT, "release", "release.json")
 TITLE = "Forge"
+# Windows: the setup program's AppId and AppMutex and its shortcuts'
+# AppUserModelID (release/launch/forge.iss); Linux: the menu entry's name.
+APP_ID = "local.forge.Forge"
 STATES = ("native", "replaced", "fallback", "cut")
 # {data}, {config}, {cache}, {state}, {logs} or {port:<app>} in a registry
 # "env" value.
@@ -307,6 +310,9 @@ LINUX_NAME = "forge-release"
 PLACE_NAME = "Forge data"
 PICKER_SHOWN = 2.0  # seconds: a picker that failed to start ends sooner
 POINTER = "where.json"
+# beside the window state: the look last seen on a place in use, for the
+# problem screen, which cannot read a place that is not there
+LOOK_FILE = "look.json"
 MARKER = "forge-data.json"
 
 
@@ -1433,7 +1439,9 @@ def page_keys(defaults: dict, overrides: dict, skip: frozenset) -> dict[str, str
 def cut_actions(status: dict, pages: list[str]) -> None:
     """Take out of the Settings app's search actions ("Wi-Fi", "Sound and
     volume") the ones that open a Settings page this release leaves out,
-    so Home search offers no dead end."""
+    so Home search offers no dead end. An action's page is its "page" when
+    the hash is an alias the page itself reads (#wallpapers opens the
+    Wallpaper page with its browser), else the hash up to the first /."""
     if not pages:
         return
     for info in status.values():
@@ -1441,7 +1449,7 @@ def cut_actions(status: dict, pages: list[str]) -> None:
             info["actions"] = [
                 a
                 for a in info["actions"]
-                if str(a.get("hash", "")).split("/")[0] not in pages
+                if (a.get("page") or str(a.get("hash", "")).split("/")[0]) not in pages
             ]
 
 
@@ -1498,6 +1506,9 @@ class Launcher:
         self.remember = True
         self.autostart = True
         self.move_state: dict = {}
+        saved = read_json(os.path.join(local["state"], LOOK_FILE)) or {}
+        self.last_look = "light" if saved.get("look") == "light" else "dark"
+        self.look_lock = threading.Lock()  # load and the watch both note it
         self.size_cache: tuple[str, int, int] | None = None
         self.place_lock = threading.RLock()
         self.outer = dict(os.environ)  # before any place's variables are set
@@ -1585,6 +1596,7 @@ class Launcher:
             self.mode = "ready"
             if look is not None:
                 self.save_look(*look)
+            self.keep_look(self.look_now()[1])
         self.log(f"[forge] your things are kept in {root}")
         if self.autostart:
             self.start_launch_apps()
@@ -1665,8 +1677,14 @@ class Launcher:
 
     def watch_once(self) -> None:
         if self.mode == "ready" and self.place.get("root"):
+            # read before the marker: a place pulled out between the two
+            # reads the default look, which the marker check then drops
+            look = self.look_now()[1]
             marker = read_marker(self.place["root"])
             if marker is not None and marker["id"] == self.place.get("id"):
+                # a Move that began meanwhile made look_now say "dark"
+                if self.mode == "ready":
+                    self.keep_look(look)  # a look changed in Settings
                 return
             with self.place_lock:
                 if self.mode != "ready":
@@ -1717,6 +1735,8 @@ class Launcher:
             "presets": theme_presets(),
         }
         out["size"], out["look"] = self.look_now()
+        if self.mode == "problem":
+            out["look"] = self.last_look
         root = self.place.get("root") or ""
         if root and self.mode in ("ready", "moving"):
             drive = self.place.get("drive") or {}
@@ -1757,6 +1777,21 @@ class Launcher:
             if all(settings.get(k) == preset[k] for k in keys):
                 return preset["name"], look
         return "", look
+
+    def keep_look(self, look: str) -> None:
+        """Note the look of the place in use, so the problem screen draws in
+        it when that place is gone (task 405 left those screens dark after
+        Light). Remembered on this computer unless the run has --data."""
+        with self.look_lock:
+            if look == self.last_look:
+                return
+            self.last_look = look
+            if not self.remember:
+                return
+            try:
+                write_json(os.path.join(self.local["state"], LOOK_FILE), {"look": look})
+            except OSError as e:
+                self.log(f"[forge] the look was not noted ({e})")
 
     def save_look(self, size, look) -> None:
         """The text size preset and the look the welcome's last step chose.
@@ -2250,7 +2285,13 @@ class Launcher:
             return self.music(request["music"])
         if any(
             k in request
-            for k in ("theme_pick", "layout_pick", "theme_next", "theme_undo")
+            for k in (
+                "theme_pick",
+                "layout_pick",
+                "forge_layout_pick",
+                "theme_next",
+                "theme_undo",
+            )
         ):
             # Alt+T's switcher, as forge.py's theme_request; the wallpaper's
             # colours take a moment, so off this thread, then back to the hub
@@ -2310,6 +2351,8 @@ class Launcher:
                     forge_themes.undo()
                 elif "layout_pick" in request:
                     forge_themes.pick_layout(str(request["layout_pick"]))
+                elif "forge_layout_pick" in request:
+                    forge_themes.pick_forge_layout(str(request["forge_layout_pick"]))
                 elif request.get("theme_next"):
                     now = forge_themes._ft().load()
                     forge_themes.pick(forge_themes.next_theme(now))
@@ -2864,27 +2907,114 @@ def open_native(launcher: Launcher, url: str, fullscreen: bool) -> bool:
         launcher.log(f"[forge] window: GTK WebKit ({python})")
         watch_process(launcher, proc)
         return proc.returncode != 3  # 3: the window could not be made
+    if not webview2_present():
+        # pywebview would draw Forge with Internet Explorer's engine, which
+        # shows a blank page: the next opener takes over
+        launcher.log(
+            "[forge] Microsoft Edge WebView2 is missing: trying a browser window"
+        )
+        return False
     try:
         import webview  # type: ignore[import-not-found]  # pywebview
     except Exception:
         return False
     launcher.log("[forge] window: pywebview")
     launcher.window_kind = "pywebview"
-    window = webview.create_window(
-        TITLE,
-        url,
-        width=WINDOW_SIZE[0],
-        height=WINDOW_SIZE[1],
-        fullscreen=fullscreen,
-        min_size=(640, 480),
+    window = None
+    try:
+        window = webview.create_window(
+            TITLE,
+            url,
+            width=WINDOW_SIZE[0],
+            height=WINDOW_SIZE[1],
+            fullscreen=fullscreen,
+            min_size=(640, 480),
+        )
+        if window is not None:
+            launcher.on_quit.append(window.destroy)
+        webview.start(
+            private_mode=False,
+            storage_path=os.path.join(launcher.dirs["state"], "webview"),
+        )
+    except Exception as e:
+        # pywebview raises when it has no way to draw a window (Wine has no
+        # .NET for it): the next opener takes over, unless a window showed
+        # and was used, which then counts as closed
+        launcher.log(f"[forge] the window stopped with an error ({e})")
+        shown = window is not None and window_was_shown(launcher, window)
+        failed = True
+    else:
+        shown = window_was_shown(launcher, window)
+        failed = False
+    if failed or not shown:
+        # nothing of this window is left for quitting to wait on (pywebview's
+        # destroy waits 20 s for a window that never showed)
+        if window is not None and window.destroy in launcher.on_quit:
+            launcher.on_quit.remove(window.destroy)
+    if not shown:
+        # the next opener's window is not a pywebview one: pop-outs and
+        # closing must not go to pywebview
+        launcher.window_kind = ""
+    return shown
+
+
+def webview2_present(reg: Any = None) -> bool:
+    """False on a Windows without Microsoft Edge WebView2 (or without .NET
+    4.6.2), where pywebview falls back to Internet Explorer's engine; the
+    same registry keys pywebview reads. True on other systems."""
+    if reg is None:
+        try:
+            reg = importlib.import_module("winreg")  # Windows only
+        except ImportError:
+            return True
+
+    def value(root, path: str, name: str):
+        try:
+            with reg.OpenKey(root, path) as key:
+                return reg.QueryValueEx(key, name)[0]
+        except Exception:
+            return None
+
+    net = value(
+        reg.HKEY_LOCAL_MACHINE,
+        r"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full",
+        "Release",
     )
-    if window is not None:
-        launcher.on_quit.append(window.destroy)
-    webview.start(
-        private_mode=False,
-        storage_path=os.path.join(launcher.dirs["state"], "webview"),
+    if not isinstance(net, int) or net < 394802:
+        return False
+    for client in (
+        "{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}",  # the runtime
+        "{2CD8A007-E189-409D-A2C8-9AF4EF3C72AA}",  # beta
+        "{0D50BFEC-CD6A-4F9A-964C-C7416E3ACB10}",  # dev
+        "{65C35B14-6C1D-4122-AC46-7148CC9D6497}",  # canary
+    ):
+        for root, path in (
+            (reg.HKEY_CURRENT_USER, r"SOFTWARE\Microsoft\EdgeUpdate\Clients"),
+            (reg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\EdgeUpdate\Clients"),
+            (
+                reg.HKEY_LOCAL_MACHINE,
+                r"SOFTWARE\WOW6432Node\Microsoft\EdgeUpdate\Clients",
+            ),
+        ):
+            build = str(value(root, path + "\\" + client, "pv") or "0")
+            major = build.split(".")[0]
+            if major.isdigit() and int(major) >= 86:  # WebView2 86.0.622.0
+                return True
+    return False
+
+
+def window_was_shown(launcher: Launcher, window) -> bool:
+    """After pywebview's loop ends: True when its window ever showed. On a
+    Windows without Edge WebView2 (or under Wine) it never does, and the
+    next opener (Edge's app mode, then the browser) takes over."""
+    shown = getattr(getattr(window, "events", None), "shown", None)
+    if shown is None or not hasattr(shown, "is_set") or shown.is_set():
+        return True
+    launcher.log(
+        "[forge] the window did not show (Microsoft Edge WebView2 may be"
+        " missing): trying a browser window"
     )
-    return True
+    return False
 
 
 def app_browsers(system: str, env=None) -> list[list[str]]:
@@ -3163,13 +3293,47 @@ def parse_args(argv: list[str] | None) -> argparse.Namespace:
     return parser.parse_args(argv)
 
 
+def windows_identity(system: str) -> object | None:
+    """Windows only: take APP_ID as this process's AppUserModelID (a
+    pywebview window then groups with the setup's Start menu shortcut and
+    shows Forge's icon; Edge's app-mode window is Edge's own process and
+    keeps Edge's) and hold a mutex of that name while Forge runs; the
+    setup program and its uninstaller (AppMutex) see it and ask the user to
+    close Forge first. The handle is returned so it stays open; Windows
+    closes it when Forge ends."""
+    if system != "windows":
+        return None
+    try:
+        import ctypes
+
+        # private handles: setting restype on ctypes.windll's shared ones
+        # would change them for every other user in this process
+        dll = getattr(ctypes, "WinDLL")  # noqa: B009  (Windows-only name)
+        shell32, kernel32 = dll("shell32"), dll("kernel32")
+    except Exception:
+        return None
+    try:
+        shell32.SetCurrentProcessExplicitAppUserModelID(APP_ID)
+    except Exception:
+        pass  # an older Windows or Wine: only the taskbar icon is lost
+    try:
+        kernel32.CreateMutexW.restype = ctypes.c_void_p
+        return kernel32.CreateMutexW(None, False, APP_ID)
+    except Exception:
+        return None
+
+
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     if args.gtk_window:
         return gtk_window(args.gtk_window, args.fullscreen)
     if args.pick_folder is not None:
         return gtk_pick_folder(args.pick_folder)
+    # no bytecode files in the program folder from the apps Forge starts
+    # (the launchers pass -B or set this already; a shortcut may not)
+    os.environ["PYTHONDONTWRITEBYTECODE"] = "1"
     system = forge_core.platform_name()
+    identity = windows_identity(system)  # noqa: F841  (held while Forge runs)
     profile = Profile(load_registry(), args.as_system or system)
     local = local_dirs(system)
     wanted = args.port if args.port else profile.hub_port + args.port_offset

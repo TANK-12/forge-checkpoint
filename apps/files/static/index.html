@@ -6,6 +6,7 @@
 <title>Files</title>
 <link rel="stylesheet" href="/shared/forge.css">
 <link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="advanced.css">
 <style>
   :root { --accent: #7fb8d8; --accent-2: #5f9cbf; --on-accent: #06131c; }
 </style>
@@ -33,9 +34,31 @@
     <button class="btn icon" id="preview-toggle" title="Preview pane (F3)">◧</button>
     <button class="btn icon" id="new-window" title="New window (Ctrl+N; middle-click a folder to open it in one)">⧉</button>
     <button class="btn" id="new-folder" title="New folder (Ctrl+Shift+N)">New folder</button>
+    <button class="btn" id="advanced-toggle" aria-pressed="false">Advanced</button>
     <button class="btn icon" id="go-fullscreen" type="button" title="Full screen">⛶</button>
   </header>
 
+  <section id="advanced-tools" class="hidden" aria-label="Advanced tools">
+    <label>Type <select id="filter-kind"><option value="">Any</option><option value="folder">Folders</option><option value="file">Files</option><option value="image">Images</option><option value="video">Videos</option><option value="audio">Audio</option><option value="text">Text</option><option value="archive">Archives</option></select></label>
+    <label>Extension <input id="filter-ext" placeholder=".py" size="5"></label>
+    <label>Minimum bytes <input id="filter-size" type="number" min="0" step="1" value="0"></label>
+    <button class="btn" id="inspect-item">Inspect</button>
+    <button class="btn" id="hash-item">SHA-256</button>
+    <button class="btn" id="usage-folder">Disk usage</button>
+    <button class="btn" id="batch-rename">Batch rename</button>
+    <button class="btn" id="terminal-here">Terminal here</button>
+    <button class="btn" id="edit-path">Edit path</button>
+  </section>
+  <div id="advanced-result" class="hidden" role="status"></div>
+  <dialog id="batch-dialog"><form method="dialog" id="batch-form">
+    <h3>Batch rename selected items</h3>
+    <p>Preview before applying. Existing names are never replaced.</p>
+    <label>Find <input id="batch-find"></label>
+    <label>Replace with <input id="batch-replace"></label>
+    <label>Prefix <input id="batch-prefix"></label>
+    <pre id="batch-plan"></pre>
+    <div class="row"><button class="btn" type="button" id="batch-close">Cancel</button><button class="btn" type="button" id="batch-preview">Preview</button><button class="btn" id="batch-apply" disabled>Apply rename</button></div>
+  </form></dialog>
   <div class="body">
     <aside id="side"></aside>
     <main id="main" tabindex="0">
@@ -77,5 +100,6 @@
 <script src="/shared/forge.js"></script>
 <script src="/shared/forge_idle.js"></script>
 <script src="app.js"></script>
+<script src="advanced.js"></script>
 </body>
 </html>

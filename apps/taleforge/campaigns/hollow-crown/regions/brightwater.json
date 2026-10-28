@@ -1,0 +1,24 @@
+{"id": "brightwater", "name": "Brightwater Vale", "level": [1, 3], "faction": "river_guild",
+ "description": "A green river valley of willows, water-meadows and stone bridges, with the market town of Brightwater at its heart. The Thornwake has only just reached it, and everyone is pretending it has not.",
+ "travel_text": "The road follows the river between hedgerows and drowned meadows.",
+ "wilds": {
+   "encounter_chance": 0.3,
+   "encounters": [
+     {"monsters": ["wolf", "wolf"], "weight": 3, "min_level": 1},
+     {"monsters": ["bandit", "bandit"], "weight": 3, "min_level": 1},
+     {"monsters": ["blight_husk", "blight_husk"], "weight": 2, "min_level": 1},
+     {"monsters": ["giant_rat", "giant_rat", "giant_rat"], "weight": 2, "min_level": 1},
+     {"monsters": ["bog_lurker"], "weight": 1, "min_level": 2},
+     {"monsters": ["bandit", "bandit", "bandit"], "weight": 1, "min_level": 2}
+   ],
+   "events": [
+     {"id": "stuck_cart", "weight": 2, "text": "A farmer's cart sits axle-deep in the mud, the farmer pushing and swearing in turns.", "check": {"skill": "athletics", "dc": "medium"}, "success": [{"message": "The cart lurches free. The farmer presses honey cakes on you."}, {"give": "honey_cakes"}, {"reputation": {"river_guild": 2}}], "fail": [{"message": "You slip and go face-first into the mud. The farmer laughs, not unkindly."}]},
+     {"id": "briar_patch", "weight": 2, "text": "A ring of black briar has sprouted in the middle of a sheep meadow overnight, humming faintly.", "check": {"skill": "arcana", "dc": "medium"}, "success": [{"message": "The briars feed on warmth. They are growing toward the town, a few yards a day."}, {"flag": "knows_briars_feed_on_warmth"}, {"xp": 25}], "fail": [{"message": "A thorn catches your sleeve and the cold goes straight to the bone."}, {"damage": "1d4"}]},
+     {"id": "lost_lamb", "weight": 1, "text": "A lamb bleats somewhere in the reeds, stuck and frightened.", "check": {"skill": "animal", "dc": "easy"}, "success": [{"message": "You coax it out and carry it to a grateful shepherd."}, {"xp": 15}, {"gold": 3}], "fail": [{"message": "It bolts deeper into the reeds. You leave it to its luck."}]},
+     {"id": "toll_men", "weight": 1, "text": "Two men with a rope across the road and a hand-painted sign: TOLL, 5 GOLD.", "check": {"skill": "intimidation", "dc": "medium"}, "success": [{"message": "They lower the rope and find somewhere else to be."}, {"xp": 25}], "fail": [{"message": "They draw cudgels."}, {"combat": ["bandit", "bandit"]}]},
+     {"id": "wayshrine", "weight": 1, "text": "A mossy wayshrine to the Dawn Mother, with a bowl for offerings.", "check": {"skill": "medicine", "dc": "trivial"}, "success": [{"message": "You rest a moment in the shrine's peace."}, {"heal": "1d6"}], "fail": []}
+   ],
+   "finds": ["wildflowers", "marsh_lily", "river_pearl", "rations", "rope"],
+   "sights": ["herons standing in the shallows like old men fishing", "a drowned meadow full of sky", "smoke from a farmstead chimney", "a stone bridge furred with moss", "black briar creeping along a hedgerow", "kingfishers flashing blue over the water"],
+   "names": ["Wendel", "Marta", "Osric", "Bryn", "Tilda", "Hob", "Agnes", "Corwin", "Nell", "Piers"]
+ }}

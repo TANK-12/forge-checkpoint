@@ -1,0 +1,35 @@
+{"scenes": [
+  {"id": "lyra_recruit", "title": "The Archer", "nodes": {
+    "start": {"speaker": "lyra", "text": "Lyra listens with her arms folded. 'You want me along.' It isn't a question. 'I'm not good company. I'm hunting something, and when I find it, that comes first. Before you, before your quest, before sense.'", "choices": [
+      {"text": "'Then we hunt it together, and then you help me with mine.'", "effects": [{"join": "lyra"}, {"affection": {"lyra": 4}}, {"flag": "lyra_trusts"}], "next": "deal"},
+      {"text": "[Persuasion] 'You've been alone with this for two months. Let someone carry some of it.'", "check": {"skill": "persuasion", "dc": "medium"}, "effects": [{"join": "lyra"}, {"affection": {"lyra": 7}}, {"flag": "lyra_trusts"}], "next": "soft", "fail_next": "prickly"},
+      {"text": "'Never mind.'", "next": "end"}]},
+    "deal": {"speaker": "lyra", "text": "'Fair trade.' She stands and shoulders her bow. 'Keep up.'", "next": "end"},
+    "soft": {"speaker": "lyra", "text": "Something in her face gives, just slightly. 'That's a low trick.' She picks up her quiver. 'It worked. Don't make me regret it.'", "next": "end"},
+    "prickly": {"speaker": "lyra", "text": "'I don't need a nursemaid.' She turns back to her arrows. Maybe another time, when she has more reason to trust you.", "next": "end"}
+  }},
+  {"id": "lyra_heart_1", "title": "Names for Stars", "once": true, "nodes": {
+    "start": {"speaker": "lyra", "text": "The fire is down to embers. Lyra is on watch, lying on her back with her hands behind her head, looking up. 'Can't sleep?' she says without turning. 'Come here, then. I'll show you something.' She points at a faint smudge of stars. 'Fen called that one the Fiddler. Said it was a man who played so badly the sky took him to shut him up.'", "choices": [
+      {"text": "Lie down beside her and ask what she'd call the next one.", "effects": [{"affection": {"lyra": 4}}], "next": "name"},
+      {"text": "'You miss him.'", "next": "miss"},
+      {"text": "'Get some sleep, Lyra. I'll take the watch.'", "effects": [{"affection": {"lyra": 2}}, {"flag": "lyra_romance_declined"}], "next": "end"}]},
+    "name": {"speaker": "lyra", "text": "She is quiet a long time. Then she points at two bright stars, close together. 'Those. The Hunters. They walk the same road all night and never get tired of the company.' She glances at you, and there's firelight in her eyes and something unguarded. 'Stupid name.'", "choices": [
+      {"text": "'It's perfect.' Find her hand in the dark.", "effects": [{"romance": {"lyra": "spark"}}, {"affection": {"lyra": 5}}, {"message": "Her fingers lace through yours and stay there until dawn."}], "next": "end"},
+      {"text": "'It's a good name.' Leave it at that.", "effects": [{"affection": {"lyra": 2}}], "next": "end"}]},
+    "miss": {"speaker": "lyra", "text": "'Every hour.' The word comes out rough. 'He was the soft one. I was supposed to be the one who kept him safe.' She wipes her face with the back of her wrist, angry at it. 'Sorry. You didn't sign on for this.'", "choices": [
+      {"text": "'I signed on for you. All of it.'", "effects": [{"romance": {"lyra": "spark"}}, {"affection": {"lyra": 6}}, {"message": "Lyra leans her head against your shoulder, and lets it stay there."}], "next": "end"},
+      {"text": "'It wasn't your fault.'", "effects": [{"affection": {"lyra": 3}}], "next": "end"}]}
+  }},
+  {"id": "lyra_heart_2", "title": "The Last Arrow", "once": true, "nodes": {
+    "start": {"speaker": "lyra", "text": "Lyra finds you away from the others, turning a single arrow over in her hands, kingfisher-blue. 'I saved one. I thought I'd keep it forever.' She holds it out to you. 'I want you to have it. It's the most important thing I own, and I'm giving it away, and I'm terrified. So say something before I lose my nerve.'", "choices": [
+      {"text": "Take the arrow, then take her face in your hands and kiss her.", "effects": [{"romance": {"lyra": "courting"}}, {"affection": {"lyra": 8}}, {"give": "brother_arrow"}, {"message": "She kisses you back like someone who has been holding her breath for a very long time."}], "next": "after"},
+      {"text": "'Lyra, I care about you. But not like that.'", "effects": [{"flag": "lyra_romance_declined"}, {"affection": {"lyra": -3}}], "next": "declined"}]},
+    "after": {"speaker": "lyra", "text": "When she pulls back, she is laughing at herself. 'Well. That's settled, then.' She presses her forehead to yours. 'Don't you dare die on me.'", "next": "end"},
+    "declined": {"speaker": "lyra", "text": "She nods, too fast. 'Right. Good. Better to know.' She tucks the arrow back in her quiver. 'Still your friend. That doesn't change.' It takes her a day to look at you properly again.", "next": "end"}
+  }},
+  {"id": "lyra_heart_3", "title": "Home", "once": true, "nodes": {
+    "start": {"speaker": "lyra", "text": "Rain on canvas. Lyra is wrapped in your cloak, her head on your chest, tracing circles on your arm. 'When this is over,' she says, 'there's a cabin at the edge of the Whisperwood. Fen and I grew up there. It needs a new roof.' A pause. 'I'd like you to help me fix it. And then stay. If you want.'", "choices": [
+      {"text": "'There's nowhere I'd rather be.' Promise her.", "effects": [{"romance": {"lyra": "beloved"}}, {"commit": "lyra"}, {"affection": {"lyra": 10}}, {"message": "Lyra doesn't say anything. She just holds on, and you feel her smile against your skin."}], "next": "end"},
+      {"text": "'Ask me again when the crown is whole.'", "effects": [{"affection": {"lyra": 1}}], "next": "end"}]}
+  }}
+]}

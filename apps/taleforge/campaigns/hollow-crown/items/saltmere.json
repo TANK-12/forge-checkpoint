@@ -1,0 +1,15 @@
+{"items": [
+  {"id": "salt_shard", "name": "Salt shard", "kind": "key", "value": 0, "unsellable": true, "text": "A piece of the heart-stone gone milky and grey, as if the sea had been at it. It aches like an old wound when the tide turns."},
+  {"id": "saltmere_vault_key", "name": "Strongroom key", "kind": "key", "value": 0, "unsellable": true, "text": "A heavy iron key on a tarred cord, stamped with a tiny salt crystal. It opens the Syndicate's strongroom under the quays."},
+  {"id": "saltmere_harbour_writ", "name": "Harbourmaster's writ", "kind": "key", "value": 0, "unsellable": true, "text": "A folded warrant stamped with the Regency's tower and signed D. Voss. It lets you search any warehouse in Saltmere, if the owners will let you live to use it."},
+  {"id": "saltmere_brine_pearl", "name": "Brine pearl", "kind": "trinket", "value": 30, "text": "A grey-green pearl from the salt flats, with a sheen like oil on water."},
+  {"id": "saltmere_cutlass", "name": "Smuggler's cutlass", "kind": "weapon", "value": 40, "damage": "1d8", "ability": "finesse", "bonus": 1, "text": "A curved blade with a shell-inlaid guard, kept sharp and quiet."},
+  {"id": "saltmere_boarding_axe", "name": "Boarding axe", "kind": "weapon", "value": 30, "damage": "1d10", "ability": "str", "text": "A short-hafted axe made for cutting rope and, on occasion, arguments."},
+  {"id": "saltmere_sailcloth_coat", "name": "Sailcloth coat", "kind": "armor", "value": 48, "ac": 12, "dex_cap": null, "text": "A waxed canvas coat with brass buttons and a hidden pocket in the lining."},
+  {"id": "saltmere_buckler", "name": "Tarred buckler", "kind": "shield", "value": 12, "ac_bonus": 1, "text": "A round wooden buckler, tarred and bound in rope. Light enough to leave a hand free."},
+  {"id": "saltmere_rum", "name": "Navy rum", "kind": "consumable", "value": 8, "use": [{"heal": "1d6+1"}], "text": "A flask of harsh dark rum. It warms you from the throat outward."},
+  {"id": "saltmere_taffy", "name": "Salt taffy", "kind": "gift", "value": 4, "text": "Chewy sea-salt taffy twisted in waxed paper. Sailors swear by it for seasickness."},
+  {"id": "saltmere_pearl_comb", "name": "Pearl-backed comb", "kind": "gift", "value": 28, "text": "A fine tortoiseshell comb with a row of seed pearls along the spine."},
+  {"id": "saltmere_tide_charm", "name": "Tide charm", "kind": "trinket", "value": 16, "text": "A twist of silver wire around a grey pebble. Sailors say it brings you home if you can swim."},
+  {"id": "saltmere_spiced_wine", "name": "Spiced harbour wine", "kind": "gift", "value": 15, "text": "Hot red wine with clove and orange peel, in a stoppered flask."}
+]}

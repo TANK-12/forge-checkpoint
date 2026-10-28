@@ -209,7 +209,7 @@ function renderWallpaper() {
     item.classList.toggle("on", !!now.name && item.dataset.name === now.name));
 }
 
-// Favourites are starred in the Wallpapers app; they are re-read whenever this
+// Favourites are starred in the Wallpapers browser; they are re-read whenever this
 // page comes back into view, so a star added there shows here. The strip is
 // only rebuilt when the list changed: rebuilding on every focus blinked each
 // picture and threw away the strip's scroll. A failed read keeps what shows.
@@ -229,7 +229,9 @@ async function loadFavourites() {
   if (!names.length) {
     const hint = document.createElement("div");
     hint.className = "muted small";
-    hint.textContent = "No favourites yet: star wallpapers in the Wallpapers app to keep them here.";
+    hint.textContent = state.wallApp
+      ? "No favourites yet: star wallpapers in Browse all wallpapers to keep them here."
+      : "No favourites yet.";
     box.appendChild(hint);
     return;
   }
@@ -255,11 +257,44 @@ async function loadFavourites() {
 
 $("current-thumb").addEventListener("error", (e) => noThumb(e.target));
 
-$("open-wallpapers").addEventListener("click", () => {
-  if (window.parent !== window) {
-    window.parent.postMessage({ forge: "open", role: "wallpapers" }, "*");
-  } else {
-    window.open("http://127.0.0.1:8442/", "_blank");
+// The whole Wallpapers browser lives in this section: this
+// backend serves the Wallpapers app at /wallpapers/, and the hub opens
+// "Wallpapers" here at #wallpapers (its manifest's "inside"), so the frame
+// loads only when it is first shown. `view` is the browser's own hash
+// ("favourites").
+function showWallBrowser(open, view) {
+  const box = $("wall-browser"), frame = $("wall-frame");
+  if (!state.wallApp) return;
+  box.hidden = !open;
+  $("open-wallpapers").setAttribute("aria-expanded", String(open));
+  $("open-wallpapers").textContent = open ? "Hide the browser" : "Browse all wallpapers";
+  if (!open) { loadFavourites(); return; }
+  const want = "wallpapers/?embed=1" + (view ? "#" + view : "");
+  if (!frame.getAttribute("src")) frame.setAttribute("src", want);
+  else if (view) { try { frame.contentWindow.location.hash = view; } catch (e) {} }
+  box.scrollIntoView({ block: "nearest", behavior: "smooth" });
+}
+$("open-wallpapers").addEventListener("click", () => showWallBrowser($("wall-browser").hidden));
+// The browser hands a new theme up like any app: pass it on to the hub, which
+// sends it back to every open app (this page re-reads its settings then).
+// The hub's themes go down to the browser the same way, so it wears Forge's
+// look like this page does: each new one, and the last one when it loads.
+window.addEventListener("message", (event) => {
+  const frame = $("wall-frame"), msg = event.data;
+  if (!msg) return;
+  if (event.source === window.parent && window.parent !== window && msg.forge === "theme" && msg.theme) {
+    state.hubTheme = msg.theme;
+    if (frame.contentWindow && frame.getAttribute("src")) frame.contentWindow.postMessage(msg, "*");
+    return;
+  }
+  if (!frame.contentWindow || event.source !== frame.contentWindow) return;
+  if (msg.forge === "ready" && state.hubTheme) {
+    frame.contentWindow.postMessage({ forge: "theme", theme: state.hubTheme }, "*");
+  } else if (msg.forge === "theme" && msg.theme) {
+    tellHub(msg.theme);
+    loadFavourites();
+  } else if (msg.forge === "key") {
+    try { window.parent.postMessage(msg, "*"); } catch (e) {}
   }
 });
 document.addEventListener("visibilitychange", () => { if (!document.hidden) loadFavourites(); });
@@ -1084,6 +1119,12 @@ function landOnRow(key) {
 addEventListener("hashchange", () => {
   if (!state.fields) return;
   const [id, row] = decodeURIComponent(location.hash.slice(1)).split("/");
+  // #wallpapers (opening the Wallpapers app) is the Wallpaper section with the
+  // browser open, at its own view when one follows (#wallpapers/favourites)
+  if (id === "wallpapers") {
+    if (state.section !== "wallpaper") showSection("wallpaper", true);
+    return showWallBrowser(true, row || "");
+  }
   if (id && id !== state.section) showSection(id, true);
   if (row) landOnRow(row);
 });
@@ -1169,9 +1210,10 @@ async function boot() {
     // is no "Open Wallpapers" and no favourites, which are starred there; on
     // a desktop Forge cannot read the wallpaper of (macOS, most Linux
     // desktops) there is no "Follow my desktop wallpaper".
-    state.wallApp = !Array.isArray(s.roles) || s.roles.includes("wallpapers");
+    state.wallApp = s.wall_browser === true;
     state.desktopFollow = s.desktop_follow !== false;
     ["open-wallpapers", "wall-app-note", "favs"].forEach((id) => { $(id).hidden = !state.wallApp; });
+    if (!state.wallApp) $("wall-browser").hidden = true;
     document.querySelector(".fav-head").hidden = !state.wallApp;
     $("follow-desktop").closest("label").hidden = !state.desktopFollow;
     $("wall-filter").placeholder = `Search ${w.wallpapers.length} wallpapers in ${w.folder}…`;
@@ -1183,6 +1225,8 @@ async function boot() {
     // #section/key (the hub's search, Power's frame rate) also lands on
     // that one setting
     let [first, row] = decodeURIComponent(location.hash.slice(1)).split("/");
+    const browse = first === "wallpapers" ? row || "" : null;
+    if (browse !== null) [first, row] = ["wallpaper", ""];
     try { first = first || localStorage.getItem("forge.settings.section") || ""; } catch (e) {}
     state.section = first;
     buildGroups();
@@ -1204,6 +1248,7 @@ async function boot() {
       landOnRow(row);
       favs.then(() => landOnRow(row));
     }
+    if (browse !== null) showWallBrowser(true, browse);
     if (booter) booter.stop();
     booter = null;
     return true;

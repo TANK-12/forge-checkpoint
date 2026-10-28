@@ -21,10 +21,10 @@ What counts as the subject: the anime cut-out model's mask when it finds a
 character of a sensible size, else the nearest part of the depth map (a
 tree, a ledge), else nothing (the wallpaper stays flat).
 
-Nothing is downloaded or installed. The models are the ones PanelForge
-already keeps (~/PanelForgeData/models: skytnt/anime-seg isnetis.onnx, the
+Nothing is installed. The models are the ones PanelForge keeps (~/PanelForgeData/models: skytnt/anime-seg isnetis.onnx, the
 model rembg ships as isnet-anime, and Depth Anything V2 from
-onnx-community), and the work runs in whichever Forge app's .venv already
+onnx-community; when they are missing, find_models starts downloading them
+again from shared/model_links.json), and the work runs in whichever Forge app's .venv already
 has onnxruntime, numpy and Pillow (find_python), so no copies are made.
 
     python3 shared/forge_layers.py make <image> <key> <folder>
@@ -106,7 +106,31 @@ def ready(key: str, folder: Path) -> dict | None:
 def find_models(root: Path = MODELS) -> dict[str, Path] | None:
     seg = next((root / m for m in SEG_MODELS if (root / m).is_file()), None)
     depth = next((root / m for m in DEPTH_MODELS if (root / m).is_file()), None)
-    return {"seg": seg, "depth": depth} if seg and depth else None
+    if seg and depth:
+        return {"seg": seg, "depth": depth}
+    fetch_missing(root, () if seg else SEG_MODELS, () if depth else DEPTH_MODELS)
+    return None
+
+
+def fetch_missing(root: Path, *groups: tuple[str, ...]) -> list[dict]:
+    """Start downloading, in the background, the first model of each group
+    that shared/model_links.json has a link for (Relay task 449 removed the
+    local copies); the next call finds them."""
+    here = str(Path(__file__).resolve().parent)
+    if here not in sys.path:
+        sys.path.insert(0, here)
+    try:
+        import forge_model_links
+    except ImportError:
+        return []
+    started = []
+    for group in groups:
+        for name in group:
+            snap = forge_model_links.start(root / name)
+            if snap:
+                started.append(snap)
+                break
+    return started
 
 
 def find_python(apps: Path = FORGE / "apps") -> str | None:

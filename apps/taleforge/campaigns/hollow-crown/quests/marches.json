@@ -1,0 +1,35 @@
+{"quests": [
+  {"id": "main_4", "name": "The Broken Oath", "kind": "main", "level": 4, "giver": "marches_edric", "region": "ashen_marches",
+   "summary": "The Regent has the heart-stone, and nobody in Vael will stand against him but the Order of Ash, the crown's own sworn knights, who broke at Greyford twelve years ago and have not ridden since.",
+   "stages": [
+     {"id": "start", "text": "Lord Varric Caul holds the heart-stone, and a regent who holds the crown's heart is not going to be talked out of it. The Order of Ash swore four hundred years ago never to leave the crown alone in the dark. What is left of them holds Emberhold Keep, three hours east of the Last Lamp.", "objective": "Seek an audience with the Lord-Commander at Emberhold Keep", "complete_when": {"flag": "marches_edric_refused"}, "next": "greyford"},
+     {"id": "greyford", "text": "Lord-Commander Edric Ashdown will not ride. Twelve years ago at Greyford the Order's retreat horn sounded, the knights obeyed it, and the village of Tarrow burned behind them. The Lord Marshal swore no order was ever sent. The knight who sounded the horn swore a courier brought one. He was Edric's son, Corin, and he lost his spurs for it.", "objective": "Find out what really happened at Greyford", "complete_when": {"has_item": "marches_courier_satchel"}, "next": "the_dead"},
+     {"id": "the_dead", "text": "The courier's satchel holds the retreat order, forged in the Queen's name under Varric Caul's seal, and Caul's own note keeping it from Ser Halvard, the knight who held the ford. But Halvard still holds Greyford: dead, grown through with briar, and the knights of Emberhold believe he stands there as their judgement.", "objective": "Lay Ser Halvard, the Ashen Knight, to rest at Greyford", "complete_when": {"flag": "ashen_knight_rested"}, "next": "oath"},
+     {"id": "oath", "text": "The ford runs clear. What the Order does with the truth is theirs to decide, but someone has to put it in front of them, in the Chapel of the Oath where they swore.", "objective": "Bring the Greyford satchel to Lord-Commander Edric at Emberhold", "complete_when": {"any": [{"flag": "order_marches_with_you"}, {"flag": "order_stays_home"}]},
+      "on_complete": [{"message": "Whatever the Order does next, Varric Caul is in Highspire with the heart-stone of the Ember Crown, and the satchel in your pack is the first proof anyone has held that the Regent's word is worth less than his seal."}, {"start_quest": "main_5"}, {"reveal": "highspire_gate"}], "next": "done"}
+   ],
+   "rewards": {"xp": 1000, "gold": 100}},
+  {"id": "marches_hounds", "name": "Hounds on the Cinder Road", "kind": "side", "level": 4, "giver": "marches_oswin", "region": "ashen_marches",
+   "summary": "Cinder hounds are taking refugees on the road between the Last Lamp and Cinderfold, and Oswin has run out of ways to warn people.",
+   "stages": [
+     {"id": "start", "text": "A pack of cinder hounds has been picking off stragglers on the road from the north. Oswin hangs lanterns on the waymarkers, but the hounds have learned to wait just past the light.", "objective": "Kill the cinder hounds hunting the Marches roads", "complete_when": {"kills": {"marches_cinder_hound": 3}}, "next": "report"},
+     {"id": "report", "text": "The road is quieter. Oswin will want to know.", "objective": "Tell Oswin at the Last Lamp the hounds are dead", "complete_when": {"flag": "oswin_hounds_thanks"}, "next": "done"}
+   ],
+   "rewards": {"xp": 400, "gold": 45, "items": ["greater_healing"], "reputation": {"order_of_ash": 3}}},
+  {"id": "marches_choir_children", "name": "The Singing Hollow", "kind": "side", "level": 4, "giver": "marches_hesk", "region": "ashen_marches",
+   "summary": "Three of Cinderfold's children walked out of camp in the night following a hymn, and the people who went after them have not come back either.",
+   "stages": [
+     {"id": "start", "text": "Three children, and the two grown-ups who went after them, walked north-east out of Cinderfold into the dead pines, following singing. Mother Hesk says the Thorn Choir has been calling at the edge of the camp for a week.", "objective": "Follow the singing to wherever the children went", "complete_when": {"visited": "marches_choir_hollow"}, "next": "lark"},
+     {"id": "lark", "text": "The children are in the Singing Hollow with thirty others, sitting in the snow under a roof of briar. They do not feel the cold. They will not, soon, feel anything. The Choir's leader is a soft-spoken young acolyte called Brother Lark.", "objective": "Free the singers from the Thorn Choir", "complete_when": {"any": [{"flag": "marches_choir_turned"}, {"flag": "marches_choir_broken"}]}, "next": "home"},
+     {"id": "home", "text": "The children are walking back to Cinderfold, wrapped in whatever coats could be found. Mother Hesk should hear it from you.", "objective": "Tell Mother Hesk the children are safe", "complete_when": {"flag": "hesk_children_thanks"}, "next": "done"}
+   ],
+   "rewards": {"xp": 500, "gold": 30, "items": ["marches_hesk_tea"], "reputation": {"order_of_ash": 4, "thorn_choir": -5}}},
+  {"id": "corin_quest", "name": "A Bell for Tarrow", "kind": "companion", "level": 4, "giver": "corin", "region": "ashen_marches",
+   "summary": "Corin has rebuilt the chapel of Tarrow with his own hands, stone by stone, over nine years. All that is missing is the bell, and someone with the right to ring it.",
+   "stages": [
+     {"id": "start", "text": "The reavers threw Tarrow's bell into the millpond the night the village burned. Corin has tried to raise it three times, and something in the water has stopped him three times.", "objective": "Raise the Tarrow bell from the millpond", "complete_when": {"has_item": "marches_tarrow_bell"}, "next": "wenna"},
+     {"id": "wenna", "text": "The bell is out of the water. Corin will not ring it. 'It isn't mine to ring,' he says. 'It belongs to Tarrow.' The last of Tarrow's families still living is Wenna, who burns charcoal at Cinderfold and hates him.", "objective": "Ask Wenna at Cinderfold to come and ring the bell", "complete_when": {"flag": "wenna_will_come"}, "next": "ring"},
+     {"id": "ring", "text": "Wenna has said she will come. The bell, the rope and the bell-cote are ready. Corin is not.", "objective": "Bring the bell to Tarrow with Corin beside you", "complete_when": {"flag": "corin_bell_rung"}, "next": "done"}
+   ],
+   "rewards": {"xp": 600, "affection": {"corin": 8}, "items": ["corin_bellrope_knot"]}}
+]}

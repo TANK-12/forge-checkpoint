@@ -220,7 +220,7 @@ function render() {
   renderCrumbs();
   renderSide();
 
-  S.shown = sorted(S.items);
+  S.shown = sorted(window.FilesAdvanced ? window.FilesAdvanced.filter(S.items) : S.items);
   const box = $("items");
   const grid = S.prefs.view === "grid";
   const cut = S.clip?.op === "move" ? new Set(S.clip.paths) : null;

@@ -1,0 +1,6 @@
+{"templates": [
+  {"id": "cull", "kind": "slay", "weight": 3, "title": "Trouble near {place}", "hook": "{giver} wants the {monster_plural} near {place} dealt with before someone gets hurt.", "count": [2, 4], "reward": {"xp_per_level": 60, "gold_per_level": 12}},
+  {"id": "bounty", "kind": "slay", "weight": 2, "title": "A bounty in {region}", "hook": "A notice signed by {giver}: {count} {monster_plural} have been seen around {place}. Coin on proof.", "count": [1, 3], "reward": {"xp_per_level": 75, "gold_per_level": 15}},
+  {"id": "gather", "kind": "fetch", "weight": 2, "title": "{item} for {giver}", "hook": "{giver} needs {item}, and the only place it turns up is out around {region}.", "count": [1, 1], "reward": {"xp_per_level": 50, "gold_per_level": 10}},
+  {"id": "parcel", "kind": "deliver", "weight": 2, "title": "A parcel for {place}", "hook": "{giver} hands you a sealed parcel for someone at {place}, and pays half up front.", "count": [1, 1], "reward": {"xp_per_level": 40, "gold_per_level": 10}}
+]}

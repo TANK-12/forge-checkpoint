@@ -1,0 +1,373 @@
+{
+ "npcs": [
+  {
+   "id": "moth",
+   "name": "Auntie Moth",
+   "pronouns": "she/her",
+   "location": "lowtide_noodle",
+   "faction": "lowtide_folk",
+   "description": "A small woman with a silver braid, forearms scarred by decades of boiling pots, and a pair of reading glasses perched on her head and never used. Her smile has the kind of patience that has fed ten thousand strangers.",
+   "personality": "Warm, sharp, nosy. Knows everything that passes through Lowtide and sells none of it, only gives it to people who eat first.",
+   "speech": "Unhurried, affectionate. Calls everyone 'little fish'. Answers questions with questions and a bowl of something hot.",
+   "greeting": "Sit, little fish. You look like a ghost who forgot to haunt anyone. Eat first. Talk after.",
+   "topics": [
+    {
+     "id": "last_month",
+     "prompt": "Ask what you were doing last month",
+     "text": "'You came in every night for a week,' Moth says, ladling broth. 'Quiet, jumpy, paying with Spire-grade chits no Lowtide cook should ever see. Then one night you ordered two bowls, ate neither, and left a note on the counter. I gave it to the wall.' She points to the wall of photographs. 'Look closer, little fish.'",
+     "effects": [
+      {
+       "flag": "heard_moth"
+      },
+      {
+       "xp": 20
+      }
+     ],
+     "once": true
+    },
+    {
+     "id": "debt",
+     "prompt": "Ask about the number on your wrist",
+     "text": "'Forty-eight thousand,' she says, and tuts. 'They always pick a number that sounds like a mistake. Do not pay it all at once, do not argue with the Spire's kiosks, and never, ever sign anything that says verified by memory.' Her eyes flick to your wrist. 'You already did, didn't you.'",
+     "effects": [
+      {
+       "flag": "heard_debt"
+      }
+     ]
+    },
+    {
+     "id": "metro",
+     "prompt": "Ask about Platform Nine",
+     "when": {
+      "flag": "chip_read"
+     },
+     "text": "Moth stops stirring. 'That station flooded eleven years ago, and the Saints sealed the stair on purpose. If you must go, take a lantern. They know you, and Dagny owes me noodles.' She slides a bowl towards you, as if food might change your mind.",
+     "effects": [
+      {
+       "flag": "moth_warned"
+      }
+     ]
+    },
+    {
+     "id": "read_her",
+     "prompt": "[Insight] Ask what she is not telling you",
+     "check": {
+      "skill": "insight",
+      "dc": "medium"
+     },
+     "text": "She goes still, then sighs and sets down the ladle. 'I saw two Spire men with you that last night, little fish. They didn't look like they were arguing. They looked like they were walking you to a car.' She meets your eye. 'I didn't call anyone. I should have.'",
+     "fail_text": "Moth only laughs and pushes a bowl of broth at you until you stop asking.",
+     "effects": [
+      {
+       "flag": "moth_secret"
+      },
+      {
+       "xp": 25
+      }
+     ],
+     "once": true
+    },
+    {
+     "id": "noodle_credit",
+     "prompt": "[Persuasion] Ask if she'll run you a tab",
+     "check": {
+      "skill": "persuasion",
+      "dc": "easy"
+     },
+     "text": "'A tab, from a woman with a number on her wrist?' She snorts. 'Fine. Eat. We will settle when you are rich.' Two bowls arrive, and the warmth of them settles somewhere behind your ribs.",
+     "fail_text": "'Little fish, I run on cash and prayer. Mostly cash.'",
+     "effects": [
+      {
+       "heal": "1d8"
+      },
+      {
+       "give": "synth_noodles"
+      }
+     ],
+     "once": true
+    }
+   ],
+   "rumours": true
+  },
+  {
+   "id": "wick",
+   "name": "Wick Aranda",
+   "pronouns": "he/him",
+   "location": "lowtide_market",
+   "faction": "lowtide_folk",
+   "description": "A lanky salvager with welding goggles pushed up into a tangle of grey-streaked hair, one forearm a patchwork of mismatched chrome, a soldering iron tucked behind his ear. His stall is a cathedral of other people's broken things.",
+   "personality": "Friendly, nervous, mercantile. Can price a stranger's implants at a glance. Loyal to Lowtide and scared of the Spire, in exactly that order.",
+   "speech": "Fast and laced with trade slang. Calls customers 'chief'. Keeps lowering his voice, then forgetting to.",
+   "greeting": "Chief! Sit, browse, touch nothing that glows. What'll it be, a deal or a miracle?",
+   "topics": [
+    {
+     "id": "read_chip",
+     "prompt": "Show him the receipt chip",
+     "when": {
+      "has_item": "receipt_chip"
+     },
+     "text": "Wick slots the chip into a reader that looks like it was cobbled from three toasters. He goes pale. 'That's a memory-extraction receipt, chief. Aurelian logs every one. Yours says collected at Platform Nine, the drowned metro. Whoever took your last six weeks stored them there, in a vault.' He pushes the chip back. 'Don't go in without friends. Or a very good lie.'",
+     "effects": [
+      {
+       "flag": "chip_read"
+      },
+      {
+       "reveal": "lowtide_metro"
+      },
+      {
+       "reveal": "lowtide_streets"
+      },
+      {
+       "xp": 30
+      }
+     ]
+    },
+    {
+     "id": "haggle",
+     "prompt": "[Persuasion] Haggle for a better price on your next buy",
+     "check": {
+      "skill": "persuasion",
+      "dc": "medium"
+     },
+     "text": "Wick waves his soldering iron like a flag of surrender. 'Fine, chief. Take this on the house. But you did not hear it from me.' He presses a stim into your hand.",
+     "fail_text": "'No, no, no. I have six kids to feed.' (He has none.)",
+     "effects": [
+      {
+       "give": "stim_shot"
+      }
+     ],
+     "once": true
+    },
+    {
+     "id": "saints",
+     "prompt": "Ask about the Lantern Saints",
+     "text": "'Gang that does what the city won't,' Wick whispers, then forgets and says it normally. 'They tax us and shoot Aurelian repo crews. Dagny Bao runs the Wet Circuit. If you want help in the metro, you go through her. Bring a favour, not a threat.'",
+     "effects": [
+      {
+       "flag": "heard_saints"
+      }
+     ]
+    },
+    {
+     "id": "ren",
+     "prompt": "Ask about Ren Okoye at the Wet Circuit",
+     "when": {
+      "visited": "lowtide_club"
+     },
+     "text": "'The singer?' Wick's whole face softens. 'Best voice in the district. Best hands on a deck, too, if you believe the rumours, and I do. Her brother's on a leased respirator at the clinic. The fees are killing her.' He winces. 'I shouldn't have said that.'",
+     "effects": [
+      {
+       "flag": "heard_ren"
+      }
+     ]
+    },
+    {
+     "id": "buy_badge",
+     "prompt": "Ask if he sells forged corp credentials",
+     "text": "'A badge? In Lowtide?' He laughs too loudly. Then, quieter: 'I have one. A real audit badge from a man who won't need it. Fifty credits and you've never met me.'",
+     "when": {
+      "not_item": "corp_badge",
+      "gold": 50
+     },
+     "effects": [
+      {
+       "gold": -50
+      },
+      {
+       "give": "corp_badge"
+      }
+     ],
+     "once": true
+    }
+   ],
+   "rumours": true
+  },
+  {
+   "id": "ines",
+   "name": "Dr. Ines Halvorsen",
+   "pronouns": "she/her",
+   "location": "lowtide_clinic",
+   "faction": "lowtide_folk",
+   "description": "A broad-shouldered woman in a blood-spotted lab coat over a hoodie, grey curls tied back with a surgical glove, hands that move with a surgeon's calm and a chain-smoker's tremor she hides by always holding something.",
+   "personality": "Tired, blunt, tender in secret. Has been fixing people the Spire discarded for fifteen years and has stopped expecting thanks. Hates owing; hates being owed worse.",
+   "speech": "Clipped, dry, clinical. Swears in Norwegian. Never asks for money first, always asks for it eventually.",
+   "greeting": "If you are bleeding, sit. If you are not, don't touch anything. If you are a lawyer, leave.",
+   "topics": [
+    {
+     "id": "chip_tag",
+     "prompt": "[Medicine] Ask her to read the chip's extraction code",
+     "when": {
+      "has_item": "receipt_chip"
+     },
+     "check": {
+      "skill": "medicine",
+      "dc": "medium"
+     },
+     "text": "Ines holds the chip under a lamp and swears in Norwegian. 'Procedure code for an engram pull. Whoever did it was gentle. A memory like this should leave you screaming for a month.' She taps the tag. 'Stored at Platform Nine. Don't ask how I know.'",
+     "fail_text": "She turns the chip over and shakes her head. 'Beyond my tools. Try Wick; his toasters are smarter than my scanner.'",
+     "effects": [
+      {
+       "flag": "chip_read"
+      },
+      {
+       "reveal": "lowtide_metro"
+      },
+      {
+       "reveal": "lowtide_streets"
+      },
+      {
+       "xp": 30
+      }
+     ],
+     "once": true
+    },
+    {
+     "id": "treat",
+     "prompt": "Ask her to patch you up",
+     "text": "She prods your ribs, your scalp, your pupils. 'You're fine. Tired and dumb, but fine.' A cold hand-spray, a plaster, and the worst of it is gone.",
+     "effects": [
+      {
+       "heal": "2d6"
+      }
+     ]
+    },
+    {
+     "id": "tomas",
+     "prompt": "Ask about Tomas on the respirator",
+     "when": {
+      "visited": "lowtide_club",
+      "not_flag": "tomas_freed"
+     },
+     "text": "'Her brother,' Ines says. 'A fall from a gantry, three years ago. Aurelian leases the respirator, the filters and the monitor. Each month they raise the fee. If Ren ever misses a payment the machine locks.' She looks at the cot by the window. 'I could break the lock, but they'd know within the hour.'",
+     "effects": [
+      {
+       "flag": "heard_tomas"
+      }
+     ]
+    },
+    {
+     "id": "deliver_override",
+     "prompt": "Hand over the lease override chip",
+     "when": {
+      "has_item": "lease_override",
+      "quest_active": "ren_quest"
+     },
+     "text": "Ines takes the chip with surgical tweezers and slots it into the respirator's lock panel. The amber light blinks, goes green, and the lease tag falls off the frame like a dead leaf. For a long moment she says nothing. 'I have not seen a free machine in this clinic in nine years,' she whispers. 'Tell Ren yourself. I won't be able to.'",
+     "effects": [
+      {
+       "take": "lease_override"
+      },
+      {
+       "flag": "tomas_freed"
+      },
+      {
+       "reputation": {
+        "lowtide_folk": 8,
+        "aurelian": -5
+       }
+      },
+      {
+       "affection": {
+        "ren": 15
+       }
+      },
+      {
+       "xp": 60
+      }
+     ]
+    },
+    {
+     "id": "debt_clinic",
+     "prompt": "Ask what she knows about Aurelian's debts",
+     "text": "'They don't lend money,' Ines says flatly. 'They lend leverage. Your debt isn't a number, it's a leash. If it runs out of room, they take something else. A kidney, a year, a memory.' She looks at your wrist. 'Yours has no origin. That's rarer. That means someone bought it, and not for the interest.'",
+     "effects": [
+      {
+       "flag": "heard_leash"
+      }
+     ]
+    }
+   ],
+   "rumours": true
+  },
+  {
+   "id": "dagny",
+   "name": "Dagny Bao",
+   "pronouns": "she/her",
+   "location": "lowtide_club",
+   "faction": "lantern_saints",
+   "description": "A tall woman in a rain cape stitched with paper lanterns, an old maglev conductor's cap over cropped white hair, a scar from lip to jaw that splits her smile into a half-smile. A sawn-off shotgun hangs from her hip like an accessory.",
+   "personality": "Patient, canny, ruthless when she has to be. Runs the Saints less like a gang than a long, argued-over family. Trusts action, not talk.",
+   "speech": "Slow, dry, deliberate. Never raises her voice. Sentences end like closing doors.",
+   "greeting": "You carry the Spire's mark on your wrist. That is either brave or stupid, and I cannot tell which yet.",
+   "topics": [
+    {
+     "id": "saints",
+     "prompt": "Ask what the Saints want",
+     "text": "'To keep the water out and the Spire off our backs,' Dagny says. 'Everything else is paperwork. Pay the lantern toll, don't sell us to repo crews, and we will leave you alone.' She turns the cap in her hands. 'Do that, and you will find the door to the metro opens easier than most.'",
+     "effects": [
+      {
+       "flag": "heard_saints"
+      }
+     ]
+    },
+    {
+     "id": "metro",
+     "prompt": "Ask about the drowned metro",
+     "text": "'Platform Nine,' she says, and for a moment her scar looks deeper. 'Aurelian built a vault under our station and told nobody. We have been trying to open it for two years. If you open it, you owe me the contents, or a very good reason.'",
+     "effects": [
+      {
+       "flag": "dagny_metro"
+      }
+     ],
+     "when": {
+      "flag": "chip_read"
+     }
+    },
+    {
+     "id": "smooth_talk",
+     "prompt": "[Persuasion] Ask for a lantern key to the metro gate",
+     "when": {
+      "flag": "chip_read",
+      "not_item": "saints_lantern"
+     },
+     "check": {
+      "skill": "persuasion",
+      "dc": "hard"
+     },
+     "text": "Dagny studies you for a long, long time. 'You have your own reasons,' she says finally. 'That's the only kind I trust.' She unhooks a paper lantern from her belt and presses it into your hand. 'Don't lose it. It's not just a key.'",
+     "fail_text": "'No,' she says, as plainly as laying down a card. 'Do something for the Saints first.'",
+     "effects": [
+      {
+       "give": "saints_lantern"
+      },
+      {
+       "reputation": {
+        "lantern_saints": 5
+       }
+      }
+     ],
+     "once": true
+    },
+    {
+     "id": "report_drones",
+     "prompt": "Report the drone nest cleared",
+     "when": {
+      "quest_stage": {
+       "saints_toll": "report"
+      }
+     },
+     "text": "'Three nests in a week,' Dagny says. 'The Spire's pet drones keep sniffing for our people. You have done Lowtide a favour.' She tips her cap. 'We keep our debts. Take this lantern. It will open our gates.'",
+     "effects": [
+      {
+       "flag": "dagny_paid"
+      }
+     ]
+    }
+   ],
+   "quests": [
+    "saints_toll"
+   ],
+   "rumours": true
+  }
+ ]
+}

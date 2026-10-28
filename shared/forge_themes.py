@@ -657,6 +657,16 @@ def pick_layout(lid: str, path: Path | None = None) -> dict:
     return ft.save(changes, path)
 
 
+def pick_forge_layout(lid: str, path: Path | None = None) -> dict:
+    """Switch the Forge layout (forge_theme.FORGE_LAYOUTS: "new" or "classic",
+    the hub's Show all apps button). Not a theme pick, so Undo is untouched;
+    the button flips it back."""
+    ft = _ft()
+    if lid not in ft.FORGE_LAYOUTS:
+        raise KeyError(lid)
+    return ft.save({"forge_layout": lid}, path)
+
+
 def undo(path: Path | None = None) -> dict:
     """Put back the settings from before the last theme or layout pick."""
     ft = _ft()

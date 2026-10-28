@@ -13,6 +13,21 @@ external tools are separate. The source checkout needs Python and dependencies.
 
 Version 0.2.0.
 
+## All-apps release — 28 October 2026
+
+The `checkpoint-2026-10-28-allapps` release carries every app that is safe
+to publish: **25 apps on Linux, 22 on Mac and 21 on Windows** (the earlier
+checkpoints had 18, 14 and 13). New in it: Prompts, Recall, Reps, Shelf,
+Taleforge, Tavern and Vault on every system, and Loops now on Mac and
+Windows too. Each new app keeps what it saves in Forge's data place, never
+inside the program folder.
+
+Left out on purpose: apps that hold the owner's own data, accounts, chats or
+secrets, apps that only drive one Linux desktop, apps that need large AI
+models or programs that cannot ship, and a chess app whose library is
+GPL-3.0 (not compatible until Forge's licence is chosen). The earlier
+releases stay as they were.
+
 ## Event checkpoint — 28 October 2026
 
 This is a separately saved preview, focused on Mac and Windows. The app code
@@ -60,19 +75,27 @@ The original `checkpoint-2026-10-28` release stays as it was.
 - **Files**: Browse, copy, move and preview your files (not on Windows, macOS)
 - **Foresight**: Signals and plans built on Dossier's facts
 - **Janhollow**: A space station that lives on its own
-- **Loops**: Beats and loops on a step grid, saved as WAV (not on Windows, macOS)
+- **Loops**: Beats and loops on a step grid, saved as WAV
 - **Mint**: Where $300 a week could go, tested on real history with fake money
 - **PixelForge**: Sprites and animation, shared
 - **PrintForge**: Look over 3D-print files before you slice them
+- **Prompts**: Prompts for Suno, AI Studio, Claude and Jan
+- **Recall**: Flashcards that come back when due
+- **Reps**: Log workouts and habits, keep the streak going
 - **Settings**: Wallpaper, colours and how Forge looks
+- **Shelf**: Keep articles to read later, offline
+- **Taleforge**: Text adventures with real rules, romance and Jan as narrator
+- **Tavern**: Tabletop campaigns with Jan as the GM
 - **Terminal**: Your shell, in tabs, inside Forge (not on Windows)
 - **Typeset**: Typst documents, CVs and letters to PDF (not on Windows, macOS)
+- **Vault**: 3D models, skies, textures and sounds
 
 ## Install
 
 Download the file for your system from the
-[updated checkpoint release](https://github.com/TANK-12/forge-checkpoint/releases/tag/checkpoint-2026-10-28-updated)
-(or the [original one](https://github.com/TANK-12/forge-checkpoint/releases/tag/checkpoint-2026-10-28)).
+[all-apps release](https://github.com/TANK-12/forge-checkpoint/releases/tag/checkpoint-2026-10-28-allapps)
+(earlier: the [updated checkpoint](https://github.com/TANK-12/forge-checkpoint/releases/tag/checkpoint-2026-10-28-updated)
+and the [original one](https://github.com/TANK-12/forge-checkpoint/releases/tag/checkpoint-2026-10-28)).
 
 ### macOS first — Apple silicon 11+, Intel 12+
 
@@ -170,6 +193,8 @@ download says where, and lists the launcher's options.
 - **Foresight**: Jan
 - **Janhollow**: Jan for its characters
 - **PixelForge**: Jan
+- **Taleforge**: Jan for narration
+- **Tavern**: Jan for the game master
 
 [Jan](https://jan.ai) is a free app that runs AI models on your computer.
 Install it, download a model in it and turn on its local API server (port
@@ -240,7 +265,6 @@ Not in this version:
 Apps left out on this system:
   Convert: documents fetch a Linux build of pandoc (Linux only in this test build)
   Files: trash, restore and open use gio and xdg-open from the Linux desktop (Linux only in this test build)
-  Loops: deleting a pattern uses gio trash (Linux only in this test build)
   Terminal: needs a Unix pseudo-terminal (pty), which Windows does not have
   Typeset: it fetches a Linux build of Typst, and Move to trash uses gio (Linux only in this test build)
 ```
@@ -276,13 +300,12 @@ Not in this version:
 Apps left out on this system:
   Convert: documents fetch a Linux build of pandoc (Linux only in this test build)
   Files: trash, restore and open use gio and xdg-open from the Linux desktop (Linux only in this test build)
-  Loops: deleting a pattern uses gio trash (Linux only in this test build)
   Typeset: it fetches a Linux build of Typst, and Move to trash uses gio (Linux only in this test build)
 ```
 
 ## Run from source
 
-With Python 3.14 installed (the downloads bring their own Python):
+With Python 3.14 (the version the downloads carry and the tests use):
 
 ```sh
 python3 -m venv .venv
@@ -290,14 +313,7 @@ python3 -m venv .venv
 .venv/bin/python forge_portable.py
 ```
 
-On Windows use `py -3.14 -m venv .venv`, then `.venv\Scripts\pip` and
-`.venv\Scripts\python`. On macOS use `python3.14` if `python3` is older.
-The portable entry point is `forge_portable.py`. The daily GTK launcher,
-Hyprland/end4 desktop shell, systemd services, power controls, Linux mounts
-and desktop widgets are Linux-only and are not part of the Mac/Windows app.
-Files, Convert, Loops and Typeset are omitted on Mac/Windows; Terminal is
-omitted on Windows. Desktop installers under `install/` belong to daily
-Linux Forge and are not included here.
+On Windows use `.venv\Scripts\pip` and `.venv\Scripts\python`.
 `python forge_portable.py --help` lists the options; `--smoke` starts every
 app, checks that each answers, and stops.
 
@@ -313,11 +329,9 @@ All four downloads are built on Linux: the builder fetches a relocatable
 Python for each system (python-build-standalone, checked against pinned
 SHA-256 digests) and installs each system's packages from wheels with
 [uv](https://docs.astral.sh/uv/). It needs git, uv and network access the
-first time. The manual GitHub workflow `.github/workflows/build.yml` is designed to do the same
-when started from the Actions tab, then start every app of each download on
-its own system (not yet run). The separate **Check saved checkpoint** workflow downloads
-this dated release and runs its smoke checks on hosted Mac, Windows and
-Linux machines without rebuilding the checkpoint; its [installed-copy run](https://github.com/TANK-12/forge-checkpoint/actions/runs/40654815268) passed all four targets.
+first time. The GitHub workflow `.github/workflows/build.yml` does the same
+when started from the Actions tab, then starts every app of each download on
+its own system.
 
 ## How it fits together
 

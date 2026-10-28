@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; frame-src 'none'; object-src 'none'">
+<title>Recall</title>
+<link rel="stylesheet" href="/shared/forge.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top" data-forge-frame-hide>
+  <h1>Recall</h1>
+  <span class="muted small" id="stats" data-forge-frame-note></span>
+</header>
+<nav data-forge-frame-tabs data-forge-frame-hide>
+  <div class="tab active" data-tab="review">Review</div>
+  <div class="tab" data-tab="cards">Cards</div>
+  <div class="tab" data-tab="import">Import</div>
+</nav>
+<div class="layout">
+  <aside class="side">
+    <div id="decks" class="decks"><div class="muted small">reading...</div></div>
+  </aside>
+  <main>
+    <section class="panel active" data-panel="review">
+      <div id="review-empty" class="placeholder hidden">
+        <p id="review-empty-text"></p>
+        <p class="muted small">Write cards under Cards, or bring in Study Companion's questions under Import.</p>
+      </div>
+      <div id="review" class="review hidden">
+        <div class="review-head"><span id="r-deck" class="muted small"></span><span class="grow"></span><span id="r-left" class="muted small"></span></div>
+        <div class="flash card">
+          <div id="r-front" class="side-text front"></div>
+          <div id="r-back-wrap" class="hidden"><hr><div id="r-back" class="side-text"></div></div>
+        </div>
+        <div id="r-show" class="answers">
+          <button class="btn btn-primary wide" id="show" type="button">Show answer <span class="key">space</span></button>
+        </div>
+        <div id="r-rate" class="answers hidden">
+          <button class="btn rate again" data-rating="1" type="button"><b>Again</b><span class="when"></span><span class="key">1</span></button>
+          <button class="btn rate hard" data-rating="2" type="button"><b>Hard</b><span class="when"></span><span class="key">2</span></button>
+          <button class="btn rate good" data-rating="3" type="button"><b>Good</b><span class="when"></span><span class="key">3</span></button>
+          <button class="btn rate easy" data-rating="4" type="button"><b>Easy</b><span class="when"></span><span class="key">4</span></button>
+        </div>
+      </div>
+    </section>
+    <section class="panel" data-panel="cards">
+      <form id="card-form" class="card card-form">
+        <div class="row">
+          <label class="small muted" for="f-deck">Deck</label>
+          <input id="f-deck" list="deck-names" placeholder="e.g. Spanish verbs" autocomplete="off" maxlength="80">
+          <datalist id="deck-names"></datalist>
+          <span class="grow"></span>
+          <button class="btn hidden" id="f-cancel" type="button">Cancel</button>
+          <button class="btn btn-primary" id="f-save" type="submit">Add card</button>
+        </div>
+        <div class="two">
+          <textarea id="f-front" rows="3" placeholder="Front: the question" maxlength="4000"></textarea>
+          <textarea id="f-back" rows="3" placeholder="Back: the answer" maxlength="4000"></textarea>
+        </div>
+      </form>
+      <input id="search" type="search" placeholder="Search the cards in this deck" autocomplete="off">
+      <div id="cards" class="cards"></div>
+    </section>
+    <section class="panel" data-panel="import">
+      <p class="muted small">Importing again adds what is new and updates changed words; answers so far are kept, and removed cards stay removed.</p>
+      <div id="sources" class="sources"></div>
+    </section>
+  </main>
+</div>
+<div id="toast" class="toast hidden" role="status"></div>
+<script src="/shared/forge.js"></script>
+<script src="app.js"></script>
+<script src="/shared/forge_chrome.js"></script>
+</body>
+</html>

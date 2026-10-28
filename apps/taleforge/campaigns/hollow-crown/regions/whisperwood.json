@@ -1,0 +1,25 @@
+{"id": "whisperwood", "name": "The Whisperwood", "level": [2, 4], "faction": "moth_court",
+ "description": "A huge old forest where the paths rearrange themselves and the trees mutter in the wind. The Court of Moths rules it by bargains, not blades, and the Thornwake is gnawing at its northern edge.",
+ "travel_text": "The trail bends where there was no bend, and the leaves above whisper something that stops the moment you listen.",
+ "wilds": {
+   "encounter_chance": 0.3,
+   "encounters": [
+     {"monsters": ["whisperwood_gloamwolf", "whisperwood_gloamwolf"], "weight": 3, "min_level": 2},
+     {"monsters": ["whisperwood_thorn_sprite", "whisperwood_thorn_sprite", "whisperwood_thorn_sprite"], "weight": 3, "min_level": 2},
+     {"monsters": ["blight_husk", "blight_husk", "blight_husk"], "weight": 2, "min_level": 2},
+     {"monsters": ["whisperwood_dusk_stag"], "weight": 1, "min_level": 3},
+     {"monsters": ["whisperwood_mirror_wraith"], "weight": 1, "min_level": 3},
+     {"monsters": ["bandit", "bandit", "bandit"], "weight": 1, "min_level": 2}
+   ],
+   "events": [
+     {"id": "fairy_ring", "weight": 2, "text": "A ring of pale mushrooms sits in a clearing, and inside it a fiddle is playing with nobody holding it.", "check": {"skill": "performance", "dc": "medium"}, "success": [{"message": "You join in with a hum and a clap. The fiddle swells, bows to you, and leaves a purse of silver acorns on the grass."}, {"gold": 15}, {"reputation": {"moth_court": 2}}], "fail": [{"message": "You step wrong and the music turns spiteful. You walk home a mile for every step and arrive with sore feet and nothing else."}, {"hours": 2}]},
+     {"id": "moth_swarm", "weight": 2, "text": "A cloud of grey moths settles over you without a sound, each one carrying a faint point of light.", "check": {"skill": "nature", "dc": "medium"}, "success": [{"message": "They are scouts of the Court, you realise, counting visitors. You hold still and let them look. Something approving passes through the swarm."}, {"reputation": {"moth_court": 3}}, {"xp": 25}], "fail": [{"message": "You wave them off. A dozen take offence and sting like nettles as they go."}, {"damage": "1d4"}]},
+     {"id": "lost_child", "weight": 2, "text": "A child in a too-large cloak sits on a stump, swinging her feet. 'I'm lost,' she says, and the voice is very old.", "check": {"skill": "insight", "dc": "hard"}, "success": [{"message": "You catch the shimmer at her edges and bow instead of reaching for her. 'Manners,' she says, delighted, and tosses you something that glints."}, {"give": "whisperwood_glimmer_honey"}, {"xp": 40}], "fail": [{"message": "You take her hand to lead her home. The hand is cold as a pond, and your sense of direction goes with her laugh."}, {"hours": 3}, {"damage": "1d4"}]},
+     {"id": "singing_tree", "weight": 1, "text": "An ancient yew hums a three-note song. Its roots have lifted a small stone box out of the earth.", "check": {"skill": "investigation", "dc": "medium"}, "success": [{"message": "You hum the fourth note. The yew sighs, and the box opens: a tonic bottle and a few coins, left by someone long dead."}, {"give": "whisperwood_dew_tonic"}, {"gold": 8}], "fail": [{"message": "You get the tune wrong. The yew drops a branch on your shoulder, as a matter of principle."}, {"damage": "1d4"}]},
+     {"id": "warden_snare", "weight": 1, "text": "A warden's snare hangs from a branch, sprung, with a note pinned to the trunk in a careful hand: Gone to find Fen. Back by dusk. It is dated years ago.", "check": {"skill": "survival", "dc": "easy"}, "success": [{"message": "You reset the snare out of respect and find a small cache beneath the trunk."}, {"give": "rations"}, {"xp": 15}], "fail": []},
+     {"id": "blight_edge", "weight": 2, "text": "The trees ahead are black at the roots. Briar has crept through the ferns, and the birdsong stops a hundred paces short of it.", "check": {"skill": "arcana", "dc": "medium"}, "success": [{"message": "You trace the cold to a single buried root and pull it free. The briar around it curls up and dries to powder."}, {"xp": 35}], "fail": [{"message": "The cold seeps through your boots and does not leave for an hour."}, {"damage": "1d6"}]}
+   ],
+   "finds": ["whisperwood_moonpetal", "whisperwood_glimmer_honey", "whisperwood_dew_tonic", "marsh_lily", "wildflowers", "rations"],
+   "sights": ["lantern-moths drifting between the trunks like slow sparks", "a stag made of mist that turns its head and is gone", "roots arranged into something very like a staircase", "a path that was on your left a moment ago", "mushrooms glowing the pale green of old coins", "a hollow tree with a tiny door and a tiny doorknob", "black briar crawling up a birch, and the birch visibly shuddering", "the leaves whispering your own name, slightly wrong"],
+   "names": ["Fennick", "Ysolt", "Bracken", "Rowan", "Linnet", "Aldous", "Marrow", "Pelle", "Tansy", "Corvin", "Isbet", "Wren"]
+ }}

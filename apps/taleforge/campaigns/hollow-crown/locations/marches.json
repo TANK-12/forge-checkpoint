@@ -1,0 +1,122 @@
+{"locations": [
+  {"id": "marches_road", "name": "The Cinder Road", "region": "ashen_marches", "tags": ["wild"], "short": "The east road, grey with ash, where the Marches begin.",
+   "description": "The road out of Brightwater climbs onto a black heath and keeps going, straight as a spear, toward a horizon smudged with smoke. Everything is the colour of a cold hearth: the grass, the stones, the sky. Cart ruts and bare footprints all point the same way, south and west, away from the north.",
+   "features": [
+     {"id": "hound_tracks", "name": "the hound tracks", "text": "Big paw prints in the ash, two and two, circling the waymarkers just past the reach of the lantern light. Oswin's hounds are close.", "when": {"quest_stage": {"marches_hounds": "start"}}, "check": {"skill": "survival", "dc": "medium"}, "success": [{"message": "You follow the prints off the road to a hollow under a burned cart where two cinder hounds lie curled together, waiting for dark. You get the first blow in."}, {"combat": ["marches_cinder_hound", "marches_cinder_hound"]}], "fail": [{"message": "The prints double back on themselves and you realise, too late, that they have been following you. Two grey shapes come out of the ash at a run."}, {"damage": "1d6"}, {"combat": ["marches_cinder_hound", "marches_cinder_hound"]}]},
+     {"id": "waymarker", "name": "the Order waymarker", "text": "An iron post topped with an ember, the Order of Ash's sign. Someone has hung a lantern on it, lit, though it is broad day. A scrap of slate wired to the post reads: Water and a fire at the Last Lamp, one hour. No charge."},
+     {"id": "burned_wagon", "name": "the burned wagon", "text": "A wagon lies on its side in the ditch, burned down to iron and bones of wood. It is not old. The ash inside is still faintly warm.", "check": {"skill": "investigation", "dc": "medium"}, "success": [{"message": "Under the bed, in a tin box the fire did not reach: coin, and a note in a child's hand that says only, We went south. Hounds tracks circle the wreck, big ones, and none of them lead away."}, {"gold": 15}, {"give": "marches_ash_bread"}, {"xp": 20}], "once": true}
+   ],
+   "on_enter": [{"once": true, "effects": [{"message": "A column of refugees passes you going the other way: carts, a goat, a grandmother carried on a door. Nobody speaks. One small boy looks back at the north the whole time, as if keeping watch."}, {"reveal": "marches_waystation"}, {"reveal": "marches_camp"}]}],
+   "exits": [
+     {"to": "brightwater_crossroads", "label": "West road back to the Weeping Crossroads", "hours": 8}, {"to": "highspire_gate", "label": "East road to Highspire", "hours": 6, "when": {"any": [{"quest_active": "main_5"}, {"quest_done": "main_5"}]}, "locked": "The east road to Highspire is closed by a Regency checkpoint, and the Knives there are turning everyone back. You will need a reason to be in the royal city before they let you by."},
+     {"to": "marches_waystation", "label": "Follow the lantern to the Last Lamp", "hours": 1},
+     {"to": "marches_camp", "label": "South to the refugee camp at Cinderfold", "hours": 1.5},
+     {"to": "marches_ashfields", "label": "North-east across the Ash Fields", "hours": 2}
+   ]},
+  {"id": "marches_waystation", "name": "The Last Lamp", "region": "ashen_marches", "tags": ["town", "inn", "safe"], "rest_cost": 6, "short": "A walled waystation and inn, the only lit window for miles.",
+   "description": "A squat stone waystation inside a ring wall, built for the Order's messengers and kept now for whoever comes. The common room is low and smoky and full of people who have walked a long way. A lantern burns in every window, all day and all night, and a big man in scraped armour is splitting wood in the yard as if the woodpile has insulted him.",
+   "npcs": ["marches_oswin", "corin"],
+   "features": [
+     {"id": "lamp_ledger", "name": "the lamp ledger", "text": "A thick book by the door where travellers write their names and where they are going. Most of the last two months say only: south.", "check": {"skill": "investigation", "dc": "easy"}, "success": [{"message": "Every morning, in the same blocky hand, someone has written a single line: Water carried to Cinderfold. C. It goes back years."}, {"flag": "marches_saw_lamp_ledger"}, {"xp": 15}], "once": true},
+     {"id": "yard_woodpile", "name": "the woodpile", "text": "Enough split wood to see the Last Lamp through two winters, stacked with a precision that is almost military, and still growing."}
+   ],
+   "shop": {"name": "Oswin's stores", "items": ["marches_ash_bread", "marches_hesk_tea", "marches_honey_brittle", "marches_reaver_axe", "healing_draught", "greater_healing", "rations", "torch", "rope", "chain_mail", "shield"], "buys": true},
+   "exits": [
+     {"to": "marches_road", "label": "Out to the Cinder Road", "hours": 1},
+     {"to": "marches_camp", "label": "The water path to Cinderfold", "hours": 1},
+     {"to": "marches_keep", "label": "East to Emberhold Keep", "hours": 3}
+   ]},
+  {"id": "marches_camp", "name": "Cinderfold", "region": "ashen_marches", "tags": ["town", "board", "safe"], "rest_cost": 0, "short": "A refugee camp in a sheltered fold of the heath.",
+   "description": "Tents, lean-tos and wagons fill a fold in the heath where a stream still runs clean. Smoke from a hundred small fires hangs in the hollow. People from the north sit in their coats and wait for news that is never good, and the children play a game where one of them is the briars.",
+   "npcs": ["marches_hesk", "marches_wenna"],
+   "features": [
+     {"id": "notice_post", "name": "the notice post", "text": "A pole covered in scraps of cloth and paper: names of the missing, and names of the found. The found are a much shorter list."},
+     {"id": "water_barrels", "name": "the water barrels", "text": "Six barrels by the stream, full to the brim, though nobody here is strong enough to fill them. A child tells you the big knight does it every morning and nobody is allowed to thank him."},
+     {"id": "north_tents", "name": "the newest tents", "text": "The families who came in last are camped a little apart. They talk among themselves in low voices about a woman in the briars.", "check": {"skill": "insight", "dc": "medium"}, "success": [{"message": "They saw her, they say, out in the white past the Frostfang: a woman wearing a crown of thorns, standing in the snow with her arms spread, and where she stood the briars stopped. They tell it like a ghost story. They also tell it like a prayer."}, {"flag": "heard_thorn_queen"}, {"xp": 30}], "once": true}
+   ],
+   "exits": [
+     {"to": "marches_road", "label": "Up to the Cinder Road", "hours": 1.5},
+     {"to": "marches_waystation", "label": "The water path to the Last Lamp", "hours": 1},
+     {"to": "marches_tarrow", "label": "North to the ruins of Tarrow", "hours": 2},
+     {"to": "marches_choir_hollow", "label": "Follow the singing into the dead pines", "hours": 2, "when": {"any": [{"flag": "marches_heard_choir"}, {"quest_active": "marches_choir_children"}, {"visited": "marches_choir_hollow"}]}}
+   ]},
+  {"id": "marches_keep", "name": "Emberhold Keep", "region": "ashen_marches", "tags": ["town", "safe"], "rest_cost": 0, "short": "The Order of Ash's last keep, on a crag over the river.",
+   "description": "A tall grey keep on a crag above the river, its curtain wall patched with newer stone and its banners faded to the colour of old blood. Two dozen knights live here, and a few hundred people who depend on them. The gate is open, but the men on it watch the east road as if they expect it to bite.",
+   "npcs": ["marches_edric", "marches_tamsin"],
+   "features": [
+     {"id": "empty_stalls", "name": "the stables", "text": "Stalls for two hundred horses. Thirty are filled. The rest have been swept clean, every day, for twelve years."},
+     {"id": "shield_wall", "name": "the hall of shields", "text": "Painted shields line the great hall, one for every knight of the Order since King Aldric. Near the end, a dozen are hung face to the wall.", "check": {"skill": "history", "dc": "medium"}, "success": [{"message": "The reversed shields belong to knights named as cowards after Greyford. The last one is newer than the rest, and smaller, a squire's shield made into a knight's: an ember over a hunting horn. The name on the back is Corin Ashdown."}, {"flag": "marches_saw_corin_shield"}, {"xp": 25}], "once": true}
+   ],
+   "on_enter": [{"when": {"quest_active": "main_4", "not_flag": "marches_edric_refused"}, "scene": "marches_edric_audience", "once": true}],
+   "shop": {"name": "The Order's quartermaster", "items": ["longsword", "greatsword", "shield", "chain_mail", "scale_mail", "marches_ashen_mail", "healing_draught", "greater_healing", "whetstone"], "buys": true},
+   "exits": [
+     {"to": "marches_waystation", "label": "West road to the Last Lamp", "hours": 3},
+     {"to": "marches_chapel", "label": "Across the yard to the Chapel of the Oath", "hours": 0.1},
+     {"to": "marches_greyford", "label": "Down the river path to Greyford", "hours": 2}
+   ]},
+  {"id": "marches_chapel", "name": "The Chapel of the Oath", "region": "ashen_marches", "tags": ["safe"], "rest_cost": 0, "short": "The Order's chapel, where its oath-stone stands cracked.",
+   "description": "A small, cold chapel built against the keep's inner wall. There is no altar, only the oath-stone: a block of red-veined granite, waist high, where every knight of the Order has knelt with a hand on the stone and sworn to the crown. It is cracked clean through the middle, and nobody has knelt at it in twelve years.",
+   "features": [
+     {"id": "oath_stone", "name": "the oath-stone", "text": "The oath is cut into its face in old letters: I will hold where I am set. I will not leave the crown alone in the dark. I will answer when it calls. The crack runs straight through the word alone.", "check": {"skill": "arcana", "dc": "hard"}, "success": [{"message": "The red veins in the granite are warm, faintly, the way the heart-stone shards are warm. The oath-stone was cut from the same deep rock as the Ember Crown's heart. It did not crack because the knights broke their word. It cracked the night the heart-stone began to fail."}, {"flag": "knows_oath_stone_link"}, {"xp": 40}], "once": true},
+     {"id": "kneeling_marks", "name": "the floor before the stone", "text": "Two shallow hollows are worn into the flagstones in front of the stone, from four hundred years of knees. They are full of dust."}
+   ],
+   "exits": [
+     {"to": "marches_keep", "label": "Back across the yard to the keep", "hours": 0.1}
+   ]},
+  {"id": "marches_ashfields", "name": "The Ash Fields", "region": "ashen_marches", "tags": ["wild"], "short": "The old battlefield, where nothing has grown back.",
+   "description": "Miles of flat grey ground where the last war was fought, still littered with rust: spearheads, a helm, a cart wheel half sunk like a dropped coin. The ash here never settles. It moves across the ground in slow drifts, and now and then a drift stands up.",
+   "features": [
+     {"id": "standards", "name": "the broken standards", "text": "Banner poles stand at angles across the field, their cloth long gone. The ones nearest the river all lean east, as if something pushed them that way."},
+     {"id": "cairn", "name": "the knights' cairn", "text": "A tall cairn of stones with a rusted helm on top. Each stone has a knight's name scratched on it. It is surprisingly well kept for a place nobody visits.", "check": {"skill": "perception", "dc": "medium"}, "success": [{"message": "Tucked between two stones near the base, dry in a wrap of oilcloth: a draught of the Order's healing cordial, and a scrap that reads, For whoever needs it more than the dead. C."}, {"give": "greater_healing"}, {"xp": 20}], "once": true}
+   ],
+   "exits": [
+     {"to": "marches_road", "label": "South-west to the Cinder Road", "hours": 2},
+     {"to": "marches_greyford", "label": "East to the river at Greyford", "hours": 1},
+     {"to": "marches_tarrow", "label": "North to the burned village of Tarrow", "hours": 1}
+   ]},
+  {"id": "marches_greyford", "name": "Greyford", "region": "ashen_marches", "tags": ["wild"], "short": "The ford where the Order broke, and where someone still holds it.",
+   "description": "The river runs wide and shallow over grey stones here, the only place for miles a host could cross. A burned watchtower leans over the near bank. In the middle of the ford, waist deep in the water, a knight in ash-grey plate stands with his sword point down, facing east, and does not move.",
+   "features": [
+     {"id": "ford_stones", "name": "the ford", "text": "Arrowheads and buckles lie in the shallows, polished by twelve years of water. Your boots turn up a horseshoe, a ring, a child's wooden toy."},
+     {"id": "halvard_far", "name": "the knight in the river", "text": "He has not moved since you arrived. Ash drifts off him in the current like smoke. Under the helm there is no face, only briar, and something that might be patience.", "when": {"not_flag": "ashen_knight_rested"}},
+     {"id": "halvard_sword_marker", "name": "the empty ford", "text": "The ford runs clear now. Somebody has built a small stone cairn on the bank where the Ashen Knight stood, and set an ember lily on top.", "when": {"flag": "ashen_knight_rested"}}
+   ],
+   "on_enter": [{"when": {"quest_stage": {"main_4": "the_dead"}, "not_flag": "ashen_knight_rested"}, "scene": "marches_halvard"}],
+   "exits": [
+     {"to": "marches_ashfields", "label": "West across the Ash Fields", "hours": 1},
+     {"to": "marches_keep", "label": "The river path up to Emberhold", "hours": 2},
+     {"to": "marches_watchtower", "label": "Climb into the burned watchtower", "hours": 0.25}
+   ]},
+  {"id": "marches_watchtower", "name": "The Horn Tower", "region": "ashen_marches", "tags": ["wild"], "short": "The burned watchtower over Greyford, where the retreat was sounded.",
+   "description": "The watchtower's upper floors fell in long ago, and the stairs end in sky. What is left smells of cold soot. A great bronze horn, cracked and black, lies in the rubble at the foot of the stairs, and a door to the cellar hangs from one hinge, half buried in burned beams.",
+   "features": [
+     {"id": "great_horn", "name": "the great horn", "text": "The Order's war-horn, long as a man, with the ember worked into its bell. It sounded the retreat at Greyford. It will never sound anything again; the fire split it from mouth to bell."},
+     {"id": "cellar", "name": "the cellar door", "text": "Burned beams have fallen across the cellar door. Behind it is a space nobody has looked into since the night of the fire.", "check": {"skill": "investigation", "dc": "medium", "advantage_when": {"in_party": "corin"}}, "success": [{"give": "marches_courier_satchel"}, {"scene": "marches_courier_found"}, {"xp": 80}], "fail": [{"message": "You shift beams until your hands bleed, and find only soot and a rat. There must be more down here; you have not cleared the far corner yet."}, {"damage": "1d4"}], "once": true}
+   ],
+   "on_enter": [{"when": {"in_party": "corin"}, "once": true, "effects": [{"message": "Corin stops in the doorway. He does not come in for a long moment, and when he does, he walks straight to the cracked horn and puts his burned hand flat on it, the way you might touch a horse you had once ridden too hard."}]}],
+   "exits": [
+     {"to": "marches_greyford", "label": "Down to the ford", "hours": 0.25}
+   ]},
+  {"id": "marches_tarrow", "name": "Tarrow", "region": "ashen_marches", "tags": ["wild"], "short": "The village that burned behind the Order's retreat.",
+   "description": "Tarrow was a mill village of forty houses. Now it is forty chimneys standing in the ash like gravestones, and a millpond gone black and still. Only the chapel has a roof again: new timber on old walls, a bell-cote standing empty, the work of one pair of hands over a very long time.",
+   "features": [
+     {"id": "chapel_walls", "name": "the rebuilt chapel", "text": "Every stone has been set by hand, a little crooked, a lot of care. Inside, forty-one names are chalked on the wall in a blocky hand, and chalked over again where the damp has faded them."},
+     {"id": "millpond", "name": "the millpond", "text": "The water is black and very still. Something under the surface moves the weed, slowly, in a circle.", "when": {"quest_stage": {"corin_quest": "start"}, "not_item": "marches_tarrow_bell"}, "success": [{"message": "You wade in up to your knees and feel for the bell in the weed. The circle stops. Then the water explodes."}, {"combat": ["marches_pond_horror"]}]},
+     {"id": "chimney_stack", "name": "the mill chimney", "text": "The tallest chimney in Tarrow still has its hearth. There is a child's height mark scratched into the stone beside it, and a name: Wenna."}
+   ],
+   "on_enter": [{"when": {"quest_stage": {"corin_quest": "ring"}, "in_party": "corin", "has_item": "marches_tarrow_bell"}, "scene": "corin_bell"}],
+   "exits": [
+     {"to": "marches_camp", "label": "South to Cinderfold", "hours": 2},
+     {"to": "marches_ashfields", "label": "South-east onto the Ash Fields", "hours": 1}
+   ]},
+  {"id": "marches_choir_hollow", "name": "The Singing Hollow", "region": "ashen_marches", "tags": ["wild"], "short": "A hollow in the dead pines where the Thorn Choir sings.",
+   "description": "A bowl of land among dead pines, roofed with black briar so thick the light comes through it green. Thirty people sit in a ring in the snow, refugees and children among them, singing three notes, slow as breathing. None of them look cold, and that is the frightening part.",
+   "npcs": ["marches_lark"],
+   "features": [
+     {"id": "briar_roof", "name": "the briar roof", "text": "The briars have been trained over the hollow on poles, like a vine over an arbour. Frost glitters on every thorn, and the thorns lean toward the singers.", "check": {"skill": "nature", "dc": "medium"}, "success": [{"message": "The briars are drinking the warmth out of the singers, a little at a time. They feel no cold because they are becoming the cold. Another week here and they would not get up."}, {"flag": "knows_choir_cold"}, {"xp": 30}], "once": true}
+   ],
+   "on_enter": [{"when": {"quest_active": "marches_choir_children", "not_flag": ["marches_choir_turned", "marches_choir_broken"]}, "scene": "marches_lark_sermon"}],
+   "exits": [
+     {"to": "marches_camp", "label": "Back through the pines to Cinderfold", "hours": 2}
+   ]}
+]}

@@ -121,7 +121,7 @@ def test_settings_actions_to_a_cut_page_leave_the_search():
     html = (ROOT / "apps/settings/static/index.html").read_text(encoding="utf-8")
     sections = set(re.findall(r'data-section="([^"]+)"', html))
     for action in manifest["actions"]:
-        assert action["hash"].split("/")[0] in sections, action
+        assert (action.get("page") or action["hash"].split("/")[0]) in sections, action
     status = {
         "settings": {"role": "settings", "actions": manifest["actions"]},
         "arcade": {"role": "", "actions": [{"label": "Play", "hash": "system"}]},
@@ -129,7 +129,14 @@ def test_settings_actions_to_a_cut_page_leave_the_search():
     p = fp.Profile(REGISTRY, "linux")
     fp.cut_actions(status, p.cut_pages)
     left = {a["label"] for a in status["settings"]["actions"]}
-    assert left == {"Change the wallpaper", "Pick a theme"}, left
+    aliased = {a["label"] for a in manifest["actions"] if a.get("page") == "wallpaper"}
+    assert "Browse all wallpapers" in aliased
+    assert left == {"Change the wallpaper", "Pick a theme"} | aliased, left
+    p = fp.Profile(REGISTRY, "linux")
+    status["settings"]["actions"] = list(manifest["actions"])
+    fp.cut_actions(status, p.cut_pages + ["wallpaper"])
+    left = {a["label"] for a in status["settings"]["actions"]}
+    assert not ({"Change the wallpaper"} | aliased) & left, left
     assert status["arcade"]["actions"] == [{"label": "Play", "hash": "system"}]
 
 
@@ -1363,6 +1370,41 @@ def test_import_scan_follows_shipped_files():
     assert len(scan.warnings) == 2
 
 
+def test_import_scan_fails_a_soft_import_the_apps_own_lock_pins():
+    """A function-level import is an optional extra unless the app's own
+    venv.lock.json pins it: then it is a real dependency the build must ship
+    (Vault's thumbnails needed PIL on Mac and Windows, where nothing shipped
+    it)."""
+    lock = '{"packages": ["fastapi==1.0", "Pillow==13.0.0", "ruamel.yaml==0.18"]}'
+    fs = files(
+        **{
+            "apps/a/web_app.py": "def thumb():\n    import PIL.Image\n"
+            "def extra():\n    import nobody_pins_this\n"
+            "def conf():\n    import ruamel.yaml\n",
+            "apps/a/venv.lock.json": lock,
+            "apps/b/web_app.py": "def thumb():\n    import PIL\n",
+        }
+    )
+    scan = build.ImportScan(
+        fs, {"fastapi"}, "macos", {"PIL": "pillow", "ruamel": "ruamel.yaml"}
+    )
+    scan.visit("apps/a/web_app.py", ["apps/a"], "apps/a")
+    scan.visit("apps/b/web_app.py", ["apps/b"], "apps/b")
+    assert [e.split(": ", 1)[1] for e in scan.errors] == [
+        "PIL is not shipped or installed (its apps/a/venv.lock.json pins it)",
+        "ruamel is not shipped or installed (its apps/a/venv.lock.json pins it)",
+    ]
+    assert sorted(w.split(": ", 1)[1] for w in scan.warnings) == [
+        "PIL is not shipped or installed",
+        "nobody_pins_this is not shipped or installed",
+    ], "an app that does not pin it only warns"
+    shipped = build.ImportScan(
+        fs, {"fastapi", "PIL", "ruamel"}, "macos", {"PIL": "pillow"}
+    )
+    shipped.visit("apps/a/web_app.py", ["apps/a"], "apps/a")
+    assert shipped.errors == []
+
+
 def test_import_scan_knows_each_systems_standard_library():
     fs = files(
         **{
@@ -1654,8 +1696,6 @@ def test_shipped_pages_name_no_home_folder():
             if path.suffix not in (".html", ".js") or "node_modules" in path.parts:
                 continue
             text = comments.sub("", path.read_text(errors="ignore"))
-            # File-picker examples are input hints, not a claimed save location.
-            text = re.sub(r'placeholder="[^"]*"', "", text)
             hits = [line.strip() for line in text.splitlines() if home.search(line)]
             assert not hits, (str(path.relative_to(ROOT)), hits)
 
@@ -1712,9 +1752,12 @@ def test_shown_words_skip_what_every_bundle_cuts():
         "apps/settings/static/index.html": "3D wallpaper and animations",
         "shared/forge_widgets.js": "any app or player",
     }
+    # a source tree (no clean checker) holds the scrubbed copies already
+    source_tree = build.clean_module() is None
     for rel, phrase in pages.items():
         page = ROOT / rel
         files = [build.File(rel, page.read_bytes(), 0o644)]
+        assert source_tree or phrase in files[0].data.decode("utf-8"), rel
         build.scrub(files, REGISTRY)
         assert phrase not in files[0].data.decode("utf-8"), rel
     for system in ("linux", "windows", "macos"):

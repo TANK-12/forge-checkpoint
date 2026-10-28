@@ -1,0 +1,10 @@
+{
+  "id": "gothic",
+  "label": "Gothic horror",
+  "order": 4,
+  "blurb": "A mist-bound valley under a castle, with a village that locks its doors at dusk, wolves in the woods and something old in the chapel crypt.",
+  "tone": "Slow dread and candlelight; danger is real and courage matters.",
+  "roles": ["Hunter", "Priest", "Scholar", "Noble", "Physician", "Wanderer"],
+  "hp": 9,
+  "opening": "Open the campaign: the party's coach breaks down on the valley road at sunset, within sight of the village."
+}

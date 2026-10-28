@@ -1,0 +1,242 @@
+{
+ "monsters": [
+  {
+   "id": "giant_rat",
+   "name": "Giant rat",
+   "level": 1,
+   "hp": "2d6",
+   "ac": 12,
+   "attack": 4,
+   "damage": "1d4+2",
+   "xp": 25,
+   "gold": "0",
+   "tags": [
+    "beast"
+   ],
+   "flee": true,
+   "text": "A rat the size of a dog, all teeth and greasy fur."
+  },
+  {
+   "id": "wolf",
+   "name": "Grey wolf",
+   "level": 1,
+   "hp": "2d8+2",
+   "ac": 13,
+   "attack": 4,
+   "damage": "2d4+2",
+   "xp": 50,
+   "gold": "0",
+   "tags": [
+    "beast"
+   ],
+   "flee": true,
+   "loot": [
+    {
+     "item": "wolf_pelt",
+     "chance": 0.5
+    }
+   ],
+   "text": "Lean and grey, with patient yellow eyes."
+  },
+  {
+   "id": "bandit",
+   "name": "Bandit",
+   "level": 1,
+   "hp": "2d8+2",
+   "ac": 12,
+   "attack": 3,
+   "damage": "1d6+1",
+   "xp": 25,
+   "gold": "2d6",
+   "tags": [
+    "humanoid"
+   ],
+   "flee": true,
+   "loot": [
+    {
+     "item": "dagger",
+     "chance": 0.3
+    }
+   ],
+   "text": "Hungry, desperate, and armed."
+  },
+  {
+   "id": "bandit_captain",
+   "name": "Bandit captain",
+   "level": 3,
+   "hp": "10d8+20",
+   "ac": 15,
+   "attack": 5,
+   "damage": "1d8+3",
+   "attacks": 2,
+   "xp": 450,
+   "gold": "4d10",
+   "tags": [
+    "humanoid"
+   ],
+   "flee": true,
+   "loot": [
+    {
+     "item": "rapier",
+     "chance": 0.5
+    },
+    {
+     "item": "healing_draught",
+     "chance": 0.5
+    }
+   ],
+   "text": "A scarred duellist with a captain's sash and a dozen grudges."
+  },
+  {
+   "id": "blight_husk",
+   "name": "Blight husk",
+   "level": 1,
+   "hp": "3d8",
+   "ac": 10,
+   "attack": 3,
+   "damage": "1d6+1",
+   "xp": 50,
+   "gold": "0",
+   "tags": [
+    "undead",
+    "thorn"
+   ],
+   "flee": false,
+   "loot": [
+    {
+     "item": "briar_thorn",
+     "chance": 0.6
+    }
+   ],
+   "text": "A corpse laced through with black briar, moving like a puppet on bad strings."
+  },
+  {
+   "id": "blight_brute",
+   "name": "Briar-bound brute",
+   "level": 2,
+   "hp": "4d8+4",
+   "ac": 12,
+   "attack": 4,
+   "damage": "1d8+2",
+   "xp": 200,
+   "gold": "1d10",
+   "tags": [
+    "undead",
+    "thorn"
+   ],
+   "flee": false,
+   "boss": true,
+   "loot": [
+    {
+     "item": "briar_thorn",
+     "chance": 1.0
+    }
+   ],
+   "text": "Once a miller, now a hulk of thorn and swollen flesh.",
+   "on_defeat": [
+    {
+     "flag": "brute_dead"
+    }
+   ]
+  },
+  {
+   "id": "bog_lurker",
+   "name": "Bog lurker",
+   "level": 2,
+   "hp": "5d8+5",
+   "ac": 12,
+   "attack": 4,
+   "damage": "2d6+2",
+   "xp": 100,
+   "gold": "0",
+   "tags": [
+    "beast"
+   ],
+   "flee": true,
+   "loot": [
+    {
+     "item": "marsh_lily",
+     "chance": 0.4
+    }
+   ],
+   "text": "A mound of weed and mud with a mouth in the middle."
+  },
+  {
+   "id": "skeleton",
+   "name": "Barrow skeleton",
+   "level": 1,
+   "hp": "2d8+4",
+   "ac": 13,
+   "attack": 4,
+   "damage": "1d6+2",
+   "xp": 50,
+   "gold": "1d4",
+   "tags": [
+    "undead"
+   ],
+   "flee": false,
+   "text": "Old bones in rusted mail, still guarding something."
+  },
+  {
+   "id": "barrow_wight",
+   "name": "Barrow wight",
+   "level": 3,
+   "hp": "6d8+18",
+   "ac": 14,
+   "attack": 4,
+   "damage": "1d8+2",
+   "attacks": 2,
+   "xp": 700,
+   "gold": "3d10",
+   "tags": [
+    "undead"
+   ],
+   "flee": false,
+   "boss": true,
+   "loot": [
+    {
+     "item": "river_pearl",
+     "chance": 1.0
+    },
+    {
+     "item": "greater_healing",
+     "chance": 0.5
+    }
+   ],
+   "text": "A dead chieftain with cold fire for eyes and a crown of verdigris."
+  },
+  {
+   "id": "grey_hunter",
+   "name": "The Grey Hunter",
+   "level": 3,
+   "hp": "8d10+16",
+   "ac": 14,
+   "attack": 6,
+   "damage": "2d6+4",
+   "attacks": 2,
+   "xp": 700,
+   "gold": "0",
+   "tags": [
+    "beast",
+    "thorn"
+   ],
+   "flee": false,
+   "boss": true,
+   "loot": [
+    {
+     "item": "wolf_pelt",
+     "chance": 1.0
+    }
+   ],
+   "text": "A great wolf grown through with briar, silent as snowfall.",
+   "on_defeat": [
+    {
+     "flag": "hunter_dead"
+    },
+    {
+     "give": "brother_arrow"
+    }
+   ]
+  }
+ ]
+}

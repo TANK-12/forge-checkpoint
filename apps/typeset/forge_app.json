@@ -2,6 +2,7 @@
   "name": "typeset",
   "label": "Typeset",
   "tagline": "Typst documents, CVs and letters to PDF",
+  "frame": true,
   "help": {
     "about": "Write documents, CVs and letters from a template and turn them into PDFs.",
     "features": [

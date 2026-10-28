@@ -1,0 +1,151 @@
+{"locations": [
+  {"id": "highspire_gate", "name": "The Lantern Gate", "region": "highspire", "tags": ["town"],
+   "short": "Highspire's great north gate, where the Knives check every face.",
+   "description": "The north road ends at a gatehouse of white granite tall enough to have weather of its own, hung with green Regency banners frozen stiff on their poles. Knife-Guards in green velvet look at every face that comes through and write some of them down. Beyond the arch, the royal city climbs its hill in tiers toward a palace with every window lit.",
+   "features": [
+     {"id": "proclamation", "name": "the Regent's proclamation", "text": "A long notice nailed to the gate in good black ink: By order of the Lord Regent, all talk of a northern blight is false and seditious, the late Queen rests in the Cathedral of Embers, and the price of coal is fixed. Someone has written underneath, small, in charcoal: then why is it so cold?"},
+     {"id": "ledger_of_faces", "name": "the gate clerk's ledger", "text": "A clerk in fingerless gloves is copying descriptions of travellers into a ledger as they pass.", "check": {"skill": "sleight", "dc": "medium"}, "success": [{"message": "You read upside down while he blows on his fingers. Halfway down today's page, in neat clerk's hand: a description of you, accurate to the boots, and a note: Saltmere and the Marches. Report to Captain Dunmore. Somebody has been expecting you."}, {"flag": "highspire_knows_watched"}, {"xp": 40}], "fail": [{"message": "The clerk closes the ledger on your fingers, politely. 'Move along, please.'"}], "once": true}
+   ],
+   "on_enter": [{"once": true, "effects": [{"message": "A Knife-Guard looks at you a moment longer than at anyone else, then waves you through. As you pass under the arch, the cold changes: not the clean cold of the road but a deeper one, the kind that comes up out of stone."}, {"reveal": "highspire_lowtown"}, {"reveal": "highspire_nine_bells"}, {"reveal": "highspire_cathedral"}, {"reveal": "highspire_heights"}]}],
+   "exits": [
+     {"to": "marches_road", "label": "West road back to the Ashen Marches", "hours": 6},
+     {"to": "saltmere_gate", "label": "The long coast road south to Saltmere", "hours": 10},
+     {"to": "highspire_lowtown", "label": "Through the arch into Lowtown", "hours": 0.5},
+     {"to": "highspire_heights", "label": "Out along the walls to the Queen's Steps", "hours": 1}
+   ]},
+  {"id": "highspire_lowtown", "name": "The Stair Market", "region": "highspire", "tags": ["town", "board"],
+   "short": "Lowtown's crowded market, at the foot of the long Stair.",
+   "description": "Lowtown crowds the foot of the hill in the smoke of a thousand chimneys, most of them cold. The market sprawls up the bottom of the Stair, a broad flight of steps that climbs to the High Tiers, and at the first landing a barrier of green-painted iron and a row of Knives decide who goes up. People here wear every coat they own.",
+   "npcs": ["highspire_juniper"],
+   "shop": {"name": "Old Pell's stall", "items": ["highspire_knife_rapier", "highspire_regency_coat", "chain_mail", "shield", "longsword", "rapier", "longbow", "healing_draught", "highspire_frost_tonic", "rations", "torch", "rope", "thieves_tools"], "buys": true},
+   "features": [
+     {"id": "stair_barrier", "name": "the Stair checkpoint", "text": "A sergeant of the Knives sits at a folding desk behind the iron barrier, stamping passes. People with the right card go up. Everyone else is told the Tiers are closed for the season.", "check": {"skill": "deception", "dc": "hard", "advantage_when": {"flag": "highspire_knows_watched"}}, "success": [{"message": "You tell him, with enormous confidence, that you are the new under-assessor of chimney duties and he is late with his returns. He stamps a pass to make you go away."}, {"give": "highspire_tier_pass"}, {"xp": 60}], "fail": [{"message": "'Nice try,' says the sergeant, not looking up. 'Next.' You could try again when there's a different face on the desk, or find a pass the honest way: from somebody dishonest."}], "when": {"not_item": "highspire_tier_pass"}},
+     {"id": "dry_well", "name": "the dry well", "text": "An old well in the corner of the market, capped with a grate that is not quite locked. Rungs go down into the dark, and warm air smells faintly of wet stone. Juniper's people come and go by it when they think nobody is looking.", "success": [{"reveal": "highspire_undercroft"}]},
+     {"id": "chalk_briar", "name": "the chalked wall", "text": "Someone has chalked a black briar on the wall above the fishmonger's, and someone else has chalked a crown above it with a big X through the crown. A Knife-Guard is scrubbing at both with a wet rag and achieving very little."}
+   ],
+   "exits": [
+     {"to": "highspire_gate", "label": "Back out to the Lantern Gate", "hours": 0.5},
+     {"to": "highspire_nine_bells", "label": "Across to the Nine Bells", "hours": 0.25},
+     {"to": "highspire_cathedral", "label": "Up the lane to the Cathedral of Embers", "hours": 0.5},
+     {"to": "highspire_tiers", "label": "Up the Stair to the High Tiers", "hours": 0.5, "when": {"any": [{"has_item": "highspire_tier_pass"}, {"flag": "order_marches_with_you"}, {"flag": "regent_exposed"}, {"quest_done": "main_5"}]}, "locked": "The Knives at the Stair barrier want a tier pass, and you do not have one. Juniper in the market can find anything for a price, and the sergeant at the desk can be argued with."},
+     {"to": "highspire_undercroft", "label": "Down the dry well into the old aqueduct", "hours": 0.5}
+   ]},
+  {"id": "highspire_nine_bells", "name": "The Nine Bells", "region": "highspire", "tags": ["town", "inn", "safe"], "rest_cost": 10,
+   "short": "A warm, crooked Lowtown inn with eight bells over the door.",
+   "description": "A tall crooked inn leaning on its neighbours, with a row of brass bells over the door: eight of them, and an empty hook where the ninth should be. Inside it is the warmest room in Lowtown, because Marta Quill burns her furniture before she lets her fire go out. Half the room is talking about the cold and the other half is pretending not to listen.",
+   "npcs": ["highspire_marta"],
+   "shop": {"name": "Marta's cellar", "items": ["highspire_candied_orange", "highspire_frost_tonic", "honey_cakes", "fine_wine", "rations", "healing_draught"], "buys": false},
+   "features": [
+     {"id": "ninth_hook", "name": "the empty ninth hook", "text": "An iron hook over the door with nothing on it. Marta says the ninth bell went to the Queen's funeral and never came back, and she will hang it again when the Queen comes home. She says it as a joke. Nobody laughs."},
+     {"id": "fireside", "name": "the big fire", "text": "Somebody's grandmother's dresser is burning very cheerfully in the grate. A cat has claimed the warmest stone and does not intend to share it."}
+   ],
+   "exits": [
+     {"to": "highspire_lowtown", "label": "Out into the Stair Market", "hours": 0.25}
+   ]},
+  {"id": "highspire_cathedral", "name": "The Cathedral of Embers", "region": "highspire", "tags": ["town"],
+   "short": "The royal cathedral, where the Queen's tomb stands.",
+   "description": "A cathedral of red sandstone with a roof like a ribcage and a hundred votive candles burning down its nave, though no priest has said a royal mass here since the Regency began. At the crossing, under a great window of red and gold glass, stands the new white tomb of Queen Isolde. Frost has crept in under the doors and stopped, as if it is waiting.",
+   "npcs": ["highspire_hollin"],
+   "features": [
+     {"id": "isolde_tomb", "name": "Queen Isolde's tomb", "text": "A white marble tomb carved with the Queen lying asleep, a stone crown on her brow with an empty hollow where the heart-stone should be. Fresh flowers have been heaped on it, and fresh candles, and on the step, a child's drawing of a woman made of briars.", "check": {"skill": "investigation", "dc": "medium"}, "success": [{"message": "The seams of the lid have never been sealed, only painted to look it. You set your shoulder to the corner and it shifts a finger's width on a breath of cold, clean air. There is nothing inside but a bolt of folded silk. Whoever was buried here was never here."}, {"flag": "highspire_tomb_empty"}, {"xp": 80}], "fail": [{"message": "You run your hands over the marble and find nothing you can name, only a faint draught where no draught should be. An old woman in archivist's grey is watching you from the side chapel."}], "once": true},
+     {"id": "red_window", "name": "the great red window", "text": "The glass shows King Aldric kneeling in a barrow, lifting a red stone out of the dark. Under him, in gold letters: What the crown holds, the crown holds back. The red is so deep that the light on the floor looks like embers."}
+   ],
+   "exits": [
+     {"to": "highspire_lowtown", "label": "Back down to the Stair Market", "hours": 0.5}
+   ]},
+  {"id": "highspire_tiers", "name": "The High Tiers", "region": "highspire", "tags": ["town"],
+   "short": "White streets of townhouses, the Collegium and the palace road.",
+   "description": "Above the Stair, the streets are swept, white and very quiet. The townhouses of the court stand shoulder to shoulder with their shutters closed, smoke rising from every chimney, and the Glass Tower of the Collegium catches the grey light like an icicle. At the top of the hill, behind a gate of black iron and gilded knives, is the Ember Palace.",
+   "npcs": ["highspire_dunmore"],
+   "shop": {"name": "The Collegium dispensary", "items": ["highspire_starlight_ink", "highspire_frost_tonic", "highspire_glass_ward", "greater_healing", "spellbook", "highspire_candied_orange"], "buys": true},
+   "features": [
+     {"id": "palace_herald", "name": "the palace herald", "text": "A herald in green and gold stands by the palace gate with a list of names for the Masque, reading it with deep satisfaction to anyone who will listen.", "check": {"skill": "persuasion", "dc": "easy"}, "when": {"flag": "order_marches_with_you", "not_item": "highspire_invitation"}, "success": [{"message": "You tell him you speak for the Order of Ash. His face does several things at once. The Order of Ash has not sent an envoy to Highspire in twelve years, and the Masque has never had one at all. He writes your name at the top of the list in his best hand."}, {"give": "highspire_invitation"}, {"xp": 40}], "fail": [{"message": "He does not believe you. Perhaps you should try saying it as if you believed it yourself."}]},
+     {"id": "tipsy_courtier", "name": "a tipsy courtier", "text": "A young lord in a mask pushed up on his forehead is singing on a doorstep, with a gilt-edged card sticking out of his coat pocket.", "check": {"skill": "sleight", "dc": "hard"}, "when": {"not_item": "highspire_invitation"}, "success": [{"message": "You help him up, dust him down and wish him goodnight. The card comes with you. He will not miss it until tomorrow, and tomorrow he will not remember why."}, {"give": "highspire_invitation"}, {"xp": 60}], "fail": [{"message": "He grabs your hand, delighted. 'A friend! Have you come to sing?' The card stays where it is, and he holds onto you for a long verse."}]},
+     {"id": "coal_yard", "name": "the Regency coal yard", "text": "Behind a fence of green iron, coal is heaped in black hills under tarpaulins: enough to warm Lowtown for a winter, kept here to warm the Tiers for three. Two Knives stamp their feet at the gate.", "check": {"skill": "stealth", "dc": "hard"}, "when": {"quest_stage": {"highspire_coal": "start"}}, "success": [{"message": "You slip in under the tarpaulins, find the yard's wagon already loaded for the palace, and drive it down the Stair road as if you had been told to. By the time the guards look up it is gone."}, {"flag": "highspire_coal_stolen"}, {"xp": 100}], "fail": [{"message": "A guard's lantern swings round onto your face. 'Oi!'"}, {"combat": ["highspire_knife_guard", "highspire_knife_guard"]}]}
+   ],
+   "on_enter": [{"once": true, "when": {"flag": "order_marches_with_you", "not_item": "highspire_tier_pass", "not_flag": "regent_exposed"}, "effects": [{"message": "The sergeant at the Stair barrier opens his mouth to ask for your pass, sees the ash-grey badge of the Order on your coat, and closes it again. Nobody in green velvet wants to be the Knife who turned back the Order of Ash. He lifts the bar without a word."}]}],
+   "exits": [
+     {"to": "highspire_lowtown", "label": "Down the Stair to Lowtown", "hours": 0.5},
+     {"to": "highspire_glass_tower", "label": "To the Glass Tower of the Collegium", "hours": 0.25},
+     {"to": "highspire_palace", "label": "Up to the Ember Palace", "hours": 0.25, "when": {"any": [{"has_item": "highspire_invitation"}, {"in_party": "mirela"}, {"flag": "regent_exposed"}, {"quest_done": "main_5"}]}, "locked": "The palace gate is shut and guarded by six Knives. Tonight is the Lord Regent's Masque, and nobody goes in without an invitation or a member of the court to vouch for them."}
+   ]},
+  {"id": "highspire_glass_tower", "name": "The Glass Tower", "region": "highspire", "tags": ["town"],
+   "short": "The Collegium of Vael, and the court mage's rooms at the top.",
+   "description": "A spire of grey stone sheathed in panes of glass, the Collegium of Vael, where the realm's wizards study and the Regency's wizards work. The stairs wind up past lecture halls gone cold and empty. At the top, in a round room full of instruments, brass and frost, the court mage keeps her lamps burning and her door open a crack, as if daring someone to come in.",
+   "npcs": ["mirela"],
+   "features": [
+     {"id": "cold_orrery", "name": "the cold orrery", "text": "A great brass instrument fills half the room: rings within rings, and at the centre, a dull red glass bead with frost creeping toward it along every ring from the north.", "check": {"skill": "arcana", "dc": "medium"}, "success": [{"message": "It is a model of the realm and the cold. The red bead is the heart-stone, and the frost is the Thornwake, and somebody has been moving the frost forward by hand every morning with terrible precision. By these figures, Highspire has eleven months."}, {"flag": "highspire_read_orrery"}, {"xp": 60}], "fail": [{"message": "Rings within rings within rings. The longer you look, the less sense it makes, and the colder your hands get."}], "once": true},
+     {"id": "collegium_records", "name": "the Collegium records", "text": "Shelves of black ledgers: every magister, every apprentice, every expulsion. The volume for this year has a different binding from the others.", "check": {"skill": "investigation", "dc": "medium", "advantage_when": {"in_party": "mirela"}}, "when": {"quest_stage": {"mirela_quest": "find"}}, "success": [{"message": "The replacement volume is a forgery, a good one. But the binder forgot the margins of the volume after it, where a clerk has noted, small: Fell, A., removed to the Quiet Cells under the palace, by the Regent's order. Not to be entered. The Quiet Cells, the clerk has added, are reached from the old aqueduct."}, {"flag": "mirela_found_fell_record"}, {"reveal": "highspire_undercroft"}, {"reveal": "highspire_quiet_cells"}, {"xp": 80}], "fail": [{"message": "Ledger after ledger of names and dates. If there is a trail here, it is buried. Another hour might find it."}, {"hours": 1}]}
+   ],
+   "exits": [
+     {"to": "highspire_tiers", "label": "Down to the High Tiers", "hours": 0.25}
+   ]},
+  {"id": "highspire_palace", "name": "The Ember Palace", "region": "highspire", "tags": ["town"],
+   "short": "The royal palace, where the Regent holds court.",
+   "description": "The palace of the kings of Vael is all red stone and gold, and it is warm: the first truly warm place you have been in for weeks, warm enough that the courtiers fan themselves. The great hall is hung with masks and lit by a thousand candles. The throne at the far end is empty, and beside it, in a plain chair, sits the man who keeps it that way.",
+   "npcs": ["highspire_caul"],
+   "features": [
+     {"id": "empty_throne", "name": "the empty throne", "text": "A great chair of red-gold wood carved with embers, and on its seat, a cushion with the dent of a crown in it. No one sits in it. No one has been allowed to since the Queen died."},
+     {"id": "warm_walls", "name": "the warm walls", "text": "You lay a hand on the red stone of the wall. It is warm as skin, and faintly, very faintly, it beats.", "check": {"skill": "arcana", "dc": "medium"}, "success": [{"message": "The warmth is coming up from below, from somewhere deep in the hill under the palace. It is not a fire. It is being drawn from something, the way a lamp draws oil, and whatever it is drawing from is running low."}, {"flag": "highspire_felt_the_draw"}, {"xp": 50}], "fail": [{"message": "Warm stone. You take your hand away before a courtier asks you what you are doing to the wall."}], "once": true}
+   ],
+   "on_enter": [{"when": {"quest_stage": {"main_5": "masque"}}, "scene": "highspire_masque"}],
+   "exits": [
+     {"to": "highspire_tiers", "label": "Out to the High Tiers", "hours": 0.25},
+     {"to": "highspire_sanctum", "label": "Down the Regent's private stair", "hours": 0.25, "when": {"any": [{"flag": "regent_exposed"}, {"in_party": "mirela"}, {"quest_done": "main_5"}]}, "locked": "A narrow stair behind the throne goes down into the hill. Four Knives guard it, and they do not look bored at all."}
+   ]},
+  {"id": "highspire_sanctum", "name": "The Regent's Sanctum", "region": "highspire", "tags": [],
+   "short": "A vault under the palace, white with frost.",
+   "description": "A round vault deep under the palace, older than the palace itself, its walls white with frost so thick it has grown into ferns. At the centre, in a cage of iron and Collegium glass, a red light beats very slowly, like a heart asleep. Pipes of copper run from the cage up into the rock, carrying its warmth to the rooms above.",
+   "features": [
+     {"id": "copper_pipes", "name": "the copper pipes", "text": "Dozens of copper pipes, warm to the touch, run from the cage up into the stone. Each is stamped with a destination: the great hall, the Regent's bedchamber, the Tiers' baths. None of them goes down to Lowtown."},
+     {"id": "cage", "name": "the glass cage", "text": "Iron bands and thick Collegium glass, frosted on the outside, beaded with warm water on the inside. Within it, the heart-stone of the Ember Crown sits on a velvet cushion, cracked, dim, three hollows in its side where the shards were broken out."}
+   ],
+   "on_enter": [
+     {"when": {"quest_stage": {"main_5": "vault"}, "not_item": "heart_stone"}, "scene": "highspire_caul_confront"},
+     {"when": {"has_item": "heart_stone", "not_flag": ["regent_killed", "regent_spared"]}, "scene": "highspire_caul_judgement"},
+     {"when": {"quest_active": "main_5", "not": {"quest_stage": {"main_5": "vault"}}}, "effects": [{"message": "The vault is empty but for the frost and the slow red light. The Regent is above, at his Masque. Sooner or later he will come down here, because whatever he is, he cannot stay away from it for long."}]}
+   ],
+   "exits": [
+     {"to": "highspire_palace", "label": "Up the private stair to the palace", "hours": 0.25, "when": {"any": [{"has_item": "highspire_invitation"}, {"in_party": "mirela"}, {"flag": "regent_exposed"}, {"quest_done": "main_5"}]}, "locked": "The private stair comes up behind the throne, into a hall full of masked courtiers and Knives. Walk out among them without an invitation and you will be back down here in chains."},
+     {"to": "highspire_undercroft", "label": "Down the old cistern stair to the aqueduct", "hours": 0.5, "when": {"flag": "highspire_found_back_stair"}}
+   ]},
+  {"id": "highspire_undercroft", "name": "The Old Aqueduct", "region": "highspire", "tags": ["wild"],
+   "short": "Drowned tunnels under the city, where its dead are not resting.",
+   "description": "The old aqueduct runs under the whole city, a vaulted tunnel with a channel of black water down the middle and walkways on either side. It used to carry snowmelt from the mountains. Now the water barely moves, the walkways are slick with ice, and the dead the city buried in its walls are coming out of them.",
+   "features": [
+     {"id": "cistern_stair", "name": "the old cistern stair", "text": "Somewhere above you, faintly, you can feel warmth coming down through the stone. A side passage climbs toward it, choked with rubble and briar.", "check": {"skill": "perception", "dc": "medium"}, "when": {"not_flag": "highspire_found_back_stair", "not": {"kills": {"highspire_drowned": 1}}}, "success": [{"message": "Behind the rubble there is a stair, old and worn, climbing up into the hill toward the warmth. At the top, through a crack in a frosted door, you see red light. This is the back way into whatever lies under the palace."}, {"flag": "highspire_found_back_stair"}, {"reveal": "highspire_sanctum"}, {"xp": 80}], "fail": [{"message": "You lose the warmth among the echoes. Something moves in the black water behind you."}, {"combat": ["highspire_drowned"]}]},
+     {"id": "cistern_stair_again", "name": "the old cistern stair", "text": "Somewhere above you, faintly, you can feel warmth coming down through the stone. A side passage climbs toward it, choked with rubble and briar.", "check": {"skill": "perception", "dc": "medium"}, "when": {"not_flag": "highspire_found_back_stair", "kills": {"highspire_drowned": 1}}, "success": [{"message": "Behind the rubble there is a stair, old and worn, climbing up into the hill toward the warmth. At the top, through a crack in a frosted door, you see red light. This is the back way into whatever lies under the palace."}, {"flag": "highspire_found_back_stair"}, {"reveal": "highspire_sanctum"}, {"xp": 80}], "fail": [{"message": "You lose the warmth among the echoes again. The black water stays still behind you now, at least."}]},
+     {"id": "drowned_archive", "name": "the drowned archive", "text": "A side vault where the cathedral once stored its records, now knee-deep in black water. Shelves lean like drunks. Something heavy and stone shifts on a high ledge.", "check": {"skill": "athletics", "dc": "medium"}, "when": {"quest_stage": {"highspire_last_letter": "find"}, "not_item": "highspire_isolde_letter", "not": {"kills": {"highspire_gargoyle": 1}}}, "success": [{"message": "You wade the stacks to the iron chest Hollin described, wrench it out of the silt and get the lid up. Inside, wrapped in oilcloth and perfectly dry, is a single folded letter sealed with a moth."}, {"give": "highspire_isolde_letter"}, {"xp": 100}], "fail": [{"message": "Your foot goes through a rotten board and the noise wakes the ledge. Stone wings unfold."}, {"combat": ["highspire_gargoyle"]}]},
+     {"id": "drowned_archive_again", "name": "the drowned archive", "text": "A side vault where the cathedral once stored its records, now knee-deep in black water. Shelves lean like drunks. Something heavy and stone shifts on a high ledge.", "check": {"skill": "athletics", "dc": "medium"}, "when": {"quest_stage": {"highspire_last_letter": "find"}, "not_item": "highspire_isolde_letter", "kills": {"highspire_gargoyle": 1}}, "success": [{"message": "You wade the stacks to the iron chest Hollin described, wrench it out of the silt and get the lid up. Inside, wrapped in oilcloth and perfectly dry, is a single folded letter sealed with a moth."}, {"give": "highspire_isolde_letter"}, {"xp": 100}], "fail": [{"message": "Your foot slips on the silt and you go down hard among the stacks. The chest stays where it is. Nothing on the ledge moves this time; the gargoyle that kept it is rubble."}]}
+   ],
+   "encounter": {"chance": 0.2, "monsters": [["highspire_drowned"], ["highspire_thorn_rats"]]},
+   "exits": [
+     {"to": "highspire_lowtown", "label": "Up the dry well to the Stair Market", "hours": 0.5},
+     {"to": "highspire_quiet_cells", "label": "Along the north channel to the Quiet Cells", "hours": 0.5, "when": {"any": [{"flag": "mirela_found_fell_record"}, {"visited": "highspire_quiet_cells"}]}},
+     {"to": "highspire_sanctum", "label": "Up the cistern stair toward the red light", "hours": 0.5, "when": {"flag": "highspire_found_back_stair"}}
+   ]},
+  {"id": "highspire_quiet_cells", "name": "The Quiet Cells", "region": "highspire", "tags": [],
+   "short": "The Regency's secret oubliette, under the palace.",
+   "description": "A long hall cut into the rock, lined with cell doors of glass so thick it is green. Nothing makes a sound here: not your boots, not your breath, not the water dripping from the roof. Every cell is lit by a single cold lantern, and in some of them, people are sitting very still.",
+   "features": [
+     {"id": "cell_doors", "name": "the glass doors", "text": "Behind each green pane, someone the Regency wanted forgotten: a priest, a merchant, a girl of fifteen still in her singing robes. They watch you pass. Some of them lift a hand."}
+   ],
+   "on_enter": [
+     {"when": {"quest_stage": {"mirela_quest": "cells"}, "in_party": "mirela", "not_flag": "highspire_warden_broken"}, "scene": "mirela_cells"},
+     {"when": {"quest_stage": {"mirela_quest": "cells"}, "in_party": "mirela", "flag": "highspire_warden_broken"}, "scene": "mirela_fell"},
+     {"when": {"quest_stage": {"mirela_quest": "cells"}, "not_in_party": "mirela"}, "effects": [{"message": "Somewhere down the hall a lantern brightens and a tall shape of glass turns its head toward you. This is Mirela's to do, not yours; you should not open that door without her."}]}
+   ],
+   "exits": [
+     {"to": "highspire_undercroft", "label": "Back along the channel to the aqueduct", "hours": 0.5}
+   ]},
+  {"id": "highspire_heights", "name": "The Queen's Steps", "region": "highspire", "tags": ["wild"],
+   "short": "Terraced gardens along the walls, gone wild with frost.",
+   "description": "Terraced royal gardens climb the outside of the city walls in long green steps, gone wild since the Queen died. From the top terrace you can see the whole north: the Marches smoking to the west, the mountains white to the north, and between them, a dark line on the snow like a crack in a plate. The wind up here smells of iron and briar.",
+   "features": [
+     {"id": "north_view", "name": "the dark line in the north", "text": "You shade your eyes and look at it a long time. It is not a road and not a river. It is the Thornwake, and it is closer than any map in Vael says it is."},
+     {"id": "queen_bench", "name": "the Queen's bench", "text": "A stone bench on the top terrace, worn smooth. Someone has scratched a tiny moth into its arm, and under it, freshly, the word: soon.", "check": {"skill": "investigation", "dc": "easy"}, "success": [{"message": "Under the bench, tucked into a crack, is a twist of candied orange peel in waxed paper, a few weeks old. Whoever comes here to sit has a sweet tooth and the means to feed it."}, {"give": "highspire_candied_orange"}, {"xp": 20}], "once": true}
+   ],
+   "exits": [
+     {"to": "highspire_gate", "label": "Back along the walls to the Lantern Gate", "hours": 1}
+   ]}
+]}

@@ -1,0 +1,30 @@
+{"quests": [
+  {"id": "main_2", "name": "The Court of Moths", "kind": "main", "level": 2, "giver": "whisperwood_thistlewick", "region": "whisperwood",
+   "summary": "The miller's letter was sealed with a moth. The Court of the Whisperwood holds a second piece of the Queen's heart-stone, and they bargain for everything.",
+   "stages": [
+     {"id": "start", "text": "The Whisperwood begins where the road ends. Somewhere in its heart, behind a stair of living wings, the Court of Moths keeps a shard the Queen left in its care.", "objective": "Reach the Court of Moths and speak to the Lady", "complete_when": {"flag": "moth_court_met"}, "next": "lamp"},
+     {"id": "lamp", "text": "The Lady of Moths will trade the shard for a service: her Court's mothlamp, stolen by a Warden turned briar-thing, is in the blighted clearing north of the Mothlight Path.", "objective": "Recover the Court's mothlamp from the Briar Warden", "complete_when": {"any": [{"has_item": "moth_lamp"}, {"flag": "moth_bargain_broken"}]}, "next": "bargain"},
+     {"id": "bargain", "text": "The mothlamp is yours to carry. The Lady's price for the shard is a bargain, and bargains bind in the Wood. What you swear, you will have to keep.", "objective": "Return the lamp and strike the bargain with the Lady of Moths", "complete_when": {"has_item": "moth_shard", "any": [{"flag": "moth_bargain_kept"}, {"flag": "moth_bargain_broken"}]}, "on_complete": [{"start_quest": "main_3"}, {"reveal": "saltmere_gate"}, {"message": "The Lady's last gift is a whisper at your ear: 'The salt-road. A fence, a ledger, and a very large lie. Go south, and be quick.'"}], "next": "done"}
+   ],
+   "rewards": {"xp": 600, "gold": 60, "reputation": {"moth_court": 5}}},
+  {"id": "whisperwood_warden_duty", "name": "A Warden's Duty", "kind": "side", "level": 2, "giver": "whisperwood_tamsin", "region": "whisperwood",
+   "summary": "Tamsin Reed, the last warden, wants the sprites that haunt the path cleared before the Court's guests arrive.",
+   "stages": [
+     {"id": "start", "text": "Briar sprites have been stripping the wardens' markers along the Mothlight Path. Tamsin is too old to chase them. She asks you to thin them out.", "objective": "Defeat three briar sprites", "complete_when": {"kills": {"whisperwood_thorn_sprite": 3}}, "next": "report"},
+     {"id": "report", "text": "The markers will hold now. Tamsin will want to hear it.", "objective": "Tell Tamsin the path is clear", "complete_when": {"flag": "tamsin_path_thanks"}, "next": "done"}
+   ],
+   "rewards": {"xp": 200, "gold": 25, "items": ["whisperwood_antler_bow"], "reputation": {"moth_court": 3}}},
+  {"id": "whisperwood_moonlight_errand", "name": "A Spoonful of Moonlight", "kind": "side", "level": 2, "giver": "whisperwood_quill", "region": "whisperwood",
+   "summary": "Mistress Quill needs a moonpetal and a comb of glimmer honey to make a sleeping draught for a fretful child.",
+   "stages": [
+     {"id": "start", "text": "Quill's sleeping draught needs a moonpetal, which only opens after dark, and glimmer honey from the wild bees along the Mothlight Path.", "objective": "Find a moonpetal and glimmer honey, then give both to Mistress Quill", "complete_when": {"flag": "quill_draught_made"}, "next": "done"}
+   ],
+   "rewards": {"xp": 150, "gold": 10, "items": ["whisperwood_reed_flute"], "reputation": {"moth_court": 2}}},
+  {"id": "whisperwood_stolen_reflection", "name": "The Drowned Reflection", "kind": "side", "level": 3, "giver": "whisperwood_gorse", "region": "whisperwood",
+   "summary": "Something in the Mirror Pool is wearing a woodcutter's reflection. Old Gorse would like it back.",
+   "stages": [
+     {"id": "start", "text": "A mirror wraith in the pool is wearing a woodcutter's reflection like a coat. Gorse thinks that killing it will free the face.", "objective": "Defeat the mirror wraith at the Mirror Pool", "complete_when": {"kills": {"whisperwood_mirror_wraith": 1}}, "next": "report"},
+     {"id": "report", "text": "The pool is clear. Gorse wants to know if the woodcutter's face is whole again.", "objective": "Tell Old Gorse the pool is clear", "complete_when": {"flag": "gorse_pool_thanks"}, "next": "done"}
+   ],
+   "rewards": {"xp": 300, "gold": 20, "items": ["whisperwood_mothsilk_vest"], "reputation": {"moth_court": 4}}}
+]}

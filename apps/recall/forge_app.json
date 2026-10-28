@@ -1,0 +1,26 @@
+{
+  "name": "recall",
+  "label": "Recall",
+  "tagline": "Flashcards that come back when due",
+  "frame": {"tabs": [{"id": "review", "label": "Review"}, {"id": "cards", "label": "Cards"}, {"id": "import", "label": "Import"}]},
+  "port": 8488,
+  "module": "web_app:app",
+  "src_dir": ".",
+  "accent": "#c77dba",
+  "icon": "🧠",
+  "order": 18,
+  "section": "research",
+  "ready_timeout": 30,
+  "ram_class": "light",
+  "store": {"github": "private"},
+  "help": {"about": "Flashcards that come back when they are due. Rate each answer Again, Hard, Good or Easy and the scheduler picks when you see the card next.", "features": ["Review", "Cards", "Import"]},
+  "manifest": {
+    "summary": "Flashcards scheduled with FSRS (shared/forge_fsrs.py, the same scheduler Kotoba uses): each answer (Again, Hard, Good, Easy) sets when the card comes back. Cards are written on the page or imported from Study Companion: every question in its question banks (answer and worked steps on the back) and any line in its notes written as front :: back. One deck per course. recall.json is the registry of sources; recall_core.IMPORTERS has one function per kind.",
+    "data_dir": "~/.local/share/forge/recall",
+    "dependencies": {"required": ["shared/forge_fsrs.py", "fsrs (pip)"], "optional": ["study-companion"]},
+    "docs": ["README.md", "WIP.md"]
+  },
+  "export": [
+    {"id": "cards", "label": "Decks, cards and reviews", "kind": "sqlite", "path": "~/.local/share/forge/recall/recall.db"}
+  ]
+}

@@ -1,0 +1,421 @@
+{
+ "scenes": [
+  {
+   "id": "ren_recruit",
+   "title": "The Courier",
+   "nodes": {
+    "start": {
+     "speaker": "ren",
+     "text": "Ren sets her mic down. 'You want me on the crew.' She taps her deck. 'I can punch holes in firewalls and hum while I do it. But I've got a brother in the clinic, and he comes first. If it comes to him or your job, I walk. Understood?'",
+     "choices": [
+      {
+       "text": "'Understood. Tomas is our priority too.'",
+       "effects": [
+        {
+         "join": "ren"
+        },
+        {
+         "affection": {
+          "ren": 4
+         }
+        },
+        {
+         "flag": "ren_trusts"
+        }
+       ],
+       "next": "deal"
+      },
+      {
+       "text": "[Insight] 'You're scared of something. What?'",
+       "check": {
+        "skill": "insight",
+        "dc": "medium"
+       },
+       "effects": [
+        {
+         "join": "ren"
+        },
+        {
+         "affection": {
+          "ren": 6
+         }
+        },
+        {
+         "flag": "ren_trusts"
+        }
+       ],
+       "next": "scared",
+       "fail_next": "prickly"
+      },
+      {
+       "text": "'Maybe another time.'",
+       "next": "end"
+      }
+     ]
+    },
+    "deal": {
+     "speaker": "ren",
+     "text": "'Okay.' She breathes out. 'Good. Don't make me regret it.'",
+     "next": "end"
+    },
+    "scared": {
+     "speaker": "ren",
+     "text": "She stares, then laughs shakily. 'Wow. Subtle as a brick.' A pause. 'I'm scared of a case I carried once. Ask me about it when I trust you.' She picks up her jacket. 'Let's go.'",
+     "next": "end"
+    },
+    "prickly": {
+     "speaker": "ren",
+     "text": "'Don't read me, chief. I've been read by professionals.' She turns back to the mic. 'Ask me again when you've earned it.'",
+     "next": "end"
+    }
+   }
+  },
+  {
+   "id": "ren_heart_1",
+   "title": "Static",
+   "once": true,
+   "nodes": {
+    "start": {
+     "speaker": "ren",
+     "text": "The rain has settled to a hush on the tin above you. Ren sits cross-legged on the floor, her deck open in her lap, humming a slow melody under her breath. She notices you watching and doesn't stop. 'My mother's song,' she says. 'A cassette she kept in her coat. It's the only reason I learned to sing.'",
+     "choices": [
+      {
+       "text": "'Sing it. I'll listen.'",
+       "effects": [
+        {
+         "affection": {
+          "ren": 4
+         }
+        }
+       ],
+       "next": "sing"
+      },
+      {
+       "text": "'Who taught you to hack?'",
+       "next": "hack"
+      },
+      {
+       "text": "'Get some rest, Ren. I'll keep watch.'",
+       "effects": [
+        {
+         "affection": {
+          "ren": 2
+         }
+        },
+        {
+         "flag": "ren_romance_declined"
+        }
+       ],
+       "next": "end"
+      }
+     ]
+    },
+    "sing": {
+     "speaker": "ren",
+     "text": "She sings quietly, in a voice that doesn't try to impress anyone, about a harbour, and a lamp, and a long way home. When she finishes, the rain seems to be holding its breath. 'No one's heard that in years,' she whispers.",
+     "choices": [
+      {
+       "text": "Reach over and tuck a teal lock behind her ear.",
+       "effects": [
+        {
+         "romance": {
+          "ren": "spark"
+         }
+        },
+        {
+         "affection": {
+          "ren": 5
+         }
+        },
+        {
+         "message": "She leans into your hand for a heartbeat, then looks away, smiling."
+        }
+       ],
+       "next": "end"
+      },
+      {
+       "text": "'Thank you. That was beautiful.'",
+       "effects": [
+        {
+         "affection": {
+          "ren": 3
+         }
+        }
+       ],
+       "next": "end"
+      }
+     ]
+    },
+    "hack": {
+     "speaker": "ren",
+     "text": "'Myself, mostly. A pirated deck and a lot of bad nights.' She shrugs. 'You learn to see the walls. Everyone has them. Even the Spire.' She glances at you. 'Even you.'",
+     "choices": [
+      {
+       "text": "'Maybe you could teach me.' Move a little closer.",
+       "effects": [
+        {
+         "romance": {
+          "ren": "spark"
+         }
+        },
+        {
+         "affection": {
+          "ren": 4
+         }
+        },
+        {
+         "message": "She hands you a spare cable and guides your fingers through the first port. Her hand stays on yours a moment longer than the lesson needs."
+        }
+       ],
+       "next": "end"
+      },
+      {
+       "text": "'I'd rather not know.'",
+       "effects": [
+        {
+         "affection": {
+          "ren": 1
+         }
+        }
+       ],
+       "next": "end"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "ren_heart_2",
+   "title": "The Case",
+   "once": true,
+   "nodes": {
+    "start": {
+     "speaker": "ren",
+     "text": "Ren has been quiet all evening, her deck closed on her lap. At last she says, 'I have to tell you something, and you might hate me for it.' She keeps her eyes on the floor. 'Before the club, I was an Aurelian courier. One night I carried a sealed case down to Platform Nine. A man had given it to me in the Spire gardens, a stranger, forgettable. I never saw his face.' She looks up, amber eye bright. 'It was you.'",
+     "choices": [
+      {
+       "text": "'You did what you were paid to do. I don't blame you.'",
+       "effects": [
+        {
+         "affection": {
+          "ren": 6
+         }
+        }
+       ],
+       "next": "forgive"
+      },
+      {
+       "text": "[Insight] Study her face. 'Is that all of it?'",
+       "check": {
+        "skill": "insight",
+        "dc": "medium"
+       },
+       "next": "more",
+       "fail_next": "forgive"
+      },
+      {
+       "text": "'You knew. You knew and said nothing.'",
+       "effects": [
+        {
+         "affection": {
+          "ren": -6
+         }
+        }
+       ],
+       "next": "cold"
+      },
+      {
+       "text": "'I need to be alone.'",
+       "effects": [
+        {
+         "flag": "ren_romance_declined"
+        }
+       ],
+       "next": "end"
+      }
+     ]
+    },
+    "forgive": {
+     "speaker": "ren",
+     "text": "'I didn't know what was in it,' she says softly. 'Not until after. When I saw your wrist, three weeks ago, I realised.' She wipes her face with her sleeve. 'I should have told you the second I knew.'",
+     "choices": [
+      {
+       "text": "Take her hand. 'You're telling me now.'",
+       "effects": [
+        {
+         "romance": {
+          "ren": "courting"
+         }
+        },
+        {
+         "affection": {
+          "ren": 6
+         }
+        },
+        {
+         "message": "Her fingers lace through yours, and the rain keeps time."
+        }
+       ],
+       "next": "end"
+      },
+      {
+       "text": "'Thank you for being honest.' Leave it there.",
+       "effects": [
+        {
+         "affection": {
+          "ren": 2
+         }
+        }
+       ],
+       "next": "end"
+      }
+     ]
+    },
+    "more": {
+     "speaker": "ren",
+     "text": "Her face crumples. 'You're good at this.' She breathes. 'The stranger said something to me, at the vault. He said: if anyone comes asking, tell them you never saw me.' A tear runs. 'So I did. For three years.' She looks up. 'That was you too.'",
+     "choices": [
+      {
+       "text": "Pull her in. 'You carried it for me. That's not betrayal.'",
+       "effects": [
+        {
+         "romance": {
+          "ren": "courting"
+         }
+        },
+        {
+         "affection": {
+          "ren": 8
+         }
+        },
+        {
+         "flag": "ren_confided"
+        },
+        {
+         "message": "She cries into your shoulder, and the club's far-off bass line seems to soften."
+        }
+       ],
+       "next": "end"
+      },
+      {
+       "text": "'I need time.'",
+       "effects": [
+        {
+         "affection": {
+          "ren": 1
+         }
+        },
+        {
+         "flag": "ren_romance_declined"
+        }
+       ],
+       "next": "end"
+      }
+     ]
+    },
+    "cold": {
+     "speaker": "ren",
+     "text": "Ren nods slowly, as if she expected this. 'Fair.' She stands, tucks her deck under her arm. 'Don't worry. I'll keep to my side of the crew.' Her voice is perfectly even. It is the worst thing you have ever heard.",
+     "effects": [
+      {
+       "flag": "ren_romance_declined"
+      }
+     ],
+     "next": "end"
+    }
+   }
+  },
+  {
+   "id": "ren_heart_3",
+   "title": "The Last Train",
+   "once": true,
+   "nodes": {
+    "start": {
+     "speaker": "ren",
+     "text": "The roof garden is wet and glowing, lanterns swaying in a gentle wind. Ren stands at the railing with her jacket draped over your shoulders, her amber eye reflecting the Spire. 'There's a maglev out of Halcyon Reach,' she says. 'Last train, midnight, from a station nobody uses. Past the sea wall, there's no rain. No Spire. No numbers on anyone's wrist.' She turns. 'Tomas could come, if he's free. I'd go anywhere with you, you know. I just wanted to say it before the end.'",
+     "choices": [
+      {
+       "text": "'Anywhere. I'm yours.' Kiss her.",
+       "effects": [
+        {
+         "romance": {
+          "ren": "beloved"
+         }
+        },
+        {
+         "commit": "ren"
+        },
+        {
+         "affection": {
+          "ren": 10
+         }
+        },
+        {
+         "flag": "ren_last_train_offer"
+        },
+        {
+         "unlock": "ending:last_train"
+        },
+        {
+         "message": "Her hands find your collar and the rain falls on both of you, and neither notices."
+        }
+       ],
+       "next": "kiss"
+      },
+      {
+       "text": "'I want that. But I need to finish this first.'",
+       "effects": [
+        {
+         "romance": {
+          "ren": "beloved"
+         }
+        },
+        {
+         "commit": "ren"
+        },
+        {
+         "affection": {
+          "ren": 6
+         }
+        },
+        {
+         "flag": "ren_last_train_offer"
+        }
+       ],
+       "next": "wait"
+      },
+      {
+       "text": "'I can't leave Lowtide. Not like this.'",
+       "effects": [
+        {
+         "flag": "ren_romance_declined"
+        },
+        {
+         "affection": {
+          "ren": -2
+         }
+        }
+       ],
+       "next": "no"
+      }
+     ]
+    },
+    "kiss": {
+     "speaker": "ren",
+     "text": "When she pulls back, her forehead rests against yours. 'I am so scared,' she whispers, laughing, 'and I have never been so happy.' Far below, the city goes on, glittering and unpaid. For tonight, it can wait.",
+     "next": "end"
+    },
+    "wait": {
+     "speaker": "ren",
+     "text": "She nods, smiling through wet eyes. 'Then finish it, and I'll be waiting at the station with two tickets and a terrible mixtape.' She kisses your cheek, soft and brief. 'Come back to me.'",
+     "next": "end"
+    },
+    "no": {
+     "speaker": "ren",
+     "text": "Ren's smile doesn't falter, but something behind it does. 'I understand,' she says gently. 'Lowtide needs a hero.' She looks at the Spire. 'Just remember who's waiting when you finish.'",
+     "next": "end"
+    }
+   }
+  }
+ ]
+}

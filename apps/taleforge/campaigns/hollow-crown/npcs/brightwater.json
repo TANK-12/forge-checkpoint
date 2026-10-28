@@ -1,0 +1,61 @@
+{"npcs": [
+  {"id": "hollis", "name": "Warden Hollis", "pronouns": "he/him", "location": "brightwater_square", "faction": "river_guild",
+   "description": "A broad, grey-bearded man in a warden's green coat, holding a ledger like a shield.",
+   "personality": "Tired, decent, out of his depth and honest about it. Respects people who act.", "speech": "Plain river-country talk, short sentences, calls everyone 'friend'.",
+   "greeting": "Another stranger. Friend, if you can hold a blade, I could use you.",
+   "quests": ["main_1"],
+   "rumours": true,
+   "topics": [
+     {"id": "bell", "prompt": "Why was the bell ringing?", "text": "Tam's boy saw dead men walking in the river at dawn, wrapped in those black thorns. We've got the docks shut. If you want to help, go down and see what's what."},
+     {"id": "mill", "prompt": "Ask about the old mill", "text": "The miller, Garrow, stopped bringing flour a fortnight ago. Then the briars came down the millrace. Nobody's been brave enough to look.", "when": {"quest_active": "main_1"}},
+     {"id": "report", "prompt": "Show him the ember shard and the letter", "when": {"has_item": "ember_shard", "quest_stage": {"main_1": "report"}}, "text": "Hollis goes pale. 'That's the Queen's stone. A piece of it. And this moth... that's the Court of the Whisperwood. Garrow was hiding it for the fey.' He closes your hand over the shard. 'Take it to them. Find out what they want with it. And friend, be careful what you promise.'", "effects": [{"flag": "reported_hollis"}, {"reputation": {"river_guild": 10}}]},
+     {"id": "queen", "prompt": "Ask about the Queen", "text": "Queen Isolde. Good to the river towns, better than most. Died in her sleep, they say, and the crown's stone gone the same night. Nobody in Highspire will say how."}
+   ]},
+  {"id": "gella", "name": "Gella Marsh", "pronouns": "she/her", "location": "brightwater_square",
+   "description": "A sharp-eyed stallkeeper with flour on her apron and a cudgel under her counter.",
+   "personality": "Brisk, funny, a gossip with a heart of gold she hides badly.", "speech": "Fast, sly, full of market idioms.",
+   "greeting": "Buying or gawping? Either costs nothing, but one's more fun for me.",
+   "rumours": true,
+   "topics": [
+     {"id": "lyra", "prompt": "Ask about the woman with the longbow", "text": "Lyra Vance? Came in a month back hunting a wolf. Says it killed her brother. Doesn't talk, doesn't drink, pays on time. Half the bargehands are in love with her and she has not noticed one of them."},
+     {"id": "witch", "prompt": "Ask about the fen", "text": "Mother Sedge lives out in Sallowfen. Mends what the shrine can't, if you can pay her price. Her price is never money."},
+     {"id": "gossip", "prompt": "Any gossip?", "text": "Pell's been feeding something in his cellar. Ama's run out of cots. And someone's been carving moths on things, which I don't like one bit."}
+   ]},
+  {"id": "pell", "name": "Pell Underbough", "pronouns": "he/him", "location": "brightwater_inn",
+   "description": "A round, anxious innkeeper with a towel permanently over one shoulder.",
+   "personality": "Fussy, kind, terrible liar.", "speech": "Apologises constantly, talks with his hands.",
+   "greeting": "Welcome, welcome to the Lantern! A bed's five gold, the pie is free if you don't ask what's in it.",
+   "quests": ["rats_in_cellar"],
+   "topics": [
+     {"id": "cellar", "prompt": "Ask about the scratching in the cellar", "text": "Rats! Just rats. Big ones. Very big. Would you... would you look? I'd pay. Not much, but I'd pay.", "effects": [{"start_quest": "rats_in_cellar"}], "when": {"quest_not_started": "rats_in_cellar"}},
+     {"id": "cellar_done", "prompt": "Tell him the cellar is clear", "when": {"quest_stage": {"rats_in_cellar": "report"}}, "text": "Pell sags with relief and pours you a drink on the house. 'Bless you. Your room's free tonight, and any night you like.'", "effects": [{"flag": "pell_grateful"}]},
+     {"id": "lantern", "prompt": "Ask about the green lantern", "text": "My grandmother got it from a fey lady in the flood year. She said as long as it burns, nothing from the dark gets in. I'm very fond of it."}
+   ]},
+  {"id": "sister_ama", "name": "Sister Ama", "pronouns": "she/her", "location": "brightwater_temple",
+   "description": "A tall dark-skinned priestess with ink-stained fingers and a burn scar along one forearm.",
+   "personality": "Calm, wry, quietly furious at injustice. A scholar of old stories.", "speech": "Measured, warm, sometimes quotes scripture and then admits she made half of it up.",
+   "greeting": "Peace on you. If you are hurt, sit. If you are healthy, carry water.",
+   "topics": [
+     {"id": "briars", "prompt": "Ask about the blight", "text": "The briars are cold. They take warmth from the living and the dead. Fire slows them. Nothing I know stops them, except perhaps what stopped them the first time."},
+     {"id": "first_time", "prompt": "The first time?", "text": "Four hundred years ago the north froze and the briars came. King Aldric found the ember-stone in a barrow and they burned back. Or so the story goes. His barrow is on the downs past the crossroads, if you are curious and foolish.", "effects": [{"reveal": "brightwater_barrow"}]},
+     {"id": "heal", "prompt": "Ask for healing", "text": "Sister Ama looks you over, cleans your wounds and murmurs a prayer that smells of beeswax.", "effects": [{"heal": "2d8"}, {"hours": 0.5}]}
+   ]},
+  {"id": "old_tam", "name": "Old Tam", "pronouns": "he/him", "location": "brightwater_docks", "faction": "river_guild",
+   "description": "A leathery ferryman with three fingers on one hand and a pipe that has gone out.",
+   "personality": "Taciturn, superstitious, protective of his grandson.", "speech": "Few words, river slang, long pauses.",
+   "greeting": "River's not safe. Ferry's not going.",
+   "topics": [
+     {"id": "walkers", "prompt": "Ask what his grandson saw", "text": "Dead men. In the water, walking on the bottom like it was a road. Came from upriver. From the mill race."},
+     {"id": "fen", "prompt": "Ask about Sallowfen", "text": "Witch lives there. Wisps too. And something bigger lately. Wolf, maybe. Big as a pony. Leaves frost in its tracks."}
+   ]},
+  {"id": "mother_sedge", "name": "Mother Sedge", "pronouns": "she/her", "location": "brightwater_fen",
+   "description": "A tiny, ancient woman with green-black hair down to her knees and eyes like wet pebbles.",
+   "personality": "Sly, playful, terrifying, fair in her own way. Loves a good bargain and a better story.", "speech": "Riddling, calls you 'duckling', laughs at her own jokes.",
+   "greeting": "A duckling, wandered into my reeds. What do you want, duckling? Everybody wants something.",
+   "quests": ["witch_bargain"],
+   "topics": [
+     {"id": "bargain", "prompt": "Ask what she wants", "text": "My heron's gone quiet, duckling. Briars got into her roost on the barrow downs. Bring me a thorn from the brute in the mill, still cold, and I'll give you a charm against drowning and a secret for free.", "when": {"quest_not_started": "witch_bargain"}, "effects": [{"start_quest": "witch_bargain"}]},
+     {"id": "give_thorn", "prompt": "Give her the blackbriar thorn", "when": {"has_item": "briar_thorn", "quest_active": "witch_bargain"}, "text": "She takes the thorn with bare fingers and drops it in her pot, which hisses. 'Here, duckling. And here's the secret: the fey didn't steal the stone. They were given it.'", "effects": [{"take": "briar_thorn"}, {"flag": "gave_witch_thorn"}, {"flag": "knows_stone_given"}]},
+     {"id": "hunter", "prompt": "Ask about the great wolf", "text": "The Grey Hunter. Was a wolf. Now it's the briar's dog. Your sad archer wants it dead. She'll need more than arrows, duckling. She'll need a friend.", "when": {"met": "lyra"}}
+   ]}
+]}

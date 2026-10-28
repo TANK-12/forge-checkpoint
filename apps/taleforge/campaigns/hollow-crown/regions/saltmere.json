@@ -1,0 +1,26 @@
+{"id": "saltmere", "name": "Saltmere", "level": [3, 5], "faction": "saltmere_syndicate",
+ "description": "A walled port on a grey estuary, all tarred timber, gull-cries and good manners. The Saltmere Syndicate runs the harbour from its back rooms while the Regency's harbourmaster pretends not to notice. Everything here has a price, and the price is posted.",
+ "travel_text": "Salt wind off the estuary, the creak of rigging, and gulls wheeling over the road like a bad omen with wings.",
+ "wilds": {
+   "encounter_chance": 0.3,
+   "encounters": [
+     {"monsters": ["saltmere_gull_swarm", "saltmere_gull_swarm"], "weight": 2, "min_level": 2},
+     {"monsters": ["saltmere_brine_crawler", "saltmere_brine_crawler"], "weight": 3, "min_level": 3},
+     {"monsters": ["saltmere_deserter", "saltmere_deserter", "saltmere_deserter"], "weight": 3, "min_level": 3},
+     {"monsters": ["saltmere_syndicate_thug", "saltmere_syndicate_thug"], "weight": 2, "min_level": 3},
+     {"monsters": ["saltmere_drowned", "saltmere_drowned"], "weight": 2, "min_level": 3},
+     {"monsters": ["saltmere_enforcer"], "weight": 1, "min_level": 4},
+     {"monsters": ["blight_husk", "blight_husk", "blight_husk"], "weight": 1, "min_level": 3}
+   ],
+   "events": [
+     {"id": "washed_chest", "weight": 2, "text": "A sea-chest lies stranded on a sandbar, the tide already turning around it.", "check": {"skill": "athletics", "dc": "medium"}, "success": [{"message": "You haul it ashore before the water takes it and pry the lid. Wet coin, a good knife, a flask of rum."}, {"gold": 22}, {"give": "saltmere_rum"}], "fail": [{"message": "The tide takes the chest, and half your dignity with it."}]},
+     {"id": "signal_lantern", "weight": 2, "text": "A green lantern blinks three times from a dark inlet, then twice, then three times again.", "check": {"skill": "investigation", "dc": "medium"}, "success": [{"message": "A smugglers' signal, and a stash beneath the third piling. You take a modest handful and re-hang the lantern the way you found it."}, {"gold": 18}, {"reputation": {"saltmere_syndicate": -1}}], "fail": [{"message": "You wander into the signal's line of sight. Somewhere out on the water, an oar stops. A crossbow quarrel thuds into a post a hand's breadth from your ear."}]},
+     {"id": "tide_rises", "weight": 2, "text": "The tide is coming in across the flats faster than seems right, a brown tongue creeping under your boots.", "check": {"skill": "survival", "dc": "medium"}, "success": [{"message": "You read the ripples and cut across a ridge of shell. You arrive dry and slightly pleased with yourself."}, {"xp": 25}], "fail": [{"message": "The water reaches your waist before you find footing. Everything you carry is soaked."}, {"damage": "1d4"}]},
+     {"id": "gull_thief", "weight": 1, "text": "A gull the size of a cat lands on your pack and stares at you with total confidence.", "check": {"skill": "animal", "dc": "easy"}, "success": [{"message": "You offer a heel of bread. It takes it, and a salt-crusted coin it was hiding drops at your feet."}, {"gold": 6}], "fail": [{"message": "It swipes your last ration and flies off, shrieking in what sounds a lot like laughter."}]},
+     {"id": "fog_bell", "weight": 1, "text": "A bell tolls from somewhere in the fog, slow and out of tune, though there is no tower on this stretch of coast.", "check": {"skill": "perception", "dc": "hard"}, "success": [{"message": "You follow the sound to a beached hulk where a drowned bell-ringer's rope still sways. Below it sits a tin box with a few coins in it."}, {"gold": 14}, {"xp": 30}], "fail": [{"message": "You wander the fog for an hour and come out exactly where you started."}, {"hours": 1}]},
+     {"id": "stranded_sailor", "weight": 1, "text": "A sailor sits on a rock with a broken oar across his knees, watching the tide go out without him.", "check": {"skill": "medicine", "dc": "easy"}, "success": [{"message": "You splint his arm. He tells you, grateful, that the Syndicate's back door is the third crate on the quay with a red nail in it."}, {"flag": "saltmere_syndicate_lead"}, {"xp": 25}], "fail": [{"message": "Your splint is clumsy, and he winces. He thanks you anyway, in the way of men who are going to complain later."}]}
+   ],
+   "finds": ["saltmere_brine_pearl", "saltmere_taffy", "saltmere_rum", "rope", "rations", "river_pearl"],
+   "sights": ["gulls wheeling over a fishing boat like a white storm", "a rusted anchor taller than a man, sunk to the crown in sand", "salt-crusted rope fences along the flats", "a line of fishing nets drying like grey flags", "the horizon smeared with distant sails", "a fog bank sitting on the water like a sleeping animal", "dead kelp heaped along the tideline, black briar threaded through it", "brown pelicans on a pier piling, grumpy"],
+   "names": ["Dagny", "Corvo", "Maren", "Joss", "Tilde", "Barnaby", "Sunniva", "Pike", "Odette", "Haldor", "Brisa", "Quentin"]
+ }}

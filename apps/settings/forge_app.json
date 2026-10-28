@@ -14,6 +14,8 @@
   },
   "actions": [
     {"label": "Change the wallpaper", "hash": "wallpaper", "words": "background picture desktop image"},
+    {"label": "Browse all wallpapers", "hash": "wallpapers", "page": "wallpaper", "words": "wallpapers collection favourites starred hidden copies resolution"},
+    {"label": "Favourite wallpapers", "hash": "wallpapers/favourites", "page": "wallpaper", "words": "wallpaper starred background"},
     {"label": "Pick a theme", "hash": "themes", "words": "look style dark light colours skin"},
     {"label": "Wi-Fi", "hash": "system", "words": "wifi wireless internet network connect"},
     {"label": "Bluetooth", "hash": "system", "words": "headphones speaker earbuds pair"},

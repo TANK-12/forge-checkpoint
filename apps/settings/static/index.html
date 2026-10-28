@@ -60,7 +60,7 @@
         <button class="btn" id="boot-retry" type="button" hidden>Try now</button>
       </div>
 
-      <section class="card" data-section="wallpaper" data-title="Wallpaper" data-settings="wallpaper" data-reset-label="Wallpaper" data-keywords="wallpaper desktop background picture image favourites follow">
+      <section class="card" data-section="wallpaper" data-title="Wallpaper" data-settings="wallpaper" data-reset-label="Wallpaper" data-keywords="wallpaper wallpapers desktop background picture image favourites follow browse collection">
         <div class="section-head">
           <h3>Wallpaper</h3>
           <label class="switch"><input type="checkbox" id="follow-desktop"> Follow my desktop wallpaper</label>
@@ -74,11 +74,14 @@
         </div>
         <div class="section-head fav-head">
           <h3>★ Favourites</h3>
-          <button class="btn btn-primary" id="open-wallpapers" type="button">Open Wallpapers</button>
+          <button class="btn btn-primary" id="open-wallpapers" type="button" aria-expanded="false" aria-controls="wall-browser">Browse all wallpapers</button>
         </div>
         <div id="favs" class="favs"></div>
-        <div class="muted small" id="wall-app-note">The Wallpapers app has the whole collection with hidden copies, sizes and
+        <div class="muted small" id="wall-app-note">Browse all wallpapers opens the whole collection here, with hidden copies, sizes and
           favourites, and sets a wallpaper on the desktop, in Forge, or both.</div>
+        <div id="wall-browser" class="wall-browser" hidden>
+          <iframe id="wall-frame" title="All wallpapers"></iframe>
+        </div>
         <details class="quick">
           <summary>Quick picker for Forge's wallpaper</summary>
           <input type="search" id="wall-filter" placeholder="Search wallpapers…">

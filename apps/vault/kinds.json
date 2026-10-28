@@ -1,0 +1,14 @@
+{
+  "_doc": "What each file ending is. The first kind that lists an ending wins. texture is a folder of material maps (colour, normal, roughness...) shown as one item; map_words are the name parts that mark a map file.",
+  "kinds": [
+    {"id": "model", "label": "3D models", "exts": [".glb", ".gltf", ".fbx", ".obj", ".stl", ".vrm", ".blend"], "preview": "3d", "preview_exts": [".glb", ".gltf"]},
+    {"id": "hdri", "label": "Skies (HDRI)", "exts": [".hdr", ".exr"], "preview": "sky", "preview_exts": [".hdr"]},
+    {"id": "texture", "label": "Textures", "exts": [], "preview": "image"},
+    {"id": "image", "label": "Images and sprites", "exts": [".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp", ".tga"], "preview": "image"},
+    {"id": "sound", "label": "Sounds", "exts": [".wav", ".ogg", ".mp3", ".flac", ".opus", ".m4a"], "preview": "audio"}
+  ],
+  "map_words": {
+    "color": ["color", "colour", "diff", "diffuse", "albedo", "basecolor", "base_color"],
+    "other": ["normal", "nor_gl", "nor_dx", "normalgl", "normaldx", "rough", "roughness", "ao", "ambientocclusion", "displacement", "disp", "height", "metal", "metalness", "arm", "opacity", "specular"]
+  }
+}

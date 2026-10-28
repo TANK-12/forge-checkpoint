@@ -1,0 +1,8 @@
+{
+  "_doc": "Folders Vault always looks in. {forge} is the Forge folder, {assets} the folder Poly Haven downloads go to (shared/assets, or FORGE_ASSETS_DIR), ~ is home. Folders the user adds in the page are kept in <data>/folders.json, not here.",
+  "sources": [
+    {"id": "forge-assets", "label": "Forge assets", "path": "{assets}"},
+    {"id": "downloads", "label": "Downloads", "path": "~/Downloads"},
+    {"id": "loops", "label": "Loops", "path": "~/Music/Loops"}
+  ]
+}

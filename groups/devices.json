@@ -2,6 +2,7 @@
   "id": "devices",
   "label": "Devices",
   "tagline": "The phone and sending things to it",
+  "glyph": "devices-place",
   "icon": "📱",
   "accent": "#abb2bf",
   "order": 24,

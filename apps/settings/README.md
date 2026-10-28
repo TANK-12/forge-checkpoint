@@ -43,6 +43,17 @@ The originals are 5-28 MB. Forge draws a 2560 px JPEG copy (about 200 KB) and
 a pre-blurred copy for behind apps, both made once per picture with ImageMagick
 in about 0.3 s. Without ImageMagick the original is used unblurred.
 
+**The whole Wallpapers browser lives here** (2026-10-28, Relay task 423).
+This backend imports `apps/wallpapers/web_app.py` and mounts it at
+`/wallpapers/`, and starts its index thread in its own lifespan; "Browse all
+wallpapers" in this section opens it in a frame (`wallpapers/?embed=1`).
+`#wallpapers` (and `#wallpapers/favourites`) opens the section with the
+browser open, which is where the hub sends anyone opening the Wallpapers app
+(its manifest's `"inside"`). Themes go both ways: the browser's new theme is
+passed up to the hub, the hub's themes are passed down to the browser (also
+on its `ready`). Without `apps/wallpapers` (a release) there is no browser,
+no button and no favourites (`wall_browser` false in `/api/settings`).
+
 Thumbnails are warmed in a background thread when this backend starts: current
 wallpaper first, one at a time, at `nice 15`. Measured: the first 21 (the first
 rows of the grid) were ready 5 s after start. Cached, so later launches do

@@ -59,3 +59,20 @@ for the next start is whichever window moved last.
 - `.venv/bin/python tests/check_ui.py`: drives the real page in headless Chrome
   (Flatpak) against a sandbox folder; prints PASS/FAIL lines.
   `FILES_CHECK_PORTS=18667,18668` pins the backend and Chrome ports.
+
+## Advanced mode (Relay 420)
+
+The Advanced button is off on first use and remembered per browser. It adds
+owner/group and permissions, exact bytes and timestamps, SHA-256 on demand
+(up to 1 GiB and a 3 second budget), folder disk usage (20,000 entries or
+3 seconds, explicitly marked partial), type/extension/minimum-size filters
+on listed or searched results, and previewed batch rename (up to 200 items).
+Hard links count once in disk usage; symlinks and nested filesystems are
+skipped. Rename checks that items still match their preview and never
+replaces an existing target. A late failure reports completed renames.
+The bar also exposes typed paths and Terminal here via Forge's existing
+Terminal role. Existing hidden files, bulk copy/move/trash and search remain.
+
+`advanced.py` holds the backend rules; `static/advanced.js` and `.css` hold
+the optional controls. `tests/check_advanced_ui.py` checks the real page in
+headless Flatpak Chrome; screenshots land in `outputs/shots/nas-420/`.

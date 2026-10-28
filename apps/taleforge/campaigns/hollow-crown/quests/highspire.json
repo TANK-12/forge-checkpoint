@@ -1,0 +1,34 @@
+{"quests": [
+  {"id": "main_5", "name": "A Crown of Knives", "kind": "main", "level": 6, "giver": "highspire_caul", "region": "highspire",
+   "summary": "Lord Varric Caul holds the heart-stone of the Ember Crown in Highspire, and the proof of what he did at Greyford is in your pack. It is time to take the one back and put the other in front of the court.",
+   "stages": [
+     {"id": "start", "text": "Highspire is the Regent's city, and his Knives watch the gate. The palace sits on the crown of the hill above the High Tiers, and the Tiers are closed to anyone without a pass.", "objective": "Find a way up the Stair into the High Tiers", "complete_when": {"visited": "highspire_tiers"}, "next": "court"},
+     {"id": "court", "text": "Tonight, as every night this winter, the Lord Regent holds his Masque at the Ember Palace: a court of courtiers in masks, dancing in the only warm rooms in Vael. Varric Caul will be there, in plain black, beside the empty throne. You will need an invitation.", "objective": "Get yourself invited to the Regent's Masque", "complete_when": {"any": [{"has_item": "highspire_invitation"}, {"in_party": "mirela"}, {"flag": "regent_exposed"}]}, "next": "masque"},
+     {"id": "masque", "text": "You have your way into the palace. Somewhere among the masks is the man who forged an order in the Queen's name, broke the Order of Ash and took the crown's heart for himself.", "objective": "Attend the Masque at the Ember Palace and face Varric Caul", "complete_when": {"flag": "highspire_met_caul"}, "next": "vault"},
+     {"id": "vault", "text": "Caul has gone down into the hill under his palace, to wherever he keeps the heart-stone, and the warmth of the whole palace is coming from the same place. There is a private stair behind the throne, and Juniper swears the old aqueduct runs under the palace too.", "objective": "Take the heart-stone from Varric Caul", "complete_when": {"has_item": "heart_stone", "any": [{"flag": "regent_killed"}, {"flag": "regent_spared"}]},
+      "on_complete": [{"message": "You hold the heart-stone of the Ember Crown. It is cracked through, and dim, and when you bring the three shards near it they lean toward it like flowers to a window. It cannot be mended by hand. It needs a forge, and the only forge in Vael that ever worked a crown is under the mountains of Frostfang, in the halls of Clan Ironvein."}, {"message": "Here the third chapter of The Hollow Crown ends. Frostfang and the Thornwake are still being written; until they are, Highspire, the Marches, Saltmere, the Wood and Brightwater still have work, friends and secrets for you."}], "next": "done"}
+   ],
+   "rewards": {"xp": 1500, "gold": 150, "reputation": {"order_of_ash": 5}}},
+  {"id": "highspire_last_letter", "name": "The Queen's Last Letter", "kind": "side", "level": 6, "giver": "highspire_hollin", "region": "highspire",
+   "summary": "Archivist Hollin believes the Queen left a letter before she died, and that the Regency's clerks never found it because it was never in the palace.",
+   "stages": [
+     {"id": "find", "text": "The week before she 'died', Isolde asked Hollin for the key to the old cathedral archive, the one that flooded fifty years ago and is now a vault of black water under the city. Hollin never asked why. She would like to know now. There is an iron chest in the drowned stacks, and a gargoyle on a high ledge that the Collegium bound there a century ago.", "objective": "Search the drowned archive in the old aqueduct", "complete_when": {"has_item": "highspire_isolde_letter"}, "next": "return"},
+     {"id": "return", "text": "A letter, in the Queen's own hand, sealed with a moth. Hollin taught that hand its letters.", "objective": "Bring the letter to Archivist Hollin at the cathedral", "complete_when": {"flag": "highspire_read_isolde_letter"}, "next": "done"}
+   ],
+   "rewards": {"xp": 600, "gold": 60, "items": ["highspire_frost_tonic"]}},
+  {"id": "highspire_coal", "name": "Coal for the Stair", "kind": "side", "level": 6, "giver": "highspire_marta", "region": "highspire",
+   "summary": "Lowtown is freezing while the Regency coal yard in the Tiers sits full. Marta Quill wants some of it brought down the Stair.",
+   "stages": [
+     {"id": "start", "text": "The Regency fixed the price of coal and then bought it all. The yard in the High Tiers is heaped high under tarpaulins, and the chimneys on the Stair are cold. Captain Dunmore of the Knives signs for the yard, and he grew up on Fuller Lane.", "objective": "Get the Regency's coal released to Lowtown, by Dunmore's order or by stealth", "complete_when": {"any": [{"has_item": "highspire_coal_chit"}, {"flag": "highspire_coal_stolen"}]}, "next": "report"},
+     {"id": "report", "text": "Coal is going down the Stair. Marta will want to hear it.", "objective": "Tell Marta at the Nine Bells", "complete_when": {"flag": "marta_coal_thanks"}, "next": "done"}
+   ],
+   "rewards": {"xp": 500, "gold": 20, "reputation": {"crown_regency": -3}}},
+  {"id": "mirela_quest", "name": "What the Student Owes", "kind": "companion", "level": 6, "giver": "mirela", "region": "highspire",
+   "summary": "Three months ago Mirela Thorne told the Regent what her old teacher had been saying about the Queen's death, and the next day Magister Aldwin Fell was gone. She has never found out where.",
+   "stages": [
+     {"id": "find", "text": "Magister Fell said, in front of the Collegium, that the Queen's death was no natural thing. Mirela reported it to the Regent, and the next morning Fell's rooms were empty and his name was out of the records. Someone in Highspire knows where the Regency puts people it wants forgotten.", "objective": "Find out where the Regency took Magister Fell", "complete_when": {"flag": "mirela_found_fell_record"}, "next": "cells"},
+     {"id": "cells", "text": "Fell was taken to the Quiet Cells under the palace, reached by the north channel of the old aqueduct. Mirela knows the Quiet's warden. She designed it.", "objective": "Free Magister Fell from the Quiet Cells, with Mirela beside you", "complete_when": {"flag": "mirela_fell_freed"}, "next": "refuge"},
+     {"id": "refuge", "text": "Fell is free, grey and shaking and alive. He needs a fire and a place the Knives will not look.", "objective": "Bring Magister Fell to Marta Quill at the Nine Bells", "complete_when": {"flag": "mirela_fell_safe"}, "next": "done"}
+   ],
+   "rewards": {"xp": 800, "affection": {"mirela": 8}, "items": ["highspire_fell_lens"]}}
+]}

@@ -1,0 +1,155 @@
+{
+ "quests": [
+  {
+   "id": "main_1",
+   "name": "Unpaid Balance",
+   "kind": "main",
+   "level": 1,
+   "giver": "moth",
+   "region": "lowtide",
+   "summary": "You woke owing Aurelian 48,000 credits and missing six weeks of your life. Your own handwriting points at a place called Platform Nine.",
+   "stages": [
+    {
+     "id": "wake",
+     "text": "Forty-eight thousand credits, no memory of borrowing them, and a pillow slit open by someone who meant you to find it. Search your capsule.",
+     "objective": "Search your capsule",
+     "complete_when": {
+      "flag": "chip_found"
+     },
+     "next": "read_chip"
+    },
+    {
+     "id": "read_chip",
+     "text": "A receipt chip in your own handwriting, with a note: 'Platform Nine'. Somebody who knows tech or medicine can read the code.",
+     "objective": "Find someone who can read the receipt chip",
+     "complete_when": {
+      "flag": "chip_read"
+     },
+     "on_complete": [
+      {
+       "reveal": "lowtide_streets"
+      },
+      {
+       "reveal": "lowtide_metro"
+      }
+     ],
+     "next": "descend"
+    },
+    {
+     "id": "descend",
+     "text": "The chip puts your stolen memory in a vault at Platform Nine, in the drowned metro under the flooded streets. The vault is sealed.",
+     "objective": "Get through the vault door at Platform Nine",
+     "complete_when": {
+      "flag": "metro_door_open"
+     },
+     "next": "confront"
+    },
+    {
+     "id": "confront",
+     "text": "The vault is open. Somebody is waiting inside with a repo collar and a very polite smile.",
+     "objective": "Defeat Repo Chief Vane",
+     "complete_when": {
+      "flag": "vane_down"
+     },
+     "on_complete": [
+      {
+       "scene": "neon_shard_choice"
+      }
+     ],
+     "next": "done"
+    }
+   ],
+   "rewards": {
+    "xp": 450,
+    "gold": 80,
+    "items": [
+     "weave_coat"
+    ],
+    "reputation": {
+     "lowtide_folk": 10,
+     "aurelian": -10
+    }
+   }
+  },
+  {
+   "id": "ren_quest",
+   "name": "Tomas's Lease",
+   "kind": "companion",
+   "level": 1,
+   "giver": "ren",
+   "region": "lowtide",
+   "summary": "Ren's brother lives on an Aurelian-leased respirator whose fee keeps rising. She needs an override chip from a wrecked service van in the flooded streets.",
+   "stages": [
+    {
+     "id": "start",
+     "text": "Ren says an Aurelian service van crashed in the flooded streets last month, and its lockbox may still hold the lease override.",
+     "objective": "Find the lease override chip in the flooded streets",
+     "complete_when": {
+      "has_item": "lease_override"
+     },
+     "next": "deliver"
+    },
+    {
+     "id": "deliver",
+     "text": "You hold a chip that can free Tomas's respirator from the Spire's lock. Dr. Halvorsen can fit it.",
+     "objective": "Take the chip to Dr. Halvorsen at the clinic",
+     "complete_when": {
+      "flag": "tomas_freed"
+     },
+     "next": "done"
+    }
+   ],
+   "rewards": {
+    "xp": 220,
+    "gold": 30,
+    "items": [
+     "jasmine_tea"
+    ],
+    "reputation": {
+     "lowtide_folk": 5
+    }
+   }
+  },
+  {
+   "id": "saints_toll",
+   "name": "Lanterns on the Line",
+   "kind": "side",
+   "level": 1,
+   "giver": "dagny",
+   "region": "lowtide",
+   "summary": "Aurelian drones are nesting in the flooded streets and mapping Saint hideouts. Dagny wants three of them dead.",
+   "stages": [
+    {
+     "id": "start",
+     "text": "A nest of Aurelian scout drones in the flooded streets is mapping Saint turf. Dagny wants it burned out.",
+     "objective": "Destroy three scrap drones",
+     "complete_when": {
+      "kills": {
+       "scrap_drone": 3
+      }
+     },
+     "next": "report"
+    },
+    {
+     "id": "report",
+     "text": "The drones lie in the black water. Dagny will want to hear it from you.",
+     "objective": "Tell Dagny at the Wet Circuit",
+     "complete_when": {
+      "flag": "dagny_paid"
+     },
+     "next": "done"
+    }
+   ],
+   "rewards": {
+    "xp": 150,
+    "gold": 30,
+    "items": [
+     "saints_lantern"
+    ],
+    "reputation": {
+     "lantern_saints": 10
+    }
+   }
+  }
+ ]
+}

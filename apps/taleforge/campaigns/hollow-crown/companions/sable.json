@@ -1,0 +1,49 @@
+{"id": "sable", "name": "Sable", "pronouns": "they/them", "age": 24, "location": "saltmere_inn", "class": "bard", "level": 3,
+ "description": "A lanky tiefling in a patched plum coat, silver rings clinking on one curled horn, a battered lute slung across their back like a sword.",
+ "appearance": "Ash-violet skin, a long expressive tail, short black hair that won't lie flat, gold eyes that crinkle when they lie, ink-stained fingers, a grin with one chipped tooth.",
+ "personality": "Charming, quick, shameless, generous with other people's money. Flirts with everyone so no one can tell when they mean it. Underneath: a foundling who has never belonged anywhere and is terrified of being left again.",
+ "speech": "Fast, musical, full of nicknames and half-rhymes. Turns every serious question into a joke, then, when cornered, says the true thing in a very small voice and immediately changes the subject.",
+ "backstory": "Sable was found as a baby in a herring crate on Saltmere's Long Quay, wrapped in a grey cloak with a silver moth pinned to it. Old Mab at the lighthouse raised them until she couldn't, and the quay did the rest. They sing at the Gilded Gull, pick the pockets of anyone who doesn't tip, and once ran small jobs for Ines Marrow, who calls them little bird. They do not know that the woman who left them was Queen Isolde.",
+ "greeting": "'Oh, a new face. Sit, sit. Buy me a drink and I'll tell you which of these people will rob you, and for a second drink, which ones I already have.'",
+ "combat": {"hp": 16, "ac": 13, "attack": 5, "damage": "1d6+3", "name": "hidden knife"},
+ "recruit": {"when": {"any": [{"quest_active": "main_3"}, {"flag": "sable_owes_you"}, {"affection": {"sable": 15}}]}, "scene": "sable_recruit", "text": "Sable swings their lute onto their back. 'Fine, fine. Someone has to keep you interesting.'"},
+ "romanceable": true, "attracted_to": ["any"],
+ "tones": {"flirt": {"amount": 3, "min_affection": 5, "below": 1}, "kind": 2, "rude": -4, "joke": 3, "curious": 1, "brave": 1, "cautious": -1},
+ "gifts": {"sable_silver_strings": 7, "saltmere_taffy": 3, "saltmere_spiced_wine": 3, "saltmere_rum": 2, "wildflowers": 2, "honey_cakes": 4, "fine_wine": 3, "default": 1},
+ "likes": ["music", "cleverness", "generosity", "being chosen", "sweets"], "dislikes": ["pity", "bullies", "being left behind", "lectures about stealing"],
+ "reactions": [
+   {"flag": "syndicate_enemy", "amount": 3, "text": "Sable whistles low. 'You picked a fight with the Syndicate. Either you're very brave or I should start writing your elegy.'"},
+   {"flag": "syndicate_ally", "amount": -2, "text": "Sable's grin stays put, but their tail goes still. 'Osk's friend now. Lovely. I'll count my rings.'"},
+   {"flag": "spared_raider", "amount": 2, "text": "'Soft heart,' Sable says, and doesn't sound like they mind."},
+   {"flag": "killed_surrendered", "amount": -6, "text": "Sable stops humming. For a long while they don't start again."},
+   {"flag": "moth_bargain_broken", "amount": -2, "text": "'You broke a promise to the Lady of Moths.' Sable touches the brooch at their collar without seeming to notice. 'I'd rather you didn't make a habit of that.'"},
+   {"flag": "sable_is_heir", "amount": 8, "text": "Sable walks close beside you all day, so close your sleeves brush, and never once explains why."}
+ ],
+ "arc": [
+   {"stage": "spark", "requires": {"affection": 20, "in_party": "sable", "not_flag": "sable_romance_declined"}, "scene": "sable_heart_1", "trigger": "rest"},
+   {"stage": "courting", "requires": {"affection": 45, "romance": {"sable": "spark"}, "flag": "sable_is_heir"}, "scene": "sable_heart_2", "trigger": "talk"},
+   {"stage": "beloved", "requires": {"affection": 70, "romance": {"sable": "courting"}}, "scene": "sable_heart_3", "trigger": "rest"}
+ ],
+ "personal_quest": "sable_quest",
+ "topics": [
+   {"id": "song", "prompt": "Ask what that song was about", "text": "'A sailor who fell in love with a lighthouse. Tragic. It kept looking at other ships.' They tune a string. 'I write the sad ones so I don't have to feel them. Very efficient.'", "effects": [{"flag": "sable_told_song"}]},
+   {"id": "horn_rings", "prompt": "Ask about the rings on their horn", "text": "'One for every lock I've picked that I shouldn't have.' Clink. 'Well. One for every tenth.'"},
+   {"id": "found", "prompt": "Ask where they're from", "when": {"affection": {"sable": 10}}, "text": "'Herring crate, Long Quay, rather early one morning.' The grin doesn't move. 'Wrapped in a cloak with a moth pinned to it, like a parcel with no address. Mab at the lighthouse says she saw the woman who left me. I've never asked her about it.' A beat. 'You'd think I would have.'", "effects": [{"flag": "sable_told_found"}]},
+   {"id": "help", "prompt": "Offer to find out who left them", "when": {"flag": "sable_told_found", "quest_not_started": "sable_quest"}, "text": "Sable stares at you, and for once has no line ready. 'You're serious.' They swallow. 'Fine. All right. Ask Mab, then. I'll come and stand nearby and pretend not to be listening.'", "effects": [{"start_quest": "sable_quest"}, {"affection": {"sable": 6}}, {"flag": "sable_owes_you"}]},
+   {"id": "letter", "prompt": "Read Marrow's letter with Sable", "when": {"has_item": "sable_letter", "in_party": "sable", "not_flag": "sable_is_heir"}, "text": "Sable turns the letter over and over in their hands. 'Somewhere quiet,' they say. 'Not here.'", "effects": [{"scene": "sable_letter_reading"}]},
+   {"id": "marrow", "prompt": "Ask about Ines Marrow", "when": {"affection": {"sable": 15}}, "text": "'Ines? She taught me to read, to count, and to never sign anything. I ran letters for her for years.' Their tail flicks. 'She is the most frightening person in Saltmere, and the only one who ever remembered my birthday.'"},
+   {"id": "fear", "prompt": "Ask what actually scares them", "when": {"affection": {"sable": 35}}, "text": "The joke arrives, and dies before it reaches their mouth. 'Waking up and the room's empty,' Sable says quietly. 'That's all. That's the whole list.' Then, brightly: 'And geese.'", "effects": [{"flag": "sable_fear"}]}
+ ],
+ "lines": {
+   "greet": ["'There you are, my favourite disaster.'", "Sable plucks a jaunty three-note greeting on the lute.", "'Missed me? Don't answer, I'll treasure the silence.'"],
+   "flirt_yes": ["Sable's tail curls around your ankle, quite deliberately. 'Keep going. I'm writing this down.'", "For one second the grin goes soft and surprised. Then they wink, too late to hide it.", "'Careful, darling. I rhyme things with people's names when I like them.'"],
+   "flirt_no": ["'Oh, that's adorable. Practise on the barmaid first.'", "Sable pats your cheek. 'Not yet, sweetheart.'", "'I've heard better lines from a parrot. It belonged to a pirate, admittedly.'"],
+   "kind": ["Sable looks at you as if you have spoken in a foreign language. 'That was nice. Why was that nice?'", "'Stop it, you'll ruin my reputation.' They are smiling.", "They don't say anything. They just bump their horn gently against your shoulder."],
+   "rude": ["'Ouch. I'll put that in a song, and you won't come off well.'", "Sable's smile stays exactly where it is. Their eyes don't.", "'Lovely. Truly. Do go on alone for a bit.'"],
+   "joke": ["Sable laughs so hard they have to hold on to you.", "'Terrible. Wonderful. I'm stealing it.'", "'Oh, we're going to get along.'"],
+   "curious": ["'Ask me anything. I'll tell you something, anyway.'", "'Me? I'm an open book. Several books. All slightly forged.'", "They think about it, honestly, which is rarer than it should be."],
+   "neutral": ["Sable hums.", "'Mm-hm.'", "They spin a coin across their knuckles while they listen.", "'Noted, filed, set to music.'"],
+   "join": "Sable tosses their tab onto someone else's table and falls in beside you, humming a marching tune.",
+   "leave": "'Off you go, then. I'll be here, being fabulous to strangers.'",
+   "banter": ["'If we die, I want it known I was the pretty one.'", "Sable composes a verse about your walk. It is not flattering. It is very catchy.", "'Did I ever tell you about the time I sold a lighthouse? I didn't own it. Neither did he.'", "They pick a stranger's pocket, check the purse, and put it back with a coin added. 'Looked like he needed it.'"]
+ }}

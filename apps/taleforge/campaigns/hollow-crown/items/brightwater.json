@@ -1,0 +1,8 @@
+{"items": [
+  {"id": "ember_shard", "name": "Ember shard", "kind": "key", "value": 0, "unsellable": true, "text": "A sliver of red crystal, warm as a hand. A chip off the Ember Crown's heart-stone."},
+  {"id": "moth_letter", "name": "Letter sealed with a moth", "kind": "key", "value": 0, "unsellable": true, "text": "To the miller: 'Keep it cold, keep it hidden, and the Court will keep its word.' Signed with a pressed grey moth."},
+  {"id": "aldric_ring", "name": "Ring of King Aldric", "kind": "trinket", "value": 120, "text": "A heavy gold ring with an ember-red stone. Warm when danger is near."},
+  {"id": "grey_hunter_fang", "name": "Grey Hunter's fang", "kind": "key", "value": 0, "unsellable": true, "text": "A fang as long as your hand, threaded through with black briar."},
+  {"id": "brother_arrow", "name": "Fletched arrow with blue feathers", "kind": "key", "value": 0, "unsellable": true, "text": "Lyra's brother fletched his arrows with kingfisher feathers. This one was in the Hunter's den."},
+  {"id": "witch_charm", "name": "Sedge-knot charm", "kind": "trinket", "value": 15, "text": "Knotted reeds and a fish bone. Mother Sedge says it keeps the drowning away."}
+]}

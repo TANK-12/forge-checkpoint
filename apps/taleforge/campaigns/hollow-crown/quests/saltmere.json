@@ -1,0 +1,39 @@
+{"quests": [
+  {"id": "main_3", "name": "Salt and Secrets", "kind": "main", "level": 3, "giver": "saltmere_voss", "region": "saltmere",
+   "summary": "The third shard went south to Saltmere, and a Syndicate fence sold the rest of the heart-stone to someone he is afraid to name.",
+   "stages": [
+     {"id": "start", "text": "Saltmere runs on bargains that are never written down. The shard went to a fence called Osk Dray, but nobody will tell a stranger where to find him. Someone in this port will know how to get an introduction.", "objective": "Find out who in Saltmere can arrange a meeting with the Syndicate", "complete_when": {"flag": "saltmere_syndicate_lead"}, "next": "marrow"},
+     {"id": "marrow", "text": "The Syndicate runs its business from Marrow & Daughters, a counting house near the market. Its mistress, Ines Marrow, decides who may see Osk Dray, who works for her, and who does not leave.", "objective": "Meet Ines Marrow at the Counting House, or find another way to Osk", "complete_when": {"any": [{"flag": "saltmere_marrow_met"}, {"flag": "saltmere_door_forced"}, {"has_item": "saltmere_vault_key"}]}, "next": "vault"},
+     {"id": "vault", "text": "Osk Dray keeps his strongroom beneath the quays, behind a black oak door. The shard is in a lacquered box inside, and Osk is not the sort to give it up for free.", "objective": "Get the salt shard from Osk Dray", "complete_when": {"has_item": "salt_shard"}, "next": "ledger"},
+     {"id": "ledger", "text": "The shard is in your hand, but it was only a chip of the whole. The heart-stone itself was sold to someone, and the answer is in Osk's ledger, or in Osk himself.", "objective": "Learn who bought the heart-stone", "complete_when": {"flag": "knows_regent_has_heart", "any": [{"flag": "syndicate_ally"}, {"flag": "syndicate_enemy"}]}, "on_complete": [{"message": "Lord Varric Caul, Regent of Vael, has the heart-stone. Everything you have been told about the Queen's death was a lie. And the road east, to the Ashen Marches, leads to the only men who might be willing to say so to his face."}, {"start_quest": "main_4"}, {"reveal": "marches_road"}], "next": "done"}
+   ],
+   "rewards": {"xp": 800, "gold": 80, "reputation": {"saltmere_syndicate": 5}}},
+  {"id": "saltmere_deserters_road", "name": "Deserters on the Salt Road", "kind": "side", "level": 3, "giver": "saltmere_voss", "region": "saltmere",
+   "summary": "Harbourmaster Voss wants the deserters on the salt flats dealt with, one way or another.",
+   "stages": [
+     {"id": "start", "text": "Deserters from the Regency's garrison are robbing salt-carts on the flats. Voss does not much care how they are dealt with, only that it is done before the autumn caravans.", "objective": "Deal with the deserters on the salt flats", "complete_when": {"any": [{"kills": {"saltmere_deserter": 3}}, {"flag": "saltmere_deserters_sent_home"}]}, "next": "report"},
+     {"id": "report", "text": "The salt road is quiet. Voss should hear how.", "objective": "Tell Harbourmaster Voss the road is safe", "complete_when": {"flag": "voss_road_thanks"}, "next": "done"}
+   ],
+   "rewards": {"xp": 300, "gold": 45, "items": ["saltmere_cutlass"], "reputation": {"crown_regency": 4}}},
+  {"id": "saltmere_pearl_errand", "name": "A Pearl for Teodora", "kind": "side", "level": 3, "giver": "saltmere_teodora", "region": "saltmere",
+   "summary": "Teodora's sister is marrying, and wants a perfect grey-green pearl from the flats.",
+   "stages": [
+     {"id": "start", "text": "Teodora's sister Annick marries at the next tide, and the only gift that would please her is a pearl from the cloudy pan on the salt flats.", "objective": "Bring Teodora a brine pearl from the salt flats", "complete_when": {"flag": "teodora_pearl_given"}, "next": "done"}
+   ],
+   "rewards": {"xp": 200, "gold": 30, "items": ["saltmere_pearl_comb"], "reputation": {"saltmere_syndicate": 3}}},
+  {"id": "saltmere_lighthouse_light", "name": "Relight the Lamp", "kind": "side", "level": 3, "giver": "saltmere_mab", "region": "saltmere",
+   "summary": "Old Mab wants the crabs in the lighthouse cellar cleared so the lamp can be lit again.",
+   "stages": [
+     {"id": "start", "text": "Two brine crawlers have made a nest in the lighthouse cellar and eaten the lamp-oil. Mab will relight the lamp if they are gone.", "objective": "Clear the brine crawlers from the lighthouse cellar", "complete_when": {"kills": {"saltmere_brine_crawler": 2}}, "next": "report"},
+     {"id": "report", "text": "The cellar is quiet. The lamp can be lit.", "objective": "Tell Old Mab the cellar is clear", "complete_when": {"flag": "mab_light_thanks"}, "next": "done"}
+   ],
+   "rewards": {"xp": 300, "gold": 20, "items": ["saltmere_tide_charm"], "reputation": {"saltmere_syndicate": 2}}},
+  {"id": "sable_quest", "name": "A Song Without a Name", "kind": "companion", "level": 3, "giver": "sable", "region": "saltmere",
+   "summary": "Sable was left on the Saltmere quay as a baby, with a silver moth brooch and no explanation. They want to know who left them, and they would rather not look too hard.",
+   "stages": [
+     {"id": "start", "text": "Sable was found as a baby in a herring crate on the Long Quay, wrapped in a grey cloak with a silver moth pinned to it. The old lighthouse keeper, Mab, was the one who found them.", "objective": "Ask Old Mab at the lighthouse who left Sable on the quay", "complete_when": {"flag": "sable_mab_told"}, "next": "marrow"},
+     {"id": "marrow", "text": "Mab remembers a woman in a moth-grey cloak, weeping, who paid Marrow's clerk and left on a north-bound barge. Whatever she wrote, Ines Marrow kept it.", "objective": "Get the letter from Ines Marrow", "complete_when": {"has_item": "sable_letter"}, "next": "letter"},
+     {"id": "letter", "text": "The letter is sealed. Sable has never wanted to read it. Perhaps it is time.", "objective": "Read the letter with Sable", "complete_when": {"flag": "sable_is_heir"}, "next": "done"}
+   ],
+   "rewards": {"xp": 500, "affection": {"sable": 8}, "items": ["sable_songbook"]}}
+]}

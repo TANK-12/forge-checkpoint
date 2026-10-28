@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; frame-src 'none'; object-src 'none'">
+<title>Prompts</title>
+<link rel="stylesheet" href="/shared/forge.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <h1 data-forge-frame-hide>Prompts</h1>
+  <input id="search" type="search" placeholder="Search titles, tags and text" aria-label="Search">
+  <div id="filters" class="filters" role="group" aria-label="Show prompts for"></div>
+  <span class="grow"></span>
+  <label class="small"><input id="show-archived" type="checkbox"> Archived</label>
+  <a class="btn" href="/api/export" download="prompts.json">Export all</a>
+  <button id="new" class="btn btn-primary" type="button">New prompt</button>
+</header>
+<main class="desk">
+  <aside class="side"><div id="list" class="list"></div></aside>
+  <section id="empty" class="empty muted">Pick a prompt on the left, or make a new one.</section>
+  <section id="edit" class="edit" hidden>
+    <div class="bar">
+      <input id="title" type="text" maxlength="120" placeholder="Title, like Rainy synthwave" aria-label="Title">
+      <select id="target" aria-label="Target"></select>
+      <input id="tags" type="text" placeholder="tags, comma separated" aria-label="Tags">
+      <button id="archive" class="btn" type="button">Archive</button>
+    </div>
+    <div class="cols">
+      <div class="col">
+        <div id="boxes" class="boxes"></div>
+        <div id="vars" class="vars" hidden></div>
+        <div class="save">
+          <input id="note" type="text" maxlength="2000" placeholder="What changed in this version (optional)" aria-label="Version note">
+          <button id="save" class="btn btn-primary" type="button">Save</button>
+        </div>
+        <p id="status" class="status" role="status"></p>
+      </div>
+      <div class="col side-col">
+        <h2>What came out</h2>
+        <form id="result-form" class="result-form">
+          <textarea id="result-text" rows="3" placeholder="What it made, how it went, or a line from the output" aria-label="What came out"></textarea>
+          <div class="row">
+            <select id="result-version" aria-label="Version"></select>
+            <select id="result-rating" aria-label="Rating">
+              <option value="0">no rating</option><option value="1">★</option><option value="2">★★</option>
+              <option value="3">★★★</option><option value="4">★★★★</option><option value="5">★★★★★</option>
+            </select>
+          </div>
+          <input id="result-link" type="text" placeholder="Link or file path (optional)" aria-label="Link">
+          <button class="btn" type="submit">Add</button>
+        </form>
+        <div id="outcomes" class="outcomes"></div>
+        <h2>Versions</h2>
+        <div id="history" class="history"></div>
+      </div>
+    </div>
+  </section>
+</main>
+<script type="module" src="app.js"></script>
+<script src="/shared/forge_chrome.js"></script>
+</body>
+</html>

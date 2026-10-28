@@ -3,10 +3,12 @@
 beautifulsoup4==4.15.0
 fastapi==0.141.1
 feedparser==6.0.14
+fsrs==6.3.2
 httpx==0.28.1
 numpy==2.5.3
+pillow==13.0.0
 python-multipart==0.0.32
+trafilatura==2.3.1
 uvicorn==0.54.0
 websockets==17.2
-pillow==13.0.0; sys_platform == "linux"
 pywebview==6.2.1; sys_platform == "win32" or sys_platform == "darwin"

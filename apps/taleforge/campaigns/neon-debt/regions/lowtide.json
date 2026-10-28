@@ -1,0 +1,261 @@
+{
+ "id": "lowtide",
+ "name": "Lowtide",
+ "level": [
+  1,
+  4
+ ],
+ "description": "The flooded bottom of Halcyon Reach, where the sea wall leaks and the rain never stops. Night markets, capsule hotels and noodle steam crowd the gantries, and the Lantern Saints hang paper lights over every street they claim. Far overhead the Aurelian Spire glows like a promise nobody down here was ever going to keep.",
+ "travel_text": "You wade and weave through Lowtide, boots wet to the ankle, holo-ads smearing pink and green across the puddles.",
+ "faction": "lowtide_folk",
+ "wilds": {
+  "encounter_chance": 0.3,
+  "encounters": [
+   {
+    "monsters": [
+     "scrap_drone",
+     "scrap_drone"
+    ],
+    "weight": 3,
+    "min_level": 1
+   },
+   {
+    "monsters": [
+     "razor_hound"
+    ],
+    "weight": 3,
+    "min_level": 1
+   },
+   {
+    "monsters": [
+     "rustdog_thug",
+     "rustdog_thug"
+    ],
+    "weight": 2,
+    "min_level": 1
+   },
+   {
+    "monsters": [
+     "flood_eel"
+    ],
+    "weight": 2,
+    "min_level": 1
+   },
+   {
+    "monsters": [
+     "chrome_junkie"
+    ],
+    "weight": 2,
+    "min_level": 2
+   },
+   {
+    "monsters": [
+     "repo_agent",
+     "repo_drone"
+    ],
+    "weight": 2,
+    "min_level": 2
+   }
+  ],
+  "events": [
+   {
+    "id": "hungry_kid",
+    "weight": 2,
+    "text": "A kid in a trash-bag poncho sits under a dripping awning, watching you eat with the flat patience of someone who has learned not to ask. Her wrist glows red too. Smaller number, same colour.",
+    "when": {
+     "has_item": "synth_noodles"
+    },
+    "check": {
+     "skill": "insight",
+     "dc": "easy"
+    },
+    "success": [
+     {
+      "take": "synth_noodles"
+     },
+     {
+      "flag": "fed_kid"
+     },
+     {
+      "reputation": {
+       "lowtide_folk": 3
+      }
+     },
+     {
+      "xp": 25
+     },
+     {
+      "message": "She eats like it might be taken back. Then she presses a battered data chip into your palm and is gone before you can thank her."
+     },
+     {
+      "give": "scrap_circuit"
+     }
+    ],
+    "fail": [
+     {
+      "message": "You hesitate a moment too long. When you look again the awning is empty and only the drip remains."
+     }
+    ]
+   },
+   {
+    "id": "loose_cable",
+    "weight": 3,
+    "text": "A live cable hangs across the gantry, spitting blue sparks into the puddles. Beyond it something metal glints in the shadow of a collapsed stall.",
+    "check": {
+     "skill": "parkour",
+     "dc": "medium"
+    },
+    "success": [
+     {
+      "give": "coolant_vial"
+     },
+     {
+      "xp": 30
+     },
+     {
+      "message": "You go under, over and through without a single spark touching you."
+     }
+    ],
+    "fail": [
+     {
+      "damage": "1d6"
+     },
+     {
+      "message": "The cable whips your shoulder and your teeth ring like bells."
+     }
+    ]
+   },
+   {
+    "id": "saints_toll_stop",
+    "weight": 2,
+    "text": "Two Lantern Saints in rain capes block the walkway, paper lanterns bobbing on poles above them. 'Toll for the lights,' the taller one says, almost politely. 'Everyone pays. Even if you do not know you owe it.'",
+    "check": {
+     "skill": "persuasion",
+     "dc": "medium"
+    },
+    "success": [
+     {
+      "reputation": {
+       "lantern_saints": 2
+      }
+     },
+     {
+      "xp": 30
+     },
+     {
+      "message": "The taller Saint laughs, waves you through, and tells you to mind the eels by the old stairs."
+     }
+    ],
+    "fail": [
+     {
+      "gold": -10
+     },
+     {
+      "message": "They take ten credits and a long look at your face. Remembered, you suspect."
+     }
+    ]
+   },
+   {
+    "id": "aurelian_billboard",
+    "weight": 2,
+    "text": "A holo-billboard unfolds above the street: a smiling woman in white holds out a hand beneath the words 'Your balance is our concern.' Your wrist ticks up by a few credits as you watch.",
+    "check": {
+     "skill": "hacking",
+     "dc": "hard"
+    },
+    "success": [
+     {
+      "gold": 40
+     },
+     {
+      "xp": 40
+     },
+     {
+      "reputation": {
+       "aurelian": -2
+      }
+     },
+     {
+      "message": "You slip a spoof into the ad's payment loop and a little of what you owe rains down as credits instead."
+     }
+    ],
+    "fail": [
+     {
+      "reputation": {
+       "aurelian": -3
+      }
+     },
+     {
+      "message": "The billboard's smile does not change. Somewhere in the Spire, a tiny alarm blinks your name."
+     }
+    ]
+   },
+   {
+    "id": "street_medic_signal",
+    "weight": 2,
+    "text": "A flickering red cross glows from a doorway. A dockhand sits inside with a split palm and a clinic's worth of pride, refusing to pay for help he can't afford.",
+    "check": {
+     "skill": "medicine",
+     "dc": "easy"
+    },
+    "success": [
+     {
+      "reputation": {
+       "lowtide_folk": 3
+      }
+     },
+     {
+      "xp": 30
+     },
+     {
+      "give": "synth_noodles"
+     },
+     {
+      "message": "You close the wound with three quick stitches. He presses a foil bowl of noodles into your hands, grinning."
+     }
+    ],
+    "fail": [
+     {
+      "message": "Your stitches hold, mostly. He winces but waves away your apology."
+     }
+    ]
+   }
+  ],
+  "finds": [
+   "scrap_circuit",
+   "coolant_vial",
+   "stim_shot",
+   "synth_noodles",
+   "cassette_tape",
+   "real_coffee"
+  ],
+  "sights": [
+   "Rain hammers a corrugated roof in a rhythm someone has set to a drum loop.",
+   "A holo-koi swims lazily through the steam above a noodle cart, the only fish that has ever been safe in Lowtide.",
+   "A string of paper lanterns sways over a canal, each one marked with a tiny saint's face.",
+   "A child's drone chases its own reflection in a black puddle.",
+   "The Aurelian Spire hangs in the clouds above, impossibly clean, impossibly far.",
+   "Someone has painted 'pay nothing' in careful white letters on a debt kiosk.",
+   "Condensation drips from a thousand cables, each drop catching a different neon colour.",
+   "A busker with a cracked amp plays an old love song through a speaker patched with duct tape."
+  ],
+  "names": [
+   "Kaito",
+   "Mira",
+   "Dex",
+   "Soledad",
+   "Jun",
+   "Tavi",
+   "Bao",
+   "Ines",
+   "Remy",
+   "Odalys",
+   "Pike",
+   "Noor",
+   "Cass",
+   "Zeke",
+   "Luz",
+   "Orin"
+  ]
+ }
+}

@@ -22,6 +22,7 @@ ROOT = Path(__file__).resolve().parent
 SHARED_DIR = Path(os.environ.get("FORGE_SHARED_DIR") or ROOT.parent.parent / "shared")
 sys.path.insert(0, str(SHARED_DIR))
 from forge_static import free_names, plain_name  # noqa: E402
+from forge_trash import TrashError, trash  # noqa: E402
 
 REGISTRY = ROOT / "instruments.json"
 STEP_COUNTS = (8, 12, 16, 24, 32)
@@ -168,11 +169,17 @@ def trash_pattern(name: object) -> None:
     path = pattern_path(name)
     if not path.is_file() or path.is_symlink():
         raise LoopsError(f"no pattern called {name!r}")
-    # LOOPS_TRASH_CMD stands in for gio in the browser check (gio cannot
-    # trash inside /tmp)
+    # LOOPS_TRASH_CMD stands in for the system trash in the browser check
+    # (gio cannot trash inside /tmp); otherwise forge_trash picks gio, the
+    # macOS trash or the Windows recycle bin
     custom = os.environ.get("LOOPS_TRASH_CMD")
-    argv = [custom, str(path)] if custom else ["gio", "trash", "--", str(path)]
-    done = subprocess.run(argv, capture_output=True, text=True)
+    if not custom:
+        try:
+            trash(path)
+        except TrashError as e:
+            raise LoopsError(f"could not move it to the trash: {e}") from e
+        return
+    done = subprocess.run([custom, str(path)], capture_output=True, text=True)
     if done.returncode != 0:
         raise LoopsError(f"could not move it to the trash: {done.stderr.strip()}")
 

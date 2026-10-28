@@ -1,0 +1,8 @@
+{
+  "_doc": "Where an item can be sent. Each id has a function of the same name in vault_core.SENDERS; kinds says which items it takes.",
+  "targets": [
+    {"id": "blender", "label": "Blender", "kinds": ["model", "hdri", "texture"], "hint": "Into the open Blender (started with the Forge bridge). A texture goes on the selected object."},
+    {"id": "godot", "label": "Godot", "kinds": ["model", "hdri", "texture", "image", "sound"], "hint": "Copied into the project's assets/vault folder.", "roots": ["~/Games"]},
+    {"id": "pixelforge", "label": "PixelForge", "kinds": ["image", "texture"], "hint": "Made into a new sprite pack and palette in the Forge art library."}
+  ]
+}

@@ -179,6 +179,21 @@ def frame(manifest: dict):
     return {"tabs": tabs[:12], "settings": settings, "mode": raw.get("mode") is True}
 
 
+def inside(manifest: dict):
+    """The manifest's "inside": the app lives inside another app's page, so it
+    has no tile, dock icon or search entry of its own and opening it opens
+    that page instead. {"role": "settings", "hash": "wallpapers"} (Relay task
+    423: the Wallpapers app folded into Settings > Wallpaper). Anything else
+    is None."""
+    raw = manifest.get("inside")
+    if not isinstance(raw, dict) or not isinstance(raw.get("role"), str):
+        return None
+    role = raw["role"].strip()[:40]
+    hash_ = raw.get("hash", "")
+    hash_ = hash_.strip().lstrip("#")[:400] if isinstance(hash_, str) else ""
+    return {"role": role, "hash": hash_} if role else None
+
+
 SEED_TIMEOUT = 120.0  # seconds one starting-data script may take
 
 _SEED_ITEM = re.compile(
@@ -226,6 +241,7 @@ class App:
         self.own_keys = own_keys(manifest)
         self.actions = actions(manifest)
         self.frame = frame(manifest)
+        self.inside = inside(manifest)
         self.section = manifest.get("section", "")
         self.seed = seed_scripts(manifest)
         self.url = f"http://127.0.0.1:{self.port}"
@@ -309,6 +325,7 @@ class App:
             "own_keys": self.own_keys,
             "actions": self.actions,
             "frame": self.frame,
+            "inside": self.inside,
         }
 
 
@@ -349,6 +366,8 @@ def group_fields(group_id: str, data: dict) -> dict:
     by name in tab order (an app's own "group" line joins it too), and
     "tab_labels" names a member's tab ({"ipod": "Other devices"}). "off": true
     undoes the fold: the group is skipped and every member keeps its own tile.
+    "glyph" names its icon in shared/forge_icons.js when the group's id is
+    already an app's (groups/devices.json and apps/devices).
     """
     members = data.get("members", [])
     labels = data.get("tab_labels", {})
@@ -373,6 +392,7 @@ def group_fields(group_id: str, data: dict) -> dict:
             else {}
         ),
         "help": data.get("help", ""),
+        "glyph": data["glyph"] if isinstance(data.get("glyph"), str) else "",
     }
 
 

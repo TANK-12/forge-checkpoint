@@ -1,0 +1,37 @@
+Forge checkpoint — 28 October 2026, all apps (0.2.0 preview)
+
+This release carries every Forge app that is safe to publish: 25 apps on
+Linux, 22 on Mac and 21 on Windows (the earlier checkpoints had 18, 14 and
+13). New: Prompts, Recall (flashcards), Reps (workouts and habits), Shelf
+(read-later), Taleforge (text adventures), Tavern (tabletop campaigns) and
+Vault (3D models, skies, textures and sounds, plus Poly Haven's free CC0
+library) on every system; Loops now on Mac and Windows too. Smart search and
+the Visuals menu from the updated checkpoint are included. The two earlier
+releases stay as they were.
+
+Each app keeps what it saves in the data place picked on the welcome screen,
+never inside the program folder. Taleforge and Tavern need Jan with a model
+for their narrator and game master, and Arcade, Dossier and Foresight use
+it too; the rest run without any AI.
+
+Left out on purpose: apps holding the owner's own data, accounts, chats or
+secrets; apps that only drive one Linux desktop; apps that need large AI
+models or programs that cannot ship; and a chess app whose library is GPL-3.0
+(not compatible until Forge's licence is chosen).
+
+Mac first: download macos-arm64 for Apple silicon (macOS 11+), or macos-x64
+for Intel (macOS 12+). Extract, then move Forge.app from the Forge folder to
+Applications. Unsigned and unnotarised; see the repository README for Apple's
+Open Anyway steps and the optional checksum-checked installer.
+
+Windows 10/11 x64: extract the zip to a local writable folder and double-click
+Forge.cmd. Python is included.
+
+Linux x64: tar xzf, then ./Forge/forge.
+
+CHECKS_GO_HERE
+
+Download SHA256SUMS with your archive. Optional install scripts verify that
+file before copying and refuse to overwrite an existing destination.
+No original-code licence chosen yet: all rights reserved; see LICENSE.
+The attached source archive is checkpoint-2026-10-28-allapps.

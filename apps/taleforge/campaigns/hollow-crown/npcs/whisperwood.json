@@ -1,0 +1,377 @@
+{
+ "npcs": [
+  {
+   "id": "whisperwood_thistlewick",
+   "name": "Thistlewick",
+   "pronouns": "he/him",
+   "location": "whisperwood_edge",
+   "faction": "moth_court",
+   "description": "A narrow man in a coat of grey felt with a high collar of wing-dust, a tall hat pinned with a dozen moths, and eyes the black of ink. He bows a little too exactly, every time.",
+   "personality": "Scrupulously polite, pedantic about bargains, secretly lonely. Delights in people who know the forms.",
+   "speech": "Formal, circuitous, delivered with a small smile. Never says a flat lie; says true things that mislead.",
+   "greeting": "Good morrow, traveller. You are expected, which is to say, you were noticed, which is nearly the same.",
+   "quests": [
+    "main_2"
+   ],
+   "rumours": true,
+   "topics": [
+    {
+     "id": "court",
+     "prompt": "Ask about the Court of Moths",
+     "text": "'The Court keeps the Wood. We keep our word. We keep a great many other things too, and do not always remember where we put them.' He smiles. 'You may walk in, if you have been asked. You have been asked. It took us a while to decide.'",
+     "effects": [
+      {
+       "flag": "moth_invited"
+      }
+     ]
+    },
+    {
+     "id": "manners",
+     "prompt": "Ask how to behave at Court",
+     "text": "'Never thank us; thanks are a debt. Never accept a gift without naming its price. Never lie outright. Mislead, if you must; it is traditional.' He taps his nose. 'And bow when the Lady speaks of the Queen.'",
+     "effects": [
+      {
+       "flag": "whisperwood_knows_manners"
+      },
+      {
+       "xp": 15
+      }
+     ]
+    },
+    {
+     "id": "shard",
+     "prompt": "Ask about the shard the Queen left",
+     "when": {
+      "quest_active": "main_2"
+     },
+     "text": "'You say it plainly. How refreshing.' He glances over his shoulder at the dark trunks. 'The Lady will weigh you. She weighs everyone. Do not be offended by the scales.'"
+    },
+    {
+     "id": "briar",
+     "prompt": "Ask about the cold in the north",
+     "text": "'The Thornwake. A word we dislike, and a thing we like less.' His smile is thin. 'Our mothlamp, the one that lights the Court's longest night, was carried north by a Warden gone strange. The cold took him, and now he guards our light as if it were his own.'",
+     "effects": [
+      {
+       "flag": "whisperwood_heard_lamp"
+      }
+     ]
+    },
+    {
+     "id": "lyra",
+     "prompt": "Ask about the Wardens",
+     "when": {
+      "in_party": "lyra"
+     },
+     "text": "He looks at Lyra a long moment, and his smile softens. 'The Vance girl. Her father kept his bargains. Her brother broke one for love. You, I think, have yet to choose.' Lyra's jaw tightens, and she does not answer."
+    }
+   ]
+  },
+  {
+   "id": "whisperwood_veyra",
+   "name": "Veyra, Lady of Moths",
+   "pronouns": "she/her",
+   "location": "whisperwood_moth_court",
+   "faction": "moth_court",
+   "description": "A tall, pale woman who seems to hold very still even while moving. Her gown is woven of grey wings, her crown is bone-white antlers, and her eyes are the colour of candle smoke.",
+   "personality": "Ancient, amused, precise, never cruel for its own sake. Respects spine, despises flattery. Grieved by the Queen and does not say so.",
+   "speech": "Calm, unhurried, complete sentences with no wasted words. Occasional dry humour like a frost crack.",
+   "greeting": "Come in, small mortal. Mind the floor; it is listening.",
+   "rumours": true,
+   "topics": [
+    {
+     "id": "isolde",
+     "prompt": "Ask about Queen Isolde",
+     "text": "'She walked this forest as a girl. She came back as a queen with a stone in her hand and asked us to hold what she could not. We said yes. She did not stay for tea.' The Lady's fingers lift, briefly, from the arm of her throne. 'She did not die in her bed, Wanderer. Remember that. I said it to no one else.'",
+     "effects": [
+      {
+       "flag": "whisperwood_knows_queen_walked"
+      },
+      {
+       "xp": 30
+      }
+     ]
+    },
+    {
+     "id": "stone",
+     "prompt": "Ask what the heart-stone really is",
+     "text": "'A seed of summer, buried in a barrow four centuries ago to keep the northern cold from its roots. When the stone cracks, the cold wakes.' She tilts her head. 'You have seen the briars. You know the rest.'",
+     "effects": [
+      {
+       "flag": "knows_stone_origin"
+      }
+     ]
+    },
+    {
+     "id": "lamp",
+     "prompt": "Offer the mothlamp back",
+     "when": {
+      "quest_stage": {
+       "main_2": "bargain"
+      },
+      "has_item": "moth_lamp"
+     },
+     "text": "Veyra holds out her hands, and the little moth in the lantern leaps for her wrist like a child. 'Home,' she says, so softly you almost miss it. 'Now, to our bargain.'",
+     "effects": [
+      {
+       "scene": "whisperwood_bargain"
+      }
+     ]
+    },
+    {
+     "id": "lamp_ask",
+     "prompt": "Ask what the Court needs of you",
+     "when": {
+      "quest_stage": {
+       "main_2": "lamp"
+      }
+     },
+     "text": "'My lamp, small mortal. A Warden gone cold has it in the clearing north of the path. Bring it back, by whatever means your conscience allows. I will not ask which.'"
+    },
+    {
+     "id": "sable",
+     "prompt": "Show her the silver moth brooch",
+     "when": {
+      "has_item": "sable_brooch",
+      "in_party": "sable"
+     },
+     "text": "Veyra goes quite still. 'Where did you get that?' She looks at Sable, long and unreadable. 'Isolde made that with her own hands, the winter before she wore the crown. I would know the stitching anywhere.' She says nothing more, and her silence is a kind of answer.",
+     "effects": [
+      {
+       "flag": "veyra_saw_brooch"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "whisperwood_tamsin",
+   "name": "Tamsin Reed",
+   "pronouns": "she/her",
+   "location": "whisperwood_cabin",
+   "faction": "moth_court",
+   "description": "A weathered old woman in a moth-eaten warden's cloak, whittling something that might be a bird. Her knuckles are swollen and her hands are rock-steady.",
+   "personality": "Dry, kind under a gruff shell, worn thin by too many funerals. Loved the Vance children.",
+   "speech": "Slow country speech, understated. Quotes proverbs and gets them wrong deliberately.",
+   "greeting": "Door's open. Always is. Sit before you fall.",
+   "quests": [
+    "whisperwood_warden_duty"
+   ],
+   "rumours": true,
+   "topics": [
+    {
+     "id": "wardens",
+     "prompt": "Ask about the Wardens",
+     "text": "'Seven of us, once. Now me. We kept the paths straight and the bargains clean, and the Court kept us fed. It was a decent trade.' She works her knife along the wood. 'Then the cold came, and the young ones went north to see about it.'"
+    },
+    {
+     "id": "vance",
+     "prompt": "Ask about the Vance children",
+     "text": "'Lyra and Fen. Wild as foxes, both of them, and twice as clever. Fen couldn't kill a rabbit; Lyra could, and cried afterwards where she thought nobody saw.' She sets down the knife. 'If you know where she is, tell her the door's open.'",
+     "effects": [
+      {
+       "flag": "tamsin_asked_lyra"
+      }
+     ]
+    },
+    {
+     "id": "lyra_home",
+     "prompt": "Tell her Lyra is with you",
+     "when": {
+      "in_party": "lyra",
+      "flag": "tamsin_asked_lyra"
+     },
+     "text": "Tamsin looks at you for a long moment, then past you, to the doorway. Lyra is standing there. 'Hello, girl,' says Tamsin, and her voice cracks on the second word. Lyra crosses the room in three strides.",
+     "effects": [
+      {
+       "affection": {
+        "lyra": 8
+       }
+      },
+      {
+       "flag": "lyra_reunited_tamsin"
+      }
+     ]
+    },
+    {
+     "id": "court_advice",
+     "prompt": "Ask for advice about the Court",
+     "text": "'They keep to the letter. If they say a thing, it is true, but not the way you think. If you must bargain, make them say it twice and write it down. They hate that.' She winks. 'It is the only thing they do not wriggle out of.'",
+     "effects": [
+      {
+       "flag": "whisperwood_knows_manners"
+      }
+     ]
+    },
+    {
+     "id": "token",
+     "prompt": "Ask for a Warden's token",
+     "when": {
+      "quest_done": "whisperwood_warden_duty"
+     },
+     "text": "'You've earned it, I think.' She presses a pressed bronze oak leaf into your palm. 'Wear it where the Court can see. It says you kept faith with the edge.'",
+     "effects": [
+      {
+       "give": "whisperwood_wardens_token"
+      },
+      {
+       "reputation": {
+        "moth_court": 3
+       }
+      }
+     ],
+     "once": true
+    },
+    {
+     "id": "path_done",
+     "prompt": "Tell her the path is clear",
+     "when": {
+      "quest_stage": {
+       "whisperwood_warden_duty": "report"
+      }
+     },
+     "text": "'Good. Good.' She turns the half-carved bird in her hands. 'You didn't have to, you know. I would have asked the Court, and it would have taken them forty years.' Her smile is crooked. 'Come back for a token when you are ready.'",
+     "effects": [
+      {
+       "flag": "tamsin_path_thanks"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "whisperwood_quill",
+   "name": "Mistress Quill",
+   "pronouns": "she/her",
+   "location": "whisperwood_lanternfall",
+   "faction": "moth_court",
+   "description": "A short, round woman with a mushroom-cap hat, ink-stained fingers and an abacus made of acorns. Her stall is the busiest in Lanternfall, and the neatest.",
+   "personality": "Brisk, merry, relentlessly honest about prices. Every transaction is a small performance.",
+   "speech": "Rapid, rhyming when excited, full of market cant. Counts under her breath.",
+   "greeting": "Buying, selling, or the dreaded third thing: browsing?",
+   "quests": [
+    "whisperwood_moonlight_errand"
+   ],
+   "rumours": true,
+   "topics": [
+    {
+     "id": "goods",
+     "prompt": "Ask what is good today",
+     "text": "'Dewcap tonic, for the bruised. Glimmer honey, for the gifted. Mothsilk, for the hunted. I sell hope in small bottles, and it costs less than you think.'"
+    },
+    {
+     "id": "court",
+     "prompt": "Ask what the Court thinks of mortals",
+     "text": "'Fondly, as one thinks of a small dog that can talk. They do not hate you. They collect you.' She snorts. 'Count your fingers when you leave.'"
+    },
+    {
+     "id": "gossip",
+     "prompt": "Any news from the Wood?",
+     "text": "'The Warden in the clearing has the Court's lamp, and the Court cannot take it back without a mortal fool. I do not say they are looking for one. I say they are looking.'",
+     "effects": [
+      {
+       "flag": "whisperwood_heard_lamp"
+      }
+     ]
+    },
+    {
+     "id": "moonlight",
+     "prompt": "Ask what she needs for the moonlight tincture",
+     "when": {
+      "quest_active": "whisperwood_moonlight_errand"
+     },
+     "text": "'A moonpetal for the sleep, and a spoon of glimmer honey for the sweetness. Hand them over and I'll boil you the best sleeping-draught in the Wood.'"
+    },
+    {
+     "id": "bring",
+     "prompt": "Hand over a moonpetal and glimmer honey",
+     "when": {
+      "quest_active": "whisperwood_moonlight_errand",
+      "all": [
+       {
+        "has_item": "whisperwood_moonpetal"
+       },
+       {
+        "has_item": "whisperwood_glimmer_honey"
+       }
+      ]
+     },
+     "text": "She boils the draught right there, the steam smelling of a cold, clean night. 'There. Good for any child who cannot sleep.' She hands you a bottle of the reserve and tucks the rest under the counter.",
+     "effects": [
+      {
+       "take": "whisperwood_moonpetal"
+      },
+      {
+       "take": "whisperwood_glimmer_honey"
+      },
+      {
+       "flag": "quill_draught_made"
+      },
+      {
+       "give": "whisperwood_dew_tonic"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "whisperwood_gorse",
+   "name": "Old Gorse",
+   "pronouns": "he/him",
+   "location": "whisperwood_old_oak",
+   "faction": "moth_court",
+   "description": "A bent hermit with moss in his beard and a smile that never stops. He wears a cloak of living leaves and carries a staff with a small owl asleep in the fork.",
+   "personality": "Gentle, rambling, oddly sharp when the topic is trees. Believes everything in the Wood is a person, including the Wood.",
+   "speech": "Meandering, affectionate, talks to the oak as much as to you.",
+   "greeting": "Hello, hello. She says you are welcome. She is rarely wrong about that.",
+   "quests": [
+    "whisperwood_stolen_reflection"
+   ],
+   "rumours": true,
+   "topics": [
+    {
+     "id": "oak",
+     "prompt": "Ask about the oak",
+     "text": "'The Grandmother? Older than the Court, older than the Queen's line. She remembers when there was only the Wood, and she is not sentimental about it.' He pats the trunk. 'She says you walk heavily. I think she approves.'"
+    },
+    {
+     "id": "pool",
+     "prompt": "Ask about the Mirror Pool",
+     "text": "'It stores faces. Some it gives back. Some it keeps. A woodcutter looked too long last winter and went home without his reflection. His wife says he doesn't cast a shadow.' Gorse sighs. 'Something in there is wearing it.'"
+    },
+    {
+     "id": "briar",
+     "prompt": "Ask about the briars",
+     "text": "'The cold is the thing. Not evil, not good, just cold. It wants the world to stop.' He rubs his beard. 'The Queen walked past me going north. I thought she was a ghost. She was too tired to be one.'",
+     "effects": [
+      {
+       "flag": "whisperwood_knows_queen_walked"
+      }
+     ]
+    },
+    {
+     "id": "rest",
+     "prompt": "Ask if you can rest here",
+     "text": "'The oak does not mind. She never has. Sleep in the roots; she'll keep the cold off.'"
+    },
+    {
+     "id": "pool_done",
+     "prompt": "Tell him the pool is clear",
+     "when": {
+      "quest_stage": {
+       "whisperwood_stolen_reflection": "report"
+      }
+     },
+     "text": "Gorse claps his hands over his mouth like a child. 'She is quiet! The whole Wood is quiet. The woodcutter came by at dawn, and his shadow was following him again, bless it.' He presses something into your palm, a leaf-wrapped sweet. 'Eat that. It's the only thing that doesn't have a price.'",
+     "effects": [
+      {
+       "flag": "gorse_pool_thanks"
+      },
+      {
+       "heal": "1d8"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

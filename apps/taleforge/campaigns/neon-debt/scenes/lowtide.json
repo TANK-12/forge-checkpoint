@@ -1,0 +1,217 @@
+{
+ "scenes": [
+  {
+   "id": "lowtide_wake",
+   "title": "Forty-Eight Thousand",
+   "once": true,
+   "nodes": {
+    "start": {
+     "text": "You wake with a taste of copper and rain. The capsule ceiling is six inches from your nose, scratched with tally marks that are not yours. On your wrist, a red number: 48,000. Somewhere beyond the thin wall a neighbour is coughing, a drone buzzes past the vent, and someone is crying quietly in a language you almost know.",
+     "choices": [
+      {
+       "text": "Tap the number and read the fine print.",
+       "next": "fine_print"
+      },
+      {
+       "text": "Check yourself over for missing parts.",
+       "check": {
+        "skill": "medicine",
+        "dc": "easy"
+       },
+       "next": "inspect",
+       "fail_next": "inspect_bad"
+      },
+      {
+       "text": "Lie still and listen to the building.",
+       "check": {
+        "skill": "perception",
+        "dc": "easy"
+       },
+       "next": "listen",
+       "fail_next": "end"
+      }
+     ]
+    },
+    "fine_print": {
+     "text": "The terms scroll past in grey type. Principal: 48,000. Interest: compounding hourly. Origin: blank. Authorisation: 'verified by memory'. At the bottom, tiny and cold: 'Collections will visit within seven days.'",
+     "effects": [
+      {
+       "flag": "read_fine_print"
+      }
+     ],
+     "next": "end"
+    },
+    "inspect": {
+     "text": "No new scars, no missing chrome, but a fresh puncture behind your ear, sealed with medical glue. Someone has been inside your skull, and the job was clean.",
+     "effects": [
+      {
+       "flag": "found_puncture"
+      },
+      {
+       "xp": 15
+      }
+     ],
+     "next": "end"
+    },
+    "inspect_bad": {
+     "text": "You check everything twice and find nothing, except a headache that feels like a fist inside your skull. If there is a scar, you cannot find it.",
+     "next": "end"
+    },
+    "listen": {
+     "text": "Through the wall, you hear two voices: a clerk's and a woman's, low and urgent. '...the sleeper in 412 hasn't paid in three days.' A pause. 'Then Aurelian will want to know why.' You realise the hotel is already watching you.",
+     "effects": [
+      {
+       "flag": "heard_clerk"
+      },
+      {
+       "xp": 15
+      }
+     ],
+     "next": "end"
+    }
+   }
+  },
+  {
+   "id": "neon_shard_choice",
+   "title": "The Shard",
+   "once": true,
+   "nodes": {
+    "start": {
+     "text": "Vane lies against the vault wall with his collar-spray dry and his polite smile finally gone. Among the ledgers a glass shard the size of your thumb glows pale blue on a cradle: the six weeks Aurelian took, preserved like a pressed flower. You can feel it humming against your teeth.",
+     "choices": [
+      {
+       "text": "Slot the shard into your temple and remember.",
+       "effects": [
+        {
+         "flag": "shard_played"
+        }
+       ],
+       "next": "played"
+      },
+      {
+       "text": "[Hacking] Copy the shard before you decide.",
+       "when": {
+        "not_flag": "shard_copied"
+       },
+       "check": {
+        "skill": "hacking",
+        "dc": "hard"
+       },
+       "next": "copied",
+       "fail_next": "copy_fail"
+      },
+      {
+       "text": "Give the shard to someone you trust.",
+       "when": {
+        "any": [
+         {
+          "in_party": "ren"
+         },
+         {
+          "met": "ren"
+         }
+        ]
+       },
+       "effects": [
+        {
+         "flag": "shard_to_ren"
+        },
+        {
+         "affection": {
+          "ren": 8
+         }
+        }
+       ],
+       "next": "to_ren"
+      },
+      {
+       "text": "Sell it to Aurelian's collections broker.",
+       "effects": [
+        {
+         "flag": "shard_sold"
+        },
+        {
+         "gold": 250
+        },
+        {
+         "reputation": {
+          "aurelian": 15,
+          "lowtide_folk": -8
+         }
+        }
+       ],
+       "next": "sold"
+      },
+      {
+       "text": "Smash it. Some things should stay forgotten.",
+       "effects": [
+        {
+         "flag": "shard_destroyed"
+        },
+        {
+         "reputation": {
+          "aurelian": -5
+         }
+        }
+       ],
+       "next": "smashed"
+      }
+     ]
+    },
+    "copied": {
+     "text": "Your fingers dance on the cradle. A mirror of the shard forms in your cyberdeck's cache, a little dimmer, a little blurred, but whole. Now whatever you choose, you will always have this.",
+     "effects": [
+      {
+       "flag": "shard_copied"
+      },
+      {
+       "xp": 60
+      }
+     ],
+     "next": "start"
+    },
+    "copy_fail": {
+     "text": "The shard throws up a cold wall of static. You jerk your hands back as the cradle's lights flicker, and for a moment you wonder whether you've damaged it.",
+     "effects": [
+      {
+       "damage": "1d4"
+      }
+     ],
+     "next": "start"
+    },
+    "played": {
+     "text": "White light, then a bar in the Spire's lower gardens. Your own hands, signing a loan with a steady pen. A woman in white watches you. 'You're sure?' she asks. You nod. 'I'm selling the six weeks that know the Ledger's key. Take it, and keep it away from everyone.' The memory ends. You are standing in the vault, breathing hard, and you finally understand: you sold your own memory to hide the Ledger, and the debt was the price.",
+     "effects": [
+      {
+       "flag": "knows_ledger"
+      },
+      {
+       "xp": 120
+      },
+      {
+       "unlock": "ending:zero_balance"
+      }
+     ],
+     "next": "end"
+    },
+    "to_ren": {
+     "text": "Ren turns the shard over in her fingers as if it might bruise. 'You trust me with this,' she says, almost to herself. Then she tucks it into her jacket and nods. 'I'll keep it safe until you want it.'",
+     "effects": [
+      {
+       "flag": "knows_ledger"
+      }
+     ],
+     "next": "end"
+    },
+    "sold": {
+     "text": "The broker's drone arrives within the hour, polite as a funeral. Credits tick onto your wrist, 250 of them, and the shard vanishes into a white case. Forty-eight thousand still glows red beside them. You are richer, and you do not feel it.",
+     "next": "end"
+    },
+    "smashed": {
+     "text": "The shard shatters under your boot with a sound like a bell, and a puff of pale blue light rises and is gone. You will never know what you sold. Somewhere, a Spire server logs a deletion and does not understand why.",
+     "next": "end"
+    }
+   }
+  }
+ ]
+}

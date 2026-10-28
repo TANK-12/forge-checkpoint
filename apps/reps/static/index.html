@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; frame-src 'none'; object-src 'none'">
+<title>Reps</title>
+<link rel="stylesheet" href="/shared/forge.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <h1>Reps</h1>
+  <nav class="tabs" role="tablist">
+    <button class="tab on" data-tab="today" role="tab" type="button">Today</button>
+    <button class="tab" data-tab="history" role="tab" type="button">History</button>
+    <button class="tab" data-tab="trackers" role="tab" type="button">Trackers</button>
+  </nav>
+  <span class="spacer"></span>
+  <span id="headline" class="muted small"></span>
+</header>
+
+<main>
+  <section id="pane-today" class="pane">
+    <div class="bar">
+      <label>Logging for <input id="day" type="date"></label>
+      <span id="day-note" class="muted small"></span>
+    </div>
+    <div id="today-empty" class="empty" hidden>
+      <p class="big">🔥</p>
+      <p>Nothing to keep up yet. Add a workout or a habit in Trackers and it shows up here with its streak.</p>
+      <button id="go-trackers" class="btn btn-primary" type="button">Add a tracker</button>
+    </div>
+    <div id="cards" class="cards"></div>
+  </section>
+
+  <section id="pane-history" class="pane" hidden>
+    <div class="bar">
+      <label>Tracker <select id="pick"></select></label>
+    </div>
+    <div id="history-empty" class="empty" hidden><p>No trackers yet.</p></div>
+    <div id="history" hidden>
+      <div id="numbers" class="numbers"></div>
+      <h2 id="chart-title"></h2>
+      <div id="chart" class="chart"></div>
+      <h2>Entries</h2>
+      <p id="entries-empty" class="muted" hidden>Nothing logged yet.</p>
+      <table id="entries" class="entries">
+        <thead><tr><th>Day</th><th>What</th><th>Note</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <p id="entries-more" class="muted small" hidden></p>
+    </div>
+  </section>
+
+  <section id="pane-trackers" class="pane" hidden>
+    <form id="add-form" class="card">
+      <h2>New tracker</h2>
+      <div class="bar">
+        <label>Name <input id="add-name" maxlength="60" placeholder="Push-ups, running, water…" required></label>
+        <label>Kind <select id="add-kind"></select></label>
+        <label>Goal <select id="add-goal"></select></label>
+        <button class="btn btn-primary" type="submit">Add</button>
+      </div>
+      <p id="kind-help" class="muted small"></p>
+    </form>
+    <h2>Your trackers</h2>
+    <p id="list-empty" class="muted" hidden>None yet.</p>
+    <div id="list" class="list"></div>
+  </section>
+</main>
+
+<div id="toast" class="toast" hidden></div>
+<script src="app.js"></script>
+<script src="/shared/forge_chrome.js"></script>
+</body>
+</html>

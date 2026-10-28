@@ -26,6 +26,7 @@ from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 import fsops
+import advanced
 
 ROOT = Path(__file__).resolve().parent
 STATIC_DIR = ROOT / "static"
@@ -43,6 +44,7 @@ def forge_only(
 app = FastAPI(title="Forge Files")
 
 
+@app.exception_handler(advanced.storage.StorageError)
 @app.exception_handler(fsops.FsError)
 async def fs_error(_req: Request, exc: fsops.FsError) -> JSONResponse:
     return JSONResponse({"detail": str(exc)}, status_code=400)
@@ -213,6 +215,36 @@ def job(job_id: str) -> dict:
     if j is None:
         raise HTTPException(404, "No such job")
     return j.public()
+
+
+@app.get("/api/advanced/inspect", dependencies=guard)
+def inspect_item(path: str) -> dict:
+    return advanced.inspect(path)
+
+
+@app.get("/api/advanced/hash", dependencies=guard)
+def hash_item(path: str) -> dict:
+    return advanced.checksum(path)
+
+
+@app.get("/api/advanced/usage", dependencies=guard)
+def disk_usage(path: str) -> dict:
+    return advanced.usage(path)
+
+
+@app.post("/api/advanced/rename/preview", dependencies=guard)
+def preview_rename(
+    paths: list[str] = Body(...),
+    find: str = Body(""),
+    replace: str = Body(""),
+    prefix: str = Body(""),
+) -> dict:
+    return {"plan": advanced.rename_plan(paths, find, replace, prefix)}
+
+
+@app.post("/api/advanced/rename/apply", dependencies=guard)
+def apply_rename(plan: list[dict] = Body(..., embed=True)) -> dict:
+    return advanced.rename_batch(plan)
 
 
 if SHARED_DIR.is_dir():

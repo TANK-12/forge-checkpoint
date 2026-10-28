@@ -1,0 +1,22 @@
+{
+  "name": "tavern",
+  "label": "Tavern",
+  "tagline": "Tabletop campaigns with Jan as the GM",
+  "port": 8496,
+  "module": "web_app:app",
+  "src_dir": ".",
+  "accent": "#d0703c",
+  "icon": "🐉",
+  "order": 22,
+  "section": "play",
+  "ready_timeout": 30,
+  "ram_class": "light",
+  "store": {"github": "private"},
+  "help": {"about": "Tabletop campaigns with a local Jan model as the game master: a party, a map, dice rolls, and the story kept as you play.", "features": ["Party", "Map", "Dice"]},
+  "manifest": {
+    "summary": "Tabletop role-playing campaigns with Jan as the game master. Pick a world (sword and sorcery, starship crew, city noir, gothic horror; one JSON file each in worlds/), name the party, and Jan opens the scene. Each player's action goes in the story and Jan answers in character; when an outcome is uncertain it asks for a roll, which shows as a button, and it can hurt or heal the party, which moves their HP bars. Dice (1d20+3, 4d6kh3 and so on) are rolled by the app, never by Jan. Party cards with HP, grid maps with painted ground and draggable tokens that Jan is told about, a running story-so-far that keeps Jan's context small, Ask again, out-of-character notes, and the whole story saved as Markdown. Jan's models load only while it writes and are released when idle (shared/forge_jan.py).",
+    "data_dir": "~/.local/share/forge/tavern",
+    "dependencies": {"required": ["shared/forge_guard.py", "shared/forge_jan.py", "Jan (for the game master)"], "optional": []},
+    "docs": ["README.md", "WIP.md"]
+  }
+}

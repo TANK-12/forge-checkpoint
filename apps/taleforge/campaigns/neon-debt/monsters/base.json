@@ -1,0 +1,216 @@
+{
+ "monsters": [
+  {
+   "id": "scrap_drone",
+   "name": "Scrap drone",
+   "level": 1,
+   "hp": "2d6",
+   "ac": 12,
+   "attack": 3,
+   "damage": "1d6+1",
+   "xp": 30,
+   "gold": "0",
+   "text": "A hovering bundle of motors and spite, glued together from dead delivery drones. Its single red eye follows you wherever you go.",
+   "tags": [
+    "machine"
+   ],
+   "loot": [
+    {
+     "item": "scrap_circuit",
+     "chance": 0.5
+    }
+   ],
+   "flee": true
+  },
+  {
+   "id": "razor_hound",
+   "name": "Razor hound",
+   "level": 1,
+   "hp": "2d8+2",
+   "ac": 13,
+   "attack": 4,
+   "damage": "2d4+1",
+   "xp": 55,
+   "gold": "0",
+   "text": "A cybernetic dog with blade-edged forelimbs and a snarl like a grinding saw. Someone threw it away when its leash ran out.",
+   "tags": [
+    "beast",
+    "machine"
+   ],
+   "loot": [
+    {
+     "item": "coolant_vial",
+     "chance": 0.3
+    }
+   ],
+   "flee": true
+  },
+  {
+   "id": "rustdog_thug",
+   "name": "Rustdog thug",
+   "level": 1,
+   "hp": "2d8+2",
+   "ac": 12,
+   "attack": 3,
+   "damage": "1d6+2",
+   "xp": 30,
+   "gold": "2d6",
+   "text": "A rival-gang enforcer in a rust-coloured jacket and a cheap chrome jaw, swinging a length of pipe with real enthusiasm.",
+   "tags": [
+    "humanoid"
+   ],
+   "loot": [
+    {
+     "item": "scrap_cleaver",
+     "chance": 0.2
+    },
+    {
+     "item": "stim_shot",
+     "chance": 0.2
+    }
+   ],
+   "flee": true
+  },
+  {
+   "id": "flood_eel",
+   "name": "Flood eel",
+   "level": 2,
+   "hp": "3d8+3",
+   "ac": 13,
+   "attack": 4,
+   "damage": "2d6",
+   "xp": 70,
+   "gold": "0",
+   "text": "A thick, glassy eel, six feet of muscle with a jaw wired for current, hunting where the canals are shallowest.",
+   "tags": [
+    "beast"
+   ],
+   "loot": [
+    {
+     "item": "coolant_vial",
+     "chance": 0.4
+    }
+   ],
+   "flee": true
+  },
+  {
+   "id": "chrome_junkie",
+   "name": "Chrome junkie",
+   "level": 2,
+   "hp": "4d8+8",
+   "ac": 13,
+   "attack": 5,
+   "damage": "1d8+3",
+   "xp": 110,
+   "gold": "2d8",
+   "text": "A hollow-eyed man more implant than flesh, twitching in time with a buzz only he can hear. Whatever he was before the chrome, he isn't any more.",
+   "tags": [
+    "humanoid"
+   ],
+   "loot": [
+    {
+     "item": "medkit",
+     "chance": 0.2
+    },
+    {
+     "item": "stim_shot",
+     "chance": 0.4
+    }
+   ],
+   "flee": false
+  },
+  {
+   "id": "repo_agent",
+   "name": "Repo agent",
+   "level": 2,
+   "hp": "4d8+8",
+   "ac": 14,
+   "attack": 5,
+   "damage": "1d8+3",
+   "xp": 120,
+   "gold": "3d8",
+   "text": "A repo man in a white Aurelian suit with a collections baton and a face like a closed spreadsheet.",
+   "tags": [
+    "humanoid"
+   ],
+   "loot": [
+    {
+     "item": "heavy_pistol",
+     "chance": 0.2
+    },
+    {
+     "item": "kevlar_vest",
+     "chance": 0.15
+    }
+   ],
+   "flee": true
+  },
+  {
+   "id": "repo_drone",
+   "name": "Repo drone",
+   "level": 2,
+   "hp": "3d8+3",
+   "ac": 14,
+   "attack": 4,
+   "damage": "1d6+2",
+   "xp": 60,
+   "gold": "0",
+   "text": "A sleek white drone with a collar arm and an apologetic voice. It will take your coat, your credits and, if you are late, your eyes.",
+   "tags": [
+    "machine"
+   ],
+   "loot": [
+    {
+     "item": "scrap_circuit",
+     "chance": 0.6
+    }
+   ],
+   "flee": true
+  },
+  {
+   "id": "repo_chief_vane",
+   "name": "Repo Chief Vane",
+   "level": 3,
+   "hp": "12d8+24",
+   "ac": 15,
+   "attack": 6,
+   "damage": "1d10+4",
+   "xp": 500,
+   "gold": "6d10",
+   "text": "A tall man in a spotless white coat with a repo collar hooked on his belt and a soft, unhurried voice. He treats violence as late-stage paperwork.",
+   "tags": [
+    "humanoid",
+    "boss"
+   ],
+   "loot": [
+    {
+     "item": "arc_blade",
+     "chance": 0.6
+    },
+    {
+     "item": "medkit",
+     "chance": 0.6
+    }
+   ],
+   "attacks": 2,
+   "flee": false,
+   "on_defeat": [
+    {
+     "flag": "vane_down"
+    },
+    {
+     "give": "memory_shard"
+    },
+    {
+     "reputation": {
+      "aurelian": -15,
+      "lowtide_folk": 10
+     }
+    },
+    {
+     "message": "Vane sinks to one knee. 'Delinquent,' he says, almost fondly. 'You were always going to be.'"
+    }
+   ]
+  }
+ ]
+}

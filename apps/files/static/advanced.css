@@ -1,0 +1,11 @@
+#advanced-tools { display:flex; flex-wrap:wrap; gap:8px; align-items:center; padding:8px 14px; border-bottom:1px solid var(--line, #344451); }
+#advanced-tools.hidden, #advanced-result.hidden { display:none; }
+#advanced-tools label { display:flex; gap:5px; align-items:center; font-size:12px; }
+#filter-size { width:110px; }
+#filter-ext { width:70px; }
+#advanced-result { padding:10px 16px; max-height:240px; overflow:auto; white-space:pre-wrap; overflow-wrap:anywhere; font:12px/1.6 monospace; background:var(--surface, #16212d); }
+#batch-dialog { color:var(--text, #dbe7ee); background:var(--surface, #16212d); border:1px solid var(--line, #465b6e); border-radius:14px; width:min(680px, 92vw); }
+#batch-dialog::backdrop { background:#0009; }
+#batch-dialog label { display:flex; justify-content:space-between; gap:12px; margin:10px 0; }
+#batch-plan { max-height:240px; overflow:auto; white-space:pre-wrap; }
+.bar { flex-wrap:wrap; }

@@ -1,0 +1,23 @@
+{
+  "story": {
+    "recent": 24,
+    "fold_at": 40,
+    "gm_max_tokens": 450,
+    "recap_max_tokens": 450,
+    "temperature": 0.9,
+    "text_max": 4000
+  },
+  "map": {"w": 24, "h": 16, "max_side": 64, "max_tokens": 60},
+  "terrain": [
+    {"key": "0", "id": "floor", "label": "Floor", "color": "#3b342b"},
+    {"key": "1", "id": "wall", "label": "Wall", "color": "#16130f"},
+    {"key": "2", "id": "grass", "label": "Grass", "color": "#4a6b35"},
+    {"key": "3", "id": "tree", "label": "Trees", "color": "#2c4a26"},
+    {"key": "4", "id": "water", "label": "Water", "color": "#2f5878"},
+    {"key": "5", "id": "road", "label": "Road", "color": "#7a6648"},
+    {"key": "6", "id": "door", "label": "Door", "color": "#9a6a2e"},
+    {"key": "7", "id": "lava", "label": "Fire", "color": "#b8452a"}
+  ],
+  "dice": {"max_dice": 100, "max_sides": 1000, "max_terms": 10},
+  "party_max": 8
+}

@@ -1,0 +1,113 @@
+{"locations": [
+  {"id": "whisperwood_edge", "name": "The Whispering Verge", "region": "whisperwood", "tags": ["wild"],
+   "short": "Where the road gives up and the old trees begin.",
+   "description": "The road simply stops, as though the forest had pushed it out. Ahead the trunks stand close as a crowd, and the leaves above murmur in a wind you cannot feel. A pale moth is pinned to the signpost with a thorn, still twitching.",
+   "features": [
+     {"id": "signpost", "name": "the signpost", "text": "Three arms, all pointing the same way: in. Each carries a carved moth with its wings spread.", "check": {"skill": "investigation", "dc": "easy"}, "success": [{"message": "Beneath the moth, scratched small: 'Ask for Thistlewick. Do not eat anything. Do not give your true name.'"}, {"flag": "whisperwood_knows_manners"}, {"xp": 15}], "fail": []},
+     {"id": "whispers", "name": "the murmuring leaves", "text": "You stand still and listen. The words are almost there, like a conversation behind a closed door.", "check": {"skill": "perception", "dc": "hard"}, "success": [{"message": "'...the lamp is gone... the Warden has it... send the one with the moth-letter...' The murmur breaks off, embarrassed."}, {"flag": "whisperwood_heard_lamp"}, {"xp": 30}], "fail": [{"message": "Something in the leaves hisses your name, and you cannot shake the feeling it said it with relish."}], "once": true},
+     {"id": "dead_moth", "name": "the pinned moth", "text": "Someone pinned it here as a warning, or as a welcome. Hard to say, in the Wood.", "check": {"skill": "medicine", "dc": "trivial"}, "success": [{"message": "You free it gently. It sits on your finger a moment, then flies in toward the dark. Somewhere ahead, a bell rings once."}, {"flag": "moth_invited"}, {"reputation": {"moth_court": 2}}], "fail": [], "once": true}
+   ],
+   "npcs": ["whisperwood_thistlewick"],
+   "on_enter": [
+     {"when": {"quest_done": "main_1", "quest_not_started": "main_2"}, "effects": [{"start_quest": "main_2"}, {"message": "You carry a warm red shard and a letter sealed with a moth. The Wood knows it."}]},
+     {"when": {"not_flag": "whisperwood_welcomed"}, "scene": "whisperwood_welcome", "once": true}
+   ],
+   "exits": [
+     {"to": "brightwater_crossroads", "label": "South, back to the Weeping Crossroads", "hours": 4},
+     {"to": "whisperwood_cabin", "label": "West, to a warden's cabin", "hours": 0.5},
+     {"to": "whisperwood_mothlight_path", "label": "In along the Mothlight Path", "hours": 1}
+   ]},
+  {"id": "whisperwood_cabin", "name": "The Wardens' Cabin", "region": "whisperwood", "tags": ["safe"], "rest_cost": 0,
+   "short": "A leaking, lived-in cabin at the forest's edge.",
+   "description": "A low log cabin with a moss roof that has slumped on one side. Inside: two narrow beds, a table scarred by knives and homework, a hearth that still smells of last winter. Every wall holds a hook, and every hook holds something a ranger would want.",
+   "features": [
+     {"id": "bunks", "name": "the two bunks", "text": "One bed is neatly made. The other has a carved wooden fox on the pillow and a blue kingfisher feather tucked in its collar.", "when": {"not_in_party": "lyra"}},
+     {"id": "bunks_lyra", "name": "the two bunks", "text": "Lyra stands in the doorway and does not come in. Then she does, and picks up the carved fox, and puts it back exactly where it was. 'Fen made that. He was nine.' She does not say anything else, and neither do you.", "when": {"in_party": "lyra"}, "success": [{"affection": {"lyra": 5}}, {"flag": "lyra_saw_cabin"}, {"message": "Lyra's shoulder presses lightly against yours for a moment."}], "once": true},
+     {"id": "names", "name": "the carved names", "text": "The doorframe is cut with heights and names: FEN at nine, LYRA at twelve, a bigger mark labelled MAM, and then a long row of older ones, all Wardens.", "check": {"skill": "history", "dc": "medium"}, "success": [{"message": "The Wardens swore to the Court long ago: guard the Wood's edge, never cross the Mothlight Path uninvited, and never take a bargain they could not keep. Most of them lasted."}, {"xp": 20}], "fail": []},
+     {"id": "cache", "name": "the warden's cache", "text": "A loose board under the hearth. A bundle of dry provisions and a spare bowstring, left for whoever needs them.", "success": [{"give": "rations"}, {"give": "rations"}, {"message": "You take what you need and leave a coin on the board, as the cabin's custom seems to ask."}, {"gold": -1}], "once": true}
+   ],
+   "npcs": ["whisperwood_tamsin"],
+   "exits": [{"to": "whisperwood_edge", "label": "Back out to the verge", "hours": 0.5}]},
+  {"id": "whisperwood_mothlight_path", "name": "The Mothlight Path", "region": "whisperwood", "tags": ["wild"],
+   "short": "A winding trail lit by drifting moths.",
+   "description": "The path is a ribbon of pale dirt wandering between enormous trees, and it is lit from above by thousands of slow, drifting moths. Behind you, the verge looks farther away than it should. Side trails split off in every direction, and each one looks more inviting than the last.",
+   "features": [
+     {"id": "hive", "name": "a hive in a hollow oak", "text": "Bees the size of your thumb come and go from a knot-hole, trailing faint gold. The honey inside would be worth taking.", "check": {"skill": "nature", "dc": "medium"}, "success": [{"message": "You hum low and slow, as the old wardens do. The bees let you take a comb."}, {"give": "whisperwood_glimmer_honey"}, {"xp": 20}], "fail": [{"message": "The hive objects. You are stung in several places at once."}, {"damage": "1d6"}], "once": true},
+     {"id": "stones", "name": "a ring of standing stones", "text": "Six leaning stones with moths carved on their faces. The seventh place is empty, and the grass there is very green.", "check": {"skill": "arcana", "dc": "hard"}, "success": [{"message": "A threshold, not a ring. Step through with the invitation and the path to the Court opens by itself; without it, you would only walk in circles."}, {"flag": "moth_invited"}, {"xp": 30}], "fail": []}
+   ],
+   "exits": [
+     {"to": "whisperwood_edge", "label": "Back to the verge", "hours": 1},
+     {"to": "whisperwood_lanternfall", "label": "Follow the lanterns to Lanternfall", "hours": 1},
+     {"to": "whisperwood_mirror_pool", "label": "Down a mossy track to the pool", "hours": 1.5},
+     {"to": "whisperwood_old_oak", "label": "Up to the great oak", "hours": 1.5},
+     {"to": "whisperwood_briar_clearing", "label": "North, toward the cold and the thorns", "hours": 2}
+   ]},
+  {"id": "whisperwood_lanternfall", "name": "Lanternfall", "region": "whisperwood", "tags": ["town", "inn", "safe"], "rest_cost": 6,
+   "short": "A market in the roots, lit by hanging lanterns.",
+   "description": "A market built among the roots of a tree so big its upper boughs are lost in cloud. Stalls hang between the roots on rope, lit by lanterns with tiny moths inside, and the traders are as likely to be mushroom-capped as human. Bargains murmur under every awning, and there is a sign at the entrance in three languages: ALL SALES FINAL, INCLUDING THE ONES YOU REGRET.",
+   "shop": {"name": "Mistress Quill's awning", "items": ["whisperwood_dew_tonic", "healing_draught", "whisperwood_glimmer_honey", "whisperwood_moonpetal", "whisperwood_reed_flute", "whisperwood_mothsilk_vest", "whisperwood_thistle_sting", "whisperwood_antler_bow", "rations"], "buys": true},
+   "features": [
+     {"id": "bell", "name": "the bargain bell", "text": "A bronze bell hangs at the heart of the market. A card beneath explains that ringing it seals the nearest bargain, and has done so since before anyone remembers.", "check": {"skill": "insight", "dc": "medium"}, "success": [{"message": "You watch a haggle end and the bell ring itself. Both parties flinch, like men who forgot the fine print. The Court's law is real and literal."}, {"flag": "whisperwood_knows_bell"}, {"xp": 15}], "fail": []},
+     {"id": "lost_things", "name": "the lost-and-found barrel", "text": "A barrel of items labelled with notes like 'a year of laughter, slightly used' and 'the colour blue (stolen)'.", "check": {"skill": "sleight", "dc": "hard"}, "success": [{"message": "You lift a silver locket from the barrel while the keeper blinks. It holds nothing, but it is pretty."}, {"give": "silver_locket"}], "fail": [{"message": "A very small hand grips your wrist. 'Pay,' says the voice below the barrel's rim. You hand over some coin."}, {"gold": -5}], "once": true}
+   ],
+   "npcs": ["whisperwood_quill"],
+   "exits": [
+     {"to": "whisperwood_mothlight_path", "label": "Back down the Mothlight Path", "hours": 1},
+     {"to": "whisperwood_court_gate", "label": "Up the hanging stair to the Court", "hours": 1}
+   ]},
+  {"id": "whisperwood_mirror_pool", "name": "The Mirror Pool", "region": "whisperwood", "tags": ["wild"],
+   "short": "A round pool so still it looks like glass.",
+   "description": "A round pool lies in a hollow of white rock, so still that the sky seems to have fallen into it. No leaf rests on its surface, and no fish stirs. When you lean over, your reflection looks up a little too slowly.",
+   "features": [
+     {"id": "reflection", "name": "your reflection", "text": "You kneel and look. The face in the water is yours, but older, and it is holding something you cannot see.", "check": {"skill": "insight", "dc": "hard"}, "success": [{"message": "It is not a threat. The pool shows you what you will carry out of the Wood, and for a moment you see the shard in your hand, and a hand over yours, and a door. Whatever it is, you will not be alone."}, {"xp": 40}, {"flag": "whisperwood_pool_seen"}], "fail": [{"message": "The reflection reaches up through the surface and takes your wrist. The cold goes straight to your bones."}, {"damage": "1d6"}], "once": true},
+     {"id": "ask_pool", "name": "the surface of the water", "text": "You ask the pool a question out loud. The ripples do not answer. Something under them does.", "success": [{"scene": "whisperwood_pool"}]},
+     {"id": "stir", "name": "a strange ripple", "text": "A single ring spreads from the centre though nothing fell. Something is rising.", "success": [{"message": "A figure climbs from the water wearing your face. It does not blink."}, {"combat": ["whisperwood_mirror_wraith"]}], "when": {"quest_active": "whisperwood_stolen_reflection"}}
+   ],
+   "exits": [
+     {"to": "whisperwood_mothlight_path", "label": "Back up to the path", "hours": 1.5},
+     {"to": "whisperwood_court_gate", "label": "Along the water to the Court's stair", "hours": 1}
+   ]},
+  {"id": "whisperwood_old_oak", "name": "The Grandmother Oak", "region": "whisperwood", "tags": ["wild", "safe"], "rest_cost": 0,
+   "short": "A vast oak and the hermit who tends it.",
+   "description": "An oak so wide that a cottage has been cut into its trunk, with a door and a chimney and a window glowing amber. The ground beneath it is soft with a century of acorns. A bowl of water sits at the roots, and the water is steaming in the cold.",
+   "features": [
+     {"id": "offering", "name": "the root bowl", "text": "A hollow in the roots for offerings. Flowers, mostly, and some bread. Gorse says the oak likes to be asked.", "check": {"skill": "medicine", "dc": "trivial"}, "success": [{"message": "You leave a coin and a word of thanks. The bowl warms your hands, and a bruise you forgot you had fades."}, {"heal": "1d8"}, {"gold": -1}], "fail": []},
+     {"id": "night_bloom", "name": "the night-blooming vine", "text": "A pale vine twines up the trunk, its buds tightly shut. By night they open, and the glen smells of cold, clean air.", "when": {"time": ["evening", "night"]}, "success": [{"give": "whisperwood_moonpetal"}, {"message": "You pluck a single moonpetal, careful not to bruise the others."}], "once": true},
+     {"id": "bark_names", "name": "the carved bark", "text": "Names, hundreds of them, cut by travellers over centuries. Near the bottom, small and crooked: FEN + a drawing of a fox.", "when": {"in_party": "lyra"}, "success": [{"affection": {"lyra": 3}}, {"message": "Lyra touches the carving once, very lightly, and says nothing. She is not crying. It is the damp."}], "once": true}
+   ],
+   "npcs": ["whisperwood_gorse"],
+   "exits": [{"to": "whisperwood_mothlight_path", "label": "Back down to the Mothlight Path", "hours": 1.5}]},
+  {"id": "whisperwood_briar_clearing", "name": "The Blighted Clearing", "region": "whisperwood", "tags": ["wild"],
+   "short": "A clearing strangled by black briar.",
+   "description": "The trees around this clearing are dying from the roots up, wrapped in black briar that hums with cold. Frost glitters on the thorns in spite of the season. In the middle, between two fallen oaks, a small light still burns.",
+   "features": [
+     {"id": "warden_hollow", "name": "the stag-skull in the briars", "text": "A great antlered skull sits in a bed of thorns, and the briars around it are not still. From one tine hangs a silk cord, and from the cord a lantern whose light is a small, frightened moth.", "when": {"not_item": "moth_lamp"}},
+     {"id": "fight_warden", "name": "the Warden's lair", "text": "Take the lamp by force. The thorns tighten.", "when": {"not_item": "moth_lamp", "not_flag": "briar_warden_dead"}, "success": [{"message": "The briars lift. The skull turns toward you, and a voice like wind in a chimney says: 'Mine. Mine. Cold is better than light.'"}, {"combat": ["whisperwood_briar_warden"]}]},
+     {"id": "calm_warden", "name": "the Warden's lamp", "text": "The Warden is a guardian twisted by the cold, not a villain. Perhaps it can be reasoned with.", "when": {"not_item": "moth_lamp", "not_flag": "briar_warden_dead"}, "check": {"skill": "nature", "dc": "hard"}, "success": [{"message": "You kneel and speak in the old warden's tongue, the one with no words in it. The briars loosen, and the skull bows. The lamp is lifted from its tine and placed in your hands."}, {"give": "moth_lamp"}, {"flag": "briar_warden_calmed"}, {"xp": 150}, {"reputation": {"moth_court": 5}}], "fail": [{"message": "It hears the lie in your cadence. The briars lunge."}, {"combat": ["whisperwood_briar_warden"]}]},
+     {"id": "sneak_lamp", "name": "the dangling lamp", "text": "It is out of the Warden's reach if you are quick. You are quick.", "when": {"not_item": "moth_lamp", "not_flag": "briar_warden_dead"}, "check": {"skill": "stealth", "dc": "very_hard"}, "success": [{"message": "You slip between the thorns on the breath the Warden exhales, unhook the cord, and are three paces away before it notices."}, {"give": "moth_lamp"}, {"xp": 120}], "fail": [{"message": "A twig cracks. The briars turn toward you."}, {"combat": ["whisperwood_briar_warden"]}]},
+     {"id": "frost", "name": "the frost on the thorns", "text": "The cold here is the Thornwake's, and it radiates from one root: black, glistening, buried deep.", "check": {"skill": "arcana", "dc": "hard"}, "success": [{"message": "You can feel the Thornwake's patience like a slow breath. It does not hate; it only wants everything to be still. The knowledge chills you, and quietly pleases you too."}, {"flag": "knows_thornwake_wants_stillness"}, {"xp": 40}], "fail": [], "once": true}
+   ],
+   "encounter": {"chance": 0.2, "monsters": [["whisperwood_thorn_sprite", "whisperwood_thorn_sprite"], ["blight_husk", "blight_husk"]]},
+   "exits": [{"to": "whisperwood_mothlight_path", "label": "Back south to the path", "hours": 2}]},
+  {"id": "whisperwood_court_gate", "name": "The Gate of Wings", "region": "whisperwood", "tags": ["town"],
+   "short": "An arch of living wings above a stair into the trees.",
+   "description": "A tall arch grown from two enormous yew trunks, strung with silk and hung with pale wings that have been shed, not taken. Beyond it a stair spirals up into the canopy, and from the top comes the sound of a harp playing three notes over and over, very slowly. Two sentinels in chitin armour stand at the foot, perfectly still.",
+   "features": [
+     {"id": "sentinels", "name": "the sentinels", "text": "They look at you without moving their heads, and one of them says, in a voice like paper, 'The Court receives the invited. State your business, and not your true name.'"}
+   ],
+   "exits": [
+     {"to": "whisperwood_lanternfall", "label": "Down to Lanternfall", "hours": 1},
+     {"to": "whisperwood_mirror_pool", "label": "Along the water to the Mirror Pool", "hours": 1},
+     {"to": "whisperwood_moth_court", "label": "Up the stair into the Court", "hours": 0.5, "when": {"any": [{"flag": "moth_invited"}, {"has_item": "moth_letter"}, {"quest_active": "main_2"}]}, "locked": "The sentinels cross their spears. 'The Court receives the invited. Show us the moth, or come back when someone has asked for you.'"}
+   ]},
+  {"id": "whisperwood_moth_court", "name": "The Court of Moths", "region": "whisperwood", "tags": ["town"],
+   "short": "A hall of silk and lanternlight among the boughs.",
+   "description": "A hall woven from living branches and spider silk, hung with ten thousand tiny lanterns, each with a moth sleeping inside. Courtiers drift between the pillars in clothes made of petals and wing-dust, and they all stop talking when you enter. At the far end, on a throne of white roots, sits the Lady of Moths.",
+   "features": [
+     {"id": "reliquary", "name": "the Lady's reliquary", "text": "A pearly coffer on a pedestal behind the throne. A pale glow leaks from the hinges, the colour of old gold.", "when": {"quest_active": "main_2", "not_item": "moth_shard"}, "check": {"skill": "sleight", "dc": "very_hard"}, "success": [{"message": "While the harp plays its three notes, you slide the lid open with two fingers and the shard drops into your palm. A bell rings once, somewhere far off."}, {"give": "moth_shard"}, {"flag": "moth_bargain_broken"}, {"reputation": {"moth_court": -25}}, {"xp": 150}], "fail": [{"message": "A spear of black glass touches your throat. 'The Lady would like a word,' says Sir Gossamer, 'and then, I think, a duel.'"}, {"combat": ["whisperwood_court_champion"]}], "once": true},
+     {"id": "harp", "name": "the self-playing harp", "text": "The harp plays three notes, rests, and plays them again. The pattern is almost a song, and almost a plea.", "check": {"skill": "performance", "dc": "hard"}, "success": [{"message": "You add a fourth and a fifth note, and the harp answers with a whole phrase. Heads turn. 'That is the Queen's tune,' someone whispers. 'She taught it to us.'"}, {"flag": "whisperwood_knows_queens_tune"}, {"reputation": {"moth_court": 4}}, {"xp": 40}], "fail": [], "once": true}
+   ],
+   "npcs": ["whisperwood_veyra"],
+   "on_enter": [{"when": {"quest_active": "main_2", "not_flag": "moth_court_met"}, "scene": "whisperwood_audience", "once": true}],
+   "exits": [{"to": "whisperwood_court_gate", "label": "Down the stair", "hours": 0.5}]}
+]}

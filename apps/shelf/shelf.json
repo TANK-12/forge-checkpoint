@@ -1,0 +1,25 @@
+{
+  "_about": "Shelf's registry. Articles are fetched by Shelf's backend (never from a private or loopback address), cut down to their text and pictures by trafilatura, cleaned to the tags listed here and kept with their pictures in the data folder. send_to lists the other apps an article can go to; {name} in a body is filled from the box the page asks with.",
+  "data": "~/.local/share/forge/shelf",
+  "user_agent": "Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0",
+  "timeout": 20,
+  "deadline": 60,
+  "pictures_deadline": 120,
+  "max_page_mb": 8,
+  "max_images": 40,
+  "max_image_mb": 8,
+  "words_per_minute": 230,
+  "min_words": 20,
+  "tags": ["p", "h1", "h2", "h3", "h4", "h5", "h6", "strong", "b", "em", "i", "u", "s", "del", "sub", "sup", "a", "img", "ul", "ol", "li", "blockquote", "pre", "code", "br", "hr", "table", "thead", "tbody", "tr", "th", "td", "figure", "figcaption"],
+  "send_to": [
+    {
+      "id": "dossier",
+      "label": "Research in Dossier",
+      "ask": "Who or what should Dossier research?",
+      "prefill": "author",
+      "url": "http://127.0.0.1:8437/api/research",
+      "body": {"name": "{name}"},
+      "done": "Dossier queued it"
+    }
+  ]
+}

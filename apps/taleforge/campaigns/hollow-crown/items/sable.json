@@ -1,0 +1,6 @@
+{"items": [
+  {"id": "sable_brooch", "name": "Sable's moth brooch", "kind": "key", "value": 0, "unsellable": true, "text": "A tiny silver moth with wings of grey enamel, the clasp worn smooth by twenty years of thumbs. Sable has never sold it, even when starving."},
+  {"id": "sable_letter", "name": "Letter in a queen's hand", "kind": "key", "value": 0, "unsellable": true, "text": "A single sheet, sealed and unsealed again, written in a slanting hand that has signed treaties. The ink has faded to the colour of dried blood."},
+  {"id": "sable_songbook", "name": "Sable's songbook", "kind": "gift", "value": 0, "unsellable": true, "text": "A well-thumbed notebook of half-finished songs, margins crowded with doodles of moths. Sable pressed it into your hands without comment."},
+  {"id": "sable_silver_strings", "name": "Set of silver lute strings", "kind": "gift", "value": 22, "text": "Wound silver wire in a paper wrapper. The sort of present a bard remembers."}
+]}

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; media-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'sha256-F+F2kFhQHK+7TV90O/h1PPQyu+lUj/AOxrCwu7qtTPQ='; connect-src 'self' blob: data:; frame-src 'none'; object-src 'none'">
+<title>Vault</title>
+<link rel="stylesheet" href="/shared/forge.css">
+<link rel="stylesheet" href="app.css">
+<script type="importmap">{"imports": {"three": "/shared/vendor/three/three.module.min.js", "three/addons/": "/shared/vendor/three/addons/"}}</script>
+</head>
+<body>
+<header class="top">
+  <h1 data-forge-frame-hide>Vault</h1>
+  <div class="tabs" role="tablist" data-forge-frame-tabs data-forge-frame-hide>
+    <button id="tab-disk" data-tab="disk" class="chip on" type="button" role="tab">On disk</button>
+    <button id="tab-ph" data-tab="ph" class="chip" type="button" role="tab">Poly Haven</button>
+  </div>
+  <input id="search" type="search" placeholder="Search names and folders" aria-label="Search">
+  <span class="grow"></span>
+  <button id="refresh" class="btn" type="button" title="Look through the folders again">Refresh</button>
+</header>
+<main class="desk">
+  <aside class="side">
+    <h2>Kinds</h2>
+    <div id="kinds" class="stack"></div>
+    <h2>Folders</h2>
+    <div id="sources" class="stack"></div>
+    <form id="add-folder" class="add">
+      <input id="folder-path" type="text" placeholder="The full path of a folder" aria-label="Folder to add">
+      <button class="btn" type="submit">Add</button>
+    </form>
+  </aside>
+  <section class="mid">
+    <div id="ph-bar" class="ph-bar" hidden>
+      <select id="ph-kind" aria-label="Poly Haven kind">
+        <option value="models">Models</option><option value="hdris">Skies</option><option value="textures">Textures</option>
+      </select>
+      <input id="ph-q" type="search" placeholder="rock, sunset, brick..." aria-label="Search Poly Haven">
+      <button id="ph-go" class="btn btn-primary" type="button">Search</button>
+      <span class="muted small">Free CC0 assets. Each one is downloaded once, at 1k unless you pick more.</span>
+    </div>
+    <p id="count" class="muted small count"></p>
+    <div id="grid" class="grid"></div>
+  </section>
+  <aside id="detail" class="detail">
+    <p class="muted">Pick something to see it here.</p>
+  </aside>
+</main>
+<p id="status" class="status" role="status"></p>
+<script type="module" src="app.js"></script>
+<script src="/shared/forge_chrome.js"></script>
+</body>
+</html>

@@ -1,0 +1,694 @@
+{
+ "locations": [
+  {
+   "id": "lowtide_capsule",
+   "name": "Capsule Hotel, Cell 412",
+   "region": "lowtide",
+   "description": "A coffin-sized pod stacked six high in a hotel that smells of disinfectant and old rain. The mattress is a damp foam brick, the mirror is cracked, and a red number pulses on the inside of your wrist: 48,000 credits, owed to Aurelian Dynamics. The pillow has a fresh slit along one seam.",
+   "short": "Your capsule, and the debt that came with it.",
+   "tags": [
+    "town",
+    "safe",
+    "inn"
+   ],
+   "rest_cost": 8,
+   "exits": [
+    {
+     "to": "lowtide_market",
+     "label": "Out to the night market",
+     "hours": 0.25
+    }
+   ],
+   "features": [
+    {
+     "id": "pillow_slit",
+     "name": "the slit in the pillow",
+     "text": "Somebody tucked a flat black chip into the foam seam. Your handwriting is on the sticker: 'If you are reading this, don't trust the Spire. Platform Nine. - you'.",
+     "once": true,
+     "success": [
+      {
+       "give": "receipt_chip"
+      },
+      {
+       "flag": "chip_found"
+      },
+      {
+       "message": "You pocket the receipt chip. Your own handwriting, from a week you don't remember."
+      }
+     ]
+    },
+    {
+     "id": "wall_panel",
+     "name": "the loose wall panel",
+     "text": "A service panel behind the mirror sits a hair proud of the wall, as though someone has opened it recently.",
+     "check": {
+      "skill": "tech",
+      "dc": "medium"
+     },
+     "once": true,
+     "success": [
+      {
+       "gold": 25
+      },
+      {
+       "give": "stim_shot"
+      },
+      {
+       "xp": 25
+      },
+      {
+       "message": "Behind the panel: a stash of credit chits and a stim, left by a previous guest who didn't come back."
+      }
+     ],
+     "fail": [
+      {
+       "damage": "1"
+      },
+      {
+       "message": "A live wire bites your fingertip. The panel stays shut."
+      }
+     ]
+    },
+    {
+     "id": "wrist_readout",
+     "name": "the red number on your wrist",
+     "text": "It reads 48,000 and a handful more every hour. The interest ticks upward in small cold increments. The loan origin field is blank, the signature field says 'verified by memory', and you have no memory of verifying anything."
+    }
+   ],
+   "npcs": [],
+   "on_enter": [
+    {
+     "scene": "lowtide_wake",
+     "once": true
+    }
+   ]
+  },
+  {
+   "id": "lowtide_market",
+   "name": "The Drip Market",
+   "region": "lowtide",
+   "description": "A night market on three tiers of rusted gantry, strung with lanterns, neon tubes and drying laundry. Vendors shout over each other in four languages. Steam, solder smoke and frying oil roll off the stalls, and under it all rain drums on the tarpaulin roof like a patient fist.",
+   "short": "The night market, hub of Lowtide.",
+   "tags": [
+    "town",
+    "board"
+   ],
+   "exits": [
+    {
+     "to": "lowtide_capsule",
+     "label": "Back to your capsule hotel",
+     "hours": 0.25
+    },
+    {
+     "to": "lowtide_noodle",
+     "label": "Auntie Moth's noodle bar",
+     "hours": 0.1
+    },
+    {
+     "to": "lowtide_clinic",
+     "label": "The back-alley clinic",
+     "hours": 0.2
+    },
+    {
+     "to": "lowtide_club",
+     "label": "The Wet Circuit club",
+     "hours": 0.2
+    },
+    {
+     "to": "lowtide_streets",
+     "label": "Down the flooded stairs",
+     "hours": 0.4
+    }
+   ],
+   "features": [
+    {
+     "id": "debt_kiosk",
+     "name": "the debt kiosk",
+     "text": "A kiosk bolted to a pillar offers a friendly blue interface and a single button: Check Your Balance. A fist-sized hole in its side suggests how most people feel about that."
+    },
+    {
+     "id": "lantern_wall",
+     "name": "the lantern wall",
+     "text": "Dozens of paper lanterns hang on a wire, each inked with a name. A woman tells you they're for the dead and the indebted, and that the difference is smaller than you'd think."
+    },
+    {
+     "id": "pickpocket_stall",
+     "name": "the unattended cash box",
+     "text": "A vendor has stepped away from a stall and left the cash box open, its latch hanging loose.",
+     "check": {
+      "skill": "sleight",
+      "dc": "medium"
+     },
+     "once": true,
+     "success": [
+      {
+       "gold": 20
+      },
+      {
+       "reputation": {
+        "lowtide_folk": -2
+       }
+      },
+      {
+       "message": "A light touch, a calm walk. The coins vanish into your sleeve."
+      }
+     ],
+     "fail": [
+      {
+       "reputation": {
+        "lowtide_folk": -3
+       }
+      },
+      {
+       "message": "A hand clamps your wrist. 'Not here,' the vendor growls, and lets you go with a promise."
+      }
+     ]
+    }
+   ],
+   "npcs": [
+    "wick"
+   ],
+   "shop": {
+    "name": "Wick's Salvage and Sundries",
+    "items": [
+     "stim_shot",
+     "medkit",
+     "synth_noodles",
+     "real_coffee",
+     "combat_knife",
+     "heavy_pistol",
+     "shock_baton",
+     "armored_jacket",
+     "kevlar_vest",
+     "riot_plate",
+     "cassette_tape",
+     "jasmine_tea",
+     "paper_lantern",
+     "lockbreaker"
+    ],
+    "buys": true
+   }
+  },
+  {
+   "id": "lowtide_noodle",
+   "name": "Auntie Moth's Noodle Bar",
+   "region": "lowtide",
+   "description": "Eight stools around a steaming counter under a tin awning, a hand-painted menu that changes with the tide, and a pot of broth that has never been empty since before the flood. The air smells of star anise and pepper oil. Rain taps on the awning, which is almost the same as a lullaby.",
+   "short": "Hot broth and honest rumours.",
+   "tags": [
+    "town",
+    "safe",
+    "inn"
+   ],
+   "rest_cost": 5,
+   "exits": [
+    {
+     "to": "lowtide_market",
+     "label": "Back out to the market",
+     "hours": 0.1
+    }
+   ],
+   "features": [
+    {
+     "id": "regulars_wall",
+     "name": "the wall of photographs",
+     "text": "Faded snapshots of the regulars: dockhands, singers, a boy with a drone on his shoulder. A few have black ribbons across the corner, and a few have red numbers scrawled underneath. One shows you, laughing, a bowl in your hand. The date is three weeks ago."
+    }
+   ],
+   "npcs": [
+    "moth"
+   ]
+  },
+  {
+   "id": "lowtide_clinic",
+   "name": "Halvorsen's Back-Alley Clinic",
+   "region": "lowtide",
+   "description": "A converted laundromat with a red cross spray-painted over the door. Surgical lamps hang from washing-machine hooks, and a row of cots lines the far wall, each with a patient and an IV bag of something cloudy. Everything smells of antiseptic and instant coffee.",
+   "short": "Patchwork medicine for people the Spire forgot.",
+   "tags": [
+    "town",
+    "safe"
+   ],
+   "rest_cost": 0,
+   "exits": [
+    {
+     "to": "lowtide_market",
+     "label": "Out to the market",
+     "hours": 0.2
+    }
+   ],
+   "features": [
+    {
+     "id": "tomas_cot",
+     "name": "the cot by the window",
+     "text": "A young man lies under a humming respirator, eyes closed, a blue Aurelian lease tag clipped to the frame. His chart says Tomas Okoye, and the leasing fee on it has your stomach turning.",
+     "hidden": false
+    },
+    {
+     "id": "drug_cabinet",
+     "name": "the cabinet of surplus meds",
+     "text": "A glass-fronted cabinet, locked with a tiny cheap latch and a very large sign.",
+     "check": {
+      "skill": "tech",
+      "dc": "hard"
+     },
+     "once": true,
+     "success": [
+      {
+       "give": "medkit"
+      },
+      {
+       "reputation": {
+        "lowtide_folk": -2
+       }
+      },
+      {
+       "message": "The latch gives. You take a medkit and hope nobody is counting."
+      }
+     ],
+     "fail": [
+      {
+       "damage": "1d4"
+      },
+      {
+       "message": "The cabinet's anti-theft sting catches you across the knuckles."
+      }
+     ]
+    }
+   ],
+   "npcs": [
+    "ines"
+   ],
+   "shop": {
+    "name": "Clinic dispensary",
+    "items": [
+     "stim_shot",
+     "medkit",
+     "coolant_vial"
+    ],
+    "buys": false
+   }
+  },
+  {
+   "id": "lowtide_club",
+   "name": "The Wet Circuit",
+   "region": "lowtide",
+   "description": "A basement club under the old maglev viaduct, half drowned and entirely alive. Neon tubes crawl along wet brick, a stage glows pink at the far end, and a bass line you feel in your fillings makes the puddles tremble. The Lantern Saints drink at the corner booths, and nobody drinks near them.",
+   "short": "Music, bass and Saint territory.",
+   "tags": [
+    "town"
+   ],
+   "exits": [
+    {
+     "to": "lowtide_market",
+     "label": "Up the stairs to the market",
+     "hours": 0.2
+    },
+    {
+     "to": "lowtide_roof",
+     "label": "The fire stairs to the roof",
+     "hours": 0.2
+    }
+   ],
+   "features": [
+    {
+     "id": "stage",
+     "name": "the stage",
+     "text": "A single mic on a bent stand, a keyboard with three dead keys, and an amp patched with copper wire. Whoever plays here knows how to make broken things sound beautiful."
+    }
+   ],
+   "npcs": [
+    "dagny",
+    "ren"
+   ]
+  },
+  {
+   "id": "lowtide_roof",
+   "name": "The Drowned Garden",
+   "region": "lowtide",
+   "description": "A rooftop above the club that someone fed with flower boxes, rain-barrel gardens and a ring of salvaged chairs. Paper lanterns sway in the wind, and from here you can see the whole of Lowtide's neon spilling into the flooded streets, and above it, far and unreachable, the Spire.",
+   "short": "A quiet garden above the noise.",
+   "tags": [
+    "safe"
+   ],
+   "rest_cost": 0,
+   "exits": [
+    {
+     "to": "lowtide_club",
+     "label": "Down to the club",
+     "hours": 0.2
+    }
+   ],
+   "features": [
+    {
+     "id": "rain_barrel",
+     "name": "the rain barrel",
+     "text": "A barrel of clean water, a tin cup chained to its lid. A hand-lettered sign reads 'Take what you need, leave what you can.'",
+     "once": true,
+     "success": [
+      {
+       "heal": "1d6"
+      },
+      {
+       "message": "The cold water steadies your shaking hands."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "lowtide_streets",
+   "name": "The Flooded Streets",
+   "region": "lowtide",
+   "description": "Knee-deep canals where the road used to be, lined by sagging gantries and half-sunk shopfronts. Dead drones bob in the black water like dropped toys, and cables sag overhead, humming. Every window is shuttered, but some of them are watching.",
+   "short": "Drowned streets, scavengers and scrap.",
+   "tags": [
+    "wild"
+   ],
+   "exits": [
+    {
+     "to": "lowtide_market",
+     "label": "Up the stairs to the market",
+     "hours": 0.4
+    },
+    {
+     "to": "lowtide_metro",
+     "label": "Down into the drowned metro",
+     "hours": 0.4,
+     "when": {
+      "any": [
+       {
+        "flag": "chip_read"
+       },
+       {
+        "visited": "lowtide_metro"
+       }
+      ]
+     },
+     "locked": "A rusted stair leads down to what the chip calls Platform Nine, but you don't know the way yet."
+    }
+   ],
+   "features": [
+    {
+     "id": "wrecked_van",
+     "name": "the wrecked Aurelian van",
+     "text": "A white Aurelian service van lies on its side in the canal, the logo peeling off in rain-sodden strips. The rear lockbox is intact.",
+     "when": {
+      "quest_active": "ren_quest",
+      "not_item": "lease_override",
+      "not_flag": "tomas_freed"
+     },
+     "check": {
+      "skill": "investigation",
+      "dc": "medium"
+     },
+     "success": [
+      {
+       "give": "lease_override"
+      },
+      {
+       "xp": 40
+      },
+      {
+       "message": "Behind a false panel you find what you were looking for: a coded Aurelian lease override, still warm from the van's dead batteries."
+      }
+     ],
+     "fail": [
+      {
+       "damage": "1d4"
+      },
+      {
+       "message": "Sparks leap from the lockbox as you pry at it. Nothing inside responds."
+      }
+     ]
+    },
+    {
+     "id": "van_lockbox",
+     "name": "the van's sealed lockbox",
+     "text": "A second attempt: the lockbox has a mechanical latch under the electronic one.",
+     "when": {
+      "quest_active": "ren_quest",
+      "not_item": "lease_override",
+      "not_flag": "tomas_freed"
+     },
+     "check": {
+      "skill": "athletics",
+      "dc": "hard"
+     },
+     "success": [
+      {
+       "give": "lease_override"
+      },
+      {
+       "xp": 40
+      },
+      {
+       "message": "The latch snaps. The override chip drops into your palm."
+      }
+     ],
+     "fail": [
+      {
+       "damage": "1d6"
+      },
+      {
+       "message": "The metal bites back and your shoulder complains for an hour."
+      }
+     ]
+    },
+    {
+     "id": "drone_nest",
+     "name": "the drone nest",
+     "text": "A tangle of dead drones heaped under a gantry. Three red eyes watch from the middle.",
+     "when": {
+      "quest_stage": {
+       "saints_toll": "start"
+      }
+     },
+     "success": [
+      {
+       "combat": [
+        "scrap_drone",
+        "scrap_drone",
+        "scrap_drone"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "flooded_cache",
+     "name": "the cache under the stairs",
+     "text": "A sodden crate has been wedged under the steps, wrapped in a plastic sheet.",
+     "check": {
+      "skill": "perception",
+      "dc": "medium"
+     },
+     "once": true,
+     "hidden": true,
+     "success": [
+      {
+       "gold": 35
+      },
+      {
+       "give": "stim_shot"
+      },
+      {
+       "message": "A smuggler's cache, sealed against the damp. You take the credits and leave a lantern in thanks."
+      }
+     ],
+     "fail": [
+      {
+       "message": "Whatever's under the stairs, you can't find it."
+      }
+     ]
+    }
+   ],
+   "encounter": {
+    "chance": 0.2,
+    "monsters": [
+     [
+      "scrap_drone",
+      "scrap_drone"
+     ],
+     [
+      "razor_hound"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "lowtide_metro",
+   "name": "The Drowned Metro, Platform Nine",
+   "region": "lowtide",
+   "description": "A tiled platform half under black water, pillars furred with green growth and strung with Lantern Saint paper. A train lies in the canal like a dead whale, its windows full of dark. At the platform's far end a vault door of brushed Aurelian steel waits, absurdly clean among the rot.",
+   "short": "A drowned station and a vault door.",
+   "tags": [
+    "wild"
+   ],
+   "exits": [
+    {
+     "to": "lowtide_streets",
+     "label": "Climb back up to the streets",
+     "hours": 0.4
+    }
+   ],
+   "features": [
+    {
+     "id": "maglock_panel",
+     "name": "the maglock panel",
+     "text": "A slim panel beside the vault door pulses amber. The firewall is Aurelian, polished and mean, but whoever installed it left a maintenance back door.",
+     "when": {
+      "not_flag": "metro_door_open"
+     },
+     "check": {
+      "skill": "hacking",
+      "dc": "hard"
+     },
+     "success": [
+      {
+       "flag": [
+        "metro_door_open",
+        "door_hacked"
+       ]
+      },
+      {
+       "xp": 60
+      },
+      {
+       "message": "The door sighs open. Lights stutter on inside, and cold air rolls out like breath."
+      }
+     ],
+     "fail": [
+      {
+       "damage": "1d6"
+      },
+      {
+       "message": "The firewall bites back through your deck and your eyes water."
+      }
+     ]
+    },
+    {
+     "id": "pry_hatch",
+     "name": "the service hatch",
+     "text": "A maintenance hatch in the wall of the vault has seized with rust, but its hinges are the weak point.",
+     "when": {
+      "not_flag": "metro_door_open"
+     },
+     "check": {
+      "skill": "athletics",
+      "dc": "hard"
+     },
+     "success": [
+      {
+       "flag": [
+        "metro_door_open",
+        "door_forced"
+       ]
+      },
+      {
+       "xp": 60
+      },
+      {
+       "message": "Metal screams, and the hatch gives, and the dark behind it breathes out dry air."
+      }
+     ],
+     "fail": [
+      {
+       "damage": "1d6"
+      },
+      {
+       "message": "The hatch doesn't budge. Your hands will ache for a day."
+      }
+     ]
+    },
+    {
+     "id": "bluff_intercom",
+     "name": "the vault intercom",
+     "text": "A speaker grille and a camera lens, both fresh from the factory.",
+     "when": {
+      "not_flag": "metro_door_open",
+      "has_item": "corp_badge"
+     },
+     "check": {
+      "skill": "deception",
+      "dc": "medium"
+     },
+     "success": [
+      {
+       "flag": [
+        "metro_door_open",
+        "door_bluffed"
+       ]
+      },
+      {
+       "xp": 60
+      },
+      {
+       "message": "'Compliance audit,' you say, and hold up your badge. The door recognises authority before it recognises you."
+      }
+     ],
+     "fail": [
+      {
+       "message": "'Credentials not recognised,' says a pleasant voice. 'Please wait for collections.'"
+      }
+     ]
+    },
+    {
+     "id": "saints_gate",
+     "name": "the Saints' lantern gate",
+     "text": "A rusted gate hung with paper lanterns covers a side tunnel the Saints use to avoid Aurelian cameras. The lock accepts a lantern key.",
+     "when": {
+      "not_flag": "metro_door_open",
+      "has_item": "saints_lantern"
+     },
+     "success": [
+      {
+       "flag": [
+        "metro_door_open",
+        "door_saints"
+       ]
+      },
+      {
+       "xp": 40
+      },
+      {
+       "message": "The gate swings. The Saints' route runs straight under the vault and up through a drain in its floor."
+      }
+     ]
+    },
+    {
+     "id": "vault_floor",
+     "name": "the open vault",
+     "text": "The vault holds a single chair, a pile of ledgers, and a man in a white coat waiting for you with a repo collar already in his hand.",
+     "when": {
+      "flag": "metro_door_open",
+      "not_flag": "vane_down"
+     },
+     "success": [
+      {
+       "combat": [
+        "repo_chief_vane",
+        "repo_drone",
+        "repo_drone"
+       ]
+      }
+     ]
+    }
+   ],
+   "encounter": {
+    "chance": 0.25,
+    "monsters": [
+     [
+      "flood_eel"
+     ],
+     [
+      "scrap_drone",
+      "scrap_drone"
+     ],
+     [
+      "repo_agent"
+     ]
+    ]
+   }
+  }
+ ]
+}

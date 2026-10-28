@@ -219,6 +219,13 @@
 
   function problem() {
     fromProblem = true;
+    // the look the place had (the launcher keeps it), unless one was picked;
+    // a place chosen in the steps then puts its own look on again (critic)
+    if (!lookPicked && state.look) {
+      look = state.look;
+      lookFor = "";
+    }
+    document.body.classList.toggle("light", look === "light");
     const p = state.problem || {};
     const text = problemText(p);
     const waits = ["missing", "empty", "gone"].includes(p.why);

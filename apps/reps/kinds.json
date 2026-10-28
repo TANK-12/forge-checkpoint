@@ -1,0 +1,38 @@
+{
+  "strength": {
+    "label": "Strength",
+    "icon": "🏋️",
+    "goal": 3,
+    "fields": [
+      {"id": "reps", "label": "Reps", "min": 1, "max": 1000, "step": 1, "required": true},
+      {"id": "weight", "label": "Weight", "unit": "kg", "min": 0, "max": 1000, "step": 0.5}
+    ],
+    "chart": {"label": "Reps", "sum": "reps"}
+  },
+  "cardio": {
+    "label": "Cardio",
+    "icon": "🏃",
+    "goal": 3,
+    "fields": [
+      {"id": "minutes", "label": "Minutes", "min": 1, "max": 1440, "step": 1, "required": true},
+      {"id": "km", "label": "Distance", "unit": "km", "min": 0, "max": 1000, "step": 0.1}
+    ],
+    "chart": {"label": "Minutes", "sum": "minutes"}
+  },
+  "count": {
+    "label": "Counted habit",
+    "icon": "🔢",
+    "goal": 7,
+    "fields": [
+      {"id": "amount", "label": "Amount", "min": 1, "max": 100000, "step": 1, "required": true}
+    ],
+    "chart": {"label": "Amount", "sum": "amount"}
+  },
+  "habit": {
+    "label": "Yes/no habit",
+    "icon": "✅",
+    "goal": 7,
+    "fields": [],
+    "chart": {"label": "Times done"}
+  }
+}

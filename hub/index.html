@@ -187,6 +187,13 @@
   #bar.ws-more-l.ws-more-r #workspaces {
     --ws-fade: linear-gradient(to right, transparent, #000 var(--ws-fade-w), #000 calc(100% - var(--ws-fade-w)), transparent); }
   #bar.ws-more-l #workspaces, #bar.ws-more-r #workspaces { -webkit-mask-image: var(--ws-fade); mask-image: var(--ws-fade); }
+  /* Whole icons only (release critic round G): when they overflow, Strip.measure
+     cuts the strip to a whole number of icons and Strip.settle stops it on one
+     when a scroll ends, so no icon shows cut in half; the fade then covers only
+     the padding. (Not CSS scroll snapping: it held small wheel steps back and
+     snapped to the front icon's scaled box.) */
+  #bar.ws-whole #workspaces { --ws-fade-w: 8px; }
+  #bar.ws-whole .ws.active { min-width: 0; } /* every icon one slot wide (narrow windows widen the front one) */
   #ws-more { position: relative; padding: 0 10px; font-size: 12px; font-weight: 600; color: var(--muted); background: rgba(255, 255, 255, .05);
     font-variant-numeric: tabular-nums; }
   #ws-more:hover { color: var(--text); background: rgba(255, 255, 255, .1); }
@@ -412,6 +419,7 @@
     display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--muted); background: var(--glass-fill);
     transition: background var(--speed), color var(--speed), transform 160ms, box-shadow var(--speed); }
   .fchip:hover { color: var(--text); transform: translateY(-1px); }
+  #show-all { display: inline-flex; align-items: center; gap: 6px; }
   .fchip.on { color: var(--on-accent); background: var(--accent); border-color: transparent;
     box-shadow: 0 4px 18px color-mix(in srgb, var(--accent) 45%, transparent); }
   #recent-wrap h3 { margin: 0 0 12px; font-size: 13px; font-weight: 600; color: var(--muted);
@@ -490,6 +498,8 @@
   /* An app inside a group keeps its window but gives up its tile, dock icon
      and number to the group. */
   .ws.grouped, .tile.grouped, .dock-item.grouped { display: none; }
+  /* the search lists the apps inside places as themselves */
+  #search-hits .tile.grouped:not(.nomatch) { display: flex; }
   /* folders: the members' icons in a 2x2 grid, and the drop highlight */
   .folder-icons { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; font-size: .42em; line-height: 1.15; text-align: center; }
   .tile.folder .icon, .dock-item.folder { background: color-mix(in srgb, var(--text) 10%, transparent); }
@@ -1272,6 +1282,7 @@
       <input id="search" class="glass" placeholder="Search apps or ask anything… (just start typing)" autocomplete="off" spellcheck="false">
       <div id="ask-card" class="ask-card" hidden aria-live="polite"></div>
       <div id="chips"></div>
+      <button type="button" id="show-all" class="fchip" aria-pressed="false"><span aria-hidden="true">▦</span><span>Show all apps</span></button>
     </div>
   </div>
   <div id="widgets" class="widgets" aria-label="Widgets"></div>
@@ -1538,8 +1549,20 @@ function appFlag(key) {
   // a developer's tool (manifest "dev": true) is put away like an archived
   // app until Settings > Apps shows developer apps
   if ((status[key] || {}).dev && !theme.show_dev_apps) return "archived";
+  // an app shown inside another app's page (manifest "inside": Wallpapers in
+  // Settings, Relay task 423) has no tile, tab or search entry of its own
+  if (insideOf(key)) return "archived";
   if ((theme.hidden_apps || []).includes(key)) return "hidden";
   return "";
+}
+// Where an app with a manifest "inside" lives: the app holding that role and
+// the hash that opens the page, or null (also when no app holds the role, so
+// the app keeps its own tile).
+function insideOf(key) {
+  const at = (status[key] || {}).inside;
+  if (!at || !at.role) return null;
+  const host = order.find((k) => k !== key && (status[k] || {}).role === at.role && !(status[k] || {}).inside);
+  return host ? { key: host, hash: at.hash || "" } : null;
 }
 function shown() { return order.filter((key) => !groupOf(key) && appFlag(key) !== "archived"); }
 
@@ -1606,7 +1629,8 @@ const Places = {
       tab.setAttribute("role", "tab");
       tab.setAttribute("aria-selected", m === key ? "true" : "false");
       tab.dataset.app = m;
-      tab.addEventListener("pointerenter", () => requestStart(m, true));
+      // a sibling's backend starts ahead only with the hover start on (task 451)
+      tab.addEventListener("pointerenter", () => { if (theme.start_on_hover === true) Warm.ask(m); });
       tab.addEventListener("click", () => selectWorkspace(m, { instant: true }));
       list.appendChild(tab);
     });
@@ -2008,6 +2032,9 @@ function iconEl(tag, cls, info, key) {
 
 function stateClass(info) {
   const s = (info || {}).state || "pending";
+  // asleep (forge_sleep.py): its backend is stopped and only its port is
+  // kept, so it is drawn like an app not started, not as running (task 451)
+  if (s === "up" && info.asleep) return "";
   return s === "up" ? "up" : s === "failed" ? "failed" : s === "missing" || s === "idle" || s === "needs_drive" ? "" : "starting";
 }
 
@@ -2022,9 +2049,13 @@ function requestStart(key, warm = false) {
 }
 
 // A backend takes 0.3-1.5 s to start, most of an app's first open (Relay
-// task 320). So the hub asks for it as soon as the pointer rests on the
-// app's tile, bar number, dock icon or overview card, presses it, or the
-// keyboard rests on it: the start overlaps the reach for the click. An app
+// task 320). So the hub can ask for it as soon as the pointer or the
+// keyboard rests on the app's tile, bar number, dock icon or overview card,
+// or presses it: the start overlaps the reach for the click. Only with
+// Settings' "Start an app when the pointer rests on it" on
+// (theme.start_on_hover), off by default since task 451: sweeping the
+// pointer over the home screen started some thirty apps the owner never
+// opened. Off, the click that opens an app starts it. An app
 // gone to sleep wakes the same way (forge.py's start wakes it). And once
 // Forge is on screen, the few apps used last start ahead, one at a time
 // (Start ahead, theme.prestart_apps); left unused they sleep again after
@@ -2056,18 +2087,23 @@ const Warm = {
     return n ? n.dataset.key || n.dataset.app : null;
   },
   init() {
+    const hover = () => theme.start_on_hover === true;
     addEventListener("pointerover", (e) => {
+      if (!hover()) { this.over = null; clearTimeout(this.timer); return; }
       const key = this.keyOf(e.target);
       if (key === this.over) return;
       this.over = key;
       clearTimeout(this.timer);
       if (key) this.timer = setTimeout(() => { if (this.over === key) this.ask(key); }, this.DWELL_MS);
     }, { capture: true, passive: true });
-    // the main button only: a right press opens the app's menu, not the app
-    addEventListener("pointerdown", (e) => { if (e.button === 0) this.ask(this.keyOf(e.target)); },
+    // the main button only: a right press opens the app's menu, not the app.
+    // Off with the hover start too: a press may become a drag into a folder,
+    // which opens nothing; the click itself starts the app (task 451).
+    addEventListener("pointerdown", (e) => { if (e.button === 0 && hover()) this.ask(this.keyOf(e.target)); },
       { capture: true, passive: true });
     // Tab passing over tiles asks nothing; resting on one does
     addEventListener("focusin", (e) => {
+      if (!hover()) { this.focused = null; clearTimeout(this.focusTimer); return; }
       const key = this.keyOf(e.target);
       this.focused = key;
       clearTimeout(this.focusTimer);
@@ -2090,7 +2126,7 @@ const Warm = {
     if (this.aheadDone || SAFE || /[?&]restore=1\b/.test(location.search)) return;
     this.aheadDone = true;
     setTimeout(() => {
-      const want = Math.max(0, Math.min(10, Math.round(Number(theme.prestart_apps ?? 4)) || 0));
+      const want = Math.max(0, Math.min(10, Math.round(Number(theme.prestart_apps ?? 0)) || 0));
       const next = (list) => {
         if (!list.length) return;
         const key = list.shift();
@@ -2523,7 +2559,28 @@ const Strip = {
   TIGHT: 5, // steps in tighten()
   // px, the width of the fade at an end with more (CSS --ws-fade-w)
   fade() {
-    return Math.min(28, $("workspaces").clientWidth * 0.15);
+    return $("bar").classList.contains("ws-whole") ? 8 : Math.min(28, $("workspaces").clientWidth * 0.15);
+  },
+  // The strip cut to whole icons: {pad, slot, k} when it overflows (k icons
+  // fit, maybe none), else null and the strip takes the room the bar gives it.
+  whole: null,
+  cut(s) {
+    const icons = rowKeys().map((k) => parts[k].ws).filter((ws) => ws.offsetWidth);
+    s.style.maxWidth = s.style.paddingInline = "";
+    $("bar").classList.remove("ws-whole");
+    this.whole = null;
+    if (icons.length < 2 || s.scrollWidth <= s.clientWidth + 1) return;
+    $("bar").classList.add("ws-whole"); // before measuring: it makes every icon one slot wide
+    // the computed sizes, not offsetLeft: an icon size like 1.15 makes 34.5 px
+    // icons, and whole-pixel offsets would add half a pixel per icon
+    const cs = getComputedStyle(s), pad = parseFloat(cs.paddingLeft) || 0, gap = parseFloat(cs.columnGap) || 0;
+    const slot = parseFloat(getComputedStyle(icons[0]).width) + gap;
+    if (!(slot > 0)) return $("bar").classList.remove("ws-whole");
+    const k = Math.floor((s.clientWidth - 2 * pad + gap) / slot);
+    // too narrow for one whole icon (only after tighten's third step): none shows, "+N" counts them all
+    if (k < 1) s.style.maxWidth = s.style.paddingInline = "0";
+    else s.style.maxWidth = 2 * pad + k * slot - gap + (s.offsetWidth - s.clientWidth) + "px";
+    this.whole = { pad, slot, k };
   },
   // Is this icon wholly inside the strip's visible part, keeping `edge` px
   // clear of each end that fades?
@@ -2573,7 +2630,7 @@ const Strip = {
     const s = $("workspaces"), more = $("ws-more"), bar = $("bar");
     // again when "+N" comes or goes, since it takes room from the strip
     for (let pass = 0; pass < 3; pass++) {
-      if (layout || pass) this.tighten();
+      if (layout || pass) { this.tighten(); this.cut(s); }
       const over = s.scrollWidth > s.clientWidth + 1;
       // an icon half under a fade counts as out of sight
       const hid = over ? rowKeys().map((k) => parts[k].ws).filter((ws) => !this.inView(ws, this.fade() / 2)) : [];
@@ -2589,11 +2646,15 @@ const Strip = {
       if (more.hidden === !out) break;
       more.hidden = !out;
     }
+    this.settleSoon();
   },
   // Scroll the strip so this app's icon is in view and clear of the fades
   // (centred when the strip is too narrow for that).
   show(key, instant) {
     const s = $("workspaces"), ws = key !== null && parts[key] ? parts[key].ws : null;
+    // the bar as it is now (the title or a page's controls may have just
+    // taken room): a strip measured at home holds more icons than an app's
+    this.measure();
     if (!ws || s.scrollWidth <= s.clientWidth + 1 || this.inView(ws, this.fade())) return this.fit();
     const fade = this.fade();
     const pad = Math.min(fade + 4, Math.max(0, (s.clientWidth - ws.offsetWidth) / 2));
@@ -2601,18 +2662,42 @@ const Strip = {
     let left = ws.offsetLeft < s.scrollLeft ? ws.offsetLeft - pad : ws.offsetLeft + ws.offsetWidth + pad - s.clientWidth;
     // near an end, go all the way: that end then has no fade over the icon
     left = left < fade ? 0 : left > max - fade ? max : left;
+    const w = this.whole;
+    if (w && w.k > 0) {
+      // whole icons: the icon lands at the near end, on a slot
+      const i = Math.round((ws.offsetLeft - w.pad) / w.slot);
+      left = Math.min(max, Math.max(0, (ws.offsetLeft < s.scrollLeft ? i : i - w.k + 1) * w.slot));
+    }
     s.scrollTo({ left, behavior: instant || theme.animations === false ? "auto" : "smooth" });
     this.fit();
+  },
+  // Once the strip has been still a moment (a scroll ended, or the bar
+  // changed under it), stop on a whole icon.
+  still: 0,
+  settleSoon() {
+    clearTimeout(this.still);
+    if (this.whole) this.still = setTimeout(() => this.settle(), 120);
+  },
+  settle() {
+    const s = $("workspaces"), w = this.whole;
+    if (!w || w.k < 1) return;
+    const max = s.scrollWidth - s.clientWidth;
+    const left = Math.min(max, Math.max(0, Math.round(s.scrollLeft / w.slot) * w.slot));
+    if (Math.abs(left - s.scrollLeft) > 0.5) {
+      s.scrollTo({ left, behavior: "auto" });
+      this.fit(false); // recount now: a page that draws no frames sends no scroll event
+    }
   },
 };
 {
   const s = $("workspaces");
-  s.addEventListener("scroll", () => Strip.fit(false), { passive: true });
+  s.addEventListener("scroll", () => { Strip.fit(false); Strip.settleSoon(); }, { passive: true });
   // an up/down wheel scrolls the icons sideways
   s.addEventListener("wheel", (e) => {
     if (s.scrollWidth <= s.clientWidth + 1 || Math.abs(e.deltaX) >= Math.abs(e.deltaY)) return;
     e.preventDefault();
     s.scrollLeft += e.deltaY * (e.deltaMode === 1 ? 16 : 1);
+    Strip.settleSoon(); // a page that draws no frames sends no scroll events
   }, { passive: false });
   new ResizeObserver(() => Strip.fit()).observe($("bar"));
   new ResizeObserver(() => Strip.fit()).observe(s);
@@ -3257,6 +3342,9 @@ document.addEventListener("keydown", (e) => {
 });
 
 function selectWorkspace(key, { instant = false } = {}) {
+  // an app folded into another (manifest "inside") opens that app's page
+  const at = key !== null && insideOf(key);
+  if (at) return openWithHash(at.key, at.hash);
   // a place's tile, number or dock icon opens its tab used last
   if (key !== null && Places.isPlace(key)) key = Places.last(key) || key;
   if (key !== null && !parts[key]) return;
@@ -3734,13 +3822,20 @@ document.addEventListener("keydown", (e) => {
 // --- home screen: search ------------------------------------------------------
 
 // What the search reads for a tile: its name and tagline, and for a group
-// those of each of its apps too.
+// those of each of its apps too. An app in a place or folder is found by
+// the place's name as well.
 function searchDocs(key) {
   return [key].concat(isGroup(key) ? (infoFor(key).members || []).filter((m) => appFlag(m) !== "archived") : []).map((k) => {
     const info = infoFor(k);
-    return { name: info.label || k, text: info.tagline || info.description || "" };
+    const at = !isGroup(k) && groupOf(k);
+    const place = at ? ` ${infoFor(at).label || ""}` : "";
+    return { name: info.label || k, text: (info.tagline || info.description || "") + place };
   });
 }
+// What the search lists: every app on the home screen as itself, with its
+// own icon, the apps a place or folder holds included; never a place's or
+// folder's own tile, which stands for several apps (the owner, 2026-10-28).
+function searchable() { return order.filter((key) => !isGroup(key) && parts[key] && appFlag(key) !== "archived"); }
 
 // What the rows under the tiles are drawn from: every setting (theme.js),
 // the actions in the manifests of apps on the home screen, the apps and
@@ -3819,10 +3914,10 @@ function filterTiles(text) {
   Finds.q = text;
   Finds.arrowed = false;
   const needle = text.trim();
-  const ranked = needle ? ForgeFuzzy.rank(needle, shown(), searchDocs) : [];
+  const ranked = needle ? ForgeFuzzy.rank(needle, searchable(), searchDocs) : [];
   const hits = ranked.map((h) => h.key);
   const hit = new Set(hits);
-  shown().forEach((key) => {
+  searchable().forEach((key) => {
     parts[key].tile.classList.toggle("nomatch", !!needle && !hit.has(key));
     parts[key].tile.classList.remove("focus");
   });
@@ -3922,7 +4017,6 @@ const Ask = {
     if (parts[key]) selectWorkspace(key);
   },
   open(url) {
-    Ask.hidePop();
     const browser = order.find((k) => (status[k] || {}).role === "browser");
     if (browser && appFlag(browser) !== "archived") { Ask.hidePop(); selectWorkspace(browser); }
     const base = browser ? (status[browser].url || "") : "";
@@ -3968,7 +4062,7 @@ const Ask = {
     else if (a.kind === "apps") {
       add(Ask.el("div", "a-sub", a.apps.length > 1 ? "These apps fit" : "This app fits"));
       add(Ask.apps(a.apps));
-    } else if (a.kind === "google") add(Ask.el("div", "a-sub", "Opened Google in your browser."));
+    } else if (a.kind === "google") add(Ask.el("div", "a-sub", "Opened the Google search."));
     else if (a.kind === "error") {
       add(Ask.el("div", "a-sub", "No answer from here: " + (a.text || "something went wrong")));
     } else {
@@ -4487,7 +4581,12 @@ function themeSwap() {
 const LAYOUT_DEFAULT = { hero: "big", sections: "rows", tiles: "big", recent: true, chips: true, align: "left" };
 let layoutKey = "";
 function layoutHome() {
-  return Object.assign({}, LAYOUT_DEFAULT, theme.layout_home || {});
+  const home = Object.assign({}, LAYOUT_DEFAULT, theme.layout_home || {});
+  // Show all apps (the Classic layout) opens every section, as Forge was
+  // before the tidy: no row folds behind "N more" and no section waits for
+  // a chip (the owner, 2026-10-28)
+  if (Layout.classic() && (home.sections === "rows" || home.sections === "none")) home.sections = "all";
+  return home;
 }
 function applyThemeLook() {
   const html = document.documentElement;
@@ -4635,6 +4734,47 @@ $("theme-picker").addEventListener("keydown", (e) => {
 $("theme-picker").addEventListener("click", (e) => { if (e.target === $("theme-picker")) ThemePicker.close(); });
 $("tp-undo").addEventListener("click", () => ThemePicker.pick({ theme_undo: true }));
 $("tp-settings").addEventListener("click", () => { ThemePicker.close(); openSettings(); });
+// Show all apps (the owner, 2026-10-28: "make it possible to just show all the
+// apps like with the old setup"): the button under the search box switches
+// the Forge layout between New and Classic (Settings > Apps > Forge layout),
+// and Classic shows every app as its own tile with every section open
+// (layoutHome). Saved through the launcher like Alt+T's picks.
+const ShowAll = {
+  render() {
+    const b = $("show-all");
+    const on = Layout.classic();
+    b.classList.toggle("on", on);
+    b.setAttribute("aria-pressed", on ? "true" : "false");
+    b.lastChild.textContent = on ? "Showing all apps" : "Show all apps";
+    b.title = on
+      ? "Every app has its own tile. Click for the tidy view: places with tabs, one row per section."
+      : "Every app as its own tile and every section open, like Forge before the tidy";
+  },
+  toggle() {
+    if (hubLocked()) return;
+    ThemePicker.pick({ forge_layout_pick: Layout.classic() ? "new" : "classic" });
+  },
+  // Turning it on also shows every section: the All chip, and the sections
+  // folded with their caret opened (critic, Relay task 423). The folds are
+  // kept aside and come back with the tidy view.
+  opened(on) {
+    const KEPT = "forge.collapsed.before-all";
+    if (on) {
+      const shut = [...collapsed].filter((k) => !k.startsWith(HIDDEN));
+      if (shut.length) remember(KEPT, shut);
+      shut.forEach((k) => collapsed.delete(k));
+      chip = "all";
+      remember("forge.chip", chip);
+    } else {
+      remembered(KEPT, []).forEach((k) => collapsed.add(k));
+      try { localStorage.removeItem(KEPT); } catch (e) {}
+    }
+    remember("forge.collapsed", [...collapsed]);
+    Object.entries(sectionEls).forEach(([id, s]) => s.root.classList.toggle("collapsed", folded(id)));
+    renderChips();
+  },
+};
+$("show-all").addEventListener("click", () => ShowAll.toggle());
 window.forgeThemePicked = (answer) => {
   const asked = ThemePicker.last || {};
   ThemePicker.busy = 0;
@@ -4649,6 +4789,12 @@ window.forgeThemePicked = (answer) => {
     const box = $(asked.layout_pick ? "tp-layouts" : "tp-themes");
     const at = ThemePicker.cards().findIndex((c) => box.contains(c) && c.classList.contains("ftc-current"));
     ThemePicker.move(at >= 0 ? at : focus);
+  }
+  const flip = asked.forge_layout_pick;
+  if (flip) {
+    if (!answer.error) ShowAll.opened(flip === "classic");
+    const back = flip === "classic" ? "new" : "classic";
+    return toast(flip === "classic" ? "Showing all apps" : "Back to the tidy view", () => ThemePicker.pick({ forge_layout_pick: back }));
   }
   const layout = (answer.theme.layouts || []).find((l) => l.id === answer.theme.layout_id);
   const label = asked.layout_pick ? layout && `${layout.label} home` : answer.theme.theme_label;
@@ -4872,6 +5018,7 @@ function applyTheme(next) {
   // the home tiles, chips and Recent row are rebuilt only when an app was
   // really hidden, archived or brought back, not whenever the lists arrive
   // the Classic layout (Layout) regroups the tiles, then sets their flags
+  ShowAll.render();
   if (!first && changed.has("layout_places") && Object.keys(parts).length) Layout.change();
   else if (touched("hidden_apps", "archived_apps", "show_dev_apps") && Object.keys(parts).length) applyAppFlags();
   // a new tile width changes how many big tiles fit in a section's row
@@ -6401,7 +6548,9 @@ addEventListener("message", (event) => {
   // One app opening another, found by manifest role or name - never named here.
   if (msg.forge === "open") {
     const key = order.find((k) => (msg.role && (status[k] || {}).role === msg.role) || k === msg.app);
-    if (key && appFlag(key) !== "archived") openWithHash(key, msg.hash);
+    // an app folded into another (manifest "inside") opens there: openWithHash
+    // puts its own hash after the host's (Settings#wallpapers/favourites)
+    if (key && (insideOf(key) || appFlag(key) !== "archived")) openWithHash(key, msg.hash);
   }
   // An app asking for another window of itself (Files' New window, Ctrl+N):
   // forge.py opens it as a pop-out of that app at `hash` (forge_popout.py).
@@ -6450,6 +6599,8 @@ const openHash = {};
 const sentHash = {};
 function openWithHash(key, hash) {
   const h = typeof hash === "string" ? hash.replace(/^#/, "").slice(0, 2000) : "";
+  const at = insideOf(key);
+  if (at) return openWithHash(at.key, at.hash + (h ? "/" + h : ""));
   const frame = parts[key] && parts[key].inner.querySelector("iframe");
   if (h && !frame) openHash[key] = h;
   selectWorkspace(key);
@@ -6578,8 +6729,10 @@ function forgeSetStatus(next) {
   for (const key of Object.keys(next)) {
     const wasAvailable = status[key] && status[key].available;
     const wasState = status[key] && status[key].state;
+    const wasAsleep = !!(status[key] && status[key].asleep);
     status[key] = Object.assign(status[key] || {}, next[key]);
-    if (groupOf(key) && wasState !== status[key].state) chooserStale = true;
+    // asleep flips with the state staying "up": its card's dot changes too
+    if (groupOf(key) && (wasState !== status[key].state || wasAsleep !== !!status[key].asleep)) chooserStale = true;
     const info = status[key];
     const p = parts[key];
     if (!p) continue;
@@ -6588,7 +6741,7 @@ function forgeSetStatus(next) {
       node.classList.remove("up", "starting", "failed");
       if (cls) node.classList.add(cls);
     }
-    p.tile.title = `${info.label || key}: ${info.state}`;
+    p.tile.title = `${info.label || key}: ${info.state === "up" && info.asleep ? "asleep" : info.state}`;
     // A backend that has just come up replaces its "starting" card with the
     // real app, but only for a window that has been opened: unvisited apps
     // stay unmounted and cost nothing. ForgeMount.plan decides the rest (a

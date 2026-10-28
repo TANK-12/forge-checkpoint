@@ -1,0 +1,10 @@
+{
+  "id": "fantasy",
+  "label": "Sword and sorcery",
+  "order": 1,
+  "blurb": "A low-magic land of walled towns, old roads, ruined keeps and forests nobody crosses at night. Magic is rare, feared and costly.",
+  "tone": "Adventurous and a little grim, with room for jokes at the tavern.",
+  "roles": ["Fighter", "Rogue", "Wizard", "Cleric", "Ranger", "Bard"],
+  "hp": 12,
+  "opening": "Open the campaign: the party meets in a crowded roadside tavern on a stormy night, and something there gives them a reason to travel together."
+}

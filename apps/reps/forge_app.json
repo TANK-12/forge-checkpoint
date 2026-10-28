@@ -1,0 +1,25 @@
+{
+  "name": "reps",
+  "label": "Reps",
+  "tagline": "Log workouts and habits, keep the streak going",
+  "port": 8498,
+  "module": "web_app:app",
+  "src_dir": ".",
+  "accent": "#e0884f",
+  "icon": "💪",
+  "order": 1,
+  "section": "life",
+  "ready_timeout": 30,
+  "ram_class": "light",
+  "store": {"github": "private"},
+  "help": {"about": "Log workouts and habits in a tap, see the streak, and look back over the weeks.", "features": ["Today", "History", "Trackers"]},
+  "manifest": {
+    "summary": "A log for workouts and habits. Each tracker is one kind from kinds.json (strength sets with reps and weight, cardio minutes and distance, a counted habit, a yes/no habit; a new kind is one entry there) with a goal in days a week. Today shows every tracker with its streak (days in a row for a daily goal, weeks in a row that met the goal otherwise), the week so far and a quick log; History draws the last eight weeks as a bar chart with the best streak and every entry, which can be removed if logged by mistake. Trackers can be renamed, have their goal changed and be archived, never deleted.",
+    "data_dir": "~/.local/share/forge/reps",
+    "dependencies": {"required": ["shared/forge_guard.py"], "optional": []},
+    "docs": ["README.md", "WIP.md"]
+  },
+  "export": [
+    {"id": "log", "label": "Trackers and logged days", "kind": "file", "path": "~/.local/share/forge/reps/reps.json"}
+  ]
+}

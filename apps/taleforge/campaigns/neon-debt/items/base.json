@@ -1,0 +1,284 @@
+{
+ "items": [
+  {
+   "id": "mono_katana",
+   "name": "Monofilament katana",
+   "kind": "weapon",
+   "value": 150,
+   "damage": "1d10",
+   "ability": "str",
+   "text": "A curved blade with an edge one molecule wide. It hums faintly when drawn."
+  },
+  {
+   "id": "combat_knife",
+   "name": "Combat knife",
+   "kind": "weapon",
+   "value": 15,
+   "damage": "1d4",
+   "ability": "finesse",
+   "text": "Black-coated carbon steel with a hilt tape that never gets slippery."
+  },
+  {
+   "id": "silenced_pistol",
+   "name": "Suppressed pistol",
+   "kind": "weapon",
+   "value": 80,
+   "damage": "1d6",
+   "ability": "dex",
+   "text": "A light pistol with a baffle in the muzzle. It coughs where others shout."
+  },
+  {
+   "id": "heavy_pistol",
+   "name": "Heavy pistol",
+   "kind": "weapon",
+   "value": 70,
+   "damage": "1d8",
+   "ability": "dex",
+   "text": "A solid slab of a sidearm with a smart-link sight and a kick like an argument."
+  },
+  {
+   "id": "shock_baton",
+   "name": "Shock baton",
+   "kind": "weapon",
+   "value": 40,
+   "damage": "1d6",
+   "ability": "str",
+   "text": "A telescoping baton with a capacitor that snaps blue when it hits."
+  },
+  {
+   "id": "smart_smg",
+   "name": "Smart SMG",
+   "kind": "weapon",
+   "value": 220,
+   "damage": "2d4",
+   "ability": "dex",
+   "text": "A compact submachine gun that curves its rounds around corners if you ask nicely."
+  },
+  {
+   "id": "arc_blade",
+   "name": "Arc blade",
+   "kind": "weapon",
+   "value": 180,
+   "damage": "1d10",
+   "ability": "finesse",
+   "bonus": 1,
+   "text": "A short blade wrapped in a lattice of arcing current. It smells of ozone."
+  },
+  {
+   "id": "scrap_cleaver",
+   "name": "Scrap cleaver",
+   "kind": "weapon",
+   "value": 8,
+   "damage": "1d8",
+   "ability": "str",
+   "text": "A butcher's cleaver welded to a length of rebar. Ugly, effective."
+  },
+  {
+   "id": "kevlar_vest",
+   "name": "Kevlar vest",
+   "kind": "armor",
+   "value": 60,
+   "ac": 12,
+   "dex_cap": 2,
+   "text": "Layered ballistic cloth, patched with duct tape and pride."
+  },
+  {
+   "id": "armored_jacket",
+   "name": "Armoured jacket",
+   "kind": "armor",
+   "value": 45,
+   "ac": 11,
+   "dex_cap": null,
+   "text": "A stylish jacket with a lining of plates you can't see and can feel."
+  },
+  {
+   "id": "weave_coat",
+   "name": "Weave coat",
+   "kind": "armor",
+   "value": 160,
+   "ac": 13,
+   "dex_cap": 3,
+   "text": "A long coat of woven ceramic fibre that sheds rain and rounds with equal ease."
+  },
+  {
+   "id": "riot_plate",
+   "name": "Riot plate",
+   "kind": "shield",
+   "value": 50,
+   "ac_bonus": 2,
+   "text": "A transparent polycarbonate shield with a Spire security stencil half scraped away."
+  },
+  {
+   "id": "stim_shot",
+   "name": "Stim shot",
+   "kind": "consumable",
+   "value": 20,
+   "use": [
+    {
+     "heal": "2d4+2"
+    }
+   ],
+   "text": "A spring-loaded injector of something that tastes like batteries and works anyway."
+  },
+  {
+   "id": "medkit",
+   "name": "Trauma medkit",
+   "kind": "consumable",
+   "value": 50,
+   "use": [
+    {
+     "heal": "4d4+4"
+    }
+   ],
+   "text": "Clotting foam, staples and a sealed pack of nanite gel."
+  },
+  {
+   "id": "synth_noodles",
+   "name": "Synth noodles",
+   "kind": "consumable",
+   "value": 5,
+   "use": [
+    {
+     "heal": "1d6"
+    }
+   ],
+   "text": "A foil bowl of hot noodles in a broth of pure salt and optimism."
+  },
+  {
+   "id": "real_coffee",
+   "name": "Real coffee",
+   "kind": "consumable",
+   "value": 25,
+   "use": [
+    {
+     "heal": "1d4"
+    },
+    {
+     "message": "Actual coffee, from an actual bean. Your hands stop shaking."
+    }
+   ],
+   "text": "A tiny vacuum-sealed pouch of real coffee grounds. In Lowtide it is worth more than a coat."
+  },
+  {
+   "id": "coolant_vial",
+   "name": "Coolant vial",
+   "kind": "consumable",
+   "value": 15,
+   "use": [
+    {
+     "heal": "1d6"
+    }
+   ],
+   "text": "A vial of chilled gel that cools overheated implants and bruised skin alike."
+  },
+  {
+   "id": "cyberdeck",
+   "name": "Cyberdeck",
+   "kind": "tool",
+   "value": 120,
+   "text": "A flat black slab with a screen and a hundred hand-soldered ports. The one tool you never leave behind."
+  },
+  {
+   "id": "lockbreaker",
+   "name": "Lockbreaker kit",
+   "kind": "tool",
+   "value": 30,
+   "text": "A roll of picks, shims and a tiny capacitor-driven rattle gun."
+  },
+  {
+   "id": "scrap_circuit",
+   "name": "Scrap circuit",
+   "kind": "trinket",
+   "value": 10,
+   "text": "A green board studded with salvageable parts. Wick will buy it."
+  },
+  {
+   "id": "corp_badge",
+   "name": "Corp badge",
+   "kind": "trinket",
+   "value": 40,
+   "text": "A glossy white ID card with an Aurelian audit logo. Real enough to open doors."
+  },
+  {
+   "id": "lucky_chip",
+   "name": "Lucky chip",
+   "kind": "trinket",
+   "value": 5,
+   "text": "A scratched credit chit you've carried since you were nine. It has never been worth anything but luck."
+  },
+  {
+   "id": "receipt_chip",
+   "name": "Extraction receipt",
+   "kind": "key",
+   "value": 0,
+   "unsellable": true,
+   "text": "A flat black chip with your handwriting on the sticker: Platform Nine."
+  },
+  {
+   "id": "lease_override",
+   "name": "Lease override chip",
+   "kind": "key",
+   "value": 0,
+   "unsellable": true,
+   "text": "A coded Aurelian chip that can unlock a leased machine for good."
+  },
+  {
+   "id": "saints_lantern",
+   "name": "Saint's lantern",
+   "kind": "key",
+   "value": 0,
+   "unsellable": true,
+   "text": "A small paper lantern with a saint's face inked on it. The Lantern Saints' gates open for it."
+  },
+  {
+   "id": "memory_shard",
+   "name": "Memory shard",
+   "kind": "key",
+   "value": 0,
+   "unsellable": true,
+   "text": "A thumb-sized shard of glass that hums with someone's six missing weeks. Yours."
+  },
+  {
+   "id": "cassette_tape",
+   "name": "Analog cassette",
+   "kind": "gift",
+   "value": 20,
+   "text": "A real magnetic tape, hand-labelled in marker. Who has the player for it, though?"
+  },
+  {
+   "id": "jasmine_tea",
+   "name": "Jasmine tea",
+   "kind": "gift",
+   "value": 25,
+   "text": "A paper tin of actual jasmine leaves. It smells like a world with no rain."
+  },
+  {
+   "id": "paper_lantern",
+   "name": "Paper lantern",
+   "kind": "gift",
+   "value": 8,
+   "text": "A hand-folded lantern with a tiny LED inside. Lowtide's way of saying I am thinking of you."
+  },
+  {
+   "id": "synth_flower",
+   "name": "Synth flower",
+   "kind": "gift",
+   "value": 12,
+   "text": "A single flower grown in a vat, petals that shift gently between pink and blue."
+  },
+  {
+   "id": "vinyl_record",
+   "name": "Vinyl record",
+   "kind": "gift",
+   "value": 35,
+   "text": "An old record in a water-stained sleeve. Whoever once owned it clearly loved it."
+  },
+  {
+   "id": "cheap_whisky",
+   "name": "Cheap whisky",
+   "kind": "gift",
+   "value": 6,
+   "text": "A flask of something amber that burns going down and keeps burning."
+  }
+ ]
+}
