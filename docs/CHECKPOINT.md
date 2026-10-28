@@ -59,7 +59,24 @@ Python; the test child now clears PSModulePath as Microsoft's documentation
 requires. That changed the test harness, not the install helper or app code.
 The original dated package tag stays fixed. The updated source, including
 this evidence and the test-environment fix, is tagged
-`checkpoint-2026-10-28-tested` and is the attached source archive.
+`checkpoint-2026-10-28-tested` and is the source archive attached to the original release.
+
+## Updated checkpoint (smart search and Visuals menu)
+
+`checkpoint-2026-10-28-updated` is a second prerelease built the same way
+with two added features: smart search and the Visuals menu (Alt+Shift+M)
+with a live particle preview. Its attached source archive is that tag. Its
+packages were scanned with the same privacy checks (one public Poly Haven
+texture match, identical to the reviewed one) and checked with the same
+installed-copy smoke: Linux 108/108 and Windows under Wine 83/83 locally,
+and again on native hosted runners through the saved-checkpoint workflow.
+
+Known limits of the smart search in this build: with no network, a web
+question waits up to about 45 seconds and then says there is no short
+answer, without saying it is offline; the Claude choice needs the claude
+command installed and otherwise shows the raw "No such file" error; the
+local choice needs Jan and a model, and falls back to the web without them.
+
 
 ## What remains unverified
 

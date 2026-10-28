@@ -37,5 +37,8 @@ file before copying and refuse to overwrite an existing destination.
 No original-code licence chosen yet: all rights reserved; see LICENSE.
 
 The attached source archive is checkpoint-2026-10-28-updated. The native
-check figures above are from the original packages; this update's own native
-run is linked from the repository README.
+check figures above are from the original packages; this update's packages
+are checked by the "Check saved checkpoint" workflow in the Actions tab.
+Smart search limits: offline, a web question waits up to about 45 seconds
+before saying it has no short answer; the Claude and local Jan choices need
+those installed separately.

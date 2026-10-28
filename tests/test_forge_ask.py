@@ -77,6 +77,7 @@ def test_clock():
     now = 1793174400.0
     assert forge_ask.clock("what time is it?", now)
     assert "2026" in (forge_ask.clock("what's the date", now) or "")
+    assert forge_ask.clock("whats the time", now)
     assert forge_ask.clock("time travel films", now) is None
 
 
@@ -173,6 +174,10 @@ def test_local_failure_falls_back_to_the_web():
 def test_auto_keeps_a_sure_local_answer_and_asks_the_web_when_unsure():
     sure = {"text": "Frank Herbert wrote it.", "source": "Local model (x)", "url": ""}
     unsure = {"text": "I'm not sure who wrote that.", "source": "Local", "url": ""}
+    advice = "If you are not sure which size to buy, go one size up."
+    assert not forge_ask._UNSURE.search(advice)
+    assert not forge_ask._UNSURE.search('You cannot say "less people" here.')
+    assert forge_ask._UNSURE.search("I don't know the current price.")
     web = {"web": lambda q: WEB}
     a = forge_ask.answer(
         {"q": "who wrote dune"}, APPS, "auto", {**web, "local": lambda q: sure}
@@ -204,11 +209,29 @@ def test_maths_edge_cases():
         "2^100": "1.2676506e+30",
         "30!": "2.652528598e+32",
         "-(2^100)": "-1.2676506e+30",
+        "3^70": "2.503155505e+33",
+        "100 / 10%": "1,000",
+        "10 / 50%": "20",
+        "2^50%": "1.41421356237",
+        "100+10%+10%": "121",
+        "100 - 10% - 10%": "81",
+        "(100)+10%": "110",
+        "10 - 5%": "9.5",
+        "round(2.5)": "3",
     }
     for text, want in cases.items():
         got = forge_ask.maths(text)
         assert got and got["value"] == want, (text, got)
-    for text in ["2026-10-28", "555-1234", "1/3/2026", "28.10.26", "0x10", "tan 90"]:
+    for text in [
+        "2026-10-28",
+        "555-1234",
+        "1-800-555-1234",
+        "1/3/2026",
+        "28.10.26",
+        "0x10",
+        "tan 90",
+        "-5",
+    ]:
         assert forge_ask.maths(text) is None, text
     # a sum that only looks like a date part still works
     assert (forge_ask.maths("10/5/2") or {}).get("value") == "1"
@@ -262,13 +285,17 @@ def test_place_and_errand_questions_are_not_app_questions():
         "where are the keys",
         "is the corner store open on sunday",
         "can you open a jar",
+        "open a new tab",
+        "start the car",
+        "launch codes",
     ]:
         a = forge_ask.answer({"q": q}, store, "web", {"web": web})
         assert a["kind"] == "web", (q, a)
-    assert len(called) == 4
+    assert len(called) == 7
     # naming an app, or starting with open, still finds it
     for q, key in [
         ("open the store", "store"),
+        ("where can i get more apps", "store"),
         ("which app installs apps", "store"),
         ("where is the browser", "browser"),
     ]:
@@ -340,7 +367,7 @@ def test_claude_answer_uses_the_cli():
     # a bare answerer: no tools, no MCP, no settings, an empty folder
     assert argv[argv.index("--tools") + 1] == ""
     assert argv[argv.index("--setting-sources") + 1] == ""
-    assert "--strict-mcp-config" in argv and argv[-1] == "capital of france"
+    assert "--strict-mcp-config" in argv and argv[-1].endswith("capital of france")
     assert seen["cwd"] and not Path(seen["cwd"]).exists()
 
 

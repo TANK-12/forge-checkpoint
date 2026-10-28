@@ -3884,6 +3884,8 @@ const Ask = {
   },
   // Enter: true when the search box should not do its own Enter
   enter(where, q) {
+    // a row picked with the arrows wins over any answer
+    if (where === "home" && Finds.arrowed && Finds.items.length) return false;
     const shown = Ask.shown[where];
     if (shown && shown.kind === "apps" && shown.q === q.trim()) { Ask.openApp(shown.apps[0].key); return true; }
     if (!q.trim()) return false;

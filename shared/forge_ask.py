@@ -29,6 +29,7 @@ loop and hands the dict to the hub's window.forgeAsk.
 from __future__ import annotations
 
 import ast
+import decimal
 import json
 import math
 import operator
@@ -92,7 +93,7 @@ _FUNCS = {
     "log": math.log10,
     "ln": math.log,
     "abs": abs,
-    "round": round,
+    "round": lambda x: math.copysign(math.floor(abs(x) + 0.5), x),  # 2.5 is 3
     "floor": math.floor,
     "ceil": math.ceil,
     "factorial": math.factorial,
@@ -119,6 +120,7 @@ _NOT_A_SUM = re.compile(
     r"\b\d{4}-\d{1,2}-\d{1,2}\b"  # 2026-10-28
     r"|\b\d{1,2}([/.])\d{1,2}\1\d{2,4}\b"  # 1/3/2026, 28.10.26
     r"|^\+?\(?\d{3}\)?[\s-]?\d{3}-\d{4}$|^\d{3}-\d{4}$"  # 555-1234
+    r"|\b\d{1,4}(?:-\d{3,4}){2,}\b"  # 1-800-555-1234
     r"|\b0[xob][0-9a-f]+\b",  # 0x10
     re.I,
 )
@@ -167,9 +169,25 @@ def _number(value: float) -> str:
     digits = str(abs(value))
     if len(digits) <= EXACT_DIGITS:
         return f"{value:,}"
-    # too long to read: scientific, worked from the digits (no float overflow)
-    lead = (digits[0] + "." + digits[1:10]).rstrip("0").rstrip(".")
-    return f"{'-' if value < 0 else ''}{lead}e+{len(digits) - 1}"
+    # too long to read: scientific, rounded from the exact digits
+    lead, power = f"{decimal.Decimal(value):.9e}".split("e")
+    return f"{lead.rstrip('0').rstrip('.')}e{power}"
+
+
+_ADD_PCT = re.compile(r"([-+])\s*([\d.]+)\s*%(?!\s*[\d(.])")
+
+
+def _percent(text: str) -> str:
+    """100 + 10% is 110 and 100 + 10% + 10% is 121, as a calculator does;
+    10%3 is a remainder; any other 50% is 0.5 (so 100 / 10% is 1000)."""
+    while True:
+        hit = _ADD_PCT.search(text)
+        left = text[: hit.start()].strip() if hit else ""
+        if not hit or not left or left.count("(") != left.count(")"):
+            break
+        sign, num = hit.group(1), hit.group(2)
+        text = f"({left})*(1{sign}{num}/100)" + text[hit.end() :]
+    return re.sub(r"([\d.]+)\s*%(?!\s*[\d(.])", r"(\1/100)", text)
 
 
 def maths(question: str) -> dict | None:
@@ -178,6 +196,8 @@ def maths(question: str) -> dict | None:
     text = _LEAD.sub("", question.strip()).strip().rstrip("?=").strip()
     if not text or len(text) > 200 or _NOT_A_SUM.search(text):
         return None
+    if re.fullmatch(r"[-+]?\s*[\d.,]+", text):
+        return None  # -5 on its own is a number, not a sum
     pct = re.fullmatch(r"([\d.,]+)\s*%\s*of\s*([\d.,]+)", text, re.I)
     if pct:
         text = f"{pct.group(1)}/100*{pct.group(2)}"
@@ -186,11 +206,7 @@ def maths(question: str) -> dict | None:
     text = text.replace("×", "*").replace("÷", "/").replace("^", "**")
     text = re.sub(r"(?<=\d),(?=\d{3}\b)", "", text)  # 1,000 -> 1000
     text = re.sub(r"(?<=\d)\s*x\s*(?=[\d(])", "*", text)  # 3 x 4
-    # 100 + 10% is 110; 10%3 is a remainder; 50% on its own is 0.5
-    text = re.sub(
-        r"([\d.]+)\s*([-+])\s*([\d.]+)\s*%(?!\s*[\d(.])", r"\1*(1\2\3/100)", text
-    )
-    text = re.sub(r"(?<=\d)\s*%(?!\s*[\d(.])", "/100", text)
+    text = _percent(text)
     text = re.sub(r"\b(sqrt|cbrt|log|ln|abs|sin|cos|tan)\s+([\d.]+)", r"\1(\2)", text)
     text = re.sub(r"\b([\d.]+)\s*!", r"factorial(\1)", text)
     if not re.search(r"[-+*/%(]|\b(?:" + "|".join(_FUNCS) + r")\b", text):
@@ -217,10 +233,11 @@ def maths(question: str) -> dict | None:
 # --- the time ----------------------------------------------------------------
 
 _TIME = re.compile(
-    r"^(what(?:'s| is)? the time|what time is it|time now|the time)\??$", re.I
+    r"^(what(?:'s| is)? the time|whats the time|what time is it|time now|the time)\??$",
+    re.I,
 )
 _DATE = re.compile(
-    r"^(what(?:'s| is)? (?:the date|today'?s date|today)|what day is (?:it|today)|today'?s date|date today)\??$",
+    r"^((?:what(?:'s| is)?|whats) (?:the date|today'?s date|today)|what day is (?:it|today)|today'?s date|date today)\??$",
     re.I,
 )
 
@@ -231,7 +248,8 @@ def clock(question: str, now: float | None = None) -> str | None:
     if _TIME.match(q):
         return time.strftime("%H:%M", t)
     if _DATE.match(q):
-        return time.strftime("%A ", t) + str(t.tm_mday) + time.strftime(" %B %Y", t)
+        # %-d is not on Windows (the portable build)
+        return time.strftime(f"%A {t.tm_mday} %B %Y", t)
     return None
 
 
@@ -242,13 +260,14 @@ _STOP = set("""a an the is are was be to of for in on at by with and or it its t
     tools has have having lets let open find show me any some there one thing
     forge program use used using how who should would will into from about""".split())
 _APP_ASK = re.compile(
-    r"\b(where(?:'s| is| are)|which (?:app|tool|one)|what (?:app|tool)|app (?:for|that|to|which)"
+    r"\b(where(?:'s| is| are| do i| can i| would i)|which (?:app|tool|one)|what (?:app|tool)|app (?:for|that|to|which)"
     r"|tool (?:for|that|to)|find (?:the )?app|is there an app)\b|^(?:open|launch|start)\b",
     re.I,
 )
 # a question that names apps or tools may match on the feature lists alone;
-# any other ("where is australia") needs an app's name or tagline
-_SAYS_APP = re.compile(r"\b(apps?|tools?)\b|^(?:open|launch|start)\b", re.I)
+# any other ("where is australia", "open a new tab") needs an app's name or
+# tagline
+_SAYS_APP = re.compile(r"\b(apps?|tools?)\b", re.I)
 
 
 def _words(text: str) -> list[str]:
@@ -300,7 +319,7 @@ def load_apps(dirs: list[Path] | None = None) -> list[dict]:
     for base in dirs:
         for path in sorted(base.glob("*/forge_app.json")):
             try:
-                m = json.loads(path.read_text())
+                m = json.loads(path.read_text(encoding="utf-8"))
             except (OSError, ValueError):
                 continue
             key = m.get("name") or path.parent.name
@@ -488,9 +507,12 @@ def shutdown() -> list[str]:
     return owner.stop() if owner is not None else []
 
 
+# the model speaking about itself, not advice ("if you are not sure, ...")
 _UNSURE = re.compile(
-    r"\b(not sure|i don'?t know|i do not know|i'?m unsure|cannot (?:say|know|answer)|"
-    r"no (?:way|means) (?:to|of) know|as of my|don'?t have (?:access|real-time))\b",
+    r"\bI(?:'m| am) (?:not (?:sure|certain)|unsure)\b"
+    r"|\bI (?:don'?t|do not) (?:know|have (?:access|real-time|current))\b"
+    r"|\bI (?:cannot|can'?t) (?:say|know|answer|be sure|confirm)\b"
+    r"|\bas of my (?:last|knowledge)\b",
     re.I,
 )
 
@@ -528,7 +550,7 @@ def claude_answer(question: str, run=subprocess.run) -> dict:
                 "",
                 "--system-prompt",
                 SYSTEM,
-                question,
+                f"Question: {question}",  # never read as an option ("-5 ...")
             ],
             capture_output=True,
             text=True,
