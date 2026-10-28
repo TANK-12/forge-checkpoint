@@ -160,9 +160,14 @@ def test_windows_installs_and_refuses_overwrite(
         "-Destination",
         str(destination) + (os.sep if trailing_separator else ""),
     ]
-    done = subprocess.run(command, capture_output=True, text=True, timeout=30)
+    # A pwsh parent gives Python module paths Windows PowerShell cannot load.
+    # Let the child construct its own standard module search path.
+    env = {
+        key: value for key, value in os.environ.items() if key.upper() != "PSMODULEPATH"
+    }
+    done = subprocess.run(command, env=env, capture_output=True, text=True, timeout=30)
     assert done.returncode == 0, done.stderr
     assert (destination / "Forge.cmd").is_file()
-    again = subprocess.run(command, capture_output=True, text=True, timeout=30)
+    again = subprocess.run(command, env=env, capture_output=True, text=True, timeout=30)
     assert again.returncode != 0
     assert (destination / "Forge.cmd").is_file()
