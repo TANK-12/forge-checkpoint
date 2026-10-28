@@ -91,6 +91,14 @@ scanned with the same privacy checks and checked with the same
 installed-copy smoke: Linux 143/143 and Windows under Wine 123/123 locally,
 and again on native hosted runners through the saved-checkpoint workflow.
 
+Native hosted runs of the published downloads, checked at 20:43
+(https://github.com/TANK-12/forge-checkpoint/actions/runs/40688289924):
+Linux 143/143 (25 apps), Mac Apple silicon 128/128 and Mac Intel 128/128
+(22 apps), Windows 123/123 (21 apps). The install helper, smart search and
+move-to-bin tests passed on each (Linux 40, Mac 37, Windows 34, the rest
+skipped as written for other systems); the real move-to-bin tests ran on Mac
+and Windows, including Windows refusing a drive with no recycle bin.
+
 Still left out: apps holding the owner's own data, accounts, chats or
 secrets; apps that only drive one Linux desktop or its security checks; apps
 that need large AI models or programs that cannot ship; a chess app whose

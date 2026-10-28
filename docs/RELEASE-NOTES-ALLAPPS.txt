@@ -29,7 +29,15 @@ Forge.cmd. Python is included.
 
 Linux x64: tar xzf, then ./Forge/forge.
 
-CHECKS_GO_HERE
+Checked for this release: Linux 143/143 installed-copy smoke (25 apps),
+Windows under Wine 123/123 (21 apps), every app's page probe clean apart
+from two known matches (Files lists the mounted drives of the machine it
+runs on; Vault's own name matches a drive-name rule). Under Wine, Vault
+listed, opened and thumbnailed a real picture. Native hosted runs of these
+downloads: Linux 143/143, Mac Apple silicon 128/128, Mac Intel 128/128,
+Windows 123/123, with the install helper, smart search and move-to-bin tests
+passing on each
+(https://github.com/TANK-12/forge-checkpoint/actions/runs/40688289924).
 
 Download SHA256SUMS with your archive. Optional install scripts verify that
 file before copying and refuse to overwrite an existing destination.
