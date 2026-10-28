@@ -1,0 +1,41 @@
+Forge checkpoint — 28 October 2026, updated (0.2.0 preview)
+
+New in this update: smart search (the home search box and the top bar's
+magnifier do sums, the time and "which app does X" on your computer, and
+answer other questions from the web: DuckDuckGo with a Wikipedia fallback
+and an Open in Google button, not Google's AI overview), and the restyled
+Visuals menu (Alt+Shift+M) with a live particle preview. Local Jan or Claude
+answers are optional separate installs. The original checkpoint-2026-10-28
+release is unchanged.
+
+Mac first: download macos-arm64 for Apple silicon (macOS 11+), or macos-x64
+for Intel (macOS 12+). Extract, then move Forge.app from the Forge folder to
+Applications. These are unsigned, unnotarised previews, built and inspected
+on Linux; full archive installs and backend smoke now pass on native hosted
+Apple silicon and Intel Macs (88/88 each). See the repository README for Apple's
+Open Anyway instructions and the optional checksum-checked Mac installer.
+
+Windows 10/11 x64: extract the zip to a local writable folder and double-click
+Forge.cmd. Python is included. Full helper install and installed-copy smoke now pass on a native hosted
+Windows runner (83/83); earlier checks also passed under Wine.
+
+Native installation evidence: https://github.com/TANK-12/forge-checkpoint/actions/runs/40654815268
+Interactive desktop windows, Gatekeeper and SmartScreen still need user tests.
+
+Checked locally for this checkpoint: Linux 108/108 smoke, Windows under Wine
+83/83 smoke, all 13 Windows app probes clean, starter art clean on both.
+Linux Files displays mounted drives on its host; raw screenshots/logs from
+that probe are private. See docs/CHECKPOINT.md for scope and remaining limits.
+
+14 Mac apps, 13 Windows apps, 18 Linux apps. Try Arcade, Emberfield,
+Drift Peaks, Exo Lab or PrintForge without an AI model. Jan/model downloads
+are separate for AI features. Linux desktop/systemd/Hyprland integration and
+private apps, logins, chats, models and personal files are excluded.
+
+Download SHA256SUMS with your archive. Optional install scripts verify that
+file before copying and refuse to overwrite an existing destination.
+No original-code licence chosen yet: all rights reserved; see LICENSE.
+
+The attached source archive is checkpoint-2026-10-28-updated. The native
+check figures above are from the original packages; this update's own native
+run is linked from the repository README.

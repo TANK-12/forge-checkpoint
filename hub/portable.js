@@ -114,6 +114,8 @@
   on("music", (e) => call("forgeMusic", e));
   on("stats", (s) => call("forgeSetStats", s));
   on("media", (players) => call("forgeMediaSys", players));
+  // the smart search's answer (shared/forge_ask.py), as forge.py calls forgeAsk
+  on("ask", (answer) => call("forgeAsk", answer));
   // the theme switcher's answer (Alt+T), as forge.py runs forgeThemePicked
   on("theme_picked", (answer) => call("forgeThemePicked", answer));
   // where the user's things are kept: a drive pulled out, or a move, takes

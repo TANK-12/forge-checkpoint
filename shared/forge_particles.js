@@ -104,10 +104,64 @@ const Particles = {
     document.addEventListener("forge-power", () => this.apply());
     this.size();
   },
+  // the drawing's size: the window for the full-screen layer, the canvas's
+  // own box for a preview()
+  W() { return innerWidth; },
+  H() { return innerHeight; },
+  // how many of a kind's count to draw: all of them full-screen, fewer in a
+  // small preview (a square root of its share of the screen, so a few still show)
+  area() { return 1; },
   size() {
     if (!this.canvas) return;
-    if (this.canvas.width !== innerWidth) this.canvas.width = innerWidth;
-    if (this.canvas.height !== innerHeight) this.canvas.height = innerHeight;
+    if (this.canvas.width !== this.W()) this.canvas.width = this.W();
+    if (this.canvas.height !== this.H()) this.canvas.height = this.H();
+  },
+  /* A second drawer of its own on any canvas: a settings preview window
+     (shared/forge_fx_preview.js). The same kinds and drawing, its own dots,
+     size and pointer; look() gives the settings to show. It leaves the page's
+     own layer and body classes alone. stop() ends it for good. */
+  preview(canvas, look) {
+    const p = Object.create(this);
+    Object.assign(p, {
+      canvas, ctx: canvas.getContext("2d"), dots: [], sparks: [], raf: 0, level: "off", built: "", sprites: {},
+      mouse: { x: -1, y: -1 }, k: 1, last: 0, ox: 0, oy: 0, surge: 0, drawn: 0, bright: false, own: true, stopped: false,
+      look, showing: () => true, boost: () => 1, fpsCap: () => 0,
+    });
+    p.W = () => Math.max(1, Math.round(canvas.clientWidth || canvas.width));
+    p.H = () => Math.max(1, Math.round(canvas.clientHeight || canvas.height));
+    p.area = () => {
+      const full = (screen.width || innerWidth) * (screen.height || innerHeight) || 1;
+      return Math.min(1, Math.max(0.2, Math.sqrt((p.W() * p.H()) / full)));
+    };
+    // drawn only while the canvas is on show and the page is seen
+    p.seen = () => !p.stopped && canvas.isConnected && canvas.getClientRects().length > 0
+      && (window.ForgeIdle ? ForgeIdle.shown() : !document.hidden);
+    canvas.addEventListener("pointermove", (e) => {
+      const r = canvas.getBoundingClientRect();
+      p.mouse.x = e.clientX - r.left; p.mouse.y = e.clientY - r.top;
+    });
+    canvas.addEventListener("pointerleave", () => { p.mouse.x = -1; });
+    canvas.addEventListener("pointerdown", (e) => {
+      const r = canvas.getBoundingClientRect();
+      p.burst(e.clientX - r.left, e.clientY - r.top);
+    });
+    // back in front (the page, or inside the hub the app: forge_idle.js)
+    const wake = () => p.sync();
+    document.addEventListener("visibilitychange", wake);
+    document.addEventListener("forge-visible", wake);
+    const ro = window.ResizeObserver ? new ResizeObserver(() => { p.size(); p.built = ""; p.apply(); }) : null;
+    if (ro) ro.observe(canvas);
+    // gone for good: no frames, no listeners, nothing kept
+    p.stop = () => {
+      p.stopped = true;
+      p.sync();
+      document.removeEventListener("visibilitychange", wake);
+      document.removeEventListener("forge-visible", wake);
+      if (ro) ro.disconnect();
+      p.dots = []; p.sparks = []; p.sprites = {};
+    };
+    p.size();
+    return p;
   },
   // The kind to draw: the wallpaper's own pick, else the setting, and for
   // "auto" the kind that suits the wallpaper. Only an Off stops them.
@@ -124,13 +178,13 @@ const Particles = {
   apply() {
     this.level = this.chosen();
     this.bright = Number(this.look().wall_light) > 0.6;
-    document.body.classList.toggle("no-particles", this.level === "off");
+    if (!this.own) document.body.classList.toggle("no-particles", this.level === "off");
     const { size, speed } = this.scale(), build = `${this.level} ${size} ${speed}`;
     if (this.built !== build) { this.dots = []; this.built = build; }
     const boost = this.boost();
     // a broken setting (text, NaN, huge) is read as 1, and never above 5
     const raw = Number(this.look().particle_amount ?? 1), amount = Math.min(5, Number.isFinite(raw) ? Math.max(0, raw) : 1) * (Number(boost) || 1);
-    const want = this.level === "off" ? 0 : Math.round(this.KINDS[this.level].count * amount);
+    const want = this.level === "off" ? 0 : Math.round(this.KINDS[this.level].count * amount * this.area());
     while (this.dots.length < want) this.dots.push(this.spawn(true));
     this.dots.length = want;
     this.sync();
@@ -174,7 +228,7 @@ const Particles = {
   },
   spawn(anywhere) {
     const kind = this.KINDS[this.level];
-    const d = this[kind.spawn](anywhere, innerWidth, innerHeight, Math.random);
+    const d = this[kind.spawn](anywhere, this.W(), this.H(), Math.random);
     // depth: near ones bigger, quicker and brighter; flat kinds have their own
     if (d.z == null) {
       d.z = kind.flat ? 1 : 0.55 + Math.random() * 0.75;
@@ -291,7 +345,7 @@ const Particles = {
     const gap = this.last ? t - this.last : 0;
     this.k = gap > 0 && gap <= 250 ? Math.max(0.25, gap / (1000 / 60)) : 1;
     this.last = t;
-    const c = this.ctx, w = innerWidth, h = innerHeight, m = this.mouse;
+    const c = this.ctx, w = this.W(), h = this.H(), m = this.mouse;
     const accent = this.look().accent || "#8ab4ff";
     // parallax: the pointer's place, eased, moves the near layer furthest
     const px = m.x >= 0 ? (m.x / w - 0.5) * -18 : 0, py = m.x >= 0 ? (m.y / h - 0.5) * -12 : 0;

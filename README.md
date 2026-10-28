@@ -29,6 +29,24 @@ Desktop windows, Gatekeeper and SmartScreen still need a person to test them.
 See [checkpoint evidence and limits](docs/CHECKPOINT.md),
 [publication steps](docs/PUBLISH.md), and [licence placeholder](LICENSE).
 
+## Updated checkpoint — 28 October 2026, 17:30
+
+The `checkpoint-2026-10-28-updated` release adds two features to the same
+apps, built the same way:
+
+- **Smart search.** The home screen's search box and a magnifying glass in
+  the top bar answer questions. Sums, the time and "which app does X" are
+  plain rules on your computer (no model, no web) and answer while you type.
+  Any other question, sent with Enter, goes to the web by default: a short
+  answer from DuckDuckGo (with a Wikipedia fallback) and an "Open in Google"
+  button. It does not show Google's own AI overview, which cannot be read
+  from here. Settings > Home screen can switch it to a local Jan model or
+  Claude, both separate installs.
+- **Visuals menu (Alt+Shift+M)**, restyled, with a live preview of the
+  particle effects; Settings shows the same preview.
+
+The original `checkpoint-2026-10-28` release stays as it was.
+
 ## The apps
 
 - **Afterglow**: Claude's after-hours toys, made for fun
@@ -53,7 +71,8 @@ See [checkpoint evidence and limits](docs/CHECKPOINT.md),
 ## Install
 
 Download the file for your system from the
-[dated checkpoint release](https://github.com/TANK-12/forge-checkpoint/releases/tag/checkpoint-2026-10-28).
+[updated checkpoint release](https://github.com/TANK-12/forge-checkpoint/releases/tag/checkpoint-2026-10-28-updated)
+(or the [original one](https://github.com/TANK-12/forge-checkpoint/releases/tag/checkpoint-2026-10-28)).
 
 ### macOS first — Apple silicon 11+, Intel 12+
 

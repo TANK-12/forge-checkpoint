@@ -179,6 +179,7 @@
     "shared/forge.js",
     "shared/forge_art.js",
     "shared/forge_art.py",
+    "shared/forge_ask.py",
     "shared/forge_autoclose.py",
     "shared/forge_chrome.js",
     "shared/forge_content.py",
@@ -251,7 +252,9 @@
     "shared/pad/",
     "shared/perf/",
     "shared/themes/",
-    "shared/vendor/"
+    "shared/vendor/",
+    "shared/forge_fx_preview.js",
+    "shared/forge_websearch.py"
   ],
   "leave_out": [
     "*/tests/*",
@@ -298,7 +301,6 @@
     "shared/claude_launch.py",
     "shared/forge_session_title.js",
     "shared/forge_convo.*",
-    "shared/forge_websearch.py",
     "shared/forge_open.py",
     "shared/forge_bidi.py",
     "shared/forge_avatar.js",
@@ -1144,7 +1146,8 @@
       "LICENSE",
       "tests/test_checkpoint.py",
       "pyrightconfig.json",
-      ".github/workflows/check-checkpoint.yml"
+      ".github/workflows/check-checkpoint.yml",
+      "tests/test_forge_ask.py"
     ],
     "top": {
       "release/source/README.md": "README.md",

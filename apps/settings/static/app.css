@@ -265,3 +265,6 @@ body.nav-tabs .changed-only { flex: none; }
 .apps-none { margin-top: 12px; }
 .apps-none summary { cursor: pointer; color: var(--muted); }
 .apps-broken { color: var(--text); border-left: 3px solid var(--accent); padding-left: 8px; }
+.fx-preview-box { margin: 2px 0 12px; }
+.fx-preview-box { grid-column: 1 / -1; }
+.fx-preview-box .forge-fxp { height: 150px; }

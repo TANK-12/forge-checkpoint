@@ -782,6 +782,21 @@ SETTINGS: dict[str, dict] = {
         "label": "Dock icon size",
     },
     # --- home screen
+    # The smart search: what answers a
+    # question the plain rules (maths, the time, finding apps) cannot.
+    "ask_answers": _choice(
+        "web",
+        {
+            "web": "The web (short answer, online)",
+            "auto": "Local model first, the web when it is unsure",
+            "local": "Local model (Jan, offline)",
+            "claude": "Claude (online, uses Claude usage)",
+            "google": "Just open Google",
+        },
+        group=HOME_SCREEN,
+        label="Questions are answered by",
+        help="The search box on the home screen, and the magnifying glass in the top bar, answer sums, the time and which app does what by plain rules, with no model and no web. Any other question, sent with Enter, goes to this. The web gives a short answer from DuckDuckGo with a link to Google's own answer. Local uses the Jan model picked for Forge's ask role, loaded when asked and released when idle; when Jan is off or has no answer the web answers instead. Local first asks the model and goes to the web when the model is not sure. Google's AI overview cannot be read from here, so Just open Google opens that search in a browser.",
+    ),
     "home_clock": {
         "default": True,
         "kind": "bool",

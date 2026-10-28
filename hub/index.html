@@ -898,35 +898,100 @@
   .q-err { color: var(--warn); font-size: 11.5px; padding: 0 4px; }
   .q-err:empty { display: none; }
   /* --- S25: the visuals popup (Alt+Shift+M, or Alt+M in Alt+V) and the key readout --- */
-  #fx-panel { position: fixed; z-index: 82; width: 430px; max-height: min(80vh, 720px); padding: 12px 12px 10px; border-radius: 14px;
-    display: flex; flex-direction: column; gap: 8px; font-size: 12.5px; color: var(--text);
-    background: color-mix(in srgb, var(--panel) 94%, transparent); max-width: calc(100vw - 16px); }
+  /* Task 436 (the owner, 2026-10-28: "make the Alt+Shift+M menu a lot better and anime
+     its looks"): an accent-lit card with a soft sakura glow, a live particle preview
+     (shared/forge_fx_preview.js) under the title, section chips that jump to and follow
+     the list, switches and filled sliders. Still one scrolling list of rows. */
+  #fx-panel { position: fixed; z-index: 82; width: 460px; max-height: min(84vh, 760px); padding: 12px 12px 10px; border-radius: 18px;
+    display: flex; flex-direction: column; gap: 8px; font-size: 12.5px; color: var(--text); max-width: calc(100vw - 16px);
+    --fx-pink: color-mix(in srgb, #ff8fc7 70%, var(--accent));
+    background:
+      radial-gradient(70% 45% at 100% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%),
+      radial-gradient(60% 40% at 0% 100%, color-mix(in srgb, var(--fx-pink) 16%, transparent), transparent 70%),
+      linear-gradient(color-mix(in srgb, var(--panel) 55%, transparent), color-mix(in srgb, var(--panel) 55%, transparent)),
+      color-mix(in srgb, var(--panel) 94%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 38%, var(--border));
+    box-shadow: 0 18px 48px rgba(0, 0, 0, .38), 0 0 0 1px rgba(255, 255, 255, .03) inset,
+      0 0 26px color-mix(in srgb, var(--accent) 18%, transparent); }
   #fx-panel[hidden] { display: none; }
+  /* a deeper pink on a light panel, so the small words stay readable */
+  html[data-forge-mode="light"] #fx-panel { --fx-pink: color-mix(in srgb, #b8256a 75%, var(--accent)); }
+  /* a thin accent-to-pink ribbon along the top edge */
+  #fx-panel::before { content: ""; position: absolute; left: 18px; right: 18px; top: 0; height: 2px; border-radius: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), var(--fx-pink), transparent); pointer-events: none; }
+  #fx-panel.opening, #fx-panel.closing { transform: translateY(-8px) scale(.965); }
   #fx-panel .fx-head { display: flex; align-items: center; gap: 8px; }
-  #fx-panel .fx-head b { flex: 1; font-size: 13.5px; }
-  #fx-panel .fx-head button { height: 26px; padding: 0 10px; border-radius: 999px; border: 1px solid var(--border);
-    background: transparent; color: var(--text); font: inherit; cursor: pointer; }
-  #fx-panel .fx-head button:hover { border-color: var(--accent); }
+  #fx-panel .fx-title { flex: 1; display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+  #fx-panel .fx-title b { font-size: 16px; letter-spacing: .01em;
+    background: linear-gradient(90deg, var(--text), color-mix(in srgb, var(--accent) 70%, var(--text)));
+    -webkit-background-clip: text; background-clip: text; color: transparent; }
+  #fx-panel .fx-title small { color: color-mix(in srgb, var(--fx-pink) 75%, var(--muted)); font-size: 11.5px; letter-spacing: .12em; }
+  #fx-panel .fx-head button { height: 28px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border);
+    background: color-mix(in srgb, var(--text) 5%, transparent); color: var(--text); font: inherit; cursor: pointer;
+    transition: border-color .15s, background .15s, transform .15s; }
+  #fx-panel .fx-head button:hover { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, transparent); }
+  #fx-panel .fx-head button:active { transform: scale(.95); }
+  #fx-panel #fx-close { width: 28px; padding: 0; font-size: 16px; }
+  #fx-preview:empty { display: none; }
+  #fx-preview .forge-fxp { height: 118px; }
+  /* the section chips: one per heading in the list, the one in view lit */
+  #fx-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+  #fx-tabs button { display: inline-flex; align-items: center; gap: 5px; height: 28px; padding: 0 11px; border-radius: 999px;
+    border: 1px solid var(--border); background: transparent; color: var(--muted); font: inherit; font-weight: 600; cursor: pointer;
+    transition: color .15s, background .2s, border-color .2s, box-shadow .2s; }
+  #fx-tabs button i { font-style: normal; color: var(--fx-pink); }
+  #fx-tabs button:hover { color: var(--text); border-color: color-mix(in srgb, var(--accent) 60%, var(--border)); }
+  #fx-tabs button.on { color: var(--on-accent, #0b1220); border-color: transparent;
+    background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 55%, var(--fx-pink)));
+    box-shadow: 0 2px 10px color-mix(in srgb, var(--accent) 35%, transparent); }
+  #fx-tabs button.on i { color: inherit; }
   /* the scroll bar gets its own lane (Relay 276): a real, always-there gutter
      plus room past it, so it never sits over a tick box or a number box */
-  #fx-list { overflow-y: auto; display: grid; gap: 1px; padding-right: 12px; min-height: 0;
+  #fx-list { overflow-y: auto; display: grid; gap: 2px; padding-right: 12px; min-height: 0;
     scrollbar-gutter: stable; }
   #fx-list::-webkit-scrollbar { width: 8px; }
-  #fx-list::-webkit-scrollbar-thumb { border-radius: 999px; background: color-mix(in srgb, var(--text) 30%, transparent); }
+  #fx-list::-webkit-scrollbar-thumb { border-radius: 999px; background: color-mix(in srgb, var(--accent) 45%, transparent); }
   #fx-list::-webkit-scrollbar-track { background: transparent; }
-  .fx-sub { margin: 8px 0 2px; font-size: 11px; font-weight: 700; letter-spacing: .04em; color: var(--muted); }
-  .fx-row { display: grid; grid-template-columns: minmax(0, 1fr) 200px; align-items: center; gap: 8px; min-height: 30px;
-    padding: 0 6px; border-radius: 8px; }
-  .fx-row:hover { background: color-mix(in srgb, var(--text) 7%, transparent); }
-  /* a switch row is one big label: a click anywhere on it flips the tick box */
-  label.fx-row { cursor: pointer; }
+  .fx-sub { display: flex; align-items: center; gap: 8px; margin: 10px 0 3px; padding: 0 6px; font-size: 12px; font-weight: 700;
+    color: var(--text); }
+  .fx-sub:first-child { margin-top: 2px; }
+  .fx-sub i { font-style: normal; width: 22px; height: 22px; border-radius: 7px; display: grid; place-items: center; font-size: 12px;
+    color: var(--on-accent, #0b1220); background: linear-gradient(135deg, var(--accent), var(--fx-pink)); }
+  .fx-sub small { color: var(--muted); font-weight: 500; letter-spacing: .1em; }
+  .fx-sub::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 40%, transparent), transparent); }
+  .fx-row { display: grid; grid-template-columns: minmax(0, 1fr) 200px; align-items: center; gap: 8px; min-height: 32px;
+    padding: 0 8px; border-radius: 10px; transition: background .15s; }
+  .fx-row:hover { background: color-mix(in srgb, var(--accent) 10%, transparent); }
+  /* a switch row is one big label: a click anywhere on it flips the switch */
+  label.fx-row { cursor: pointer; grid-template-columns: minmax(0, 1fr) auto; }
   label.fx-row > span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .fx-row.num { grid-template-columns: minmax(0, 1fr) 132px 56px; }
   .fx-row label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; }
-  .fx-row select, .fx-row input[type=number] { height: 26px; min-width: 0; padding: 0 6px; border-radius: 8px;
-    border: 1px solid var(--border); background: var(--panel); color: var(--text); font: inherit; }
-  .fx-row input[type=range] { width: 100%; min-width: 0; accent-color: var(--accent); }
-  .fx-row input[type=checkbox] { justify-self: end; width: 18px; height: 18px; margin: 0; accent-color: var(--accent); cursor: pointer; }
+  .fx-row select, .fx-row input[type=number] { height: 28px; min-width: 0; padding: 0 8px; border-radius: 9px;
+    border: 1px solid var(--border); background: color-mix(in srgb, var(--panel) 85%, var(--text) 4%); color: var(--text); font: inherit;
+    transition: border-color .15s; }
+  .fx-row select:hover, .fx-row input[type=number]:hover, .fx-row select:focus, .fx-row input[type=number]:focus { border-color: var(--accent); outline: none; }
+  .fx-row input[type=number] { text-align: right; font-variant-numeric: tabular-nums; }
+  /* a filled slider: accent up to the value (--fill, set by Fx.fillOf) */
+  .fx-row input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; min-width: 0; height: 6px; margin: 0; border-radius: 999px; cursor: pointer;
+    background: linear-gradient(90deg, var(--accent), var(--fx-pink)) 0 0 / var(--fill, 50%) 100% no-repeat,
+      color-mix(in srgb, var(--text) 16%, transparent); }
+  .fx-row input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%;
+    background: #fff; border: 3px solid var(--accent); box-shadow: 0 1px 6px color-mix(in srgb, var(--accent) 60%, transparent);
+    transition: transform .15s; }
+  .fx-row input[type=range]:hover::-webkit-slider-thumb { transform: scale(1.15); }
+  .fx-row input[type=range]::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: #fff; border: 3px solid var(--accent); }
+  /* a switch, not a tick box (still a checkbox underneath) */
+  .fx-row input[type=checkbox] { -webkit-appearance: none; appearance: none; justify-self: end; position: relative; width: 38px; height: 22px; margin: 0;
+    border-radius: 999px; cursor: pointer; background: color-mix(in srgb, var(--text) 20%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--text) 12%, transparent); transition: background .2s, box-shadow .2s; }
+  .fx-row input[type=checkbox]::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%;
+    background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, .35); transition: transform .22s cubic-bezier(.3, 1.4, .5, 1); }
+  .fx-row input[type=checkbox]:checked { background: linear-gradient(90deg, var(--accent), var(--fx-pink));
+    box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 40%, transparent); }
+  .fx-row input[type=checkbox]:checked::after { transform: translateX(16px); }
+  .fx-row input[type=checkbox]:focus-visible, .fx-row input[type=range]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  body.no-anim #fx-panel *, body.no-anim #fx-panel *::after { transition: none !important; }
   .fx-keys { color: var(--muted); font-size: 11.5px; line-height: 1.5; border-top: 1px solid var(--border); padding-top: 6px; }
   #fx-hud { position: fixed; left: 50%; top: 18px; transform: translate(-50%, -8px); z-index: 97; padding: 8px 16px; border-radius: 999px;
     font-size: 13px; color: #fff; background: rgba(10, 12, 20, .6); backdrop-filter: blur(10px); opacity: 0; pointer-events: none;
@@ -1041,6 +1106,35 @@
   .tp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr)); gap: 16px; }
   .tp-grid.small { grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr)); gap: 14px; }
   #theme-picker .ov-sub { margin: 6px 0 -4px; font-size: 13px; font-weight: 600; color: var(--muted); }
+
+  /* The smart search's answer (shared/forge_ask.py, Relay task 438): a card
+     under the home search, and the same card in the magnifier's popup. */
+  .ask-card { width: 100%; max-width: 680px; padding: 12px 16px; border-radius: 14px; text-align: left;
+    background: color-mix(in srgb, var(--bg, #111) 72%, transparent); border: 1px solid var(--line, rgba(255,255,255,.14));
+    -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); color: var(--text); font-size: 14px; line-height: 1.45; }
+  .ask-card[hidden] { display: none; }
+  .ask-card .a-big { font-size: 26px; font-weight: 650; letter-spacing: -.01em; }
+  .ask-card .a-sub, .ask-card .a-src { color: var(--muted); font-size: 12.5px; }
+  .ask-card .a-text { margin: 2px 0 8px; }
+  .ask-card .a-acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .ask-card button { font: inherit; font-size: 13px; color: var(--text); background: color-mix(in srgb, var(--text) 9%, transparent);
+    border: 1px solid var(--line, rgba(255,255,255,.14)); border-radius: 999px; padding: 4px 12px; cursor: pointer; }
+  .ask-card button:hover, .ask-card button:focus-visible { border-color: var(--accent); outline: none; }
+  .ask-card .a-app { display: flex; align-items: center; gap: 10px; padding: 6px 0; }
+  .ask-card .a-app + .a-app { border-top: 1px solid var(--line, rgba(255,255,255,.08)); }
+  .ask-card .a-app .a-ic { width: 28px; text-align: center; font-size: 18px; }
+  .ask-card .a-app .a-w { flex: 1; min-width: 0; }
+  .ask-card .a-app .a-w b { display: block; font-weight: 600; }
+  .ask-card .a-app .a-w span { color: var(--muted); font-size: 12.5px; }
+  .ask-card .a-wait { color: var(--muted); }
+  #ask-btn { display: none; }
+  body.in-app #ask-btn { display: inline-flex; align-items: center; }
+  #ask-pop { position: fixed; z-index: 60; top: 52px; right: 14px; width: min(460px, calc(100vw - 28px));
+    display: flex; flex-direction: column; gap: 8px; }
+  #ask-pop[hidden] { display: none; }
+  #ask-input { width: 100%; height: 42px; padding: 0 16px; border-radius: 999px; font: inherit; font-size: 15px; color: var(--text);
+    border: 1px solid var(--accent); background: color-mix(in srgb, var(--bg, #111) 80%, transparent); outline: none;
+    -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
 </style>
 <!-- The chosen look (Settings > Look): one stylesheet from looks/, swapped by
      applyLook(). Classic is empty, so the rules above are the Classic look. -->
@@ -1123,7 +1217,9 @@
 <div id="app-menu" class="glass popup" hidden role="menu"></div>
 <div id="toast" class="glass popup" hidden role="status"><span id="toast-text"></span><button id="toast-undo">Undo</button></div>
 <div id="fx-panel" class="glass popup" hidden role="dialog" aria-label="Visuals">
-  <div class="fx-head"><b>Visuals</b><button id="fx-settings" type="button" title="Every setting, in the Settings app">All settings</button><button id="fx-close" type="button" aria-label="Close (Esc)">×</button></div>
+  <div class="fx-head"><div class="fx-title"><b>Visuals</b><small lang="ja">ビジュアル</small></div><button id="fx-settings" type="button" title="Every setting, in the Settings app">All settings</button><button id="fx-close" type="button" aria-label="Close (Esc)">×</button></div>
+  <div id="fx-preview"></div>
+  <nav id="fx-tabs" aria-label="Sections"></nav>
   <div id="fx-list"></div>
   <div class="fx-keys" id="fx-keys"></div>
 </div>
@@ -1152,11 +1248,17 @@
     <button class="bar-btn" id="music-btn" title="Background music" hidden>&#9835;</button>
     <button class="bar-btn" id="zen-btn" title="Zen mode (Alt+Z). Esc comes back.">&#9790;</button>
     <button class="bar-btn" id="ambient-btn" title="Background mode (Alt+B): just the wallpaper, particles and visualiser. Esc comes back.">&#10023;</button>
+    <button class="bar-btn" id="ask-btn" title="Ask or search: sums, apps, any question" aria-haspopup="dialog"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="7" cy="7" r="4.6"/><path d="M10.5 10.5L14 14"/></svg></button>
     <button class="bar-btn" id="size-btn" title="Text and size">Aa</button>
     <button class="bar-btn" id="quick-btn" title="Quick settings: brightness, volume, Wi-Fi, Bluetooth and more" aria-haspopup="dialog" hidden></button>
     <span class="chip" id="clock">--:--</span>
     <button class="bar-btn" id="settings-btn" title="Settings" hidden>&#9881;</button>
   </div>
+</div>
+
+<div id="ask-pop" role="dialog" aria-label="Ask or search" hidden>
+  <input id="ask-input" placeholder="Ask anything, do a sum, or find an app" autocomplete="off" spellcheck="false">
+  <div id="ask-out" class="ask-card" hidden aria-live="polite"></div>
 </div>
 
 <div id="home">
@@ -1167,7 +1269,8 @@
       <div class="greet" id="greet"></div>
     </div>
     <div class="hero-side">
-      <input id="search" class="glass" placeholder="Search apps… (just start typing)" autocomplete="off" spellcheck="false">
+      <input id="search" class="glass" placeholder="Search apps or ask anything… (just start typing)" autocomplete="off" spellcheck="false">
+      <div id="ask-card" class="ask-card" hidden aria-live="polite"></div>
       <div id="chips"></div>
     </div>
   </div>
@@ -1275,6 +1378,7 @@
 <script src="status.js" onerror="void 0"></script>
 <script src="theme.js" onerror="void 0"></script>
 <script src="../shared/forge_particles.js"></script>
+<script src="../shared/forge_fx_preview.js"></script>
 <script src="../shared/forge_glass.js"></script>
 <script src="../shared/forge_visual.js"></script>
 <script src="../shared/forge_framecap.js"></script>
@@ -3249,6 +3353,7 @@ function selectWorkspace(key, { instant = false } = {}) {
     Overview.seen(key);
   } else {
     $("search").value = "";
+    if (!$("ask-card").hidden) Ask.clear("home");
     if (relayout) layoutSections();
     filterTiles("");
     renderRecent();
@@ -3712,6 +3817,7 @@ function openFocusedFind() {
 let searchLaid = false;
 function filterTiles(text) {
   Finds.q = text;
+  Finds.arrowed = false;
   const needle = text.trim();
   const ranked = needle ? ForgeFuzzy.rank(needle, shown(), searchDocs) : [];
   const hits = ranked.map((h) => h.key);
@@ -3746,21 +3852,188 @@ function filterTiles(text) {
   return first;
 }
 
-$("search").addEventListener("input", (e) => filterTiles(e.target.value));
+
+// --- the smart search (shared/forge_ask.py, Relay task 438) ------------------
+// Sums, the time and "which app does X" answer while typing (plain rules in
+// forge.py's worker, no model, no web); Enter on a question sends it to the
+// engine picked in Settings > Home screen. The home search shows the answer
+// in a card under it; anywhere else the magnifier in the top bar opens the
+// same box as a popup.
+const Ask = {
+  seq: 0,
+  latest: { home: 0, pop: 0 },
+  timer: null,
+  shown: { home: null, pop: null },
+  box(where) { return $(where === "home" ? "ask-card" : "ask-out"); },
+  send(where, q, live) {
+    const id = ++Ask.seq;
+    Ask.latest[where] = id;
+    try { window.webkit.messageHandlers.forge.postMessage(JSON.stringify({ ask: { id, q, live, where } })); } catch (e) {}
+    return id;
+  },
+  // while typing: the rules only, a moment after the last key
+  typed(where, q) {
+    clearTimeout(Ask.timer);
+    if (!q.trim()) { Ask.clear(where); return; }
+    Ask.timer = setTimeout(() => Ask.send(where, q, true), 140);
+  },
+  question(q) {
+    const t = q.trim();
+    return /\?$/.test(t) || t.split(/\s+/).length >= 4 ||
+      /^(what|who|whom|whose|when|where|why|how|which|is|are|was|were|do|does|did|can|could|should|will|would|define|explain|tell me)\b/i.test(t);
+  },
+  // Enter: true when the search box should not do its own Enter
+  enter(where, q) {
+    const shown = Ask.shown[where];
+    if (shown && shown.kind === "apps" && shown.q === q.trim()) { Ask.openApp(shown.apps[0].key); return true; }
+    if (!q.trim()) return false;
+    // on the home search a marked row or a tile named outright opens as
+    // before; only a question goes off to be answered
+    if (where === "home" && Finds.items.length) {
+      const top = Finds.items[0];
+      const named = top && top.tile && top.score >= 1.5;
+      if (Finds.arrowed || named || !Ask.question(q)) return false;
+    }
+    clearTimeout(Ask.timer);
+    Ask.send(where, q, false);
+    Ask.draw(where, { kind: "wait", q: q.trim() });
+    return true;
+  },
+  clear(where) {
+    Ask.latest[where] = ++Ask.seq;
+    Ask.shown[where] = null;
+    const box = Ask.box(where);
+    box.hidden = true;
+    box.textContent = "";
+  },
+  answer(a) {
+    const where = Object.keys(Ask.latest).find((w) => Ask.latest[w] === a.id);
+    if (!where) return; // an older question, already typed past
+    if (a.kind === "opened") return;
+    if (a.kind === "none") { Ask.clear(where); return; }
+    if (a.kind === "google" && a.google) Ask.open(a.google);
+    Ask.draw(where, a);
+  },
+  openApp(key) {
+    Ask.hidePop();
+    if ($("search").value) { $("search").value = ""; filterTiles(""); Ask.clear("home"); }
+    if (parts[key]) selectWorkspace(key);
+  },
+  open(url) {
+    Ask.hidePop();
+    const browser = order.find((k) => (status[k] || {}).role === "browser");
+    if (browser && appFlag(browser) !== "archived") { Ask.hidePop(); selectWorkspace(browser); }
+    const base = browser ? (status[browser].url || "") : "";
+    try { window.webkit.messageHandlers.forge.postMessage(JSON.stringify({ ask: { op: "open", id: ++Ask.seq, url, browser: base } })); } catch (e) {}
+  },
+  el(tag, cls, text) {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined) e.textContent = text;
+    return e;
+  },
+  button(label, run) {
+    const b = Ask.el("button", "", label);
+    b.type = "button";
+    b.addEventListener("click", run);
+    return b;
+  },
+  apps(list) {
+    const wrap = Ask.el("div", "a-apps");
+    (list || []).filter((app) => parts[app.key]).forEach((app) => {
+      const row = Ask.el("div", "a-app");
+      row.appendChild(Ask.el("span", "a-ic", app.icon || "▢"));
+      const w = Ask.el("div", "a-w");
+      w.appendChild(Ask.el("b", "", app.label));
+      w.appendChild(Ask.el("span", "", app.tagline || ""));
+      row.appendChild(w);
+      row.appendChild(Ask.button("Open", () => Ask.openApp(app.key)));
+      wrap.appendChild(row);
+    });
+    return wrap;
+  },
+  draw(where, a) {
+    const box = Ask.box(where);
+    box.textContent = "";
+    Ask.shown[where] = a.kind === "wait" ? null : a;
+    const add = (node) => box.appendChild(node);
+    const google = () => a.google && Ask.button("Open in Google", () => Ask.open(a.google));
+    if (a.kind === "wait") add(Ask.el("div", "a-wait", "Looking that up…"));
+    else if (a.kind === "maths") {
+      add(Ask.el("div", "a-sub", a.expr + " ="));
+      add(Ask.el("div", "a-big", a.text));
+    } else if (a.kind === "clock") add(Ask.el("div", "a-big", a.text));
+    else if (a.kind === "apps") {
+      add(Ask.el("div", "a-sub", a.apps.length > 1 ? "These apps fit" : "This app fits"));
+      add(Ask.apps(a.apps));
+    } else if (a.kind === "google") add(Ask.el("div", "a-sub", "Opened Google in your browser."));
+    else if (a.kind === "error") {
+      add(Ask.el("div", "a-sub", "No answer from here: " + (a.text || "something went wrong")));
+    } else {
+      if (a.note) add(Ask.el("div", "a-sub", a.note));
+      add(Ask.el("div", "a-text", a.text || "No short answer for that."));
+      if (a.source) {
+        const src = Ask.el(a.url ? "button" : "div", "a-src", "From " + a.source);
+        if (a.url) { src.type = "button"; src.style.padding = "0"; src.style.border = "0"; src.style.background = "none"; src.addEventListener("click", () => Ask.open(a.url)); }
+        add(src);
+      }
+      if (a.apps && a.apps.length) add(Ask.apps(a.apps));
+    }
+    if (a.kind !== "wait" && a.kind !== "apps" && a.kind !== "maths" && a.kind !== "clock" && a.kind !== "google") {
+      const acts = Ask.el("div", "a-acts");
+      const g = google();
+      if (g) acts.appendChild(g);
+      add(acts);
+    }
+    box.hidden = !box.childNodes.length;
+    // an answer is a match: no "No app matches that" under it
+    if (where === "home" && !box.hidden) $("empty-search").style.display = "none";
+  },
+  showPop() {
+    if (current === null) { $("search").focus(); return; }
+    $("ask-pop").hidden = false;
+    $("ask-input").focus();
+    $("ask-input").select();
+  },
+  hidePop() {
+    if ($("ask-pop").hidden) return;
+    $("ask-pop").hidden = true;
+    Ask.clear("pop");
+  },
+};
+window.forgeAsk = (a) => Ask.answer(a);
+document.addEventListener("keydown", (e) => {
+  if (e.ctrlKey && !e.altKey && !e.shiftKey && e.key.toLowerCase() === "k") { e.preventDefault(); Ask.showPop(); }
+});
+$("ask-btn").addEventListener("click", () => ($("ask-pop").hidden ? Ask.showPop() : Ask.hidePop()));
+$("ask-input").addEventListener("input", (e) => Ask.typed("pop", e.target.value));
+$("ask-input").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") { e.preventDefault(); Ask.enter("pop", e.target.value); }
+  else if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); e.target.value = ""; Ask.hidePop(); }
+});
+document.addEventListener("pointerdown", (e) => {
+  if (!$("ask-pop").hidden && !e.target.closest("#ask-pop, #ask-btn")) Ask.hidePop();
+}, true);
+// a click into an app's frame never reaches this page: it only blurs it
+window.addEventListener("blur", () => Ask.hidePop());
+
+$("search").addEventListener("input", (e) => { filterTiles(e.target.value); Ask.typed("home", e.target.value); });
 $("search").addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     // Up and Down may have marked another result: keep it unless the text
     // changed without an input event (filled in by a script)
     if (Finds.q !== e.target.value) filterTiles(e.target.value);
-    openFocusedFind();
+    if (!Ask.enter("home", e.target.value)) openFocusedFind();
   } else if ((e.key === "ArrowDown" || e.key === "ArrowUp") && Finds.items.length) {
     // Up and Down walk the tiles and then the rows under them
     e.preventDefault();
     const step = e.key === "ArrowDown" ? 1 : -1;
+    Finds.arrowed = true;
     markFind(Math.max(0, Math.min(Finds.items.length - 1, Finds.at + step)));
   } else if (e.key === "Escape") {
     e.target.value = "";
     filterTiles("");
+    Ask.clear("home");
     e.target.blur();
   }
 });
@@ -4619,6 +4892,7 @@ function applyTheme(next) {
   // the bar and forge.py's web views follow the dock and full screen settings
   if (touched("dock", "auto_fullscreen")) applyChrome();
   Particles.apply();
+  if (Fx.pv) Fx.pv.refresh(); // the Visuals popup's preview, for a change made elsewhere
   document.body.classList.toggle("particles-in-apps", theme.particles_in_apps !== false);
   document.body.classList.toggle("visual-in-apps", theme.visualiser_in_apps === true);
   Depth3D.apply();
@@ -7322,7 +7596,7 @@ const Fx = {
     if (hubLocked()) return;
     applyTheme(changes);
     Sizes.save(changes); // the same short-delay save to forge.py as the Aa panel
-    if (Popup.isOpen($("fx-panel"))) this.values();
+    if (Popup.isOpen($("fx-panel"))) { this.values(); if (this.pv) this.pv.refresh(); }
   },
   label(key, value) { const r = this.row(key); return (r && r.labels && r.labels[value]) || String(value); },
   hud(text, ms = 1800, long = false) {
@@ -7421,30 +7695,90 @@ const Fx = {
     if (!on) {
       // a focused control in a closed popup kept the Alt+V keys from working
       if (p.contains(document.activeElement)) document.activeElement.blur();
+      if (this.pv) { this.pv.stop(); this.pv = null; }
       return Popup.close(p);
     }
     this.fill();
     Popup.open(p);
+    this.preview();
+    this.spy();
     const at = Drag.saved(p);
     if (at) Drag.moveTo(p, at.x, at.y);
     else { p.style.left = "auto"; p.style.right = "24px"; p.style.top = "64px"; }
     const first = $("fx-list").querySelector("input, select");
     if (first) first.focus({ preventScroll: true });
   },
+  // the list's sections: a row's group, then each group's chip and heading
+  // (an icon, its name and a small Japanese word under the anime look)
+  group(key) {
+    return key.startsWith("pulse_") ? "pulse" : key.startsWith("particle") ? "particles"
+      : key.startsWith("wall_") || key.startsWith("glass_") || key === "fx_hud" ? "wall" : "visualiser";
+  },
+  GROUPS: {
+    visualiser: { name: "Visualiser", short: "Visualiser", icon: "♪", ja: "音" },
+    particles: { name: "Particles", short: "Particles", icon: "✦", ja: "光" },
+    pulse: { name: "Alt+V pulse", short: "Pulse", icon: "✺", ja: "鼓動" },
+    wall: { name: "Wallpaper and more", short: "Wallpaper", icon: "❀", ja: "背景" },
+  },
   fill() {
-    const list = $("fx-list");
+    const list = $("fx-list"), tabs = $("fx-tabs");
     list.replaceChildren();
+    tabs.replaceChildren();
     let group = "";
     for (const r of this.rows()) {
-      // a small heading where the popup moves from one kind of thing to the next
-      const g = r.key.startsWith("pulse_") ? "Alt+V pulse" : r.key.startsWith("particle") ? "Particles"
-        : r.key.startsWith("wall_") || r.key === "fx_hud" ? "Wallpaper and more" : "Visualiser";
-      if (g !== group) { list.append(make("div", "fx-sub", g)); group = g; }
+      // a heading where the popup moves from one kind of thing to the next
+      const g = this.group(r.key), info = this.GROUPS[g];
+      if (g !== group) {
+        const sub = make("div", "fx-sub", "");
+        sub.dataset.sec = g;
+        sub.append(make("i", "", info.icon), make("span", "", info.name), make("small", "", info.ja));
+        sub.lastChild.lang = "ja";
+        list.append(sub);
+        const chip = make("button", "", "");
+        chip.type = "button"; chip.dataset.sec = g;
+        chip.append(make("i", "", info.icon), make("span", "", info.short));
+        chip.addEventListener("click", () => this.jump(g));
+        tabs.append(chip);
+        group = g;
+      }
       list.append(this.control(r));
     }
     $("fx-keys").textContent = `In Alt+V: ${this.help()}`;
     $("fx-keys").hidden = !Pulse.on;
     this.values();
+    this.spy();
+  },
+  // a chip scrolls its heading to the top of the list
+  jump(g) {
+    const list = $("fx-list"), sub = list.querySelector(`.fx-sub[data-sec="${g}"]`);
+    if (!sub) return;
+    list.scrollTo({ top: sub.offsetTop - list.offsetTop - 2, behavior: theme.animations === false ? "auto" : "smooth" });
+    this.mark(g);
+  },
+  mark(g) { for (const c of $("fx-tabs").children) c.classList.toggle("on", c.dataset.sec === g); },
+  // the chip of the section in view, as the list scrolls
+  spy() {
+    const list = $("fx-list");
+    let at = "";
+    for (const sub of list.querySelectorAll(".fx-sub")) {
+      if (sub.offsetTop - list.offsetTop <= list.scrollTop + 24) at = sub.dataset.sec;
+    }
+    this.mark(at || (list.querySelector(".fx-sub") || {}).dataset?.sec);
+  },
+  // the live particle preview (shared/forge_fx_preview.js) over the wallpaper
+  pv: null,
+  preview() {
+    if (!window.ForgeFxPreview || !this.rows().some((r) => ForgeFxPreview.wants(r.key))) return;
+    const labels = (this.row("particles") || {}).labels || {};
+    // powerTheme: the amounts and rates the home screen draws with right now
+    if (!this.pv) this.pv = ForgeFxPreview.mount($("fx-preview"), { look: () => powerTheme, labels });
+    this.pv.picture(getComputedStyle($("wall")).backgroundImage);
+    this.pv.refresh();
+  },
+  // a slider's filled part, its value's share of the way along
+  fillOf(range) {
+    const lo = Number(range.min), hi = Number(range.max), v = Number(range.value);
+    range.style.setProperty("--fill", `${hi > lo ? Math.max(0, Math.min(100, ((v - lo) / (hi - lo)) * 100)) : 0}%`);
   },
   control(r) {
     const id = `fx-${r.key}`;
@@ -7476,8 +7810,8 @@ const Fx = {
       range.type = "range"; range.id = id; range.dataset.key = r.key;
       num.type = "number"; num.dataset.key = r.key; num.setAttribute("aria-label", this.plain(r.label));
       for (const x of [range, num]) { x.min = r.min; x.max = r.max; x.step = r.step || (r.kind === "int" ? 1 : 0.1); }
-      range.addEventListener("input", () => { num.value = range.value; this.set({ [r.key]: Number(range.value) }); });
-      num.addEventListener("change", () => { range.value = num.value; this.set({ [r.key]: Number(num.value) }); });
+      range.addEventListener("input", () => { num.value = range.value; this.fillOf(range); this.set({ [r.key]: Number(range.value) }); });
+      num.addEventListener("change", () => { range.value = num.value; this.fillOf(range); this.set({ [r.key]: Number(num.value) }); });
       row.append(range, num);
     }
     return row;
@@ -7488,10 +7822,12 @@ const Fx = {
       const v = this.value(x.dataset.key);
       if (x.type === "checkbox") x.checked = v === true;
       else x.value = v ?? "";
+      if (x.type === "range") this.fillOf(x);
     }
   },
   init() {
     $("fx-close").addEventListener("click", () => this.open(false));
+    $("fx-list").addEventListener("scroll", () => this.spy(), { passive: true });
     $("fx-settings").addEventListener("click", () => {
       this.open(false);
       openSettings();

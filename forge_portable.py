@@ -2017,6 +2017,11 @@ class Launcher:
         self.push("quit", {})
         time.sleep(0.2)  # the event reaches the pages before they are cut off
         self.done.set()
+        if "forge_ask" in sys.modules:  # the smart search's Jan model, if loaded
+            try:
+                sys.modules["forge_ask"].shutdown()
+            except Exception as e:  # noqa: BLE001 -- quitting goes on
+                self.log(f"[forge] releasing the ask model failed ({e})")
         for close in list(self.on_quit):
             try:
                 close()
@@ -2220,6 +2225,15 @@ class Launcher:
 
     # -- the bridge: what forge.py's on_page_message does ---------------------
 
+    def ask(self, req: dict) -> None:
+        import forge_ask
+
+        try:
+            answer = forge_ask.answer(req)
+        except Exception as e:  # noqa: BLE001 -- the hub waits on an answer
+            answer = {"id": req.get("id"), "kind": "error", "text": f"search: {e}"}
+        self.push("ask", answer)
+
     def handle(self, request) -> str:
         """Carry out one message from the page; returns what was done (for the
         log and the tests). Messages for a feature this launcher does not have
@@ -2245,6 +2259,13 @@ class Launcher:
                 target=self.theme_pick, args=(request,), daemon=True
             ).start()
             return "theme"
+        if isinstance(request.get("ask"), dict):
+            # The smart search (shared/forge_ask.py): rules, web or a model,
+            # off this thread as forge.py does; the answer goes back as "ask".
+            threading.Thread(
+                target=self.ask, args=(request["ask"],), daemon=True
+            ).start()
+            return "ask"
         if isinstance(request.get("media"), dict):
             # Other players on the desktop (MPRIS) are Linux D-Bus: none here.
             self.push("media", [])

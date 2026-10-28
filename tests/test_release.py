@@ -778,6 +778,31 @@ def test_bridge_saves_only_the_hub_settings(launcher):
     assert answer == {"done": "ignored"}
 
 
+def test_bridge_answers_the_smart_search(launcher):
+    """The hub's smart search works in the portable build:
+    a question in through the bridge, the answer back as the "ask" event."""
+    conn = http.client.HTTPConnection("127.0.0.1", launcher.port, timeout=15)
+    try:
+        conn.request("GET", f"/forge/events?t={launcher.token}")
+        response = conn.getresponse()
+        assert response.status == 200
+        assert launcher.bridge({"ask": {"id": 7, "q": "12*12", "live": True}}) == (
+            200,
+            {"done": "ask"},
+        )
+        deadline = time.monotonic() + 12
+        while time.monotonic() < deadline:
+            line = response.fp.readline().decode()
+            if line.startswith("event: ask"):
+                data = json.loads(response.fp.readline().decode().split("data: ", 1)[1])
+                assert data["id"] == 7 and data["kind"] == "maths"
+                assert data["text"] == "144"
+                return
+    finally:
+        conn.close()
+    raise AssertionError("no ask event within 12 s")
+
+
 def picked_theme(launcher, message) -> dict:
     """Send one theme switcher message and read the answer the launcher
     pushes back to the hub ("theme_picked", as forge.py calls

@@ -503,6 +503,7 @@ function renderControls() {
   document.querySelectorAll("output[data-for]").forEach((out) => {
     out.textContent = formatValue(out.dataset.for, state.settings[out.dataset.for]);
   });
+  if (window.ForgeFxPreview) ForgeFxPreview.refreshAll();
   const n = changedCount();
   $("changed-count").textContent = n ? String(n) : "none";
   $("changed-only").classList.toggle("none", !n);
@@ -687,9 +688,20 @@ function buildGroups() {
     title.textContent = name;
     head.append(title);
     card.appendChild(head);
+    // a card that holds particle settings shows them live as they change
+    // (shared/forge_fx_preview.js; its KEYS say which settings those are):
+    // the preview goes where the first of them is, and the rest of them
+    // follow it, so the sliders sit right under the picture they change
+    if (window.ForgeFxPreview && items.some(([key, spec]) => !spec.copyIn && ForgeFxPreview.wants(key))) {
+      const fx = items.filter(([key, spec]) => !spec.copyIn && ForgeFxPreview.wants(key));
+      const at = items.indexOf(fx[0]);
+      items = [...items.slice(0, at).filter((it) => !fx.includes(it)), ["__fx_preview", { kind: "fx_preview" }], ...fx,
+        ...items.slice(at).filter((it) => !fx.includes(it))];
+    }
 
     items.forEach(([key, spec]) => {
-      if (spec.kind === "presets") card.appendChild(presetRow(key, spec));
+      if (spec.kind === "fx_preview") card.appendChild(fxPreviewBox());
+      else if (spec.kind === "presets") card.appendChild(presetRow(key, spec));
       else if (spec.kind === "keys") card.appendChild(keysTable(key, spec));
       else card.appendChild(settingRow(key, spec));
     });
@@ -701,12 +713,25 @@ function buildGroups() {
     reset.type = "button";
     reset.className = "btn reset-sec";
     reset.dataset.resetSection = name;
-    reset.dataset.resetKeys = [...new Set(items.filter(([, spec]) => spec.kind !== "presets").map(([key]) => key))].join(" ");
+    reset.dataset.resetKeys = [...new Set(items.filter(([, spec]) => spec.kind !== "presets" && spec.kind !== "fx_preview").map(([key]) => key))].join(" ");
     reset.addEventListener("click", () => Resets.run({ section: name }));
     foot.appendChild(reset);
     card.appendChild(foot);
     box.appendChild(card);
   });
+}
+
+// The live particle preview's place in a card (buildGroups)
+function fxPreviewBox() {
+  const box = document.createElement("div");
+  box.className = "fx-preview-box";
+  ForgeFxPreview.mount(box, {
+    look: () => Object.assign({}, state.theme, state.settings),
+    labels: () => ((state.fields || {}).particles || {}).labels,
+    picture: () => currentWall().thumb,
+    hint: "live preview · click for sparks",
+  });
+  return box;
 }
 
 // One row per setting: its name and help on the left (with the ↺ that puts it
